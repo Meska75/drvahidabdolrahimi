@@ -1,0 +1,657 @@
+{% extends "persian/persian_base.html" %}
+{% load static %}
+
+{% block title %}دکتر وحید عبدالرحیمی — فوق تخصص شبکیه و زجاجیه{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ===== هیرو ===== -->
+<section class="hero-section">
+    <div class="hero-bg-slider" id="heroBgSlider">
+        <div class="hero-slide" data-bg="{% static 'images/banner-bg.jpg' %}"></div>
+        <div class="hero-slide" data-bg="{% static 'images/banner-5bg.jpg' %}"></div>
+        <div class="hero-slide" data-bg="{% static 'images/banner-2bg.jpg' %}"></div>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-circle-1"></div>
+    <div class="hero-circle-2"></div>
+
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7 hero-content">
+                <div class="hero-badge">
+                    <i class="fa fa-stethoscope"></i>
+                    فوق تخصص شبکیه و زجاجیه
+                </div>
+                <h1 class="hero-title">
+                    دکتر وحید<br>
+                    <span class="highlight">عبدالرحیمی</span>
+                </h1>
+                <h2 class="hero-subtitle">پیشرو در درمان بیماری‌های چشم و شبکیه</h2>
+                <p class="hero-desc">
+                    با بیش از یک دهه تجربه بالینی در حوزه چشم‌پزشکی، ارائه‌دهنده بهترین خدمات
+                    تشخیصی و درمانی برای بیماری‌های شبکیه و زجاجیه.
+                </p>
+                <div class="hero-btns">
+                    <a href="{% url 'main:persian_contact' %}" class="btn-hero-primary">
+                        <i class="fa fa-calendar-check-o"></i> رزرو نوبت
+                    </a>
+                    <a href="{% url 'main:persian_about' %}" class="btn-hero-outline">
+                        <i class="fa fa-user-md"></i> درباره دکتر
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-num">+۱۰<sup>سال</sup></div>
+                        <div class="hero-stat-lbl">تجربه بالینی</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-num">+۵۰۰۰</div>
+                        <div class="hero-stat-lbl">بیمار موفق</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-num">+۱۵۰۰</div>
+                        <div class="hero-stat-lbl">عمل جراحی</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-num">۹۸<sup>٪</sup></div>
+                        <div class="hero-stat-lbl">رضایت بیماران</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 hero-right">
+                <div class="hero-img-bg">
+                    <div class="floating-card fc-top">
+                        <div class="fc-icon blue"><i class="fa fa-eye"></i></div>
+                        <div class="fc-text">
+                            <strong>معاینه تخصصی</strong>
+                            <span>آخرین تکنولوژی تصویربرداری</span>
+                        </div>
+                    </div>
+                    <div class="floating-card fc-bottom">
+                        <div class="fc-icon green"><i class="fa fa-check-circle"></i></div>
+                        <div class="fc-text">
+                            <strong>۹۸٪ رضایت بیماران</strong>
+                            <span>بر اساس نظرسنجی</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== نوار آمار ===== -->
+<section class="stats-bar">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-3 col-sm-6">
+                <div class="stat-item">
+                    <i class="fa fa-user-md stat-icon"></i>
+                    <span class="stat-num">+۱۰</span>
+                    <span class="stat-lbl">سال تجربه بالینی</span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="stat-item">
+                    <i class="fa fa-heartbeat stat-icon"></i>
+                    <span class="stat-num">+۵۰۰۰</span>
+                    <span class="stat-lbl">بیمار موفق</span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="stat-item">
+                    <i class="fas fa-procedures stat-icon"></i>
+                    <span class="stat-num">+۱۵۰۰</span>
+                    <span class="stat-lbl">عمل جراحی</span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="stat-item">
+                    <i class="fa fa-star stat-icon"></i>
+                    <span class="stat-num">۹۸٪</span>
+                    <span class="stat-lbl">رضایت بیماران</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== کارت‌های تخصص ===== -->
+<section class="features-section">
+    <div class="container">
+        <div class="sec-head">
+            <span class="pre-title">خدمات تخصصی</span>
+            <h2>حوزه‌های تخصصی ما</h2>
+            <div class="sec-divider"></div>
+            <p>با بهره‌گیری از جدیدترین روش‌های تشخیصی و درمانی، بهترین مراقبت را برای سلامت بینایی شما ارائه می‌دهیم</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                <div class="feat-card">
+                    <div class="feat-icon"><i class="fa fa-search-plus"></i></div>
+                    <h3>معاینات تخصصی چشم</h3>
+                    <p>تشخیص و ارزیابی دقیق بیماری‌های چشمی با بهره‌گیری از تکنولوژی نوین OCT و آنژیوگرافی</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                <div class="feat-card">
+                    <div class="feat-icon"><i class="fa fa-eye"></i></div>
+                    <h3>درمان بیماری‌های شبکیه</h3>
+                    <p>ارائه راهکارهای درمانی پیشرفته برای حفظ و بهبود بینایی بیماران مبتلا به بیماری‌های شبکیه</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <div class="feat-card">
+                    <div class="feat-icon"><i class="fas fa-syringe"></i></div>
+                    <h3>لیزر و تزریقات چشمی</h3>
+                    <p>درمان‌های تخصصی شامل لیزر شبکیه و تزریق داخل زجاجیه برای کنترل بیماری‌های پیشرفته</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="feat-card">
+                    <div class="feat-icon"><i class="fa fa-hospital-o"></i></div>
+                    <h3>جراحی‌های تخصصی</h3>
+                    <p>انجام جراحی‌های پیشرفته شبکیه، آب مروارید و زجاجیه با هدف بازگرداندن سلامت بینایی</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== معرفی دکتر ===== -->
+<section class="about-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-5 mb-5 mb-lg-0">
+                <div class="about-img-wrap">
+                    <img src="{% static 'images/welcome.png' %}" alt="دکتر وحید عبدالرحیمی">
+                    <div class="exp-badge">
+                        <span class="yrs">+۱۰</span>
+                        <span class="lbl">سال تجربه</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 pr-lg-5">
+                <div class="about-text">
+                    <span class="pre-title">درباره دکتر</span>
+                    <h2>به مطب دکتر عبدالرحیمی خوش آمدید</h2>
+                    <p>
+                        دکتر وحید عبدالرحیمی، فوق تخصص بیماری‌های شبکیه و زجاجیه، با تخصص و تجربه گسترده در
+                        حوزه چشم‌پزشکی، خدمات جامعی را برای بیماران ارائه می‌دهد. ایشان با بهره‌گیری از
+                        جدیدترین تکنولوژی‌های تشخیصی و درمانی روز دنیا، سلامت بینایی شما را در اولویت قرار می‌دهند.
+                    </p>
+                    <ul class="about-list">
+                        <li>
+                            <span class="li-icon"><i class="fa fa-graduation-cap"></i></span>
+                            فوق تخصص بیماری‌های شبکیه از دانشگاه علوم پزشکی تهران
+                        </li>
+                        <li>
+                            <span class="li-icon"><i class="fa fa-trophy"></i></span>
+                            عضو انجمن چشم‌پزشکی ایران و انجمن شبکیه ایران
+                        </li>
+                        <li>
+                            <span class="li-icon"><i class="fa fa-file-text"></i></span>
+                            بیش از ۳۰ مقاله علمی در مجلات معتبر بین‌المللی
+                        </li>
+                        <li>
+                            <span class="li-icon"><i class="fa fa-globe"></i></span>
+                            شرکت در کنگره‌های بین‌المللی چشم‌پزشکی در اروپا و آسیا
+                        </li>
+                        <li>
+                            <span class="li-icon"><i class="fa fa-flask"></i></span>
+                            مجهز به پیشرفته‌ترین دستگاه‌های تصویربرداری شبکیه (OCT, FFA)
+                        </li>
+                    </ul>
+                    <a href="{% url 'main:persian_about' %}" class="btn-about">
+                        بیشتر بدانید <i class="fa fa-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== خدمات مطب ===== -->
+<section class="services-office-section">
+    <div class="container">
+        <div class="sec-head">
+            <span class="pre-title">مطب</span>
+            <h2>خدمات مطب</h2>
+            <div class="sec-divider"></div>
+            <p>ارائه خدمات تخصصی چشم‌پزشکی در محیطی مجهز و آرام، همراه با معاینه دقیق و مشاوره حرفه‌ای</p>
+        </div>
+        <div class="owl-carousel srv-carousel" id="officeSrvCarousel">
+            <div class="srv-carousel-item">
+                <div class="srv-card">
+                    <div class="card-img">
+                        <img src="{% static 'images/department1.jpg' %}" alt="معاینه و مشاوره">
+                        <div class="overlay"></div>
+                        <span class="tag">مطب</span>
+                    </div>
+                    <div class="card-body-inner">
+                        <h3>معاینه و مشاوره</h3>
+                        <p>بررسی دقیق وضعیت چشم و ارائه راهنمایی برای انتخاب بهترین مسیر درمانی</p>
+                        <a href="{% url 'services:persian_office_services' %}" class="card-link">
+                            بیشتر بدانید <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="srv-carousel-item">
+                <div class="srv-card">
+                    <div class="card-img">
+                        <img src="{% static 'images/department2.jpg' %}" alt="تصویربرداری OCT">
+                        <div class="overlay"></div>
+                        <span class="tag">مطب</span>
+                    </div>
+                    <div class="card-body-inner">
+                        <h3>تصویربرداری OCT</h3>
+                        <p>تصویربرداری پیشرفته از شبکیه و عصب بینایی برای تشخیص دقیق بیماری‌ها</p>
+                        <a href="{% url 'services:persian_office_services' %}" class="card-link">
+                            بیشتر بدانید <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="srv-carousel-item">
+                <div class="srv-card">
+                    <div class="card-img">
+                        <img src="{% static 'images/department3.jpg' %}" alt="تزریق داخل زجاجیه">
+                        <div class="overlay"></div>
+                        <span class="tag">مطب</span>
+                    </div>
+                    <div class="card-body-inner">
+                        <h3>تزریق داخل زجاجیه</h3>
+                        <p>تزریق داروهای ضد رگزایی (Anti-VEGF) برای درمان بیماری‌های ماکولا</p>
+                        <a href="{% url 'services:persian_office_services' %}" class="card-link">
+                            بیشتر بدانید <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="srv-carousel-item">
+                <div class="srv-card">
+                    <div class="card-img">
+                        <img src="{% static 'images/department1.jpg' %}" alt="آزمون میدان بینایی">
+                        <div class="overlay"></div>
+                        <span class="tag">مطب</span>
+                    </div>
+                    <div class="card-body-inner">
+                        <h3>آزمون میدان بینایی</h3>
+                        <p>ارزیابی دقیق میدان بینایی برای تشخیص و پیگیری بیماری‌هایی مثل گلوکوم</p>
+                        <a href="{% url 'services:persian_office_services' %}" class="card-link">
+                            بیشتر بدانید <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center srv-more-btn">
+            <a href="{% url 'services:persian_office_services' %}" class="btn-about">
+                مشاهده همه خدمات مطب <i class="fa fa-arrow-left"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== خدمات جراحی ===== -->
+<section class="services-surgery-section">
+    <div class="container">
+        <div class="sec-head">
+            <span class="pre-title">اتاق عمل</span>
+            <h2>خدمات جراحی</h2>
+            <div class="sec-divider sec-divider-light"></div>
+            <p>انجام جراحی‌های تخصصی چشم با پیشرفته‌ترین تجهیزات و با هدف بازگرداندن و حفظ سلامت بینایی</p>
+        </div>
+        <div class="owl-carousel srv-carousel" id="surgerySrvCarousel">
+            <div class="srv-carousel-item">
+                <div class="srv-card">
+                    <div class="card-img">
+                        <img src="{% static 'images/department2.jpg' %}" alt="ویترکتومی">
+                        <div class="overlay"></div>
+                        <span class="tag tag-surgery">جراحی</span>
+                    </div>
+                    <div class="card-body-inner">
+                        <h3>جراحی شبکیه (ویترکتومی)</h3>
+                        <p>جراحی پیشرفته شبکیه برای درمان جداشدگی شبکیه و خونریزی زجاجیه</p>
+                        <a href="{% url 'services:persian_surgery_services' %}" class="card-link">
+                            بیشتر بدانید <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="srv-carousel-item">
+                <div class="srv-card">
+                    <div class="card-img">
+                        <img src="{% static 'images/department1.jpg' %}" alt="آب مروارید">
+                        <div class="overlay"></div>
+                        <span class="tag tag-surgery">جراحی</span>
+                    </div>
+                    <div class="card-body-inner">
+                        <h3>جراحی آب مروارید</h3>
+                        <p>جراحی فیکوامولسیفیکاسیون با کاشت لنز داخل چشمی برای بازگرداندن وضوح دید</p>
+                        <a href="{% url 'services:persian_surgery_services' %}" class="card-link">
+                            بیشتر بدانید <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="srv-carousel-item">
+                <div class="srv-card">
+                    <div class="card-img">
+                        <img src="{% static 'images/department3.jpg' %}" alt="لیزر شبکیه">
+                        <div class="overlay"></div>
+                        <span class="tag tag-surgery">جراحی</span>
+                    </div>
+                    <div class="card-body-inner">
+                        <h3>لیزر شبکیه</h3>
+                        <p>درمان پارگی‌ها و ضعف‌های شبکیه با لیزر برای جلوگیری از جداشدگی</p>
+                        <a href="{% url 'services:persian_surgery_services' %}" class="card-link">
+                            بیشتر بدانید <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="srv-carousel-item">
+                <div class="srv-card">
+                    <div class="card-img">
+                        <img src="{% static 'images/department2.jpg' %}" alt="جراحی گلوکوم">
+                        <div class="overlay"></div>
+                        <span class="tag tag-surgery">جراحی</span>
+                    </div>
+                    <div class="card-body-inner">
+                        <h3>جراحی گلوکوم</h3>
+                        <p>مداخلات جراحی و لیزری برای کنترل فشار چشم و جلوگیری از آسیب عصب بینایی</p>
+                        <a href="{% url 'services:persian_surgery_services' %}" class="card-link">
+                            بیشتر بدانید <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center srv-more-btn">
+            <a href="{% url 'services:persian_surgery_services' %}" class="btn-surgery-outline">
+                مشاهده همه خدمات جراحی <i class="fa fa-arrow-left"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== تیم مطب ===== -->
+<section class="team-section">
+    <!-- تصویر fade پس‌زمینه — با JS هنگام hover روی هر کارت تغییر می‌کند -->
+    <div class="team-section-bg" id="teamSectionBg"></div>
+
+    <div class="container team-container">
+        <div class="sec-head">
+            <span class="pre-title">همکاران</span>
+            <h2>تیم مطب</h2>
+            <div class="sec-divider"></div>
+            <p>همکاران متخصص و باتجربه در کنار دکتر عبدالرحیمی، آماده ارائه بهترین خدمات به شما هستند</p>
+        </div>
+
+        <div class="row">
+            <!-- کارت ۱ -->
+            <div class="col-lg-3 col-sm-6 mb-4 mb-lg-0">
+                <div class="team-card" data-member-img="{% static 'images/doctor1.jpg' %}">
+                    <div class="img-wrap">
+                        <img src="{% static 'images/doctor1.jpg' %}" alt="دکتر وحید عبدالرحیمی">
+                    </div>
+                    <div class="card-info">
+                        <h3>دکتر وحید عبدالرحیمی</h3>
+                        <span class="role">فوق تخصص شبکیه و زجاجیه</span>
+                        <div class="member-socials">
+                            <a href="#" class="soc-link instagram" aria-label="اینستاگرام">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="soc-link whatsapp" aria-label="واتس‌اپ">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                            <a href="#" class="soc-link telegram" aria-label="تلگرام">
+                                <i class="fab fa-telegram-plane"></i>
+                            </a>
+                            <a href="#" class="soc-link linkedin" aria-label="لینکدین">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                        <p>متخصص در جراحی و درمان بیماری‌های پیشرفته شبکیه و زجاجیه</p>
+                    </div>
+                </div>
+            </div>
+            <!-- کارت ۲ -->
+            <div class="col-lg-3 col-sm-6 mb-4 mb-lg-0">
+                <div class="team-card" data-member-img="{% static 'images/doctor2.jpg' %}">
+                    <div class="img-wrap">
+                        <img src="{% static 'images/doctor2.jpg' %}" alt="همکار مطب">
+                    </div>
+                    <div class="card-info">
+                        <h3>نام همکار</h3>
+                        <span class="role">کارشناس بینایی‌سنجی</span>
+                        <div class="member-socials">
+                            <a href="#" class="soc-link instagram" aria-label="اینستاگرام">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="soc-link whatsapp" aria-label="واتس‌اپ">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                            <a href="#" class="soc-link telegram" aria-label="تلگرام">
+                                <i class="fab fa-telegram-plane"></i>
+                            </a>
+                            <a href="#" class="soc-link linkedin" aria-label="لینکدین">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                        <p>ارائه خدمات تخصصی بینایی‌سنجی و تجویز عدسی و عینک</p>
+                    </div>
+                </div>
+            </div>
+            <!-- کارت ۳ -->
+            <div class="col-lg-3 col-sm-6 mb-4 mb-sm-0">
+                <div class="team-card" data-member-img="{% static 'images/doctor3.jpg' %}">
+                    <div class="img-wrap">
+                        <img src="{% static 'images/doctor3.jpg' %}" alt="همکار مطب">
+                    </div>
+                    <div class="card-info">
+                        <h3>نام همکار</h3>
+                        <span class="role">پرستار و دستیار بالینی</span>
+                        <div class="member-socials">
+                            <a href="#" class="soc-link instagram" aria-label="اینستاگرام">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="soc-link whatsapp" aria-label="واتس‌اپ">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                            <a href="#" class="soc-link telegram" aria-label="تلگرام">
+                                <i class="fab fa-telegram-plane"></i>
+                            </a>
+                            <a href="#" class="soc-link linkedin" aria-label="لینکدین">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                        <p>مراقبت از بیماران و هماهنگی امور بالینی مطب</p>
+                    </div>
+                </div>
+            </div>
+            <!-- کارت ۴ -->
+            <div class="col-lg-3 col-sm-6">
+                <div class="team-card" data-member-img="{% static 'images/doctor4.jpg' %}">
+                    <div class="img-wrap">
+                        <img src="{% static 'images/doctor4.jpg' %}" alt="همکار مطب">
+                    </div>
+                    <div class="card-info">
+                        <h3>نام همکار</h3>
+                        <span class="role">مسئول پذیرش</span>
+                        <div class="member-socials">
+                            <a href="#" class="soc-link instagram" aria-label="اینستاگرام">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="soc-link whatsapp" aria-label="واتس‌اپ">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                            <a href="#" class="soc-link telegram" aria-label="تلگرام">
+                                <i class="fab fa-telegram-plane"></i>
+                            </a>
+                            <a href="#" class="soc-link linkedin" aria-label="لینکدین">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                        <p>هماهنگی نوبت‌دهی و رسیدگی به امور اداری بیماران</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{# ===== بخش اورژانس — کامنت شده ===== #}
+{#
+<section class="emergency-section">
+    <div class="container">
+        <div class="emg-content">
+            <div class="emg-badge">
+                <i class="fa fa-exclamation-triangle"></i>
+                اورژانس چشم‌پزشکی
+            </div>
+            <h2>در موارد اورژانسی با ما تماس بگیرید</h2>
+            <span class="emg-phone">۰۲۱-XXXXXXXX</span>
+            <p>در صورت بروز مشکل بینایی فوری مثل جداشدگی ناگهانی شبکیه،
+            کاهش حاد بینایی یا ضربه به چشم، بدون تأخیر با ما تماس بگیرید.</p>
+            <a href="{% url 'main:persian_contact' %}" class="btn-emg">
+                <i class="fa fa-phone"></i> تماس با ما
+            </a>
+        </div>
+    </div>
+</section>
+#}
+
+
+<!-- ===== گالری تصاویر ===== -->
+<section class="gallery-section">
+    <div class="container">
+        <div class="sec-head">
+            <span class="pre-title">گالری</span>
+            <h2>تصاویر مطب</h2>
+            <div class="sec-divider"></div>
+            <p>نگاهی به محیط مجهز و دوستانه مطب دکتر عبدالرحیمی</p>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item gi-wide-tall">
+                <img src="{% static 'images/feed1.jpg' %}" alt="تصویر مطب ۱">
+                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
+            </div>
+            <div class="gallery-item">
+                <img src="{% static 'images/feed2.jpg' %}" alt="تصویر مطب ۲">
+                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
+            </div>
+            <div class="gallery-item">
+                <img src="{% static 'images/feed3.jpg' %}" alt="تصویر مطب ۳">
+                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
+            </div>
+            <div class="gallery-item">
+                <img src="{% static 'images/feed4.jpg' %}" alt="تصویر مطب ۴">
+                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
+            </div>
+            <div class="gallery-item">
+                <img src="{% static 'images/feed5.jpg' %}" alt="تصویر مطب ۵">
+                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
+            </div>
+            <div class="gallery-item gi-wide">
+                <img src="{% static 'images/feed6.jpg' %}" alt="تصویر مطب ۶">
+                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
+            </div>
+            <div class="gallery-item">
+                <img src="{% static 'images/feed7.jpg' %}" alt="تصویر مطب ۷">
+                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
+            </div>
+            <div class="gallery-item">
+                <img src="{% static 'images/feed8.jpg' %}" alt="تصویر مطب ۸">
+                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(function () {
+
+    /* ===== slider crossfade بنر هیرو ===== */
+    var slides = document.querySelectorAll('#heroBgSlider .hero-slide');
+    var current = 0;
+    slides.forEach(function (slide) {
+        var bg = slide.getAttribute('data-bg');
+        if (bg) { slide.style.backgroundImage = 'url(' + bg + ')'; }
+    });
+    if (slides.length > 0) {
+        slides[0].classList.add('active');
+        setInterval(function () {
+            slides[current].classList.remove('active');
+            current = (current + 1) % slides.length;
+            slides[current].classList.add('active');
+        }, 5000);
+    }
+
+    /* ===== کاروسل خدمات — فقط اگر تعداد آیتم > 4 ===== */
+    function initSrvCarousel(el) {
+        var $el = $(el);
+        if (!$el.length) return;
+        if ($el.children('.srv-carousel-item').length > 4) {
+            $el.owlCarousel({
+                loop: true,
+                margin: 20,
+                autoplay: true,
+                autoplayTimeout: 3500,
+                autoplayHoverPause: true,
+                nav: true,
+                dots: true,
+                navText: [
+                    '<i class="fa fa-chevron-right"></i>',
+                    '<i class="fa fa-chevron-left"></i>'
+                ],
+                smartSpeed: 700,
+                responsive: {
+                    0:    { items: 1 },
+                    576:  { items: 2 },
+                    992:  { items: 3 },
+                    1200: { items: 4 }
+                }
+            });
+        }
+    }
+    initSrvCarousel($('#officeSrvCarousel'));
+    initSrvCarousel($('#surgerySrvCarousel'));
+
+    /* ===== تصویر fade پس‌زمینه بخش تیم ===== */
+    var $teamBg = $('#teamSectionBg');
+    var teamBgTimer = null;
+
+    $('.team-card').on('mouseenter', function () {
+        var img = $(this).data('member-img');
+        if (!img) return;
+        clearTimeout(teamBgTimer);
+        /* اگر تصویر عوض شده قبل از fade-out، آن را بلافاصله تعویض کن */
+        $teamBg.css('background-image', 'url(' + img + ')');
+        $teamBg.addClass('is-visible');
+    }).on('mouseleave', function () {
+        teamBgTimer = setTimeout(function () {
+            $teamBg.removeClass('is-visible');
+        }, 200);
+    });
+
+});
+</script>
+{% endblock %}

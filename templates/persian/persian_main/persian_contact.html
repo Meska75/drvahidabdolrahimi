@@ -1,0 +1,136 @@
+{% extends "persian/persian_base.html" %}
+{% load static %}
+
+{% block title %}تماس با ما — دکتر وحید عبدالرحیمی{% endblock %}
+
+{% block content %}
+
+    <!-- بنر صفحه داخلی -->
+    <section class="banner-area other-page">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>تماس با ما</h1>
+                    <div class="breadcrumb-wrap">
+                        <a href="{% url 'main:persian_home' %}">خانه</a>
+                        <span> | </span>
+                        <a href="{% url 'main:persian_contact' %}">تماس با ما</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- پایان بنر -->
+
+    <!-- نقشه شروع -->
+    <section class="map-area">
+        <div class="container-fluid px-0">
+            <div class="row no-gutters">
+                <div class="col-lg-12">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d207316.6867093774!2d51.17522!3d35.69439!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f8e00491ff3dcd9%3A0xf0b3697c567024bc!2sTehran%2C%20Tehran%20Province%2C%20Iran!5e0!3m2!1sen!2s!4v1700000000000"
+                        width="100%"
+                        height="400"
+                        style="border:0; display:block;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="موقعیت مطب دکتر عبدالرحیمی">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- پایان نقشه -->
+
+    <!-- فرم تماس شروع -->
+    <section class="contact-form section-padding3">
+        <div class="container">
+            <div class="row">
+                <!-- اطلاعات تماس -->
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <div class="d-flex mb-4">
+                        <div class="into-icon">
+                            <i class="fa fa-map-marker"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>آدرس مطب</h3>
+                            <p>تهران — آدرس کامل مطب اینجا قرار می‌گیرد</p>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-4">
+                        <div class="into-icon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>۰۲۱-XXXXXXXX</h3>
+                            <p>شنبه تا چهارشنبه | ۹ صبح تا ۵ عصر</p>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-4">
+                        <div class="into-icon">
+                            <i class="fa fa-envelope-o"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>info@drabdolrahimi.ir</h3>
+                            <p>هر زمان پیام خود را ارسال کنید</p>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="into-icon">
+                            <i class="fa fa-clock-o"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>ساعات کاری</h3>
+                            <p>شنبه تا چهارشنبه: ۹ تا ۱۷</p>
+                            <p>پنج‌شنبه: ۹ تا ۱۳</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- فرم ارسال پیام -->
+                <div class="col-lg-8">
+                    <form action="#" method="post">
+                        {% csrf_token %}
+                        <div class="left">
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="نام و نام خانوادگی"
+                                onfocus="this.placeholder=''"
+                                onblur="this.placeholder='نام و نام خانوادگی'"
+                                required>
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="آدرس ایمیل"
+                                onfocus="this.placeholder=''"
+                                onblur="this.placeholder='آدرس ایمیل'"
+                                required>
+                            <input
+                                type="text"
+                                name="subject"
+                                placeholder="موضوع پیام"
+                                onfocus="this.placeholder=''"
+                                onblur="this.placeholder='موضوع پیام'"
+                                required>
+                        </div>
+                        <div class="right">
+                            <textarea
+                                name="message"
+                                cols="20"
+                                rows="7"
+                                placeholder="متن پیام خود را اینجا بنویسید..."
+                                onfocus="this.placeholder=''"
+                                onblur="this.placeholder='متن پیام خود را اینجا بنویسید...'"
+                                required></textarea>
+                        </div>
+                        <button type="submit" class="template-btn">ارسال پیام</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- پایان فرم تماس -->
+
+{% endblock %}

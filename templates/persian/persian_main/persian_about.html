@@ -1,0 +1,160 @@
+{% extends "persian/persian_base.html" %}
+{% load static %}
+
+{% block title %}درباره دکتر عبدالرحیمی — فوق تخصص شبکیه و زجاجیه{% endblock %}
+
+{% block content %}
+
+    <!-- بنر صفحه داخلی -->
+    <section class="banner-area other-page">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>درباره دکتر</h1>
+                    <div class="breadcrumb-wrap">
+                        <a href="{% url 'main:persian_home' %}">خانه</a>
+                        <span> | </span>
+                        <a href="{% url 'main:persian_about' %}">درباره دکتر</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- پایان بنر -->
+
+    <!-- بخش معرفی دکتر شروع -->
+    <section class="welcome-area section-padding3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 align-self-center">
+                    <div class="welcome-img">
+                        <img src="{% static 'images/welcome2.png' %}" alt="دکتر وحید عبدالرحیمی">
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="welcome-text mt-5 mt-lg-0">
+                        <h2>دکتر وحید عبدالرحیمی</h2>
+                        <h5 style="color:#0dcaf0; margin-bottom:1rem;">فوق تخصص بیماری‌های شبکیه و زجاجیه</h5>
+                        <p class="pt-2">دکتر وحید عبدالرحیمی، فارغ‌التحصیل دوره فوق تخصصی بیماری‌های شبکیه و زجاجیه، با سال‌ها تجربه بالینی در حوزه تشخیص و درمان بیماری‌های پیچیده چشم، به ارائه خدمات تخصصی با بالاترین استانداردهای کیفی اشتغال دارد.</p>
+                        <p>ایشان با استفاده از جدیدترین تکنولوژی‌های تصویربرداری و درمانی، از جمله OCT نسل جدید، فلوئورسین آنژیوگرافی، لیزر شبکیه و تزریقات داخل زجاجیه، خدمات جامعی را به بیماران ارائه می‌دهند.</p>
+                        <a href="{% url 'main:persian_contact' %}" class="template-btn mt-3">رزرو نوبت</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- پایان معرفی دکتر -->
+
+    <!-- تحصیلات و سوابق شروع -->
+    <section class="feature-area section-padding" style="background:#f9f9f9;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="section-top text-center mb-5">
+                        <h2>تحصیلات و سوابق علمی</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="single-feature text-center item-padding">
+                        <i class="fa fa-graduation-cap fa-3x mb-3" style="color:#0dcaf0;"></i>
+                        <h3>دکترای پزشکی عمومی</h3>
+                        <p class="pt-3">فارغ‌التحصیل دکترای پزشکی عمومی از یکی از دانشگاه‌های معتبر علوم پزشکی کشور</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="single-feature text-center item-padding">
+                        <i class="fa fa-eye fa-3x mb-3" style="color:#0dcaf0;"></i>
+                        <h3>تخصص چشم‌پزشکی</h3>
+                        <p class="pt-3">گذراندن دوره تخصصی چشم‌پزشکی و کسب بورد تخصصی از دانشگاه علوم پزشکی ایران</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="single-feature text-center item-padding">
+                        <i class="fa fa-certificate fa-3x mb-3" style="color:#0dcaf0;"></i>
+                        <h3>فوق تخصص شبکیه</h3>
+                        <p class="pt-3">اخذ فلوشیپ فوق تخصصی بیماری‌های شبکیه و زجاجیه از مراکز معتبر داخلی و خارجی</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- پایان تحصیلات -->
+
+    <!-- حوزه‌های تخصصی شروع -->
+    <section class="department-area section-padding4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="section-top text-center">
+                        <h2>حوزه‌های تخصصی</h2>
+                        <p>دکتر عبدالرحیمی در موارد زیر تخصص ویژه دارند</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="single-slide text-center">
+                        <div class="slide-img">
+                            <img src="{% static 'images/department1.jpg' %}" alt="دژنراسیون ماکولا" class="img-fluid">
+                        </div>
+                        <div class="single-department item-padding">
+                            <h3>دژنراسیون ماکولا (AMD)</h3>
+                            <p>تشخیص و درمان تخریب لکه زرد مرتبط با سن، با تزریق داروهای ضد رگزایی</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="single-slide text-center">
+                        <div class="slide-img">
+                            <img src="{% static 'images/department2.jpg' %}" alt="رتینوپاتی دیابتی" class="img-fluid">
+                        </div>
+                        <div class="single-department item-padding">
+                            <h3>رتینوپاتی دیابتی</h3>
+                            <p>پیشگیری، تشخیص و درمان عوارض چشمی ناشی از دیابت با لیزر و تزریق</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="single-slide text-center">
+                        <div class="slide-img">
+                            <img src="{% static 'images/department3.jpg' %}" alt="جداشدگی شبکیه" class="img-fluid">
+                        </div>
+                        <div class="single-department item-padding">
+                            <h3>جداشدگی شبکیه</h3>
+                            <p>جراحی اورژانسی و الکتیو برای ترمیم جداشدگی شبکیه و بازگرداندن بینایی</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- پایان حوزه‌های تخصصی -->
+
+    <!-- بخش آمار شروع -->
+    <section class="hotline-area text-center section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h2 style="font-size:3rem; font-weight:bold;">+۱۰</h2>
+                    <p>سال تجربه بالینی</p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h2 style="font-size:3rem; font-weight:bold;">+۵۰۰۰</h2>
+                    <p>عمل جراحی موفق</p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h2 style="font-size:3rem; font-weight:bold;">+۲۰۰۰۰</h2>
+                    <p>بیمار راضی</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h2 style="font-size:3rem; font-weight:bold;">+۳۰</h2>
+                    <p>مقاله علمی</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- پایان بخش آمار -->
+
+{% endblock %}

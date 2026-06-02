@@ -1,0 +1,169 @@
+{% extends "persian/persian_base.html" %}
+{% load static %}
+
+{% block title %}خدمات مطب — دکتر وحید عبدالرحیمی{% endblock %}
+
+{% block content %}
+
+    <!-- بنر صفحه داخلی -->
+    <section class="banner-area other-page">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>خدمات مطب</h1>
+                    <div class="breadcrumb-wrap">
+                        <a href="{% url 'main:persian_home' %}">خانه</a>
+                        <span> | </span>
+                        <a href="{% url 'services:persian_office_services' %}">خدمات مطب</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- پایان بنر -->
+
+    <!-- معرفی خدمات مطب شروع -->
+    <section class="department-area section-padding4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <div class="section-top text-center">
+                        <h2>خدمات تخصصی مطب</h2>
+                        <p>
+                            مطب دکتر عبدالرحیمی مجهز به پیشرفته‌ترین دستگاه‌های تشخیصی و درمانی است.
+                            تمامی خدمات در محیطی آرام، منظم و کاملاً حرفه‌ای ارائه می‌شود.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="single-slide text-center">
+                        <div class="slide-img">
+                            <img src="{% static 'images/department1.jpg' %}" alt="معاینه و مشاوره" class="img-fluid">
+                            <div class="hover-state">
+                                <a href="#"><i class="fa fa-eye"></i></a>
+                            </div>
+                        </div>
+                        <div class="single-department item-padding">
+                            <h3>معاینه و مشاوره چشم</h3>
+                            <p>
+                                بررسی جامع وضعیت چشم، پاسخ به سوالات بیمار و ارائه برنامه درمانی
+                                مناسب با توجه به شرایط هر بیمار.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="single-slide text-center">
+                        <div class="slide-img">
+                            <img src="{% static 'images/department2.jpg' %}" alt="OCT شبکیه" class="img-fluid">
+                            <div class="hover-state">
+                                <a href="#"><i class="fa fa-eye"></i></a>
+                            </div>
+                        </div>
+                        <div class="single-department item-padding">
+                            <h3>تصویربرداری OCT</h3>
+                            <p>
+                                تصویربرداری مقطعی پیشرفته از شبکیه و عصب بینایی برای تشخیص دقیق
+                                بیماری‌های ماکولا، گلوکوم و سایر اختلالات.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="single-slide text-center">
+                        <div class="slide-img">
+                            <img src="{% static 'images/department3.jpg' %}" alt="فلوئورسین آنژیوگرافی" class="img-fluid">
+                            <div class="hover-state">
+                                <a href="#"><i class="fa fa-eye"></i></a>
+                            </div>
+                        </div>
+                        <div class="single-department item-padding">
+                            <h3>فلوئورسین آنژیوگرافی</h3>
+                            <p>
+                                عکس‌برداری از عروق شبکیه برای تشخیص و بررسی بیماری‌های عروقی
+                                شامل رتینوپاتی دیابتی و انسداد وریدهای شبکیه.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="single-slide text-center">
+                        <div class="slide-img">
+                            <img src="{% static 'images/department1.jpg' %}" alt="تزریق داخل زجاجیه" class="img-fluid">
+                            <div class="hover-state">
+                                <a href="#"><i class="fa fa-eye"></i></a>
+                            </div>
+                        </div>
+                        <div class="single-department item-padding">
+                            <h3>تزریق داخل زجاجیه</h3>
+                            <p>
+                                تزریق داروهای ضد رگزایی (Anti-VEGF) و کورتیکواستروئید برای درمان
+                                ادم ماکولا، AMD مرطوب و رتینوپاتی دیابتی.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="single-slide text-center">
+                        <div class="slide-img">
+                            <img src="{% static 'images/department2.jpg' %}" alt="آزمون میدان بینایی" class="img-fluid">
+                            <div class="hover-state">
+                                <a href="#"><i class="fa fa-eye"></i></a>
+                            </div>
+                        </div>
+                        <div class="single-department item-padding">
+                            <h3>آزمون میدان بینایی (پریمتری)</h3>
+                            <p>
+                                ارزیابی دقیق میدان بینایی برای تشخیص و پایش بیماری‌هایی مثل
+                                گلوکوم، آسیب عصب بینایی و بیماری‌های سیستم عصبی مرکزی.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="single-slide text-center">
+                        <div class="slide-img">
+                            <img src="{% static 'images/department3.jpg' %}" alt="اندازه‌گیری فشار چشم" class="img-fluid">
+                            <div class="hover-state">
+                                <a href="#"><i class="fa fa-eye"></i></a>
+                            </div>
+                        </div>
+                        <div class="single-department item-padding">
+                            <h3>اندازه‌گیری فشار چشم</h3>
+                            <p>
+                                اندازه‌گیری دقیق فشار داخل چشم (تونومتری) برای تشخیص زودهنگام
+                                گلوکوم و پایش روند درمان بیماران تحت نظر.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- پایان خدمات مطب -->
+
+    <!-- CTA شروع -->
+    <section class="hotline-area text-center section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>آماده دریافت خدمات هستید؟</h2>
+                    <p class="pt-3">برای رزرو نوبت یا کسب اطلاعات بیشتر درباره خدمات مطب با ما تماس بگیرید</p>
+                    <a href="{% url 'main:persian_contact' %}" class="template-btn mt-3">رزرو نوبت</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- پایان CTA -->
+
+{% endblock %}

@@ -1,0 +1,1086 @@
+/* ==============================================
+   صفحه اصلی — home.css
+   دکتر وحید عبدالرحیمی
+============================================== */
+
+/* ===== متغیرهای رنگ ===== */
+:root {
+    --primary:       #1a56db;
+    --primary-dark:  #1241a8;
+    --primary-light: #e8f0fe;
+    --accent:        #0ea5e9;
+    --text-dark:     #1e293b;
+    --text-muted:    #64748b;
+    --bg-light:      #f8fafc;
+    --border:        #e2e8f0;
+    --shadow-md:     0 4px 20px rgba(0,0,0,.09);
+    --shadow-lg:     0 10px 40px rgba(0,0,0,.13);
+}
+
+/* ===========================
+   قانون پایه تصاویر آپلودی
+   هر تصویر درون کانتینر فیکس
+=========================== */
+.img-fixed {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* ===========================
+   هیرو
+=========================== */
+.hero-section {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding-top: 110px;
+    padding-bottom: 60px;
+}
+
+/* crossfade بنر هیرو */
+.hero-bg-slider {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.hero-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+}
+
+.hero-slide.active { opacity: 1; }
+
+/* overlay نیمه‌شفاف */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+        140deg,
+        rgba(7,26,53,0.72) 0%,
+        rgba(13,43,85,0.60) 55%,
+        rgba(10,61,114,0.55) 100%
+    );
+}
+
+.hero-circle-1 {
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.04);
+    top: -150px; left: -200px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.hero-circle-2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: rgba(26,86,219,.12);
+    bottom: -100px; right: -80px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.hero-content { position: relative; z-index: 3; }
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(26,86,219,.25);
+    border: 1px solid rgba(96,165,250,.35);
+    color: #93c5fd;
+    padding: 6px 18px;
+    border-radius: 50px;
+    font-size: 13px;
+    margin-bottom: 24px;
+}
+
+.hero-badge i { font-size: 14px; }
+
+.hero-title {
+    font-size: 54px !important;
+    font-weight: 800 !important;
+    color: #fff !important;
+    line-height: 1.25 !important;
+    margin-bottom: 12px !important;
+}
+
+.hero-title .highlight { color: #60a5fa; }
+
+.hero-subtitle {
+    font-size: 18px !important;
+    color: #93c5fd !important;
+    font-weight: 500 !important;
+    margin-bottom: 16px !important;
+}
+
+.hero-desc {
+    color: #cbd5e1;
+    font-size: 15px;
+    line-height: 1.85;
+    max-width: 500px;
+    margin-bottom: 36px;
+}
+
+.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+.btn-hero-primary {
+    background: var(--primary);
+    color: #fff !important;
+    padding: 13px 30px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    border: 2px solid var(--primary);
+    transition: all .3s;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-hero-primary:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26,86,219,.45);
+}
+
+.btn-hero-outline {
+    background: transparent;
+    color: #fff !important;
+    padding: 13px 30px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    border: 2px solid rgba(255,255,255,.3);
+    transition: all .3s;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-hero-outline:hover {
+    border-color: #fff;
+    background: rgba(255,255,255,.08);
+    transform: translateY(-2px);
+}
+
+/* آمار داخل هیرو */
+.hero-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 52px;
+    padding-top: 36px;
+    border-top: 1px solid rgba(255,255,255,.1);
+    flex-wrap: wrap;
+}
+
+.hero-stat { text-align: right; }
+
+.hero-stat-num {
+    font-size: 40px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+}
+
+.hero-stat-num sup {
+    font-size: 20px;
+    color: #60a5fa;
+    vertical-align: super;
+}
+
+.hero-stat-lbl {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: 6px;
+}
+
+/* کارت‌های شناور */
+.hero-right {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-img-bg {
+    width: 380px; height: 440px;
+    border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%;
+    background: linear-gradient(135deg, rgba(26,86,219,.35), rgba(14,165,233,.2));
+    position: relative;
+}
+
+.floating-card {
+    position: absolute;
+    background: rgba(255,255,255,.09);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 14px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: floatY 3s ease-in-out infinite;
+}
+
+.floating-card:nth-child(2) { animation-delay: 1.5s; }
+
+@keyframes floatY {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-8px); }
+}
+
+.floating-card.fc-top    { top: -24px; left: -40px; }
+.floating-card.fc-bottom { bottom: -20px; right: -40px; }
+
+.fc-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.fc-icon.blue  { background: rgba(96,165,250,.25); color: #60a5fa; }
+.fc-icon.green { background: rgba(52,211,153,.25); color: #34d399; }
+
+.fc-text strong {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    display: block;
+}
+
+.fc-text span { font-size: 11px; color: #94a3b8; }
+
+/* ===========================
+   نوار آمار
+=========================== */
+.stats-bar {
+    background: #fff;
+    padding: 0;
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+}
+
+.stat-item {
+    padding: 40px 24px;
+    text-align: center;
+    border-left: 1px solid var(--border);
+    transition: background .3s;
+}
+
+.stat-item:last-child { border-left: none; }
+.stat-item:hover { background: var(--bg-light); }
+
+.stat-num {
+    font-size: 48px !important;
+    font-weight: 900 !important;
+    color: var(--primary) !important;
+    line-height: 1 !important;
+    display: block !important;
+    font-family: 'Vazirmatn', sans-serif !important;
+}
+
+.stat-lbl {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 8px;
+    display: block;
+}
+
+.stat-icon {
+    font-size: 24px;
+    color: var(--primary);
+    opacity: .25;
+    margin-bottom: 12px;
+    display: block;
+}
+
+/* ===========================
+   عنوان بخش‌ها
+=========================== */
+.sec-head {
+    margin-bottom: 56px;
+    text-align: center;
+}
+
+.sec-head .pre-title {
+    display: inline-block;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+}
+
+.sec-head h2 {
+    font-size: 34px !important;
+    font-weight: 800 !important;
+    color: var(--text-dark) !important;
+    margin-bottom: 14px !important;
+}
+
+.sec-head p {
+    color: var(--text-muted);
+    font-size: 15px;
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.75;
+}
+
+.sec-divider {
+    width: 56px;
+    height: 4px;
+    background: linear-gradient(to left, var(--primary), var(--accent));
+    border-radius: 2px;
+    margin: 14px auto;
+}
+
+/* نسخه روشن divider برای section‌های تاریک */
+.sec-divider-light {
+    background: linear-gradient(to left, #ef4444, #f97316);
+}
+
+/* ===========================
+   کارت‌های تخصص
+=========================== */
+.features-section {
+    padding: 100px 0;
+    background: var(--bg-light);
+}
+
+.feat-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 36px 28px;
+    height: 100%;
+    border: 1px solid var(--border);
+    transition: all .35s cubic-bezier(.4,0,.2,1);
+    position: relative;
+    overflow: hidden;
+}
+
+.feat-card::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(to left, var(--primary), var(--accent));
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform .35s;
+}
+
+.feat-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: transparent;
+}
+
+.feat-card:hover::after { transform: scaleX(1); }
+
+.feat-icon {
+    width: 68px; height: 68px;
+    border-radius: 16px;
+    background: var(--primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    font-size: 28px;
+    color: var(--primary);
+    transition: all .35s;
+}
+
+.feat-card:hover .feat-icon {
+    background: var(--primary);
+    color: #fff;
+}
+
+.feat-card h3 {
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    color: var(--text-dark) !important;
+    margin-bottom: 12px !important;
+    text-transform: none !important;
+}
+
+.feat-card p {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.85;
+    margin: 0;
+}
+
+/* ===========================
+   معرفی دکتر
+=========================== */
+.about-section {
+    padding: 100px 0;
+    background: #fff;
+}
+
+.about-img-wrap {
+    position: relative;
+}
+
+/* تصویر دکتر — ارتفاع فیکس، object-fit:cover */
+.about-img-wrap img {
+    border-radius: 20px;
+    width: 100%;
+    height: 480px;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    box-shadow: var(--shadow-lg);
+}
+
+.exp-badge {
+    position: absolute;
+    bottom: 28px;
+    left: -18px;
+    background: var(--primary);
+    color: #fff;
+    padding: 20px 24px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(26,86,219,.4);
+    z-index: 2;
+}
+
+.exp-badge .yrs {
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1;
+    display: block;
+}
+
+.exp-badge .lbl {
+    font-size: 11px;
+    opacity: .85;
+    margin-top: 4px;
+    display: block;
+}
+
+.about-text .pre-title {
+    display: inline-block;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+}
+
+.about-text h2 {
+    font-size: 34px !important;
+    font-weight: 800 !important;
+    color: var(--text-dark) !important;
+    margin-bottom: 16px !important;
+}
+
+.about-text > p {
+    color: var(--text-muted);
+    line-height: 1.85;
+    margin-bottom: 28px;
+    font-size: 15px;
+}
+
+.about-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 32px;
+}
+
+.about-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dark);
+    font-size: 14px;
+}
+
+.about-list li:last-child { border-bottom: none; }
+
+.about-list li .li-icon {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    background: var(--primary-light);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.btn-about {
+    background: var(--primary);
+    color: #fff !important;
+    padding: 13px 30px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    border: none;
+    transition: all .3s;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-about:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26,86,219,.4);
+    color: #fff !important;
+}
+
+/* ===========================
+   کارت‌های خدمات — مشترک
+   تصاویر با ارتفاع فیکس + object-fit
+=========================== */
+.srv-card {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: all .3s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.srv-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-5px);
+    border-color: var(--primary);
+}
+
+/* کانتینر تصویر — ارتفاع ثابت */
+.srv-card .card-img {
+    position: relative;
+    overflow: hidden;
+    height: 200px;
+    flex-shrink: 0;
+}
+
+/* تصویر کارت خدمات — هر سایزی که آپلود شود، کادر ثابت می‌ماند */
+.srv-card .card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform .45s;
+}
+
+.srv-card:hover .card-img img { transform: scale(1.07); }
+
+.srv-card .card-img .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(7,26,53,.65), transparent);
+}
+
+.srv-card .card-img .tag {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    background: var(--primary);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 50px;
+}
+
+/* tag قرمز برای بخش جراحی */
+.srv-card .card-img .tag.tag-surgery { background: #ef4444; }
+
+.srv-card .card-body-inner {
+    padding: 20px 20px 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.srv-card h3 {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: var(--text-dark) !important;
+    margin-bottom: 8px !important;
+    text-transform: none !important;
+}
+
+.srv-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.75;
+    flex: 1;
+}
+
+.srv-card .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    margin-top: 14px;
+    transition: gap .2s;
+}
+
+.srv-card .card-link:hover { gap: 10px; }
+
+/* ===========================
+   Owl Carousel — خدمات
+   grid mode وقتی کاروسل فعال نیست
+=========================== */
+.srv-carousel:not(.owl-loaded) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.srv-carousel:not(.owl-loaded) .srv-carousel-item {
+    flex: 0 0 calc(25% - 18px);
+    min-width: 240px;
+}
+
+/* وقتی کاروسل فعال است — فاصله پایین برای dots */
+.srv-carousel.owl-loaded {
+    padding-bottom: 44px;
+}
+
+.srv-carousel.owl-loaded .srv-carousel-item {
+    padding: 0 6px;
+    height: 100%;
+}
+
+/* دکمه‌های nav کاروسل */
+.srv-carousel .owl-nav button {
+    width: 40px; height: 40px;
+    border-radius: 50% !important;
+    background: #fff !important;
+    border: 1px solid var(--border) !important;
+    box-shadow: var(--shadow-md);
+    color: var(--primary) !important;
+    font-size: 16px !important;
+    transition: all .25s;
+}
+
+.srv-carousel .owl-nav button:hover {
+    background: var(--primary) !important;
+    color: #fff !important;
+    border-color: var(--primary) !important;
+}
+
+.srv-carousel .owl-nav .owl-prev { margin-left: 6px; }
+.srv-carousel .owl-nav .owl-next { margin-right: 6px; }
+
+/* نقطه‌های dots */
+.srv-carousel .owl-dot span {
+    background: var(--border) !important;
+    transition: background .25s;
+}
+
+.srv-carousel .owl-dot.active span { background: var(--primary) !important; }
+
+/* ===========================
+   بخش خدمات مطب
+   پس‌زمینه آبی روشن — متمایز از about
+=========================== */
+.services-office-section {
+    padding: 100px 0;
+    background: #eff6ff;
+    position: relative;
+}
+
+/* خط جداکننده بالا */
+.services-office-section::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; left: 0;
+    height: 4px;
+    background: linear-gradient(to left, var(--primary), var(--accent));
+}
+
+.srv-more-btn { margin-top: 48px; }
+
+/* ===========================
+   بخش خدمات جراحی
+   پس‌زمینه navy dark + diagonal shape
+=========================== */
+.services-surgery-section {
+    padding: 120px 0 100px;
+    background: linear-gradient(140deg, #071a35 0%, #0d2b55 60%, #0a3d72 100%);
+    position: relative;
+    /* diagonal edge بالا */
+    clip-path: polygon(0 56px, 100% 0, 100% 100%, 0 100%);
+    margin-top: -56px;
+}
+
+/* دکور دایره پس‌زمینه */
+.services-surgery-section::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: rgba(26,86,219,.08);
+    top: -200px; left: -150px;
+    pointer-events: none;
+}
+
+.services-surgery-section::after {
+    content: '';
+    position: absolute;
+    width: 350px; height: 350px;
+    border-radius: 50%;
+    background: rgba(14,165,233,.07);
+    bottom: -80px; right: -80px;
+    pointer-events: none;
+}
+
+/* عنوان section جراحی — رنگ روشن */
+.services-surgery-section .sec-head h2 { color: #fff !important; }
+.services-surgery-section .sec-head p  { color: #94a3b8; }
+
+.services-surgery-section .sec-head .pre-title {
+    background: rgba(239,68,68,.18);
+    border: 1px solid rgba(239,68,68,.3);
+    color: #fca5a5;
+}
+
+/* nav کاروسل بخش جراحی */
+.services-surgery-section .srv-carousel .owl-nav button {
+    background: rgba(255,255,255,.1) !important;
+    border-color: rgba(255,255,255,.2) !important;
+    color: #fff !important;
+}
+
+.services-surgery-section .srv-carousel .owl-nav button:hover {
+    background: #ef4444 !important;
+    border-color: #ef4444 !important;
+}
+
+.services-surgery-section .srv-carousel .owl-dot span {
+    background: rgba(255,255,255,.2) !important;
+}
+
+.services-surgery-section .srv-carousel .owl-dot.active span {
+    background: #ef4444 !important;
+}
+
+/* دکمه "مشاهده همه" در section جراحی */
+.btn-surgery-outline {
+    background: transparent;
+    color: #fff !important;
+    padding: 13px 30px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    border: 2px solid rgba(255,255,255,.35);
+    transition: all .3s;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-surgery-outline:hover {
+    border-color: #fff;
+    background: rgba(255,255,255,.1);
+    transform: translateY(-2px);
+    color: #fff !important;
+}
+
+/* ===========================
+   تیم مطب
+   ارتفاع کارت و تصویر فیکس
+=========================== */
+.team-section {
+    padding: 100px 0;
+    background: #fff;
+    position: relative;
+}
+
+/* خط جداکننده بالا */
+.team-section::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; left: 0;
+    height: 4px;
+    background: linear-gradient(to left, var(--primary), var(--accent));
+}
+
+.team-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: all .3s;
+    text-align: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.team-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-6px);
+}
+
+/* کانتینر تصویر تیم — ارتفاع ثابت */
+.team-card .img-wrap {
+    position: relative;
+    overflow: hidden;
+    height: 260px;
+    flex-shrink: 0;
+}
+
+/* تصویر اعضای تیم — فیکس، هر ابعادی که آپلود شود */
+.team-card .img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    transition: transform .4s;
+}
+
+.team-card:hover .img-wrap img { transform: scale(1.06); }
+
+.team-card .social-hover {
+    position: absolute;
+    inset: 0;
+    background: rgba(26,86,219,.88);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    opacity: 0;
+    transition: opacity .3s;
+}
+
+.team-card:hover .social-hover { opacity: 1; }
+
+.team-card .social-hover a {
+    width: 40px; height: 40px;
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.35);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 15px;
+    transition: background .2s;
+    text-decoration: none;
+}
+
+.team-card .social-hover a:hover { background: rgba(255,255,255,.28); }
+
+.team-card .card-info {
+    padding: 20px 16px 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.team-card .card-info h3 {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: var(--text-dark) !important;
+    margin-bottom: 4px !important;
+    text-transform: none !important;
+}
+
+.team-card .card-info .role {
+    font-size: 12px;
+    color: var(--primary);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.team-card .card-info p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.7;
+    flex: 1;
+}
+
+/* ===========================
+   بخش اورژانس
+=========================== */
+.emergency-section {
+    padding: 90px 0;
+    background: linear-gradient(140deg, #071a35 0%, #0d2b55 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.emergency-section::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: rgba(26,86,219,.15);
+    top: -150px; left: -150px;
+    pointer-events: none;
+}
+
+.emergency-section::after {
+    content: '';
+    position: absolute;
+    width: 350px; height: 350px;
+    border-radius: 50%;
+    background: rgba(14,165,233,.1);
+    bottom: -100px; right: -80px;
+    pointer-events: none;
+}
+
+.emg-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.emg-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(239,68,68,.18);
+    border: 1px solid rgba(239,68,68,.35);
+    color: #fca5a5;
+    padding: 6px 18px;
+    border-radius: 50px;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.emg-content h2 {
+    font-size: 38px !important;
+    font-weight: 800 !important;
+    color: #fff !important;
+    margin-bottom: 12px !important;
+}
+
+.emg-phone {
+    font-size: 52px;
+    font-weight: 900;
+    color: #60a5fa;
+    display: block;
+    margin: 14px 0 20px;
+    letter-spacing: 3px;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.emg-content p {
+    color: #94a3b8;
+    font-size: 15px;
+    max-width: 540px;
+    margin: 0 auto 36px;
+    line-height: 1.8;
+}
+
+.btn-emg {
+    background: var(--primary);
+    color: #fff !important;
+    padding: 14px 36px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    transition: all .3s;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-emg:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26,86,219,.45);
+    color: #fff !important;
+}
+
+/* ===========================
+   ریسپانسیو
+=========================== */
+@media (max-width: 991px) {
+    .hero-title        { font-size: 36px !important; }
+    .hero-right        { display: none; }
+    .stat-item         { border-left: none; border-bottom: 1px solid var(--border); }
+    .exp-badge         { left: 10px; }
+    .about-img-wrap    { margin-bottom: 40px; }
+    .about-img-wrap img { height: 360px; }
+
+    .srv-carousel:not(.owl-loaded) .srv-carousel-item {
+        flex: 0 0 calc(50% - 12px);
+    }
+
+    .services-surgery-section {
+        clip-path: polygon(0 36px, 100% 0, 100% 100%, 0 100%);
+        margin-top: -36px;
+        padding-top: 100px;
+    }
+}
+
+@media (max-width: 767px) {
+    .hero-title         { font-size: 28px !important; }
+    .hero-stats         { gap: 20px; }
+    .hero-stat-num      { font-size: 30px; }
+    .emg-phone          { font-size: 36px; letter-spacing: 1px; }
+    .emg-content h2     { font-size: 26px !important; }
+    .exp-badge          { position: static; margin-top: -30px; display: inline-block; }
+    .about-img-wrap img { height: 280px; }
+    .srv-card .card-img { height: 180px; }
+    .team-card .img-wrap { height: 220px; }
+
+    .srv-carousel:not(.owl-loaded) .srv-carousel-item {
+        flex: 0 0 100%;
+    }
+
+    .services-surgery-section {
+        clip-path: none;
+        margin-top: 0;
+        padding-top: 100px;
+    }
+}

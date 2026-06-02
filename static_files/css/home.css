@@ -33,12 +33,14 @@
    هیرو
 =========================== */
 .hero-section {
-    min-height: 100vh;
+    /* margin-top = header-top(47px) + #header(76px) تا تصویر زیر هدر نرود */
+    margin-top: 123px;
+    min-height: calc(100vh - 123px);
     position: relative;
     display: flex;
     align-items: center;
     overflow: hidden;
-    padding-top: 110px;
+    padding-top: 60px;
     padding-bottom: 60px;
 }
 
@@ -750,7 +752,7 @@
     padding: 120px 0 100px;
     background: linear-gradient(140deg, #071a35 0%, #0d2b55 60%, #0a3d72 100%);
     position: relative;
-    /* diagonal edge بالا */
+    overflow: hidden;
     clip-path: polygon(0 56px, 100% 0, 100% 100%, 0 100%);
     margin-top: -56px;
 }
@@ -831,12 +833,14 @@
 
 /* ===========================
    تیم مطب
-   ارتفاع کارت و تصویر فیکس
+   - تصویر fade پس‌زمینه با JS
+   - لینک‌های اجتماعی خاکستری زیر نام
 =========================== */
 .team-section {
     padding: 100px 0;
     background: #fff;
     position: relative;
+    overflow: hidden;
 }
 
 /* خط جداکننده بالا */
@@ -846,6 +850,42 @@
     top: 0; right: 0; left: 0;
     height: 4px;
     background: linear-gradient(to left, var(--primary), var(--accent));
+    z-index: 4;
+}
+
+/* لایه ۱ — تصویر پس‌زمینه بزرگ و محو */
+.team-bg-img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center top;
+    transform: scale(1.15);
+    filter: blur(14px) saturate(0.5);
+    opacity: 0;
+    transition: opacity 0.65s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.team-bg-img.active { opacity: 1; }
+
+/* لایه ۲ — overlay سفید برای کمرنگ کردن تصویر پس‌زمینه */
+.team-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.78);
+    opacity: 0;
+    transition: opacity 0.65s ease;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.team-bg-overlay.active { opacity: 1; }
+
+/* container محتوا — بالاتر از لایه‌های پس‌زمینه */
+.team-container {
+    position: relative;
+    z-index: 3;
 }
 
 .team-card {
@@ -863,6 +903,7 @@
 .team-card:hover {
     box-shadow: var(--shadow-lg);
     transform: translateY(-6px);
+    border-color: rgba(26,86,219,.25);
 }
 
 /* کانتینر تصویر تیم — ارتفاع ثابت */
@@ -873,7 +914,7 @@
     flex-shrink: 0;
 }
 
-/* تصویر اعضای تیم — فیکس، هر ابعادی که آپلود شود */
+/* تصویر اعضای تیم — فیکس */
 .team-card .img-wrap img {
     width: 100%;
     height: 100%;
@@ -885,38 +926,8 @@
 
 .team-card:hover .img-wrap img { transform: scale(1.06); }
 
-.team-card .social-hover {
-    position: absolute;
-    inset: 0;
-    background: rgba(26,86,219,.88);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    opacity: 0;
-    transition: opacity .3s;
-}
-
-.team-card:hover .social-hover { opacity: 1; }
-
-.team-card .social-hover a {
-    width: 40px; height: 40px;
-    background: rgba(255,255,255,.15);
-    border: 1px solid rgba(255,255,255,.35);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 15px;
-    transition: background .2s;
-    text-decoration: none;
-}
-
-.team-card .social-hover a:hover { background: rgba(255,255,255,.28); }
-
 .team-card .card-info {
-    padding: 20px 16px 24px;
+    padding: 18px 16px 22px;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -938,6 +949,27 @@
     margin-bottom: 10px;
 }
 
+/* لینک‌های اجتماعی — خاکستری ساده، بدون کادر */
+.member-socials {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.member-socials a {
+    color: #94a3b8;
+    font-size: 16px;
+    text-decoration: none;
+    transition: color .2s, transform .2s;
+    line-height: 1;
+}
+
+.member-socials a:hover {
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+
 .team-card .card-info p {
     font-size: 12px;
     color: var(--text-muted);
@@ -947,7 +979,114 @@
 }
 
 /* ===========================
-   بخش اورژانس
+   گالری تصاویر
+   — پس‌زمینه تاریک + لبه مورب از بخش تیم
+=========================== */
+.gallery-section {
+    padding: 130px 0 100px;
+    background: linear-gradient(140deg, #111827 0%, #1e2d40 55%, #1a3550 100%);
+    position: relative;
+    overflow: hidden;
+    clip-path: polygon(0 56px, 100% 0, 100% 100%, 0 100%);
+    margin-top: -56px;
+}
+
+/* دایره دکوراتیو پس‌زمینه چپ */
+.gallery-section::before {
+    content: '';
+    position: absolute;
+    width: 480px; height: 480px;
+    border-radius: 50%;
+    background: rgba(26, 86, 219, 0.07);
+    top: -120px; left: -100px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* دایره دکوراتیو پس‌زمینه راست */
+.gallery-section::after {
+    content: '';
+    position: absolute;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: rgba(14, 165, 233, 0.06);
+    bottom: -60px; right: -60px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* grid داخل z-index بالاتر */
+.gallery-section .container { position: relative; z-index: 1; }
+
+/* عنوان گالری — رنگ روشن روی پس‌زمینه تاریک */
+.gallery-section .sec-head h2       { color: #fff !important; }
+.gallery-section .sec-head p        { color: #94a3b8; }
+.gallery-section .sec-head .pre-title {
+    background: rgba(255, 255, 255, 0.1);
+    color: #93c5fd;
+}
+.gallery-section .sec-divider {
+    background: linear-gradient(to left, #60a5fa, #0ea5e9);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 220px;
+    gap: 12px;
+}
+
+/* آیتم ۱ — بزرگ ۲×۲ */
+.gallery-item.gi-wide-tall {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+/* آیتم ۶ — عریض ۲×۱ */
+.gallery-item.gi-wide {
+    grid-column: span 2;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .5s ease;
+}
+
+.gallery-item:hover img { transform: scale(1.08); }
+
+.gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(26,86,219,.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity .3s;
+}
+
+.gallery-overlay i {
+    font-size: 28px;
+    color: #fff;
+    transform: scale(0.7);
+    transition: transform .3s;
+}
+
+.gallery-item:hover .gallery-overlay { opacity: 1; }
+.gallery-item:hover .gallery-overlay i { transform: scale(1); }
+
+/* ===========================
+   بخش اورژانس (کامنت — CSS نگه داشته شده)
 =========================== */
 .emergency-section {
     padding: 90px 0;
@@ -1044,7 +1183,70 @@
 /* ===========================
    ریسپانسیو
 =========================== */
+/* ===========================
+   Lightbox گالری
+=========================== */
+.gallery-lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 15, 30, 0.94);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease, visibility .3s ease;
+    padding: 20px;
+}
+
+.gallery-lightbox.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lb-img {
+    max-width: 90vw;
+    max-height: 88vh;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 24px 80px rgba(0,0,0,.7);
+    transform: scale(0.92);
+    transition: transform .35s ease;
+}
+
+.gallery-lightbox.open .lb-img { transform: scale(1); }
+
+.lb-close {
+    position: absolute;
+    top: 18px;
+    left: 24px;
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.2);
+    color: #fff;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s;
+}
+
+.lb-close:hover { background: rgba(255,255,255,.25); }
+
+/* ===========================
+   ریسپانسیو
+=========================== */
 @media (max-width: 991px) {
+    /* تبلت: header-top در flow (47px) + #header fixed (76px) → اختلاف = 29px */
+    .hero-section {
+        margin-top: 29px;
+        min-height: calc(100vh - 76px);
+        padding-top: 50px;
+    }
     .hero-title        { font-size: 36px !important; }
     .hero-right        { display: none; }
     .stat-item         { border-left: none; border-bottom: 1px solid var(--border); }
@@ -1061,14 +1263,26 @@
         margin-top: -36px;
         padding-top: 100px;
     }
+
+    /* گالری — ۲ ستون */
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 200px;
+    }
+    .gallery-item.gi-wide-tall { grid-column: span 2; grid-row: span 1; }
+    .gallery-item.gi-wide      { grid-column: span 2; }
 }
 
 @media (max-width: 767px) {
+    /* موبایل: header-top hidden، #header fixed (76px) از بالا */
+    .hero-section {
+        margin-top: 76px;
+        min-height: calc(100vh - 76px);
+        padding-top: 40px;
+    }
     .hero-title         { font-size: 28px !important; }
     .hero-stats         { gap: 20px; }
     .hero-stat-num      { font-size: 30px; }
-    .emg-phone          { font-size: 36px; letter-spacing: 1px; }
-    .emg-content h2     { font-size: 26px !important; }
     .exp-badge          { position: static; margin-top: -30px; display: inline-block; }
     .about-img-wrap img { height: 280px; }
     .srv-card .card-img { height: 180px; }
@@ -1082,5 +1296,194 @@
         clip-path: none;
         margin-top: 0;
         padding-top: 100px;
+    }
+
+    /* گالری — ۱ ستون موبایل */
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 220px;
+    }
+    .gallery-item.gi-wide-tall,
+    .gallery-item.gi-wide { grid-column: span 1; grid-row: span 1; }
+
+    /* تماس — موبایل */
+    .contact-home-section { padding-top: 60px; }
+
+    .contact-map-row {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .contact-map-wrap {
+        height: 320px;
+        flex: none;
+    }
+
+    .contact-building-wrap {
+        flex: none;
+        height: 200px;
+    }
+
+    .ci-item {
+        border-left: none;
+        border-bottom: 1px solid var(--border);
+        padding: 16px 0;
+    }
+
+    .ci-btn-wrap {
+        padding: 16px 0;
+        justify-content: flex-start;
+    }
+}
+
+/* ===========================
+   بخش ارتباط با ما
+=========================== */
+.contact-home-section {
+    padding-top: 156px; /* 100px + 56px برای offset لبه مورب */
+    background: #fff;
+    position: relative;
+    overflow: hidden;
+    clip-path: polygon(0 56px, 100% 0, 100% 100%, 0 100%);
+    margin-top: -56px;
+}
+
+/* دکور گرادیان دایره‌ای جای خط بالا */
+.contact-home-section::before {
+    content: '';
+    position: absolute;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(26, 86, 219, 0.05) 0%, transparent 70%);
+    top: 80px; left: -80px;
+    pointer-events: none;
+}
+
+/* ردیف نقشه + تصویر ساختمان — فول‌ویدث، هم‌ارتفاع */
+.contact-map-row {
+    display: flex;
+    /* ارتفاع مشترک نقشه و تصویر — جهت تغییر همین مقدار را ویرایش کنید */
+    height: 500px;
+}
+
+/* نقشه — ۷۵٪ عرض (flex 3 از 4) — برای تغییر نسبت: مقدار flex را ویرایش کنید */
+.contact-map-wrap {
+    flex: 3;
+    position: relative;
+    overflow: hidden;
+}
+
+/* position:absolute تضمین می‌کند ارتفاع نقشه در flex layout صحیح باشد */
+#neshanMap {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* تصویر ساختمان — ۲۵٪ عرض (flex 1 از 4) — برای تغییر نسبت: مقدار flex را ویرایش کنید */
+.contact-building-wrap {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-building-wrap .building-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform .5s ease;
+}
+
+.contact-building-wrap:hover .building-photo { transform: scale(1.04); }
+
+.contact-building-wrap .building-photo-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(7,26,53,0.1), rgba(7,26,53,0.38));
+    pointer-events: none;
+}
+
+/* نوار اطلاعات تماس زیر نقشه */
+.contact-info-bar {
+    background: #fff;
+    padding: 36px 0;
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -2px 16px rgba(0,0,0,0.05);
+}
+
+/* آیتم تماس — جداکننده در RTL با border-left */
+.ci-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 24px;
+    border-left: 1px solid var(--border);
+}
+
+/* آیکون هر آیتم */
+.ci-icon-wrap {
+    width: 46px;
+    height: 46px;
+    background: var(--primary-light);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.ci-text strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+}
+
+.ci-text span {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+/* ستون دکمه — بدون جداکننده */
+.ci-btn-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 24px;
+}
+
+@media (max-width: 991px) {
+    .contact-map-row { height: 420px; }
+
+    /* کاهش اندازه diagonal در تبلت */
+    .gallery-section {
+        clip-path: polygon(0 36px, 100% 0, 100% 100%, 0 100%);
+        margin-top: -36px;
+        padding-top: 100px;
+    }
+    .contact-home-section {
+        clip-path: polygon(0 36px, 100% 0, 100% 100%, 0 100%);
+        margin-top: -36px;
+        padding-top: 136px;
+    }
+}
+
+@media (max-width: 767px) {
+    /* حذف diagonal در موبایل */
+    .gallery-section {
+        clip-path: none;
+        margin-top: 0;
+        padding-top: 80px;
+    }
+    .contact-home-section {
+        clip-path: none;
+        margin-top: 0;
     }
 }

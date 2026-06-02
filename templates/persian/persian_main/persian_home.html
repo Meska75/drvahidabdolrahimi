@@ -5,6 +5,8 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
+<!-- Leaflet.js — استاندارد، بدون وابستگی به SDK نشان -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 {% endblock %}
 
 {% block content %}
@@ -390,8 +392,10 @@
 
 <!-- ===== تیم مطب ===== -->
 <section class="team-section">
-    <!-- تصویر fade پس‌زمینه — با JS هنگام hover روی هر کارت تغییر می‌کند -->
-    <div class="team-section-bg" id="teamSectionBg"></div>
+    <!-- div پس‌زمینه — تصویر همکار با JS تنظیم می‌شود -->
+    <div class="team-bg-img" id="teamBgImg"></div>
+    <!-- overlay سفید روی پس‌زمینه برای کمرنگ کردن -->
+    <div class="team-bg-overlay"></div>
 
     <div class="container team-container">
         <div class="sec-head">
@@ -402,9 +406,8 @@
         </div>
 
         <div class="row">
-            <!-- کارت ۱ -->
             <div class="col-lg-3 col-sm-6 mb-4 mb-lg-0">
-                <div class="team-card" data-member-img="{% static 'images/doctor1.jpg' %}">
+                <div class="team-card" data-bg="{% static 'images/doctor1.jpg' %}">
                     <div class="img-wrap">
                         <img src="{% static 'images/doctor1.jpg' %}" alt="دکتر وحید عبدالرحیمی">
                     </div>
@@ -412,26 +415,17 @@
                         <h3>دکتر وحید عبدالرحیمی</h3>
                         <span class="role">فوق تخصص شبکیه و زجاجیه</span>
                         <div class="member-socials">
-                            <a href="#" class="soc-link instagram" aria-label="اینستاگرام">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="#" class="soc-link whatsapp" aria-label="واتس‌اپ">
-                                <i class="fab fa-whatsapp"></i>
-                            </a>
-                            <a href="#" class="soc-link telegram" aria-label="تلگرام">
-                                <i class="fab fa-telegram-plane"></i>
-                            </a>
-                            <a href="#" class="soc-link linkedin" aria-label="لینکدین">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
+                            <a href="#" aria-label="اینستاگرام"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="واتس‌اپ"><i class="fab fa-whatsapp"></i></a>
+                            <a href="#" aria-label="تلگرام"><i class="fab fa-telegram-plane"></i></a>
+                            <a href="#" aria-label="لینکدین"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                         <p>متخصص در جراحی و درمان بیماری‌های پیشرفته شبکیه و زجاجیه</p>
                     </div>
                 </div>
             </div>
-            <!-- کارت ۲ -->
             <div class="col-lg-3 col-sm-6 mb-4 mb-lg-0">
-                <div class="team-card" data-member-img="{% static 'images/doctor2.jpg' %}">
+                <div class="team-card" data-bg="{% static 'images/doctor2.jpg' %}">
                     <div class="img-wrap">
                         <img src="{% static 'images/doctor2.jpg' %}" alt="همکار مطب">
                     </div>
@@ -439,26 +433,17 @@
                         <h3>نام همکار</h3>
                         <span class="role">کارشناس بینایی‌سنجی</span>
                         <div class="member-socials">
-                            <a href="#" class="soc-link instagram" aria-label="اینستاگرام">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="#" class="soc-link whatsapp" aria-label="واتس‌اپ">
-                                <i class="fab fa-whatsapp"></i>
-                            </a>
-                            <a href="#" class="soc-link telegram" aria-label="تلگرام">
-                                <i class="fab fa-telegram-plane"></i>
-                            </a>
-                            <a href="#" class="soc-link linkedin" aria-label="لینکدین">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
+                            <a href="#" aria-label="اینستاگرام"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="واتس‌اپ"><i class="fab fa-whatsapp"></i></a>
+                            <a href="#" aria-label="تلگرام"><i class="fab fa-telegram-plane"></i></a>
+                            <a href="#" aria-label="لینکدین"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                         <p>ارائه خدمات تخصصی بینایی‌سنجی و تجویز عدسی و عینک</p>
                     </div>
                 </div>
             </div>
-            <!-- کارت ۳ -->
             <div class="col-lg-3 col-sm-6 mb-4 mb-sm-0">
-                <div class="team-card" data-member-img="{% static 'images/doctor3.jpg' %}">
+                <div class="team-card" data-bg="{% static 'images/doctor3.jpg' %}">
                     <div class="img-wrap">
                         <img src="{% static 'images/doctor3.jpg' %}" alt="همکار مطب">
                     </div>
@@ -466,26 +451,17 @@
                         <h3>نام همکار</h3>
                         <span class="role">پرستار و دستیار بالینی</span>
                         <div class="member-socials">
-                            <a href="#" class="soc-link instagram" aria-label="اینستاگرام">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="#" class="soc-link whatsapp" aria-label="واتس‌اپ">
-                                <i class="fab fa-whatsapp"></i>
-                            </a>
-                            <a href="#" class="soc-link telegram" aria-label="تلگرام">
-                                <i class="fab fa-telegram-plane"></i>
-                            </a>
-                            <a href="#" class="soc-link linkedin" aria-label="لینکدین">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
+                            <a href="#" aria-label="اینستاگرام"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="واتس‌اپ"><i class="fab fa-whatsapp"></i></a>
+                            <a href="#" aria-label="تلگرام"><i class="fab fa-telegram-plane"></i></a>
+                            <a href="#" aria-label="لینکدین"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                         <p>مراقبت از بیماران و هماهنگی امور بالینی مطب</p>
                     </div>
                 </div>
             </div>
-            <!-- کارت ۴ -->
             <div class="col-lg-3 col-sm-6">
-                <div class="team-card" data-member-img="{% static 'images/doctor4.jpg' %}">
+                <div class="team-card" data-bg="{% static 'images/doctor4.jpg' %}">
                     <div class="img-wrap">
                         <img src="{% static 'images/doctor4.jpg' %}" alt="همکار مطب">
                     </div>
@@ -493,18 +469,10 @@
                         <h3>نام همکار</h3>
                         <span class="role">مسئول پذیرش</span>
                         <div class="member-socials">
-                            <a href="#" class="soc-link instagram" aria-label="اینستاگرام">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="#" class="soc-link whatsapp" aria-label="واتس‌اپ">
-                                <i class="fab fa-whatsapp"></i>
-                            </a>
-                            <a href="#" class="soc-link telegram" aria-label="تلگرام">
-                                <i class="fab fa-telegram-plane"></i>
-                            </a>
-                            <a href="#" class="soc-link linkedin" aria-label="لینکدین">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
+                            <a href="#" aria-label="اینستاگرام"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="واتس‌اپ"><i class="fab fa-whatsapp"></i></a>
+                            <a href="#" aria-label="تلگرام"><i class="fab fa-telegram-plane"></i></a>
+                            <a href="#" aria-label="لینکدین"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                         <p>هماهنگی نوبت‌دهی و رسیدگی به امور اداری بیماران</p>
                     </div>
@@ -515,8 +483,9 @@
 </section>
 
 
-{# ===== بخش اورژانس — کامنت شده ===== #}
-{#
+{% comment %}
+===== بخش اورژانس — غیرفعال شده =====
+برای فعال‌سازی مجدد این بخش را از {% comment %} خارج کنید
 <section class="emergency-section">
     <div class="container">
         <div class="emg-content">
@@ -525,16 +494,18 @@
                 اورژانس چشم‌پزشکی
             </div>
             <h2>در موارد اورژانسی با ما تماس بگیرید</h2>
-            <span class="emg-phone">۰۲۱-XXXXXXXX</span>
-            <p>در صورت بروز مشکل بینایی فوری مثل جداشدگی ناگهانی شبکیه،
-            کاهش حاد بینایی یا ضربه به چشم، بدون تأخیر با ما تماس بگیرید.</p>
+            <span class="emg-phone">021-XXXXXXXX</span>
+            <p>
+                در صورت بروز مشکل بینایی فوری مثل جداشدگی ناگهانی شبکیه،
+                کاهش حاد بینایی یا ضربه به چشم، بدون تأخیر با ما تماس بگیرید.
+            </p>
             <a href="{% url 'main:persian_contact' %}" class="btn-emg">
                 <i class="fa fa-phone"></i> تماس با ما
             </a>
         </div>
     </div>
 </section>
-#}
+{% endcomment %}
 
 
 <!-- ===== گالری تصاویر ===== -->
@@ -547,35 +518,35 @@
             <p>نگاهی به محیط مجهز و دوستانه مطب دکتر عبدالرحیمی</p>
         </div>
         <div class="gallery-grid">
-            <div class="gallery-item gi-wide-tall">
+            <div class="gallery-item gi-wide-tall" data-full="{% static 'images/feed1.jpg' %}">
                 <img src="{% static 'images/feed1.jpg' %}" alt="تصویر مطب ۱">
                 <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" data-full="{% static 'images/feed2.jpg' %}">
                 <img src="{% static 'images/feed2.jpg' %}" alt="تصویر مطب ۲">
                 <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" data-full="{% static 'images/feed3.jpg' %}">
                 <img src="{% static 'images/feed3.jpg' %}" alt="تصویر مطب ۳">
                 <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" data-full="{% static 'images/feed4.jpg' %}">
                 <img src="{% static 'images/feed4.jpg' %}" alt="تصویر مطب ۴">
                 <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" data-full="{% static 'images/feed5.jpg' %}">
                 <img src="{% static 'images/feed5.jpg' %}" alt="تصویر مطب ۵">
                 <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
             </div>
-            <div class="gallery-item gi-wide">
+            <div class="gallery-item gi-wide" data-full="{% static 'images/feed6.jpg' %}">
                 <img src="{% static 'images/feed6.jpg' %}" alt="تصویر مطب ۶">
                 <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" data-full="{% static 'images/feed7.jpg' %}">
                 <img src="{% static 'images/feed7.jpg' %}" alt="تصویر مطب ۷">
                 <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" data-full="{% static 'images/feed8.jpg' %}">
                 <img src="{% static 'images/feed8.jpg' %}" alt="تصویر مطب ۸">
                 <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
             </div>
@@ -583,18 +554,89 @@
     </div>
 </section>
 
+<!-- ===== بخش ارتباط با ما ===== -->
+<section class="contact-home-section">
+    <div class="container">
+        <div class="sec-head">
+            <span class="pre-title">موقعیت مطب</span>
+            <h2>ارتباط با ما</h2>
+            <div class="sec-divider"></div>
+            <p>برای رزرو نوبت یا دریافت اطلاعات بیشتر، از طریق راه‌های زیر با ما در تماس باشید</p>
+        </div>
+    </div>
+
+    <!-- نقشه (۷۵٪) + تصویر ساختمان (۲۵٪) — هم‌ارتفاع و فول‌ویدث -->
+    <div class="contact-map-row">
+        <!-- نقشه نشان -->
+        <div class="contact-map-wrap">
+            <div id="neshanMap"></div>
+        </div>
+        <!-- عکس ساختمان: جهت تغییر تصویر، مقدار src را ویرایش کنید -->
+        <div class="contact-building-wrap">
+            <img src="{% static 'images/feed1.jpg' %}" alt="نمای ساختمان مطب دکتر عبدالرحیمی" class="building-photo">
+            <div class="building-photo-overlay"></div>
+        </div>
+    </div>
+
+    <!-- نوار اطلاعات تماس -->
+    <div class="contact-info-bar">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-sm-6 ci-item">
+                    <div class="ci-icon-wrap"><i class="fa fa-map-marker"></i></div>
+                    <div class="ci-text">
+                        <!-- آدرس: ویرایش‌پذیر -->
+                        <strong>آدرس مطب</strong>
+                        <span>تهران، آدرس مطب اینجا درج می‌شود</span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 ci-item">
+                    <div class="ci-icon-wrap"><i class="fa fa-phone"></i></div>
+                    <div class="ci-text">
+                        <!-- تلفن: ویرایش‌پذیر -->
+                        <strong>تلفن مطب</strong>
+                        <span dir="ltr">۰۲۱-XXXXXXXX</span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 ci-item">
+                    <div class="ci-icon-wrap"><i class="fa fa-clock-o"></i></div>
+                    <div class="ci-text">
+                        <!-- ساعات کاری: ویرایش‌پذیر -->
+                        <strong>ساعات کاری</strong>
+                        <span>شنبه تا چهارشنبه: ۸ الی ۱۴</span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 ci-btn-wrap">
+                    <a href="{% url 'main:persian_contact' %}" class="btn-about">
+                        رزرو نوبت <i class="fa fa-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== lightbox گالری ===== -->
+<div class="gallery-lightbox" id="galleryLightbox">
+    <button class="lb-close" id="lbClose" aria-label="بستن">&times;</button>
+    <img src="" alt="" id="lbImg" class="lb-img">
+</div>
+
 {% endblock %}
 
 {% block extra_js %}
+<!-- Leaflet.js — defer: بلاک render نمی‌کند، سرعت بارگذاری را افزایش می‌دهد -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
 <script>
 $(function () {
 
     /* ===== slider crossfade بنر هیرو ===== */
     var slides = document.querySelectorAll('#heroBgSlider .hero-slide');
     var current = 0;
-    slides.forEach(function (slide) {
-        var bg = slide.getAttribute('data-bg');
-        if (bg) { slide.style.backgroundImage = 'url(' + bg + ')'; }
+    slides.forEach(function (s) {
+        var bg = s.getAttribute('data-bg');
+        if (bg) s.style.backgroundImage = 'url(' + bg + ')';
     });
     if (slides.length > 0) {
         slides[0].classList.add('active');
@@ -605,30 +647,18 @@ $(function () {
         }, 5000);
     }
 
-    /* ===== کاروسل خدمات — فقط اگر تعداد آیتم > 4 ===== */
+    /* ===== کاروسل خدمات — فعال فقط اگر تعداد آیتم > 4 ===== */
     function initSrvCarousel(el) {
         var $el = $(el);
         if (!$el.length) return;
         if ($el.children('.srv-carousel-item').length > 4) {
             $el.owlCarousel({
-                loop: true,
-                margin: 20,
-                autoplay: true,
-                autoplayTimeout: 3500,
-                autoplayHoverPause: true,
-                nav: true,
-                dots: true,
-                navText: [
-                    '<i class="fa fa-chevron-right"></i>',
-                    '<i class="fa fa-chevron-left"></i>'
-                ],
+                loop: true, margin: 20, autoplay: true,
+                autoplayTimeout: 3500, autoplayHoverPause: true,
+                nav: true, dots: true,
+                navText: ['<i class="fa fa-chevron-right"></i>', '<i class="fa fa-chevron-left"></i>'],
                 smartSpeed: 700,
-                responsive: {
-                    0:    { items: 1 },
-                    576:  { items: 2 },
-                    992:  { items: 3 },
-                    1200: { items: 4 }
-                }
+                responsive: { 0:{items:1}, 576:{items:2}, 992:{items:3}, 1200:{items:4} }
             });
         }
     }
@@ -636,22 +666,105 @@ $(function () {
     initSrvCarousel($('#surgerySrvCarousel'));
 
     /* ===== تصویر fade پس‌زمینه بخش تیم ===== */
-    var $teamBg = $('#teamSectionBg');
-    var teamBgTimer = null;
+    var $bgImg    = $('#teamBgImg');
+    var $bgOvl    = $('.team-bg-overlay');
+    var bgTimer   = null;
 
     $('.team-card').on('mouseenter', function () {
-        var img = $(this).data('member-img');
-        if (!img) return;
-        clearTimeout(teamBgTimer);
-        /* اگر تصویر عوض شده قبل از fade-out، آن را بلافاصله تعویض کن */
-        $teamBg.css('background-image', 'url(' + img + ')');
-        $teamBg.addClass('is-visible');
+        var url = $(this).attr('data-bg');
+        if (!url) return;
+        clearTimeout(bgTimer);
+        /* تنظیم مستقیم background-image روی div پس‌زمینه */
+        $bgImg[0].style.backgroundImage = 'url("' + url + '")';
+        $bgImg.addClass('active');
+        $bgOvl.addClass('active');
     }).on('mouseleave', function () {
-        teamBgTimer = setTimeout(function () {
-            $teamBg.removeClass('is-visible');
-        }, 200);
+        bgTimer = setTimeout(function () {
+            $bgImg.removeClass('active');
+            $bgOvl.removeClass('active');
+        }, 250);
     });
 
+    /* ===== lightbox گالری ===== */
+    var $lb    = $('#galleryLightbox');
+    var $lbImg = $('#lbImg');
+
+    /* باز کردن با کلیک روی هر آیتم گالری */
+    $(document).on('click', '.gallery-item', function () {
+        var full = $(this).attr('data-full') || $(this).find('img').attr('src');
+        $lbImg.attr('src', full);
+        $lb.addClass('open');
+        $('body').css('overflow', 'hidden');
+    });
+
+    /* بستن با دکمه × */
+    $('#lbClose').on('click', closeLb);
+
+    /* بستن با کلیک روی پس‌زمینه تاریک */
+    $lb.on('click', function (e) {
+        if (e.target === this) closeLb();
+    });
+
+    /* بستن با کلید Escape */
+    $(document).on('keydown', function (e) {
+        if (e.key === 'Escape') closeLb();
+    });
+
+    function closeLb() {
+        $lb.removeClass('open');
+        $('body').css('overflow', '');
+    }
+
+});
+
+/* ===== نقشه نشان (Leaflet استاندارد + tile API نشان) =====
+   window.load: بعد از defer scripts و اعمال flex layout اجرا می‌شود */
+window.addEventListener('load', function () {
+    var mapEl = document.getElementById('neshanMap');
+    if (!mapEl || typeof L === 'undefined') return;
+
+    var lat    = 35.75431655694686;
+    var lng    = 51.41248217613625;
+    var apiKey = 'service.4b130a29422349a7a3210bf2972459f5';
+
+    var map = L.map('neshanMap', {
+        center: [lat, lng],
+        zoom: 16,
+        zoomControl: true,
+        attributionControl: true
+    });
+
+    /* tile نشان با کلید API به صورت query string */
+    var neshanFailed = false;
+    var neshanLayer  = L.tileLayer(
+        'https://map.neshan.org/sdk/v1/map/xyz/dreamy/{z}/{x}/{y}.png?x-api-key=' + apiKey,
+        { attribution: '© <a href="https://neshan.org" target="_blank">نشان</a>', maxZoom: 18 }
+    );
+
+    /* اگر tile نشان لود نشد — fallback به OpenStreetMap */
+    neshanLayer.on('tileerror', function () {
+        if (!neshanFailed) {
+            neshanFailed = true;
+            map.removeLayer(neshanLayer);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© <a href="https://openstreetmap.org" target="_blank">OpenStreetMap</a>'
+            }).addTo(map);
+        }
+    });
+
+    neshanLayer.addTo(map);
+
+    /* نشانگر موقعیت مطب */
+    L.marker([lat, lng])
+        .addTo(map)
+        .bindPopup(
+            '<div dir="rtl" style="font-family:Vazirmatn,sans-serif;font-size:13px;padding:4px 8px;">' +
+            '<strong>مطب دکتر وحید عبدالرحیمی</strong></div>'
+        )
+        .openPopup();
+
+    /* رفع اندازه container در flex layout */
+    setTimeout(function () { map.invalidateSize(); }, 300);
 });
 </script>
 {% endblock %}

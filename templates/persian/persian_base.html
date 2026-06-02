@@ -25,21 +25,32 @@
 
     <style>
         /* ===== تنظیمات پایه RTL ===== */
+        html { overflow-x: hidden; }
         body {
             font-family: 'Vazirmatn', Tahoma, Arial, sans-serif;
             direction: rtl;
             text-align: right;
             color: #64748b;
+            overflow-x: hidden;
+            background: #071a35; /* همرنگ هدر — فاصله احتمالی ناپیدا باشد */
         }
 
         /* ===== هدر بالا ===== */
         .header-top {
             padding: 10px 0;
             background: #071a35;
-            position: absolute;
+            position: fixed;
             top: 0; left: 0; width: 100%;
             z-index: 998;
             border-bottom: 1px solid rgba(255,255,255,.07);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        /* وقتی اسکرول میشه header-top بالا میره و #header جاشو میگیره */
+        .header-top.header-scrolled {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
         }
 
         .header-top .d-md-flex { flex-direction: row-reverse; justify-content: flex-end; }
@@ -225,6 +236,11 @@
 
         /* ===== تیم پزشکی ===== */
         .doctor-name h3, .doctor-name h6 { direction: rtl; }
+
+        /* ===== رفع آیکون شکسته superfish در RTL ===== */
+        /* superfish از font-family:FontAwesome (نسخه ۴) استفاده می‌کند که با FA5 کار نمی‌کند */
+        .sf-arrows .sf-with-ul:after { content: none !important; }
+        .sf-arrows .sf-with-ul { padding-right: 14px !important; padding-left: 14px !important; }
 
         /* ===== bootstrap RTL fixes ===== */
         .ml-2 { margin-left: 0 !important; margin-right: 0.5rem !important; }

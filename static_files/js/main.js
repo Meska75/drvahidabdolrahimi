@@ -85,41 +85,15 @@
         });
 
 
-            $(document).ready(function() {
 
-            $('html, body').hide();
-
-                if (window.location.hash) {
-
-                setTimeout(function() {
-
-                $('html, body').scrollTop(0).show();
-
-                $('html, body').animate({
-
-                scrollTop: $(window.location.hash).offset().top
-
-                }, 1000)
-
-                }, 0);
-
-                }
-
-                else {
-
-                $('html, body').show();
-
-                }
-
-            });
-        
-
-        // Header scroll class
+        // هدر اسکرول — وقتی بیشتر از ۸۰px اسکرول شد، header-top پنهان و #header بالا میاد
         $(window).scroll(function() {
-            if ($(this).scrollTop() > 100) {
-            $('#header').addClass('header-scrolled');
+            if ($(this).scrollTop() > 80) {
+                $('#header').addClass('header-scrolled');
+                $('.header-top').addClass('header-scrolled');
             } else {
-            $('#header').removeClass('header-scrolled');
+                $('#header').removeClass('header-scrolled');
+                $('.header-top').removeClass('header-scrolled');
             }
         });
 

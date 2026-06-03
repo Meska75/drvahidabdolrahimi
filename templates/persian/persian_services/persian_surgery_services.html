@@ -3,194 +3,270 @@
 
 {% block title %}خدمات جراحی — دکتر وحید عبدالرحیمی{% endblock %}
 
+{% block meta_description %}<meta name="description" content="جراحی‌های تخصصی چشم دکتر وحید عبدالرحیمی — ویترکتومی، آب مروارید (کاتاراکت)، لیزر شبکیه، جراحی گلوکوم، SLT و YAG. بیش از +۵۰۰۰ جراحی موفق در تهران.">{% endblock %}
+
+{% block meta_og %}
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:site_name" content="دکتر وحید عبدالرحیمی">
+<meta property="og:title" content="جراحی‌های تخصصی چشم — دکتر وحید عبدالرحیمی">
+<meta property="og:description" content="ویترکتومی، جراحی کاتاراکت، لیزر شبکیه، گلوکوم و سایر جراحی‌های تخصصی چشم با بالاترین استانداردهای ایمنی">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.png' %}">
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/services.css' %}">
+{% endblock %}
+
 {% block content %}
 
-    <!-- بنر صفحه داخلی -->
-    <section class="banner-area other-page">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1>خدمات جراحی</h1>
-                    <div class="breadcrumb-wrap">
+<!-- ===== هیرو صفحه خدمات جراحی ===== -->
+<section class="services-hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <!-- محتوای متنی -->
+            <div class="col-lg-8">
+                <div class="services-hero-content wow fadeInRight" data-wow-delay=".1s">
+
+                    <div class="services-breadcrumb">
                         <a href="{% url 'main:persian_home' %}">خانه</a>
-                        <span> | </span>
-                        <a href="{% url 'services:persian_surgery_services' %}">خدمات جراحی</a>
+                        <span class="sep">›</span>
+                        <span class="current">خدمات جراحی</span>
                     </div>
+
+                    <span class="services-tag">فوق تخصص شبکیه و زجاجیه</span>
+
+                    <h1>جراحی‌های <span class="grad-text">تخصصی</span> چشم</h1>
+
+                    <p>
+                        دکتر عبدالرحیمی با بهره‌گیری از پیشرفته‌ترین تکنیک‌های جراحی و تجهیزات مدرن،
+                        طیف گسترده‌ای از جراحی‌های تخصصی چشم را با بالاترین استانداردهای ایمنی انجام می‌دهد.
+                    </p>
+
+                    <div class="hero-service-badges">
+                        <div class="service-badge-item">
+                            <i class="fas fa-shield-alt"></i>
+                            بالاترین ایمنی
+                        </div>
+                        <div class="service-badge-item">
+                            <i class="fas fa-procedures"></i>
+                            +۵۰۰۰ جراحی موفق
+                        </div>
+                        <div class="service-badge-item">
+                            <i class="fas fa-user-md"></i>
+                            مراقبت پس از عمل
+                        </div>
+                    </div>
+
                 </div>
             </div>
+
+            <!-- آیکون دکوراتیو -->
+            <div class="col-lg-4 d-none d-lg-flex justify-content-center wow fadeInLeft" data-wow-delay=".15s">
+                <div class="hero-deco-circle">
+                    <i class="fas fa-cut"></i>
+                </div>
+            </div>
+
         </div>
-    </section>
-    <!-- پایان بنر -->
+    </div>
+</section>
+<!-- پایان هیرو -->
 
-    <!-- معرفی خدمات جراحی شروع -->
-    <section class="department-area section-padding4">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 offset-lg-2">
-                    <div class="section-top text-center">
-                        <h2>جراحی‌های تخصصی چشم</h2>
-                        <p>
-                            دکتر عبدالرحیمی با بهره‌گیری از پیشرفته‌ترین تکنیک‌های جراحی و تجهیزات مدرن،
-                            طیف گسترده‌ای از جراحی‌های تخصصی چشم را با بالاترین استانداردهای ایمنی انجام می‌دهد.
-                        </p>
-                    </div>
-                </div>
-            </div>
 
-            <div class="row mt-5">
+<!-- ===== کارت‌های جراحی ===== -->
+<section class="services-grid-section">
+    <div class="container">
 
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="single-slide text-center">
-                        <div class="slide-img">
-                            <img src="{% static 'images/department1.jpg' %}" alt="جراحی شبکیه ویترکتومی" class="img-fluid">
-                            <div class="hover-state">
-                                <a href="#"><i class="fa fa-eye"></i></a>
-                            </div>
-                        </div>
-                        <div class="single-department item-padding">
-                            <h3>جراحی شبکیه (ویترکتومی)</h3>
-                            <p>
-                                جراحی پیشرفته زجاجیه و شبکیه برای درمان جداشدگی شبکیه، خونریزی
-                                زجاجیه، ادم ماکولا و سایر بیماری‌های پیچیده.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="single-slide text-center">
-                        <div class="slide-img">
-                            <img src="{% static 'images/department2.jpg' %}" alt="جراحی آب مروارید" class="img-fluid">
-                            <div class="hover-state">
-                                <a href="#"><i class="fa fa-eye"></i></a>
-                            </div>
-                        </div>
-                        <div class="single-department item-padding">
-                            <h3>جراحی آب مروارید (کاتاراکت)</h3>
-                            <p>
-                                جراحی فیکوامولسیفیکاسیون با کمترین برش ممکن و کاشت لنز داخل چشمی
-                                پریمیوم برای بازگرداندن وضوح دید بدون نیاز به عینک.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="single-slide text-center">
-                        <div class="slide-img">
-                            <img src="{% static 'images/department3.jpg' %}" alt="لیزر شبکیه" class="img-fluid">
-                            <div class="hover-state">
-                                <a href="#"><i class="fa fa-eye"></i></a>
-                            </div>
-                        </div>
-                        <div class="single-department item-padding">
-                            <h3>لیزر شبکیه</h3>
-                            <p>
-                                درمان پارگی‌ها، ضعف‌ها و ضایعات شبکیه با لیزر آرگون برای
-                                جلوگیری از پیشرفت بیماری و حفاظت از بینایی.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="single-slide text-center">
-                        <div class="slide-img">
-                            <img src="{% static 'images/department1.jpg' %}" alt="جراحی گلوکوم" class="img-fluid">
-                            <div class="hover-state">
-                                <a href="#"><i class="fa fa-eye"></i></a>
-                            </div>
-                        </div>
-                        <div class="single-department item-padding">
-                            <h3>جراحی گلوکوم</h3>
-                            <p>
-                                مداخلات جراحی شامل تراب‌کولکتومی و کاشت ایمپلنت تخلیه زلالیه
-                                برای کنترل دائمی فشار چشم و جلوگیری از کوری.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="single-slide text-center">
-                        <div class="slide-img">
-                            <img src="{% static 'images/department2.jpg' %}" alt="لیزر گلوکوم" class="img-fluid">
-                            <div class="hover-state">
-                                <a href="#"><i class="fa fa-eye"></i></a>
-                            </div>
-                        </div>
-                        <div class="single-department item-padding">
-                            <h3>لیزر گلوکوم (SLT/YAG)</h3>
-                            <p>
-                                درمان لیزری انتخابی ترابکولاپلاستی (SLT) و ایریدوتومی با لیزر YAG
-                                برای کاهش فشار چشم بدون نیاز به جراحی باز.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="single-slide text-center">
-                        <div class="slide-img">
-                            <img src="{% static 'images/department3.jpg' %}" alt="جراحی پاره شدن شبکیه" class="img-fluid">
-                            <div class="hover-state">
-                                <a href="#"><i class="fa fa-eye"></i></a>
-                            </div>
-                        </div>
-                        <div class="single-department item-padding">
-                            <h3>اندوتامپوناد (گاز / سیلیکون)</h3>
-                            <p>
-                                استفاده از گاز یا روغن سیلیکون در جراحی شبکیه برای تثبیت موقعیت
-                                شبکیه پس از عمل جراحی ویترکتومی.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+        <div class="sec-head wow fadeInUp" data-wow-delay=".1s">
+            <span class="pre-title">تخصص‌های جراحی</span>
+            <h2>جراحی‌های تخصصی چشم</h2>
+            <div class="sec-divider"></div>
+            <p>طیف کاملی از جراحی‌های تخصصی شبکیه، زجاجیه و سایر بخش‌های چشم با به‌کارگیری جدیدترین تکنیک‌ها</p>
         </div>
-    </section>
-    <!-- پایان خدمات جراحی -->
 
-    <!-- بخش توضیحات شروع -->
-    <section class="welcome-area section-padding3" style="background:#f9f9f9;">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-5 align-self-center">
-                    <div class="welcome-img">
-                        <img src="{% static 'images/welcome.png' %}" alt="جراحی چشم">
+        <div class="row">
+
+            <!-- جراحی ۱ -->
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".1s">
+                <div class="service-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder"><i class="fas fa-cut"></i></div>
+                        <img src="{% static 'images/svc_surg_1.jpg' %}" alt="جراحی شبکیه ویترکتومی" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
                     </div>
-                </div>
-                <div class="col-lg-7">
-                    <div class="welcome-text mt-5 mt-lg-0">
-                        <h2>چرا جراحی با دکتر عبدالرحیمی؟</h2>
-                        <p class="pt-3">دکتر عبدالرحیمی با بهره‌گیری از جدیدترین تکنیک‌های جراحی و تجربه موفق در هزاران عمل جراحی، نتایج قابل اطمینانی برای بیماران به همراه دارد. مراقبت‌های پیش و پس از عمل به‌صورت کامل توسط تیم مطب پیگیری می‌شود.</p>
-                        <ul style="list-style:none; padding-right:0;">
-                            <li class="mb-2"><i class="fa fa-check-circle ml-2" style="color:#0dcaf0;"></i> استفاده از جدیدترین تجهیزات جراحی</li>
-                            <li class="mb-2"><i class="fa fa-check-circle ml-2" style="color:#0dcaf0;"></i> بیهوشی موضعی بدون درد</li>
-                            <li class="mb-2"><i class="fa fa-check-circle ml-2" style="color:#0dcaf0;"></i> پیگیری کامل بعد از عمل</li>
-                            <li class="mb-2"><i class="fa fa-check-circle ml-2" style="color:#0dcaf0;"></i> مشاوره رایگان قبل از تصمیم‌گیری</li>
-                        </ul>
-                        <a href="{% url 'main:persian_contact' %}" class="template-btn mt-3">رزرو مشاوره</a>
+                    <div class="svc-body">
+                        <h3>جراحی شبکیه (ویترکتومی)</h3>
+                        <p>جراحی پیشرفته زجاجیه برای درمان جداشدگی شبکیه و خونریزی زجاجیه.</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!-- پایان توضیحات -->
 
-    <!-- CTA شروع -->
-    <section class="hotline-area text-center section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h2>سوال دارید؟</h2>
-                    <p class="pt-3">برای مشاوره درباره نوع جراحی مناسب یا رزرو نوبت با ما در تماس باشید</p>
-                    <a href="{% url 'main:persian_contact' %}" class="template-btn mt-3">تماس با ما</a>
+            <!-- جراحی ۲ -->
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".15s">
+                <div class="service-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder"><i class="fas fa-eye"></i></div>
+                        <img src="{% static 'images/svc_surg_2.jpg' %}" alt="جراحی آب مروارید" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>جراحی آب مروارید (کاتاراکت)</h3>
+                        <p>فیکوامولسیفیکاسیون با کمترین برش و کاشت لنز پریمیوم برای بازگرداندن دید.</p>
+                    </div>
                 </div>
             </div>
+
+            <!-- جراحی ۳ -->
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".2s">
+                <div class="service-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder"><i class="fas fa-bolt"></i></div>
+                        <img src="{% static 'images/svc_surg_3.jpg' %}" alt="لیزر شبکیه" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>لیزر شبکیه</h3>
+                        <p>درمان پارگی‌ها و ضایعات شبکیه با لیزر آرگون برای حفاظت از بینایی.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- جراحی ۴ -->
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".1s">
+                <div class="service-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder"><i class="fas fa-procedures"></i></div>
+                        <img src="{% static 'images/svc_surg_4.jpg' %}" alt="جراحی گلوکوم" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>جراحی گلوکوم</h3>
+                        <p>تراب‌کولکتومی و کاشت ایمپلنت تخلیه زلالیه برای کنترل دائمی فشار چشم.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- جراحی ۵ -->
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".15s">
+                <div class="service-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder"><i class="fas fa-layer-group"></i></div>
+                        <img src="{% static 'images/svc_surg_5.jpg' %}" alt="لیزر گلوکوم" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>لیزر گلوکوم (SLT / YAG)</h3>
+                        <p>لیزر انتخابی SLT و ایریدوتومی YAG برای کاهش فشار بدون جراحی باز.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- جراحی ۶ -->
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".2s">
+                <div class="service-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder"><i class="fas fa-fill-drip"></i></div>
+                        <img src="{% static 'images/svc_surg_6.jpg' %}" alt="اندوتامپوناد" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>اندوتامپوناد (گاز / سیلیکون)</h3>
+                        <p>استفاده از گاز یا روغن سیلیکون برای تثبیت شبکیه پس از ویترکتومی.</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </section>
-    <!-- پایان CTA -->
+    </div>
+</section>
+<!-- پایان کارت‌ها -->
+
+
+<!-- ===== چرا جراحی با دکتر عبدالرحیمی؟ ===== -->
+<section class="surgery-why-section">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <!-- تصویر -->
+            <div class="col-lg-5 mb-5 mb-lg-0">
+                <div class="why-img-wrap wow fadeInRight" data-wow-delay=".1s">
+                    <div class="why-img-inner">
+                        <img src="{% static 'images/welcome.png' %}" alt="جراحی چشم دکتر عبدالرحیمی" loading="lazy">
+                    </div>
+                </div>
+            </div>
+
+            <!-- متن -->
+            <div class="col-lg-7">
+                <div class="why-text-wrap wow fadeInLeft" data-wow-delay=".15s">
+
+                    <span class="pre-title">مزیت ما</span>
+                    <h2>چرا جراحی با دکتر عبدالرحیمی؟</h2>
+                    <div class="why-divider"></div>
+
+                    <p>
+                        دکتر عبدالرحیمی با بهره‌گیری از جدیدترین تکنیک‌های جراحی و تجربه موفق در
+                        هزاران عمل جراحی، نتایج قابل اطمینانی برای بیماران به همراه دارد.
+                        مراقبت‌های پیش و پس از عمل به‌صورت کامل توسط تیم مطب پیگیری می‌شود.
+                    </p>
+
+                    <div class="why-checklist">
+                        <div class="why-check-item">
+                            <div class="check-icon"><i class="fas fa-check"></i></div>
+                            <span>استفاده از جدیدترین تجهیزات جراحی روز دنیا</span>
+                        </div>
+                        <div class="why-check-item">
+                            <div class="check-icon"><i class="fas fa-check"></i></div>
+                            <span>بیهوشی موضعی و بدون درد</span>
+                        </div>
+                        <div class="why-check-item">
+                            <div class="check-icon"><i class="fas fa-check"></i></div>
+                            <span>پیگیری کامل و مستمر پس از عمل</span>
+                        </div>
+                        <div class="why-check-item">
+                            <div class="check-icon"><i class="fas fa-check"></i></div>
+                            <span>مشاوره رایگان قبل از تصمیم‌گیری برای جراحی</span>
+                        </div>
+                        <div class="why-check-item">
+                            <div class="check-icon"><i class="fas fa-check"></i></div>
+                            <span>بالاترین استانداردهای ایمنی و بهداشت</span>
+                        </div>
+                    </div>
+
+                    <a href="{% url 'main:persian_contact' %}" class="btn-why-book">
+                        <i class="fas fa-calendar-check"></i>
+                        رزرو مشاوره رایگان
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- پایان why section -->
+
+
+<!-- ===== CTA نهایی ===== -->
+<section class="services-cta-section">
+    <div class="container">
+        <div class="cta-wrap wow fadeInUp" data-wow-delay=".1s">
+            <h2>سوال یا ابهامی دارید؟</h2>
+            <p>برای مشاوره درباره نوع جراحی مناسب یا رزرو نوبت، با تیم ما در تماس باشید</p>
+            <a href="{% url 'main:persian_contact' %}" class="btn-svc-primary">
+                <i class="fas fa-calendar-check"></i>
+                رزرو نوبت آنلاین
+            </a>
+            <a href="tel:021XXXXXXXX" class="btn-svc-ghost">
+                <i class="fas fa-phone"></i>
+                تماس با مطب
+            </a>
+        </div>
+    </div>
+</section>
+<!-- پایان CTA -->
 
 {% endblock %}

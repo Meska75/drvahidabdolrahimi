@@ -3,6 +3,18 @@
 
 {% block title %}دکتر وحید عبدالرحیمی — فوق تخصص شبکیه و زجاجیه{% endblock %}
 
+{% block meta_description %}<meta name="description" content="دکتر وحید عبدالرحیمی فوق تخصص شبکیه و زجاجیه — رزرو نوبت آنلاین، خدمات تشخیصی و جراحی چشم در تهران. بیش از ۱۰ سال تجربه و +۵۰۰۰ بیمار موفق.">{% endblock %}
+
+{% block meta_og %}
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:site_name" content="دکتر وحید عبدالرحیمی">
+<meta property="og:title" content="دکتر وحید عبدالرحیمی — فوق تخصص شبکیه و زجاجیه">
+<meta property="og:description" content="رزرو نوبت آنلاین مطب دکتر عبدالرحیمی — فوق تخصص بیماری‌های شبکیه، زجاجیه و جراحی چشم در تهران">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.png' %}">
+{% endblock %}
+
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 <!-- Leaflet.js — استاندارد، بدون وابستگی به SDK نشان -->
@@ -174,7 +186,7 @@
         <div class="row align-items-center">
             <div class="col-lg-5 mb-5 mb-lg-0">
                 <div class="about-img-wrap">
-                    <img src="{% static 'images/welcome.png' %}" alt="دکتر وحید عبدالرحیمی">
+                    <img src="{% static 'images/welcome.png' %}" alt="دکتر وحید عبدالرحیمی" loading="lazy">
                     <div class="exp-badge">
                         <span class="yrs">+۱۰</span>
                         <span class="lbl">سال تجربه</span>
@@ -242,9 +254,6 @@
                     <div class="card-body-inner">
                         <h3>معاینه و مشاوره</h3>
                         <p>بررسی دقیق وضعیت چشم و ارائه راهنمایی برای انتخاب بهترین مسیر درمانی</p>
-                        <a href="{% url 'services:persian_office_services' %}" class="card-link">
-                            بیشتر بدانید <i class="fa fa-arrow-left"></i>
-                        </a>
                     </div>
                 </div>
             </div>
@@ -258,9 +267,6 @@
                     <div class="card-body-inner">
                         <h3>تصویربرداری OCT</h3>
                         <p>تصویربرداری پیشرفته از شبکیه و عصب بینایی برای تشخیص دقیق بیماری‌ها</p>
-                        <a href="{% url 'services:persian_office_services' %}" class="card-link">
-                            بیشتر بدانید <i class="fa fa-arrow-left"></i>
-                        </a>
                     </div>
                 </div>
             </div>
@@ -274,9 +280,6 @@
                     <div class="card-body-inner">
                         <h3>تزریق داخل زجاجیه</h3>
                         <p>تزریق داروهای ضد رگزایی (Anti-VEGF) برای درمان بیماری‌های ماکولا</p>
-                        <a href="{% url 'services:persian_office_services' %}" class="card-link">
-                            بیشتر بدانید <i class="fa fa-arrow-left"></i>
-                        </a>
                     </div>
                 </div>
             </div>
@@ -290,9 +293,6 @@
                     <div class="card-body-inner">
                         <h3>آزمون میدان بینایی</h3>
                         <p>ارزیابی دقیق میدان بینایی برای تشخیص و پیگیری بیماری‌هایی مثل گلوکوم</p>
-                        <a href="{% url 'services:persian_office_services' %}" class="card-link">
-                            بیشتر بدانید <i class="fa fa-arrow-left"></i>
-                        </a>
                     </div>
                 </div>
             </div>
@@ -326,9 +326,6 @@
                     <div class="card-body-inner">
                         <h3>جراحی شبکیه (ویترکتومی)</h3>
                         <p>جراحی پیشرفته شبکیه برای درمان جداشدگی شبکیه و خونریزی زجاجیه</p>
-                        <a href="{% url 'services:persian_surgery_services' %}" class="card-link">
-                            بیشتر بدانید <i class="fa fa-arrow-left"></i>
-                        </a>
                     </div>
                 </div>
             </div>
@@ -342,9 +339,6 @@
                     <div class="card-body-inner">
                         <h3>جراحی آب مروارید</h3>
                         <p>جراحی فیکوامولسیفیکاسیون با کاشت لنز داخل چشمی برای بازگرداندن وضوح دید</p>
-                        <a href="{% url 'services:persian_surgery_services' %}" class="card-link">
-                            بیشتر بدانید <i class="fa fa-arrow-left"></i>
-                        </a>
                     </div>
                 </div>
             </div>
@@ -358,9 +352,6 @@
                     <div class="card-body-inner">
                         <h3>لیزر شبکیه</h3>
                         <p>درمان پارگی‌ها و ضعف‌های شبکیه با لیزر برای جلوگیری از جداشدگی</p>
-                        <a href="{% url 'services:persian_surgery_services' %}" class="card-link">
-                            بیشتر بدانید <i class="fa fa-arrow-left"></i>
-                        </a>
                     </div>
                 </div>
             </div>
@@ -374,9 +365,6 @@
                     <div class="card-body-inner">
                         <h3>جراحی گلوکوم</h3>
                         <p>مداخلات جراحی و لیزری برای کنترل فشار چشم و جلوگیری از آسیب عصب بینایی</p>
-                        <a href="{% url 'services:persian_surgery_services' %}" class="card-link">
-                            بیشتر بدانید <i class="fa fa-arrow-left"></i>
-                        </a>
                     </div>
                 </div>
             </div>
@@ -409,7 +397,7 @@
             <div class="col-lg-3 col-sm-6 mb-4 mb-lg-0">
                 <div class="team-card" data-bg="{% static 'images/doctor1.jpg' %}">
                     <div class="img-wrap">
-                        <img src="{% static 'images/doctor1.jpg' %}" alt="دکتر وحید عبدالرحیمی">
+                        <img src="{% static 'images/doctor1.jpg' %}" alt="دکتر وحید عبدالرحیمی" loading="lazy">
                     </div>
                     <div class="card-info">
                         <h3>دکتر وحید عبدالرحیمی</h3>
@@ -427,7 +415,7 @@
             <div class="col-lg-3 col-sm-6 mb-4 mb-lg-0">
                 <div class="team-card" data-bg="{% static 'images/doctor2.jpg' %}">
                     <div class="img-wrap">
-                        <img src="{% static 'images/doctor2.jpg' %}" alt="همکار مطب">
+                        <img src="{% static 'images/doctor2.jpg' %}" alt="همکار مطب" loading="lazy">
                     </div>
                     <div class="card-info">
                         <h3>نام همکار</h3>
@@ -445,7 +433,7 @@
             <div class="col-lg-3 col-sm-6 mb-4 mb-sm-0">
                 <div class="team-card" data-bg="{% static 'images/doctor3.jpg' %}">
                     <div class="img-wrap">
-                        <img src="{% static 'images/doctor3.jpg' %}" alt="همکار مطب">
+                        <img src="{% static 'images/doctor3.jpg' %}" alt="همکار مطب" loading="lazy">
                     </div>
                     <div class="card-info">
                         <h3>نام همکار</h3>
@@ -463,7 +451,7 @@
             <div class="col-lg-3 col-sm-6">
                 <div class="team-card" data-bg="{% static 'images/doctor4.jpg' %}">
                     <div class="img-wrap">
-                        <img src="{% static 'images/doctor4.jpg' %}" alt="همکار مطب">
+                        <img src="{% static 'images/doctor4.jpg' %}" alt="همکار مطب" loading="lazy">
                     </div>
                     <div class="card-info">
                         <h3>نام همکار</h3>
@@ -519,35 +507,35 @@
         </div>
         <div class="gallery-grid">
             <div class="gallery-item gi-wide-tall" data-full="{% static 'images/feed1.jpg' %}">
-                <img src="{% static 'images/feed1.jpg' %}" alt="تصویر مطب ۱">
+                <img src="{% static 'images/feed1.jpg' %}" alt="تصویر مطب ۱" loading="lazy">
                 <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
             </div>
             <div class="gallery-item" data-full="{% static 'images/feed2.jpg' %}">
-                <img src="{% static 'images/feed2.jpg' %}" alt="تصویر مطب ۲">
+                <img src="{% static 'images/feed2.jpg' %}" alt="تصویر مطب ۲" loading="lazy">
                 <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
             </div>
             <div class="gallery-item" data-full="{% static 'images/feed3.jpg' %}">
-                <img src="{% static 'images/feed3.jpg' %}" alt="تصویر مطب ۳">
+                <img src="{% static 'images/feed3.jpg' %}" alt="تصویر مطب ۳" loading="lazy">
                 <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
             </div>
             <div class="gallery-item" data-full="{% static 'images/feed4.jpg' %}">
-                <img src="{% static 'images/feed4.jpg' %}" alt="تصویر مطب ۴">
+                <img src="{% static 'images/feed4.jpg' %}" alt="تصویر مطب ۴" loading="lazy">
                 <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
             </div>
             <div class="gallery-item" data-full="{% static 'images/feed5.jpg' %}">
-                <img src="{% static 'images/feed5.jpg' %}" alt="تصویر مطب ۵">
+                <img src="{% static 'images/feed5.jpg' %}" alt="تصویر مطب ۵" loading="lazy">
                 <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
             </div>
             <div class="gallery-item gi-wide" data-full="{% static 'images/feed6.jpg' %}">
-                <img src="{% static 'images/feed6.jpg' %}" alt="تصویر مطب ۶">
+                <img src="{% static 'images/feed6.jpg' %}" alt="تصویر مطب ۶" loading="lazy">
                 <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
             </div>
             <div class="gallery-item" data-full="{% static 'images/feed7.jpg' %}">
-                <img src="{% static 'images/feed7.jpg' %}" alt="تصویر مطب ۷">
+                <img src="{% static 'images/feed7.jpg' %}" alt="تصویر مطب ۷" loading="lazy">
                 <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
             </div>
             <div class="gallery-item" data-full="{% static 'images/feed8.jpg' %}">
-                <img src="{% static 'images/feed8.jpg' %}" alt="تصویر مطب ۸">
+                <img src="{% static 'images/feed8.jpg' %}" alt="تصویر مطب ۸" loading="lazy">
                 <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
             </div>
         </div>
@@ -573,7 +561,7 @@
         </div>
         <!-- عکس ساختمان: جهت تغییر تصویر، مقدار src را ویرایش کنید -->
         <div class="contact-building-wrap">
-            <img src="{% static 'images/feed1.jpg' %}" alt="نمای ساختمان مطب دکتر عبدالرحیمی" class="building-photo">
+            <img src="{% static 'images/feed1.jpg' %}" alt="نمای ساختمان مطب دکتر عبدالرحیمی" class="building-photo" loading="lazy">
             <div class="building-photo-overlay"></div>
         </div>
     </div>
@@ -626,145 +614,6 @@
 {% endblock %}
 
 {% block extra_js %}
-<!-- Leaflet.js — defer: بلاک render نمی‌کند، سرعت بارگذاری را افزایش می‌دهد -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
-<script>
-$(function () {
-
-    /* ===== slider crossfade بنر هیرو ===== */
-    var slides = document.querySelectorAll('#heroBgSlider .hero-slide');
-    var current = 0;
-    slides.forEach(function (s) {
-        var bg = s.getAttribute('data-bg');
-        if (bg) s.style.backgroundImage = 'url(' + bg + ')';
-    });
-    if (slides.length > 0) {
-        slides[0].classList.add('active');
-        setInterval(function () {
-            slides[current].classList.remove('active');
-            current = (current + 1) % slides.length;
-            slides[current].classList.add('active');
-        }, 5000);
-    }
-
-    /* ===== کاروسل خدمات — فعال فقط اگر تعداد آیتم > 4 ===== */
-    function initSrvCarousel(el) {
-        var $el = $(el);
-        if (!$el.length) return;
-        if ($el.children('.srv-carousel-item').length > 4) {
-            $el.owlCarousel({
-                loop: true, margin: 20, autoplay: true,
-                autoplayTimeout: 3500, autoplayHoverPause: true,
-                nav: true, dots: true,
-                navText: ['<i class="fa fa-chevron-right"></i>', '<i class="fa fa-chevron-left"></i>'],
-                smartSpeed: 700,
-                responsive: { 0:{items:1}, 576:{items:2}, 992:{items:3}, 1200:{items:4} }
-            });
-        }
-    }
-    initSrvCarousel($('#officeSrvCarousel'));
-    initSrvCarousel($('#surgerySrvCarousel'));
-
-    /* ===== تصویر fade پس‌زمینه بخش تیم ===== */
-    var $bgImg    = $('#teamBgImg');
-    var $bgOvl    = $('.team-bg-overlay');
-    var bgTimer   = null;
-
-    $('.team-card').on('mouseenter', function () {
-        var url = $(this).attr('data-bg');
-        if (!url) return;
-        clearTimeout(bgTimer);
-        /* تنظیم مستقیم background-image روی div پس‌زمینه */
-        $bgImg[0].style.backgroundImage = 'url("' + url + '")';
-        $bgImg.addClass('active');
-        $bgOvl.addClass('active');
-    }).on('mouseleave', function () {
-        bgTimer = setTimeout(function () {
-            $bgImg.removeClass('active');
-            $bgOvl.removeClass('active');
-        }, 250);
-    });
-
-    /* ===== lightbox گالری ===== */
-    var $lb    = $('#galleryLightbox');
-    var $lbImg = $('#lbImg');
-
-    /* باز کردن با کلیک روی هر آیتم گالری */
-    $(document).on('click', '.gallery-item', function () {
-        var full = $(this).attr('data-full') || $(this).find('img').attr('src');
-        $lbImg.attr('src', full);
-        $lb.addClass('open');
-        $('body').css('overflow', 'hidden');
-    });
-
-    /* بستن با دکمه × */
-    $('#lbClose').on('click', closeLb);
-
-    /* بستن با کلیک روی پس‌زمینه تاریک */
-    $lb.on('click', function (e) {
-        if (e.target === this) closeLb();
-    });
-
-    /* بستن با کلید Escape */
-    $(document).on('keydown', function (e) {
-        if (e.key === 'Escape') closeLb();
-    });
-
-    function closeLb() {
-        $lb.removeClass('open');
-        $('body').css('overflow', '');
-    }
-
-});
-
-/* ===== نقشه نشان (Leaflet استاندارد + tile API نشان) =====
-   window.load: بعد از defer scripts و اعمال flex layout اجرا می‌شود */
-window.addEventListener('load', function () {
-    var mapEl = document.getElementById('neshanMap');
-    if (!mapEl || typeof L === 'undefined') return;
-
-    var lat    = 35.75431655694686;
-    var lng    = 51.41248217613625;
-    var apiKey = 'service.4b130a29422349a7a3210bf2972459f5';
-
-    var map = L.map('neshanMap', {
-        center: [lat, lng],
-        zoom: 16,
-        zoomControl: true,
-        attributionControl: true
-    });
-
-    /* tile نشان با کلید API به صورت query string */
-    var neshanFailed = false;
-    var neshanLayer  = L.tileLayer(
-        'https://map.neshan.org/sdk/v1/map/xyz/dreamy/{z}/{x}/{y}.png?x-api-key=' + apiKey,
-        { attribution: '© <a href="https://neshan.org" target="_blank">نشان</a>', maxZoom: 18 }
-    );
-
-    /* اگر tile نشان لود نشد — fallback به OpenStreetMap */
-    neshanLayer.on('tileerror', function () {
-        if (!neshanFailed) {
-            neshanFailed = true;
-            map.removeLayer(neshanLayer);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© <a href="https://openstreetmap.org" target="_blank">OpenStreetMap</a>'
-            }).addTo(map);
-        }
-    });
-
-    neshanLayer.addTo(map);
-
-    /* نشانگر موقعیت مطب */
-    L.marker([lat, lng])
-        .addTo(map)
-        .bindPopup(
-            '<div dir="rtl" style="font-family:Vazirmatn,sans-serif;font-size:13px;padding:4px 8px;">' +
-            '<strong>مطب دکتر وحید عبدالرحیمی</strong></div>'
-        )
-        .openPopup();
-
-    /* رفع اندازه container در flex layout */
-    setTimeout(function () { map.invalidateSize(); }, 300);
-});
-</script>
+<script src="{% static 'js/home.js' %}"></script>
 {% endblock %}

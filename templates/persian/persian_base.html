@@ -8,6 +8,23 @@
     <title>{% block title %}دکتر وحید عبدالرحیمی — فوق تخصص بیماری‌های شبکیه و زجاجیه{% endblock %}</title>
     <link rel="shortcut icon" href="{% static 'images/logo/favicon.png' %}" type="image/x-icon">
 
+    <!-- SEO meta -->
+    {% block meta_description %}<meta name="description" content="دکتر وحید عبدالرحیمی — فوق تخصص بیماری‌های شبکیه و زجاجیه. مطب تخصصی چشم‌پزشکی در تهران با بیش از ۱۰ سال تجربه بالینی.">{% endblock %}
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="دکتر وحید عبدالرحیمی">
+    {% block canonical %}<link rel="canonical" href="{{ request.build_absolute_uri }}">{% endblock %}
+
+    <!-- Open Graph -->
+    {% block meta_og %}
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fa_IR">
+    <meta property="og:site_name" content="دکتر وحید عبدالرحیمی">
+    <meta property="og:title" content="دکتر وحید عبدالرحیمی — فوق تخصص شبکیه و زجاجیه">
+    <meta property="og:description" content="فوق تخصص بیماری‌های شبکیه و زجاجیه — مطب تخصصی چشم‌پزشکی در تهران">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.png' %}">
+    {% endblock %}
+
     <!-- فونت وزیر‌متن -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
@@ -261,6 +278,41 @@
     </style>
 
     {% block extra_css %}{% endblock %}
+
+    <!-- JSON-LD Schema.org — اطلاعات دکتر و مطب برای موتورهای جستجو -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": ["Physician", "MedicalBusiness"],
+        "name": "دکتر وحید عبدالرحیمی",
+        "description": "فوق تخصص بیماری‌های شبکیه و زجاجیه",
+        "medicalSpecialty": "Ophthalmology",
+        "telephone": "021-XXXXXXXX",
+        "email": "info@drabdolrahimi.ir",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "تهران",
+            "addressCountry": "IR"
+        },
+        "openingHoursSpecification": [
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday"],
+                "opens": "09:00",
+                "closes": "17:00"
+            },
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": "Thursday",
+                "opens": "09:00",
+                "closes": "13:00"
+            }
+        ],
+        "priceRange": "$$",
+        "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.png' %}"
+    }
+    </script>
+    {% block json_ld %}{% endblock %}
 </head>
 <body>
 
@@ -378,7 +430,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <span>تمامی حقوق محفوظ است &copy; <script>document.write(new Date().getFullYear());</script> — دکتر وحید عبدالرحیمی</span>
+                        <span>تمامی حقوق محفوظ است &copy; {% now "Y" %} — دکتر وحید عبدالرحیمی</span>
                     </div>
                 </div>
             </div>

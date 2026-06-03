@@ -1,0 +1,564 @@
+/* ==============================================
+   صفحه تماس با ما — contact.css
+   دکتر وحید عبدالرحیمی
+============================================== */
+
+:root {
+    --primary:       #1a56db;
+    --primary-dark:  #1241a8;
+    --primary-light: #e8f0fe;
+    --accent:        #0ea5e9;
+    --text-dark:     #1e293b;
+    --text-muted:    #64748b;
+    --bg-light:      #f8fafc;
+    --border:        #e2e8f0;
+    --shadow-lg:     0 10px 40px rgba(0,0,0,.13);
+}
+
+.grad-text {
+    background: linear-gradient(90deg, #60a5fa, #0ea5e9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ===========================
+   هیرو — بلند، تاریک، کامل
+=========================== */
+.contact-hero-section {
+    margin-top: 123px;
+    background: linear-gradient(150deg, #040f1f 0%, #071a35 45%, #0a2d5a 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 90px 0 160px; /* padding زیاد برای فضای شناور کارت */
+    text-align: center;
+}
+
+/* دایره‌های متحرک پس‌زمینه */
+.contact-hero-section::before {
+    content: '';
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,86,219,.07) 0%, transparent 70%);
+    top: -200px; right: -150px;
+    pointer-events: none;
+}
+
+.contact-hero-section::after {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(14,165,233,.06) 0%, transparent 70%);
+    bottom: 0; left: -100px;
+    pointer-events: none;
+}
+
+/* گرید شبکه‌ای دکوراتیو */
+.hero-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(96,165,250,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(96,165,250,.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+}
+
+/* breadcrumb */
+.contact-breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 2;
+}
+
+.contact-breadcrumb a { color: #64748b; text-decoration: none; transition: color .25s; }
+.contact-breadcrumb a:hover { color: #60a5fa; }
+.contact-breadcrumb .sep { color: #334155; }
+.contact-breadcrumb .current { color: #60a5fa; }
+
+.contact-hero-section h1 {
+    font-size: 52px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 2;
+}
+
+.contact-hero-section .hero-sub {
+    color: #64748b;
+    font-size: 15px;
+    max-width: 460px;
+    margin: 0 auto 56px;
+    line-height: 1.85;
+    position: relative;
+    z-index: 2;
+}
+
+/* ===========================
+   بلوک‌های تماس شیشه‌ای در هیرو
+=========================== */
+.contact-blocks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.contact-block {
+    background: rgba(255,255,255,.05);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 22px;
+    padding: 28px 20px;
+    text-align: center;
+    text-decoration: none;
+    transition: all .35s;
+    display: block;
+}
+
+.contact-block:hover {
+    background: rgba(26,86,219,.18);
+    border-color: rgba(96,165,250,.3);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px rgba(0,0,0,.35);
+}
+
+/* آیکون با حلقه پالس */
+.cb-icon {
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    background: rgba(26,86,219,.22);
+    border: 1px solid rgba(96,165,250,.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 14px;
+    position: relative;
+}
+
+.cb-icon::after {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    border: 1px solid rgba(96,165,250,.2);
+    animation: pulse-ring 2.5s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+    0%   { transform: scale(.9); opacity: .7; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+.cb-icon i { font-size: 22px; color: #60a5fa; }
+
+.contact-block h4 {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.contact-block .cb-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: #f1f5f9;
+    display: block;
+    line-height: 1.5;
+}
+
+/* ===========================
+   بدنه اصلی — پس‌زمینه کم‌رنگ
+=========================== */
+.contact-body-section {
+    background: var(--bg-light);
+    padding: 0 0 90px;
+    position: relative;
+}
+
+/* ===========================
+   کارت دو بخشی — شناور روی هیرو
+=========================== */
+.contact-card {
+    display: flex;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 40px 100px rgba(0,0,0,.22);
+    margin-top: -110px;
+    position: relative;
+    z-index: 10;
+}
+
+/* پانل تاریک — اطلاعات دکتر (سمت راست در RTL) */
+.card-info-panel {
+    width: 38%;
+    background: linear-gradient(165deg, #071a35 0%, #0d2b55 60%, #0a3d72 100%);
+    padding: 48px 36px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.card-info-panel::before {
+    content: '';
+    position: absolute;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(26,86,219,.08);
+    bottom: -80px; left: -60px;
+    pointer-events: none;
+}
+
+.info-panel-tag {
+    display: inline-block;
+    background: rgba(96,165,250,.15);
+    border: 1px solid rgba(96,165,250,.25);
+    color: #93c5fd;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 5px 14px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+    align-self: flex-start;
+}
+
+.card-info-panel h3 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.35;
+    margin-bottom: 12px;
+}
+
+.card-info-panel > p {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.85;
+    margin-bottom: 32px;
+    flex-shrink: 0;
+}
+
+/* جداکننده */
+.info-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,.07);
+    margin-bottom: 28px;
+}
+
+/* آیتم اطلاعات تماس در پانل */
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.info-item:last-of-type { margin-bottom: 0; }
+
+.info-item-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: rgba(96,165,250,.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.info-item-icon i { font-size: 14px; color: #60a5fa; }
+
+.info-item-text h5 {
+    font-size: 11px;
+    font-weight: 700;
+    color: #475569;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+}
+
+.info-item-text p,
+.info-item-text a {
+    font-size: 13px;
+    color: #cbd5e1;
+    font-weight: 600;
+    text-decoration: none;
+    display: block;
+    line-height: 1.5;
+    transition: color .25s;
+}
+
+.info-item-text a:hover { color: #60a5fa; }
+
+/* شبکه اجتماعی در پایین پانل */
+.info-social {
+    margin-top: auto;
+    padding-top: 28px;
+}
+
+.info-social p {
+    font-size: 11px;
+    color: #475569;
+    letter-spacing: 1px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.info-social-links {
+    display: flex;
+    gap: 10px;
+}
+
+.info-social-links a {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.09);
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    transition: all .3s;
+    text-decoration: none;
+}
+
+.info-social-links a:hover {
+    background: rgba(26,86,219,.3);
+    border-color: rgba(96,165,250,.35);
+    color: #60a5fa;
+    transform: translateY(-3px);
+}
+
+/* پانل فرم — سفید (سمت چپ در RTL) */
+.card-form-panel {
+    flex: 1;
+    background: #fff;
+    padding: 48px 42px;
+    overflow-y: auto;
+}
+
+.card-form-panel h3 {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+}
+
+.card-form-panel > p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+}
+
+/* ===========================
+   فرم با ورودی underline
+=========================== */
+.uf-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 28px;
+}
+
+.uf-group {
+    position: relative;
+    margin-bottom: 24px;
+}
+
+/* آیکون داخل فیلد */
+.uf-group .uf-icon {
+    position: absolute;
+    top: 50%;
+    right: 2px;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #cbd5e1;
+    transition: color .25s;
+    pointer-events: none;
+}
+
+.uf-group.textarea-group .uf-icon {
+    top: 14px;
+    transform: none;
+}
+
+/* ورودی‌های underline */
+.uf-group input,
+.uf-group textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--border);
+    border-radius: 0;
+    padding: 10px 26px 10px 0;
+    font-size: 14px;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    color: var(--text-dark);
+    direction: rtl;
+    text-align: right;
+    outline: none;
+    transition: border-color .3s;
+    -webkit-appearance: none;
+}
+
+.uf-group textarea {
+    resize: none;
+    height: 110px;
+    padding-top: 8px;
+}
+
+.uf-group input::placeholder,
+.uf-group textarea::placeholder { color: #cbd5e1; font-size: 13px; }
+
+.uf-group input:focus,
+.uf-group textarea:focus { border-bottom-color: var(--primary); }
+
+.uf-group input:focus ~ .uf-icon,
+.uf-group textarea:focus ~ .uf-icon { color: var(--primary); }
+
+/* label کوچک بالای فیلد */
+.uf-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+/* دکمه ارسال */
+.btn-send {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    background: linear-gradient(135deg, #1a56db 0%, #0ea5e9 100%);
+    color: #fff;
+    border: none;
+    padding: 15px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    cursor: pointer;
+    transition: all .3s;
+    box-shadow: 0 8px 24px rgba(26,86,219,.4);
+    margin-top: 8px;
+}
+
+.btn-send:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 36px rgba(26,86,219,.5);
+}
+
+.btn-send i { font-size: 16px; }
+
+/* ===========================
+   نقشه — full width
+=========================== */
+.contact-map-section {
+    position: relative;
+    line-height: 0;
+}
+
+.map-label {
+    position: absolute;
+    top: 20px;
+    right: 50%;
+    transform: translateX(50%);
+    z-index: 5;
+    background: rgba(7,26,53,.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(96,165,250,.25);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px 24px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+}
+
+.map-label i { color: #60a5fa; }
+
+.contact-map-section iframe {
+    width: 100%;
+    height: 420px;
+    border: none;
+    display: block;
+    filter: grayscale(15%);
+}
+
+/* ===========================
+   Responsive
+=========================== */
+@media (max-width: 991.98px) {
+    .contact-hero-section {
+        margin-top: 29px;
+        padding: 70px 0 140px;
+    }
+
+    .contact-hero-section h1 { font-size: 38px; }
+
+    .contact-blocks { max-width: 100%; }
+
+    .contact-card {
+        flex-direction: column;
+        margin-top: -80px;
+    }
+
+    .card-info-panel {
+        width: 100%;
+        padding: 36px 28px;
+    }
+
+    .card-form-panel { padding: 36px 28px; }
+
+    .info-social { margin-top: 28px; padding-top: 20px; }
+}
+
+@media (max-width: 767.98px) {
+    .contact-hero-section {
+        margin-top: 76px;
+        padding: 50px 0 120px;
+    }
+
+    .contact-hero-section h1 { font-size: 28px; }
+    .contact-hero-section .hero-sub { font-size: 13px; }
+
+    .contact-blocks {
+        grid-template-columns: 1fr;
+        max-width: 320px;
+    }
+
+    .contact-card {
+        border-radius: 20px;
+        margin-top: -60px;
+    }
+
+    .uf-row { grid-template-columns: 1fr; gap: 0; }
+
+    .card-form-panel { padding: 28px 20px; }
+    .card-info-panel { padding: 28px 20px; }
+
+    .contact-map-section iframe { height: 300px; }
+}

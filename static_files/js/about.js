@@ -13,6 +13,7 @@
             autoplayTimeout: 4500,
             autoplayHoverPause: true,
             smartSpeed: 600,
+            autoHeight: false,
             responsive: {
                 0:   { items: 1 },
                 768: { items: 2 },

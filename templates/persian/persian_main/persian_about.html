@@ -10,13 +10,18 @@
 <meta property="og:locale" content="fa_IR">
 <meta property="og:site_name" content="دکتر وحید عبدالرحیمی">
 <meta property="og:title" content="درباره دکتر وحید عبدالرحیمی — فوق تخصص شبکیه و زجاجیه">
-<meta property="og:description" content="فوق تخصص بیماری‌های شبکیه و زجاجیه با بیش از ۱۰ سال تجربه بالینی — سوابق علمی و حرفه‌ای دکتر عبدالرحیمی">
+<meta property="og:description" content="فوق تخصص بیماری‌های شبکیه و زجاجیه با بیش از ۲۰ سال تجربه بالینی — سوابق علمی و حرفه‌ای دکتر عبدالرحیمی">
 <meta property="og:url" content="{{ request.build_absolute_uri }}">
 <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.png' %}">
 {% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/about.css' %}">
+<style>
+    .hero-bio, .bio-text-wrap p, .tl-card p, .expertise-card p,
+    .achievement-card p, .clinic-body p, .about-hero-content p,
+    .sec-head > p { text-align: justify !important; }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -38,7 +43,7 @@
                     </div>
 
                     <!-- تگ تخصص -->
-                    <span class="hero-tag">فوق تخصص چشم‌پزشکی</span>
+                    <span class="hero-tag">جراح و متخصص چشم</span>
 
                     <!-- نام -->
                     <h1>
@@ -46,25 +51,26 @@
                         <span class="grad-text">عبدالرحیمی</span>
                     </h1>
 
-                    <p class="hero-specialty">فوق تخصص بیماری‌های شبکیه و زجاجیه</p>
+                    <p class="hero-specialty">فوق تخصص شبکیه و لیزر</p>
+                    <p class="hero-license">شماره نظام پزشکی: <span dir="ltr">۷۷۲۷۹</span></p>
 
                     <p class="hero-bio">
-                        با بیش از ۱۰ سال تجربه بالینی در تشخیص و درمان بیماری‌های پیچیده چشم، دکتر عبدالرحیمی با استفاده از جدیدترین تکنولوژی‌های روز دنیا خدمات تخصصی با بالاترین استانداردهای کیفی ارائه می‌دهند.
+                        با بیش از ۲۰ سال تجربه بالینی، دکتر عبدالرحیمی طیف کاملی از خدمات جراحی درمانی و زیبایی شامل فیکو، لیزیک، استرابیسم و بلفاروپلاستی را ارائه می‌دهند. همچنین در پیشگیری و درمان عوارض چشمی دیابت و بینایی‌سنجی و تجویز عینک تخصص دارند.
                     </p>
 
                     <!-- بج‌های اطلاعاتی -->
                     <div class="hero-meta-badges">
                         <div class="meta-badge">
                             <i class="fas fa-graduation-cap"></i>
-                            <span>بورد تخصصی چشم‌پزشکی</span>
+                            <span>فوق تخصص شبکیه و لیزر</span>
                         </div>
                         <div class="meta-badge">
-                            <i class="fas fa-award"></i>
-                            <span>فلوشیپ شبکیه و زجاجیه</span>
+                            <i class="fas fa-globe-europe"></i>
+                            <span>عضو انجمن جراحان چشم اروپا</span>
                         </div>
                         <div class="meta-badge">
-                            <i class="fas fa-hospital"></i>
-                            <span>عضو انجمن چشم‌پزشکی ایران</span>
+                            <i class="fas fa-globe-americas"></i>
+                            <span>عضو انجمن جراحان چشم آمریکا</span>
                         </div>
                     </div>
 
@@ -87,15 +93,15 @@
                     <div class="photo-frame">
                         <!-- بج تجربه -->
                         <div class="photo-exp-badge">
-                            <div class="exp-number">+۱۰</div>
+                            <div class="exp-number">+۲۰</div>
                             <span class="exp-label">سال تجربه</span>
                         </div>
 
-                        <img src="{% static 'images/welcome2.png' %}" alt="دکتر وحید عبدالرحیمی">
+                        <img src="{% static 'images/about/doctor/welcome2.png' %}" alt="دکتر وحید عبدالرحیمی">
 
                         <!-- بج تخصص پایین عکس -->
                         <div class="photo-specialty-badge">
-                            فوق تخصص شبکیه و زجاجیه
+                            فوق تخصص شبکیه و لیزر
                         </div>
                     </div>
 
@@ -118,7 +124,7 @@
                     <div class="stat-icon-wrap">
                         <i class="fas fa-clock"></i>
                     </div>
-                    <div class="stat-number">+۱۰</div>
+                    <div class="stat-number">+۲۰</div>
                     <div class="stat-label">سال تجربه بالینی</div>
                 </div>
             </div>
@@ -169,7 +175,7 @@
                 <div class="bio-photo-wrap wow fadeInRight" data-wow-delay=".1s">
                     <div class="bio-photo-deco"></div>
                     <div class="bio-photo-inner">
-                        <img src="{% static 'images/welcome.png' %}" alt="دکتر وحید عبدالرحیمی — بیوگرافی">
+                        <img src="{% static 'images/about/doctor/welcome.png' %}" alt="دکتر وحید عبدالرحیمی — بیوگرافی">
                     </div>
                 </div>
             </div>
@@ -179,42 +185,42 @@
                 <div class="bio-text-wrap wow fadeInLeft" data-wow-delay=".15s">
 
                     <span class="pre-title">بیوگرافی</span>
-                    <h2>متخصص برجسته در درمان<br>بیماری‌های شبکیه</h2>
+                    <h2>جراح و متخصص چشم<br>فوق تخصص شبکیه و لیزر</h2>
                     <div class="bio-divider"></div>
 
                     <p>
-                        دکتر وحید عبدالرحیمی، فارغ‌التحصیل دوره فوق تخصصی بیماری‌های شبکیه و زجاجیه، با سال‌ها تجربه بالینی در حوزه تشخیص و درمان بیماری‌های پیچیده چشم، به ارائه خدمات تخصصی با بالاترین استانداردهای کیفی اشتغال دارد.
+                        دکتر وحید عبدالرحیمی، جراح و متخصص چشم با فوق تخصص شبکیه و لیزر، عضو انجمن جراحان چشم اروپا و آمریکا است. ایشان با بیش از ۲۰ سال تجربه بالینی، خدمات تخصصی با بالاترین استانداردهای کیفی به بیماران ارائه می‌دهند.
                     </p>
 
                     <p>
-                        ایشان با استفاده از جدیدترین تکنولوژی‌های تصویربرداری و درمانی، از جمله OCT نسل جدید، فلوئورسین آنژیوگرافی، لیزر شبکیه و تزریقات داخل زجاجیه، خدمات جامعی را به بیماران ارائه می‌دهند. رویکرد ایشان بر پایه درمان فردمحور و به‌کارگیری روش‌های نوین پزشکی مبتنی بر شواهد است.
+                        حوزه‌های تخصصی دکتر عبدالرحیمی شامل انجام کلیه اعمال جراحی درمانی و زیبایی (فیکو، لیزیک، استرابیسم و بلفاروپلاستی)، پیشگیری و درمان عوارض چشمی دیابت، و ارائه خدمات بینایی‌سنجی و تجویز عینک می‌شود.
                     </p>
 
                     <!-- مهارت‌ها -->
                     <div class="bio-skills-grid">
                         <div class="bio-skill">
                             <div class="skill-dot"></div>
-                            <span>OCT پیشرفته</span>
+                            <span>جراحی فیکو</span>
                         </div>
                         <div class="bio-skill">
                             <div class="skill-dot"></div>
-                            <span>لیزر شبکیه</span>
+                            <span>لیزیک</span>
                         </div>
                         <div class="bio-skill">
                             <div class="skill-dot"></div>
-                            <span>تزریق داخل زجاجیه</span>
+                            <span>استرابیسم</span>
                         </div>
                         <div class="bio-skill">
                             <div class="skill-dot"></div>
-                            <span>جراحی شبکیه</span>
+                            <span>بلفاروپلاستی</span>
                         </div>
                         <div class="bio-skill">
                             <div class="skill-dot"></div>
-                            <span>فلوئورسین آنژیوگرافی</span>
+                            <span>درمان دیابت چشمی</span>
                         </div>
                         <div class="bio-skill">
                             <div class="skill-dot"></div>
-                            <span>ویتروکتومی</span>
+                            <span>بینایی‌سنجی</span>
                         </div>
                     </div>
 
@@ -253,14 +259,14 @@
                     <div class="tl-item wow fadeInUp" data-wow-delay=".1s">
                         <div class="tl-dot"></div>
                         <div class="tl-card">
-                            <span class="tl-year">۱۳۸۰ – ۱۳۸۷</span>
+                            <span class="tl-year">۱۳۶۵ – ۱۳۷۲</span>
                             <div class="tl-card-header">
                                 <div class="tl-icon">
                                     <i class="fas fa-user-md"></i>
                                 </div>
                                 <h3>دکترای پزشکی عمومی</h3>
                             </div>
-                            <p>فارغ‌التحصیل دکترای پزشکی عمومی از دانشگاه علوم پزشکی ایران با رتبه ممتاز</p>
+                            <p>فارغ‌التحصیل دکترای پزشکی عمومی از دانشگاه علوم پزشکی ایران</p>
                         </div>
                     </div>
 
@@ -268,7 +274,7 @@
                     <div class="tl-item wow fadeInUp" data-wow-delay=".15s">
                         <div class="tl-dot"></div>
                         <div class="tl-card">
-                            <span class="tl-year">۱۳۸۸ – ۱۳۹۲</span>
+                            <span class="tl-year">۱۳۷۴ – ۱۳۷۸</span>
                             <div class="tl-card-header">
                                 <div class="tl-icon">
                                     <i class="fas fa-eye"></i>
@@ -283,14 +289,14 @@
                     <div class="tl-item wow fadeInUp" data-wow-delay=".2s">
                         <div class="tl-dot"></div>
                         <div class="tl-card">
-                            <span class="tl-year">۱۳۹۳ – ۱۳۹۵</span>
+                            <span class="tl-year">۱۳۷۸ – ۱۳۸۰</span>
                             <div class="tl-card-header">
                                 <div class="tl-icon">
                                     <i class="fas fa-certificate"></i>
                                 </div>
-                                <h3>فوق تخصص شبکیه و زجاجیه</h3>
+                                <h3>فوق تخصص شبکیه و لیزر</h3>
                             </div>
-                            <p>اخذ فلوشیپ فوق تخصصی بیماری‌های شبکیه و زجاجیه از مراکز معتبر داخلی و بین‌المللی</p>
+                            <p>اخذ فلوشیپ فوق تخصصی شبکیه و لیزر از مراکز معتبر داخلی و بین‌المللی و عضویت در انجمن جراحان چشم اروپا و آمریکا</p>
                         </div>
                     </div>
 
@@ -298,14 +304,14 @@
                     <div class="tl-item wow fadeInUp" data-wow-delay=".25s">
                         <div class="tl-dot"></div>
                         <div class="tl-card">
-                            <span class="tl-year">۱۳۹۵ – اکنون</span>
+                            <span class="tl-year">۱۳۸۰ – اکنون</span>
                             <div class="tl-card-header">
                                 <div class="tl-icon">
                                     <i class="fas fa-hospital-alt"></i>
                                 </div>
-                                <h3>فعالیت بالینی و تدریس</h3>
+                                <h3>فعالیت بالینی تخصصی</h3>
                             </div>
-                            <p>ارائه خدمات تخصصی در مطب خصوصی، همکاری با بیمارستان‌های معتبر و فعالیت آموزشی در دانشگاه</p>
+                            <p>ارائه خدمات جراحی و درمانی تخصصی در مطب خصوصی و مراکز درمانی معتبر تهران با بیش از ۲۰ سال سابقه موفق</p>
                         </div>
                     </div>
 
@@ -460,13 +466,13 @@
         <!-- اسلایدر کلینیک‌ها — قابلیت چرخشی با owl carousel -->
         <div class="clinics-slider owl-carousel">
 
-            <!-- کلینیک ۱ -->
+            <!-- کلینیک ۱ — نوین دیدگان -->
             <div class="clinic-card">
                 <div class="clinic-img-wrap">
                     <div class="clinic-img-placeholder">
                         <i class="fas fa-hospital-alt"></i>
                     </div>
-                    <img src="{% static 'images/clinic1.jpg' %}" alt="بیمارستان نور" loading="lazy" onerror="this.style.opacity='0'">
+                    <img src="{% static 'images/about/clinics/clinic1.jpg' %}" alt="کلینیک فوق تخصصی نوین دیدگان" loading="lazy" onerror="this.style.opacity='0'">
                     <div class="clinic-img-overlay">
                         <span class="clinic-badge">
                             <i class="fas fa-map-marker-alt"></i>
@@ -475,43 +481,39 @@
                     </div>
                 </div>
                 <div class="clinic-body">
-                    <h3 class="clinic-name">بیمارستان نور و حضرت رسول</h3>
+                    <h3 class="clinic-name">کلینیک فوق تخصصی نوین دیدگان</h3>
                     <div class="clinic-info">
                         <div class="clinic-info-item">
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>تهران، خیابان ستارخان، خیابان نیایش</span>
+                            <span>خیابان شهید بهشتی، خیابان قائم مقام فراهانی، کوچه میرزا حسنی، شماره ۲۴</span>
                         </div>
                         <div class="clinic-info-item">
                             <i class="fas fa-phone"></i>
-                            <span dir="ltr">021-66501600</span>
+                            <span dir="ltr">021-88703688</span>
                         </div>
                     </div>
                     <div class="clinic-schedule">
                         <div class="schedule-title">
-                            <i class="fas fa-clock"></i>
-                            زمان حضور دکتر
+                            <i class="fas fa-phone"></i>
+                            ساعت تماس
                         </div>
                         <div class="schedule-list">
                             <div class="schedule-item">
-                                <span class="day">شنبه – یکشنبه</span>
-                                <span class="time">۹:۰۰ – ۱۳:۰۰</span>
-                            </div>
-                            <div class="schedule-item">
-                                <span class="day">سه‌شنبه</span>
-                                <span class="time">۱۵:۰۰ – ۱۹:۰۰</span>
+                                <span class="day">شنبه تا پنجشنبه</span>
+                                <span class="time">۱۰:۰۰ – ۲۰:۰۰</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- کلینیک ۲ -->
+            <!-- کلینیک ۲ — مرکز جراحی چشم ونک -->
             <div class="clinic-card">
                 <div class="clinic-img-wrap">
                     <div class="clinic-img-placeholder">
                         <i class="fas fa-hospital-alt"></i>
                     </div>
-                    <img src="{% static 'images/clinic2.jpg' %}" alt="کلینیک بینا" loading="lazy" onerror="this.style.opacity='0'">
+                    <img src="{% static 'images/about/clinics/clinic2.jpg' %}" alt="مرکز جراحی چشم ونک" loading="lazy" onerror="this.style.opacity='0'">
                     <div class="clinic-img-overlay">
                         <span class="clinic-badge">
                             <i class="fas fa-map-marker-alt"></i>
@@ -520,76 +522,82 @@
                     </div>
                 </div>
                 <div class="clinic-body">
-                    <h3 class="clinic-name">کلینیک تخصصی چشم‌پزشکی بینا</h3>
+                    <h3 class="clinic-name">مرکز جراحی چشم ونک</h3>
                     <div class="clinic-info">
                         <div class="clinic-info-item">
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>تهران، خیابان ولیعصر، بالاتر از میدان ونک</span>
+                            <span>ایران، تهران، میدان ونک، اتوبان حقانی، بعد از خیابان گاندی جنوبی، پلاک ۵۰</span>
                         </div>
                         <div class="clinic-info-item">
                             <i class="fas fa-phone"></i>
-                            <span dir="ltr">021-88001234</span>
+                            <span dir="ltr">021-88874394 | 021-88874397</span>
                         </div>
                     </div>
                     <div class="clinic-schedule">
                         <div class="schedule-title">
-                            <i class="fas fa-clock"></i>
-                            زمان حضور دکتر
+                            <i class="fas fa-phone"></i>
+                            ساعت تماس
                         </div>
                         <div class="schedule-list">
                             <div class="schedule-item">
-                                <span class="day">دوشنبه – چهارشنبه</span>
-                                <span class="time">۱۰:۰۰ – ۱۴:۰۰</span>
-                            </div>
-                            <div class="schedule-item">
-                                <span class="day">پنجشنبه</span>
-                                <span class="time">۹:۰۰ – ۱۲:۰۰</span>
+                                <span class="day">شنبه تا پنجشنبه</span>
+                                <span class="time">۱۰:۰۰ – ۲۰:۰۰</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- کلینیک ۳ -->
+            <!-- کلینیک ۳ — مطب خصوصی -->
             <div class="clinic-card">
                 <div class="clinic-img-wrap">
                     <div class="clinic-img-placeholder">
                         <i class="fas fa-clinic-medical"></i>
                     </div>
-                    <img src="{% static 'images/clinic3.jpg' %}" alt="مطب خصوصی" loading="lazy" onerror="this.style.opacity='0'">
+                    <img src="{% static 'images/about/clinics/clinic3.jpg' %}" alt="مطب دکتر عبدالرحیمی" loading="lazy" onerror="this.style.opacity='0'">
                     <div class="clinic-img-overlay">
                         <span class="clinic-badge">
                             <i class="fas fa-map-marker-alt"></i>
-                            تهران
+                            تهران — ونک
                         </span>
                     </div>
                 </div>
                 <div class="clinic-body">
-                    <h3 class="clinic-name">مطب خصوصی دکتر عبدالرحیمی</h3>
+                    <h3 class="clinic-name">مطب دکتر وحید عبدالرحیمی</h3>
                     <div class="clinic-info">
                         <div class="clinic-info-item">
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>تهران، خیابان شریعتی، نرسیده به پل صدر</span>
+                            <span>ایران، تهران، میدان ونک، خ. گاندی جنوبی، خ. شهیده ترکان (خ.۱۹)، پلاک ۲۴، طبقه ۴، واحد ۹</span>
                         </div>
                         <div class="clinic-info-item">
                             <i class="fas fa-phone"></i>
-                            <span dir="ltr">021-77201122</span>
+                            <span dir="ltr">021-88648210</span>
+                        </div>
+                        <div class="clinic-info-item">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span dir="ltr">0901-343-4195</span>
                         </div>
                     </div>
                     <div class="clinic-schedule">
                         <div class="schedule-title">
                             <i class="fas fa-clock"></i>
-                            زمان حضور دکتر
+                            ساعات کاری مطب
                         </div>
                         <div class="schedule-list">
                             <div class="schedule-item">
-                                <span class="day">شنبه – یکشنبه</span>
-                                <span class="time">۱۶:۰۰ – ۲۰:۰۰</span>
+                                <span class="day">شنبه تا پنجشنبه</span>
+                                <span class="time">۱۱:۰۰ – ۱۴:۰۰</span>
                             </div>
                             <div class="schedule-item">
-                                <span class="day">سه‌شنبه – چهارشنبه</span>
-                                <span class="time">۱۶:۰۰ – ۲۰:۰۰</span>
+                                <span class="day">جمعه</span>
+                                <span class="time">تعطیل</span>
                             </div>
+                        </div>
+                        <!-- شبکه اجتماعی مطب -->
+                        <div class="clinic-social">
+                            <a href="https://www.instagram.com/dr_vahid_abdolrahimi/" target="_blank" rel="noopener" class="ig" aria-label="اینستاگرام"><i class="fab fa-instagram"></i></a>
+                            <a href="https://t.me/dr_vahid_abdolrahimi" target="_blank" rel="noopener" class="tg" aria-label="تلگرام"><i class="fab fa-telegram-plane"></i></a>
+                            <a href="https://wa.me/989013434195" target="_blank" rel="noopener" class="wa" aria-label="واتس‌اپ"><i class="fab fa-whatsapp"></i></a>
                         </div>
                     </div>
                 </div>

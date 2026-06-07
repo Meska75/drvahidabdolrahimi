@@ -1,0 +1,236 @@
+{% extends "english/english_base.html" %}
+{% load static %}
+
+{% block title %}Office Services — Dr. Vahid Abdolrahimi{% endblock %}
+
+{% block meta_description %}<meta name="description" content="Diagnostic and therapeutic services at Dr. Abdolrahimi's clinic — eye examination, OCT imaging, fluorescein angiography, intravitreal injection, perimetry, and tonometry in Tehran.">{% endblock %}
+
+{% block meta_og %}
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Dr. Vahid Abdolrahimi">
+<meta property="og:title" content="Office Services — Dr. Vahid Abdolrahimi">
+<meta property="og:description" content="Comprehensive eye examination, OCT, angiography, Anti-VEGF injection, and other diagnostic services at Dr. Abdolrahimi's clinic">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo_en.png' %}">
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/services.css' %}">
+<style>
+    /* ===== LTR overrides ===== */
+
+    /* Section dividers */
+    .sec-divider {
+        background: linear-gradient(to right, var(--primary), var(--accent)) !important;
+    }
+
+    /* Decorative circles in hero — LTR flip */
+    .services-hero-section::before {
+        left: auto;
+        right: -120px;
+    }
+    .services-hero-section::after {
+        right: auto;
+        left: -60px;
+    }
+
+    /* Hero text */
+    .services-hero-content h1,
+    .services-hero-content p { text-align: left; }
+
+    /* Ghost button — LTR spacing */
+    .btn-svc-ghost {
+        margin-right: 0 !important;
+        margin-left: 12px !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="services-hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <!-- Text content -->
+            <div class="col-lg-8">
+                <div class="services-hero-content wow fadeInUp" data-wow-delay=".1s">
+
+                    <div class="services-breadcrumb">
+                        <a href="{% url 'english:english_home' %}">Home</a>
+                        <span class="sep">›</span>
+                        <a href="{% url 'english_services:english_services_overview' %}">Services</a>
+                        <span class="sep">›</span>
+                        <span class="current">Office Services</span>
+                    </div>
+
+                    <span class="services-tag">DR. ABDOLRAHIMI'S SPECIALIZED CLINIC</span>
+
+                    <h1>Diagnostic & <span class="grad-text">Therapeutic</span> Office Services</h1>
+
+                    <p>
+                        Dr. Abdolrahimi's clinic is equipped with the most advanced diagnostic and therapeutic devices.
+                        All services are provided in a calm, organized, and fully professional environment.
+                    </p>
+
+                    <div class="hero-service-badges">
+                        <div class="service-badge-item">
+                            <i class="fas fa-microscope"></i>
+                            Precise Diagnosis
+                        </div>
+                        <div class="service-badge-item">
+                            <i class="fas fa-syringe"></i>
+                            Specialized Treatment
+                        </div>
+                        <div class="service-badge-item">
+                            <i class="fas fa-calendar-check"></i>
+                            Online Booking
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Decorative icon -->
+            <div class="col-lg-4 d-none d-lg-flex justify-content-center wow fadeInUp" data-wow-delay=".15s">
+                <div class="hero-deco-circle">
+                    <i class="fas fa-stethoscope"></i>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- End Hero -->
+
+
+<!-- Service Cards Grid -->
+<section class="services-grid-section">
+    <div class="container">
+
+        <div class="sec-head wow fadeInUp" data-wow-delay=".1s">
+            <span class="pre-title">OUR SERVICES</span>
+            <h2>Specialized Clinic Services</h2>
+            <div class="sec-divider"></div>
+            <p>A full range of diagnostic and therapeutic ophthalmology services using state-of-the-art equipment</p>
+        </div>
+
+        <div class="row">
+
+            <!-- Service 1 -->
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".1s">
+                <div class="service-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder"><i class="fas fa-eye"></i></div>
+                        <img src="{% static 'images/services/office/svc_office_1.jpg' %}" alt="Eye Examination & Consultation" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>Eye Examination & Consultation</h3>
+                        <p>Comprehensive eye assessment and individualized treatment planning for each patient.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 2 -->
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".15s">
+                <div class="service-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder"><i class="fas fa-microscope"></i></div>
+                        <img src="{% static 'images/services/office/svc_office_2.jpg' %}" alt="OCT Imaging" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>OCT Imaging</h3>
+                        <p>Advanced cross-sectional retinal imaging for precise diagnosis of macular diseases.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".2s">
+                <div class="service-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder"><i class="fas fa-camera"></i></div>
+                        <img src="{% static 'images/services/office/svc_office_3.jpg' %}" alt="Fluorescein Angiography" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>Fluorescein Angiography</h3>
+                        <p>Retinal vessel imaging for diagnosis of diabetic retinopathy and vascular occlusion.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 4 -->
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".1s">
+                <div class="service-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder"><i class="fas fa-syringe"></i></div>
+                        <img src="{% static 'images/services/office/svc_office_4.jpg' %}" alt="Intravitreal Injection" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>Intravitreal Injection</h3>
+                        <p>Anti-VEGF drug injection for treatment of macular edema and wet AMD.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 5 -->
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".15s">
+                <div class="service-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder"><i class="fas fa-dot-circle"></i></div>
+                        <img src="{% static 'images/services/office/svc_office_5.jpg' %}" alt="Visual Field Testing" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>Visual Field Testing (Perimetry)</h3>
+                        <p>Precise visual field assessment for diagnosis and monitoring of glaucoma and optic nerve damage.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 6 -->
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".2s">
+                <div class="service-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder"><i class="fas fa-tachometer-alt"></i></div>
+                        <img src="{% static 'images/services/office/svc_office_6.jpg' %}" alt="Intraocular Pressure Measurement" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>Intraocular Pressure Measurement</h3>
+                        <p>Accurate measurement of intraocular pressure (tonometry) for early glaucoma detection.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- End Cards -->
+
+
+<!-- CTA Section -->
+<section class="services-cta-section">
+    <div class="container">
+        <div class="cta-wrap wow fadeInUp" data-wow-delay=".1s">
+            <h2>Ready to Book an Appointment?</h2>
+            <p>Contact us to schedule an appointment or learn more about our office services</p>
+            <a href="{% url 'english:english_contact' %}" class="btn-svc-primary">
+                <i class="fas fa-calendar-check"></i>
+                Book Online
+            </a>
+            <a href="tel:02188648210" class="btn-svc-ghost">
+                <i class="fas fa-phone"></i>
+                Call the Clinic
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

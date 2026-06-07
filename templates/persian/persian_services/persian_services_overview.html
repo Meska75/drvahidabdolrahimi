@@ -1,0 +1,127 @@
+{% extends "persian/persian_base.html" %}
+{% load static %}
+
+{% block title %}خدمات — دکتر وحید عبدالرحیمی{% endblock %}
+
+{% block meta_description %}<meta name="description" content="خدمات تخصصی مطب و جراحی دکتر وحید عبدالرحیمی — فوق تخصص شبکیه و زجاجیه. خدمات تشخیصی، درمانی و جراحی چشم در تهران.">{% endblock %}
+
+{% block meta_og %}
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:site_name" content="دکتر وحید عبدالرحیمی">
+<meta property="og:title" content="خدمات مطب و جراحی — دکتر وحید عبدالرحیمی">
+<meta property="og:description" content="خدمات تشخیصی، درمانی و جراحی چشم توسط دکتر عبدالرحیمی — فوق تخصص شبکیه و زجاجیه در تهران">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.png' %}">
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/services_overview.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ===== هیرو ===== -->
+<section class="sov-hero-section">
+    <div class="container">
+
+        <!-- breadcrumb -->
+        <div class="sov-breadcrumb wow fadeInDown" data-wow-delay=".05s">
+            <a href="{% url 'main:persian_home' %}">خانه</a>
+            <span class="sep">›</span>
+            <span class="current">خدمات</span>
+        </div>
+
+        <!-- عنوان -->
+        <h1 class="wow fadeInUp" data-wow-delay=".1s">
+            خدمات <span class="grad-text">تخصصی</span> ما
+        </h1>
+
+        <p class="sov-hero-sub wow fadeInUp" data-wow-delay=".15s">
+            مطب دکتر عبدالرحیمی طیف کاملی از خدمات تشخیصی، درمانی و جراحی چشم را با بهره‌گیری از
+            پیشرفته‌ترین تجهیزات و بالاترین استانداردهای کیفی ارائه می‌دهد.
+        </p>
+
+    </div>
+</section>
+<!-- پایان هیرو -->
+
+
+<!-- ===== لیست خدمات ===== -->
+<section class="sov-list-section">
+    <div class="container">
+
+        <!-- آیتم ۱ — خدمات مطب -->
+        <a href="{% url 'services:persian_office_services' %}" class="sov-item wow fadeInUp" data-wow-delay=".1s">
+
+            <!-- تصویر — سمت راست در RTL -->
+            <div class="sov-item-img">
+                <img src="{% static 'images/services/overview/department1.jpg' %}" alt="خدمات تشخیصی مطب دکتر عبدالرحیمی" loading="lazy">
+                <span class="sov-badge">مطب</span>
+            </div>
+
+            <!-- محتوای متنی -->
+            <div class="sov-item-body">
+                <span class="sov-item-tag">تشخیص و درمان</span>
+                <div class="sov-divider-line"></div>
+                <h2>خدمات مطب</h2>
+                <p>
+                    مطب دکتر عبدالرحیمی مجهز به پیشرفته‌ترین دستگاه‌های تشخیصی روز دنیاست. خدمات ارائه‌شده
+                    شامل معاینه تخصصی چشم، تصویربرداری OCT از شبکیه، فلوئورسین آنژیوگرافی، تزریق داخل زجاجیه
+                    (Anti-VEGF)، آزمون میدان بینایی (پریمتری) و اندازه‌گیری فشار چشم (تونومتری) است.
+                    تمام خدمات در محیطی آرام، منظم و کاملاً حرفه‌ای انجام می‌شود.
+                </p>
+                <span class="sov-cta">
+                    ورود به صفحه خدمات مطب
+                    <i class="fas fa-arrow-left"></i>
+                </span>
+            </div>
+
+        </a>
+        <!-- پایان آیتم ۱ -->
+
+        <!-- آیتم ۲ — خدمات جراحی -->
+        <a href="{% url 'services:persian_surgery_services' %}" class="sov-item sov-surgery wow fadeInUp" data-wow-delay=".15s">
+
+            <!-- تصویر — سمت راست در RTL -->
+            <div class="sov-item-img">
+                <img src="{% static 'images/services/overview/department2.jpg' %}" alt="جراحی تخصصی چشم دکتر عبدالرحیمی" loading="lazy">
+                <span class="sov-badge surgery">جراحی</span>
+            </div>
+
+            <!-- محتوای متنی -->
+            <div class="sov-item-body">
+                <span class="sov-item-tag surgery">جراحی تخصصی</span>
+                <div class="sov-divider-line" style="background: linear-gradient(90deg, #059669, #34d399);"></div>
+                <h2>خدمات جراحی</h2>
+                <p>
+                    دکتر عبدالرحیمی با بهره‌گیری از پیشرفته‌ترین تکنیک‌های جراحی و بیش از +۵۰۰۰ عمل موفق،
+                    طیف گسترده‌ای از جراحی‌های تخصصی چشم را انجام می‌دهد. این جراحی‌ها شامل ویترکتومی (شبکیه)،
+                    کاتاراکت، لیزر شبکیه، جراحی گلوکوم، لیزر SLT و YAG و اندوتامپوناد می‌شود.
+                    تمامی جراحی‌ها با بالاترین استانداردهای ایمنی و مراقبت کامل پس از عمل انجام می‌گیرد.
+                </p>
+                <span class="sov-cta">
+                    ورود به صفحه خدمات جراحی
+                    <i class="fas fa-arrow-left"></i>
+                </span>
+            </div>
+
+        </a>
+        <!-- پایان آیتم ۲ -->
+
+    </div>
+</section>
+<!-- پایان لیست خدمات -->
+
+
+<!-- ===== تیم مطب ===== -->
+<section class="sov-team-section">
+    <div class="container">
+
+        {% include "persian/components/team_section.html" %}
+    </div>
+</section>
+<!-- پایان تیم -->
+
+{% endblock %}

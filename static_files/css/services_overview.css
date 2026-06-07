@@ -1,0 +1,273 @@
+/* ==============================================
+   صفحه نمای کلی خدمات — services_overview.css
+   دکتر وحید عبدالرحیمی
+============================================== */
+
+:root {
+    --primary:       #1a56db;
+    --primary-dark:  #1241a8;
+    --accent:        #0ea5e9;
+    --text-dark:     #1e293b;
+    --text-muted:    #64748b;
+    --bg-light:      #f1f5f9;
+    --border:        #e2e8f0;
+    --surgery-green: #059669;
+    --surgery-light: #d1fae5;
+    --surgery-dark:  #065f46;
+}
+
+.grad-text {
+    background: linear-gradient(90deg, #60a5fa, #0ea5e9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ===========================
+   هیرو — کوچک و تمیز
+=========================== */
+.sov-hero-section {
+    margin-top: 123px;
+    background: linear-gradient(150deg, #040f1f 0%, #071a35 50%, #0a2d5a 100%);
+    padding: 72px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* گرید دکوراتیو */
+.sov-hero-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(96,165,250,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(96,165,250,.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+}
+
+.sov-hero-section::after {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,86,219,.07) 0%, transparent 70%);
+    top: -150px; left: -100px;
+    pointer-events: none;
+}
+
+.sov-breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 2;
+}
+.sov-breadcrumb a { color: #64748b; text-decoration: none; transition: color .25s; }
+.sov-breadcrumb a:hover { color: #60a5fa; }
+.sov-breadcrumb .sep { color: #334155; }
+.sov-breadcrumb .current { color: #60a5fa; }
+
+.sov-hero-section h1 {
+    font-size: 42px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 2;
+}
+
+.sov-hero-sub {
+    color: #64748b;
+    font-size: 15px;
+    max-width: 540px;
+    line-height: 1.85;
+    position: relative;
+    z-index: 2;
+    margin: 0;
+}
+
+/* ===========================
+   لیست خدمات
+=========================== */
+.sov-list-section {
+    background: var(--bg-light);
+    padding: 80px 0 70px;
+}
+
+/* آیتم خدمت — کارت افقی */
+.sov-item {
+    display: flex;
+    background: #fff;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 4px 30px rgba(0,0,0,.07);
+    margin-bottom: 28px;
+    min-height: 280px;
+    text-decoration: none;
+    transition: box-shadow .35s, transform .35s, border-color .35s;
+    border: 2px solid transparent;
+}
+
+.sov-item:hover {
+    box-shadow: 0 24px 64px rgba(0,0,0,.13);
+    transform: translateY(-6px);
+    text-decoration: none;
+    border-color: rgba(96,165,250,.3);
+}
+
+.sov-item:last-child { margin-bottom: 0; }
+
+/* تصویر — در RTL سمت راست است (اول در DOM) */
+.sov-item-img {
+    width: 380px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.sov-item-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .55s ease;
+}
+
+.sov-item:hover .sov-item-img img { transform: scale(1.06); }
+
+/* بج روی تصویر */
+.sov-badge {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(26,86,219,.88);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 6px 18px;
+    border-radius: 50px;
+}
+
+.sov-badge.surgery { background: rgba(5,150,105,.88); }
+
+/* بدنه متنی */
+.sov-item-body {
+    flex: 1;
+    padding: 44px 52px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.sov-item-tag {
+    display: inline-block;
+    background: #e8f0fe;
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 4px 14px;
+    border-radius: 50px;
+    margin-bottom: 16px;
+    align-self: flex-start;
+}
+
+.sov-item-tag.surgery { background: var(--surgery-light); color: var(--surgery-dark); }
+
+.sov-item-body h2 {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 16px;
+    line-height: 1.25;
+    transition: color .25s;
+}
+
+.sov-item:hover .sov-item-body h2 { color: var(--primary); }
+.sov-item.sov-surgery:hover .sov-item-body h2 { color: var(--surgery-green); }
+
+.sov-item-body p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.95;
+    margin-bottom: 28px;
+}
+
+/* لینک "ورود به صفحه" */
+.sov-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--primary);
+    transition: gap .25s;
+}
+
+.sov-cta i { font-size: 13px; transition: transform .25s; }
+.sov-item:hover .sov-cta { gap: 12px; }
+.sov-item:hover .sov-cta i { transform: translateX(-5px); }
+
+.sov-item.sov-surgery .sov-cta { color: var(--surgery-dark); }
+.sov-item.sov-surgery:hover .sov-cta { color: var(--surgery-green); }
+
+/* خط جدا‌کننده بین دو بخش */
+.sov-divider-line {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    border-radius: 2px;
+    margin-bottom: 20px;
+}
+
+/* ===========================
+   بخش تیم
+=========================== */
+.sov-team-section {
+    background: #fff;
+    padding: 80px 0;
+    border-top: 1px solid var(--border);
+}
+
+/* ===========================
+   Responsive
+=========================== */
+@media (max-width: 991.98px) {
+    .sov-hero-section { margin-top: 29px; padding: 56px 0; }
+    .sov-hero-section h1 { font-size: 34px; }
+
+    .sov-item-img { width: 280px; }
+    .sov-item-body { padding: 32px 36px; }
+    .sov-item-body h2 { font-size: 22px; }
+}
+
+@media (max-width: 767.98px) {
+    .sov-hero-section { margin-top: 76px; padding: 48px 0; }
+    .sov-hero-section h1 { font-size: 28px; }
+    .sov-hero-sub { font-size: 13px; }
+
+    .sov-item {
+        flex-direction: column;
+        min-height: auto;
+        border-radius: 18px;
+    }
+
+    .sov-item-img {
+        width: 100%;
+        height: 220px;
+    }
+
+    .sov-item-body {
+        padding: 28px 24px;
+    }
+
+    .sov-item-body h2 { font-size: 20px; }
+    .sov-badge { bottom: 12px; right: 12px; }
+}

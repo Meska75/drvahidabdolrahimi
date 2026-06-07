@@ -1,0 +1,266 @@
+{% extends "english/english_base.html" %}
+{% load static %}
+
+{% block title %}Contact Us — Dr. Vahid Abdolrahimi{% endblock %}
+
+{% block meta_description %}<meta name="description" content="Contact Dr. Vahid Abdolrahimi's ophthalmology clinic — book an appointment online, clinic address in Tehran Vanak Square, phone numbers and working hours.">{% endblock %}
+
+{% block meta_og %}
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Dr. Vahid Abdolrahimi">
+<meta property="og:title" content="Contact Dr. Vahid Abdolrahimi's Clinic">
+<meta property="og:description" content="Book an appointment, clinic address, phone numbers and working hours — Dr. Vahid Abdolrahimi, Tehran">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo_en.png' %}">
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+<style>
+    /* ===== LTR Overrides for Contact Page ===== */
+
+    /* Form inputs — switch to LTR */
+    .uf-group input,
+    .uf-group textarea {
+        direction: ltr !important;
+        text-align: left !important;
+        padding: 10px 0 10px 26px !important;
+        font-family: 'Inter', Arial, sans-serif !important;
+    }
+
+    /* Icon — move from right to left */
+    .uf-group .uf-icon {
+        right: auto !important;
+        left: 2px !important;
+    }
+
+    /* Send button font */
+    .btn-send {
+        font-family: 'Inter', Arial, sans-serif !important;
+    }
+
+    /* Map label font */
+    .map-label {
+        font-family: 'Inter', Arial, sans-serif !important;
+    }
+
+    /* Decorative circles in hero — LTR flip */
+    .contact-hero-section::before {
+        right: auto;
+        left: -150px;
+    }
+    .contact-hero-section::after {
+        left: auto;
+        right: -100px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="contact-hero-section">
+
+    <div class="hero-grid-overlay"></div>
+
+    <div class="container">
+
+        <!-- Breadcrumb -->
+        <div class="contact-breadcrumb wow fadeInDown" data-wow-delay=".05s">
+            <a href="{% url 'english:english_home' %}">Home</a>
+            <span class="sep">›</span>
+            <span class="current">Contact Us</span>
+        </div>
+
+        <!-- Heading -->
+        <h1 class="wow fadeInUp" data-wow-delay=".1s">
+            How Can We<br>
+            <span class="grad-text">Help You?</span>
+        </h1>
+
+        <p class="hero-sub wow fadeInUp" data-wow-delay=".15s">
+            Our team is ready to assist you. To book an appointment, get a consultation, or ask any question, reach us through the options below.
+        </p>
+
+        <!-- Three contact blocks -->
+        <div class="contact-blocks wow fadeInUp" data-wow-delay=".2s">
+
+            <a href="tel:02188648210" class="contact-block">
+                <div class="cb-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <h4>Clinic Phone</h4>
+                <span class="cb-value">021-88648210</span>
+            </a>
+
+            <a href="tel:09013434195" class="contact-block">
+                <div class="cb-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h4>Mobile</h4>
+                <span class="cb-value">0901-343-4195</span>
+            </a>
+
+            <div class="contact-block">
+                <div class="cb-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h4>Working Hours</h4>
+                <span class="cb-value">Sat – Thu</span>
+                <span class="cb-value" style="font-size:12px; color:#64748b; font-weight:500;">11:00 – 14:00</span>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- End Hero -->
+
+
+<!-- Info Card + Form Section -->
+<section class="contact-body-section">
+    <div class="container">
+
+        <div class="contact-card wow fadeInUp" data-wow-delay=".1s">
+
+            <!-- Dark panel — contact info -->
+            <div class="card-info-panel">
+
+                <span class="info-panel-tag">GET IN TOUCH</span>
+
+                <h3>Dr. Abdolrahimi's<br>Clinic</h3>
+
+                <p>We are here to answer your questions.<br>We will get back to you as soon as possible.</p>
+
+                <div class="info-divider"></div>
+
+                <div class="info-item">
+                    <div class="info-item-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="info-item-text">
+                        <h5>ADDRESS</h5>
+                        <p>Tehran, Vanak Sq., South Gandhi St., Shahide Torkan St., No. 24, 4th Floor, Unit 9</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-item-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="info-item-text">
+                        <h5>CLINIC PHONE</h5>
+                        <a href="tel:02188648210">021-88648210</a>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-item-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="info-item-text">
+                        <h5>MOBILE</h5>
+                        <a href="tel:09013434195">0901-343-4195</a>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-item-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="info-item-text">
+                        <h5>WORKING HOURS</h5>
+                        <p>Saturday to Thursday: 11:00 – 14:00</p>
+                    </div>
+                </div>
+
+                <!-- Social links -->
+                <div class="info-social">
+                    <p>SOCIAL MEDIA</p>
+                    <div class="info-social-links">
+                        <a href="https://www.instagram.com/dr_vahid_abdolrahimi/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://t.me/dr_vahid_abdolrahimi" target="_blank" rel="noopener" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+                        <a href="https://wa.me/989013434195" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+            </div>
+            <!-- End dark panel -->
+
+            <!-- White form panel -->
+            <div class="card-form-panel">
+                <h3>Send a Message</h3>
+                <p>Send us your message — we reply within 24 business hours.</p>
+
+                <form action="#" method="post">
+                    {% csrf_token %}
+
+                    <!-- Name + Phone row -->
+                    <div class="uf-row">
+                        <div class="uf-group">
+                            <label class="uf-label">FULL NAME</label>
+                            <input type="text" name="name" placeholder="e.g. John Smith" required>
+                            <i class="fas fa-user uf-icon"></i>
+                        </div>
+                        <div class="uf-group">
+                            <label class="uf-label">PHONE NUMBER</label>
+                            <input type="tel" name="phone" placeholder="+98XXXXXXXXXX">
+                            <i class="fas fa-phone uf-icon"></i>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="uf-group">
+                        <label class="uf-label">EMAIL ADDRESS</label>
+                        <input type="email" name="email" placeholder="example@email.com">
+                        <i class="fas fa-envelope uf-icon"></i>
+                    </div>
+
+                    <!-- Subject -->
+                    <div class="uf-group">
+                        <label class="uf-label">SUBJECT</label>
+                        <input type="text" name="subject" placeholder="e.g. Book an Appointment" required>
+                        <i class="fas fa-tag uf-icon"></i>
+                    </div>
+
+                    <!-- Message -->
+                    <div class="uf-group textarea-group">
+                        <label class="uf-label">MESSAGE</label>
+                        <textarea name="message" placeholder="Write your question or message here..." required></textarea>
+                        <i class="fas fa-comment-dots uf-icon"></i>
+                    </div>
+
+                    <button type="submit" class="btn-send">
+                        <i class="fas fa-paper-plane"></i>
+                        Send Message
+                    </button>
+
+                </form>
+            </div>
+            <!-- End form panel -->
+
+        </div>
+        <!-- End contact card -->
+
+    </div>
+</section>
+<!-- End body section -->
+
+
+<!-- Full-width Map -->
+<section class="contact-map-section">
+    <div class="map-label">
+        <i class="fas fa-map-marker-alt"></i>
+        Clinic Location on Map
+    </div>
+    <iframe
+        src="https://maps.google.com/maps?q=35.75431655694686,51.41248217613625&z=16&output=embed"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Dr. Abdolrahimi's Clinic Location">
+    </iframe>
+</section>
+<!-- End map -->
+
+{% endblock %}

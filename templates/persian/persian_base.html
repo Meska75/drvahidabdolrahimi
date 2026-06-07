@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %}دکتر وحید عبدالرحیمی — فوق تخصص بیماری‌های شبکیه و زجاجیه{% endblock %}</title>
+    <title>{% block title %}دکتر وحید عبدالرحیمی — فوق تخصص شبکیه و لیزر{% endblock %}</title>
     <link rel="shortcut icon" href="{% static 'images/logo/favicon.png' %}" type="image/x-icon">
 
     <!-- SEO meta -->
-    {% block meta_description %}<meta name="description" content="دکتر وحید عبدالرحیمی — فوق تخصص بیماری‌های شبکیه و زجاجیه. مطب تخصصی چشم‌پزشکی در تهران با بیش از ۱۰ سال تجربه بالینی.">{% endblock %}
+    {% block meta_description %}<meta name="description" content="دکتر وحید عبدالرحیمی — جراح متخصص چشم، فوق تخصص شبکیه و لیزر. مطب تخصصی چشم‌پزشکی در تهران، میدان ونک.">{% endblock %}
     <meta name="robots" content="index, follow">
     <meta name="author" content="دکتر وحید عبدالرحیمی">
     {% block canonical %}<link rel="canonical" href="{{ request.build_absolute_uri }}">{% endblock %}
@@ -19,8 +19,8 @@
     <meta property="og:type" content="website">
     <meta property="og:locale" content="fa_IR">
     <meta property="og:site_name" content="دکتر وحید عبدالرحیمی">
-    <meta property="og:title" content="دکتر وحید عبدالرحیمی — فوق تخصص شبکیه و زجاجیه">
-    <meta property="og:description" content="فوق تخصص بیماری‌های شبکیه و زجاجیه — مطب تخصصی چشم‌پزشکی در تهران">
+    <meta property="og:title" content="دکتر وحید عبدالرحیمی — فوق تخصص شبکیه و لیزر">
+    <meta property="og:description" content="جراح و متخصص چشم، فوق تخصص شبکیه و لیزر — مطب تخصصی چشم‌پزشکی در تهران، میدان ونک">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.png' %}">
     {% endblock %}
@@ -44,12 +44,19 @@
         /* ===== تنظیمات پایه RTL ===== */
         html { overflow-x: hidden; }
         body {
-            font-family: 'Vazirmatn', Tahoma, Arial, sans-serif;
+            font-family: 'Vazirmatn', Tahoma, Arial, sans-serif !important;
             direction: rtl;
             text-align: right;
             color: #64748b;
             overflow-x: hidden;
             background: #071a35; /* همرنگ هدر — فاصله احتمالی ناپیدا باشد */
+        }
+
+        /* override کردن Roboto/Ubuntu از style.css قدیمی — تمام متن‌ها Vazirmatn */
+        h1, h2, h3, h4, h5, h6,
+        p, a, span, div, li, ul, ol,
+        input, textarea, select, button, label, td, th {
+            font-family: 'Vazirmatn', Tahoma, Arial, sans-serif !important;
         }
 
         /* ===== هدر بالا ===== */
@@ -80,8 +87,14 @@
             align-items: center;
             gap: 6px;
         }
-        .header-top h6 span { margin-right: 0 !important; margin-left: 0; }
-        .header-top h6 i { color: #60a5fa; font-size: 14px; }
+        .header-top h6 span {
+            margin-right: 0 !important;
+            margin-left: 0;
+            display: inline-flex;
+            align-items: center;
+            line-height: 1;
+        }
+        .header-top h6 i { color: #60a5fa; font-size: 14px; line-height: 1; }
 
         .header-top .social-links ul {
             display: flex;
@@ -134,6 +147,12 @@
         }
 
         #logo img { max-height: 48px; }
+
+        /* ===== layout هدر اصلی — لوگو راست، منو کنار آن با gap ===== */
+        #header .row.d-flex {
+            justify-content: flex-start !important;
+            gap: 2.5rem;
+        }
 
         /* ===== منو ===== */
         #nav-menu-container { margin: 0; }
@@ -275,6 +294,38 @@
             #header { top: 0; }
             .header-top { display: none; }
         }
+
+        /* ===== موبایل — RTL fixes ===== */
+        @media (max-width: 960px) {
+            /* دکمه همبرگر: از راست (روی لوگو) به چپ منتقل شود */
+            #mobile-nav-toggle {
+                right: auto !important;
+                left: 15px !important;
+            }
+
+            /* آیکون فلش زیرمنو: از روی متن به سمت چپ لینک */
+            #mobile-nav .menu-has-children {
+                position: relative;
+                display: flex !important;
+                align-items: center;
+            }
+            #mobile-nav .menu-has-children > a {
+                flex: 1;
+                padding-left: 36px !important;
+            }
+            #mobile-nav .menu-has-children > i.lnr {
+                position: absolute !important;
+                left: 8px !important;
+                right: auto !important;
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+                padding: 6px 8px;
+                color: #94a3b8;
+                flex-shrink: 0;
+                z-index: 1;
+            }
+        }
     </style>
 
     {% block extra_css %}{% endblock %}
@@ -285,31 +336,34 @@
         "@context": "https://schema.org",
         "@type": ["Physician", "MedicalBusiness"],
         "name": "دکتر وحید عبدالرحیمی",
-        "description": "فوق تخصص بیماری‌های شبکیه و زجاجیه",
+        "description": "جراح و متخصص چشم — فوق تخصص شبکیه و لیزر",
         "medicalSpecialty": "Ophthalmology",
-        "telephone": "021-XXXXXXXX",
-        "email": "info@drabdolrahimi.ir",
+        "telephone": ["021-88648210", "09013434195"],
+        "sameAs": [
+            "https://www.instagram.com/dr_vahid_abdolrahimi/",
+            "https://t.me/dr_vahid_abdolrahimi"
+        ],
         "address": {
             "@type": "PostalAddress",
+            "streetAddress": "میدان ونک، خیابان گاندی جنوبی، خیابان شهیده ترکان، پلاک ۲۴، طبقه ۴، واحد ۹",
             "addressLocality": "تهران",
             "addressCountry": "IR"
         },
         "openingHoursSpecification": [
             {
                 "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday"],
-                "opens": "09:00",
-                "closes": "17:00"
-            },
-            {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": "Thursday",
-                "opens": "09:00",
-                "closes": "13:00"
+                "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+                "opens": "11:00",
+                "closes": "14:00"
             }
         ],
         "priceRange": "$$",
-        "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.png' %}"
+        "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.png' %}",
+        "identifier": {
+            "@type": "PropertyValue",
+            "name": "شماره نظام پزشکی",
+            "value": "77279"
+        }
     }
     </script>
     {% block json_ld %}{% endblock %}
@@ -328,17 +382,16 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-9 d-md-flex">
-                        <h6><span><i class="fa fa-mobile"></i></span> ۰۲۱-XXXXXXXX</h6>
-                        <h6><span><i class="fa fa-envelope-o"></i></span> info@drabdolrahimi.ir</h6>
-                        <h6><span><i class="fa fa-map-marker"></i></span> تهران، ایران</h6>
+                        <h6><span><i class="fa fa-phone"></i></span> ۰۲۱-۸۸۶۴۸۲۱۰</h6>
+                        <h6><span><i class="fa fa-mobile"></i></span> ۰۹۰۱-۳۴۳-۴۱۹۵</h6>
+                        <h6><span><i class="fa fa-map-marker"></i></span> ایران، تهران، میدان ونک، خ. گاندی جنوبی، خ. شهیده ترکان، پلاک ۲۴، طبقه ۴، واحد ۹</h6>
                     </div>
                     <div class="col-lg-3">
                         <div class="social-links">
                             <ul>
-                                <li><a href="#" aria-label="اینستاگرام"><i class="fa fa-instagram"></i></a></li>
-                                <li><a href="#" aria-label="تلگرام"><i class="fa fa-telegram"></i></a></li>
-                                <li><a href="#" aria-label="لینکدین"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="#" aria-label="یوتیوب"><i class="fa fa-youtube-play"></i></a></li>
+                                <li><a href="https://www.instagram.com/dr_vahid_abdolrahimi/" aria-label="اینستاگرام" target="_blank" rel="noopener"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="https://t.me/dr_vahid_abdolrahimi" aria-label="تلگرام" target="_blank" rel="noopener"><i class="fa fa-telegram"></i></a></li>
+                                <li><a href="https://wa.me/989013434195" aria-label="واتس‌اپ" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -362,8 +415,8 @@
                             <li {% if request.resolver_match.url_name == 'persian_about' %}class="menu-active"{% endif %}>
                                 <a href="{% url 'main:persian_about' %}">درباره دکتر</a>
                             </li>
-                            <li class="menu-has-children">
-                                <a href="#">خدمات</a>
+                            <li class="menu-has-children {% if 'services' in request.resolver_match.url_name %}menu-active{% endif %}">
+                                <a href="{% url 'services:persian_services_overview' %}">خدمات</a>
                                 <ul>
                                     <li><a href="{% url 'services:persian_office_services' %}">خدمات مطب</a></li>
                                     <li><a href="{% url 'services:persian_surgery_services' %}">خدمات جراحی</a></li>
@@ -404,10 +457,10 @@
                     <div class="col-xl-4 offset-xl-1 col-lg-5">
                         <div class="single-widget-home mb-5 mb-lg-0">
                             <h3 class="mb-4">اطلاعات تماس</h3>
-                            <p class="mb-2"><i class="fa fa-map-marker ml-2"></i> تهران — آدرس کامل مطب</p>
-                            <p class="mb-2"><i class="fa fa-phone ml-2"></i> ۰۲۱-XXXXXXXX</p>
-                            <p class="mb-2"><i class="fa fa-envelope-o ml-2"></i> info@drabdolrahimi.ir</p>
-                            <p><i class="fa fa-clock-o ml-2"></i> شنبه تا چهارشنبه | ۹ تا ۱۷</p>
+                            <p class="mb-2"><i class="fa fa-map-marker ml-2"></i> ایران، تهران، میدان ونک، خ. گاندی جنوبی، خ. شهیده ترکان، پلاک ۲۴، طبقه ۴، واحد ۹</p>
+                            <p class="mb-2"><i class="fa fa-phone ml-2"></i> <span dir="ltr">021-88648210</span></p>
+                            <p class="mb-2"><i class="fa fa-mobile ml-2"></i> <span dir="ltr">0901-343-4195</span></p>
+                            <p><i class="fa fa-clock-o ml-2"></i> شنبه تا پنجشنبه | ۱۱ تا ۱۴</p>
                         </div>
                     </div>
                     <div class="col-xl-3 offset-xl-1 col-lg-4">
@@ -416,9 +469,9 @@
                             <p class="mb-3">ما را در شبکه‌های اجتماعی دنبال کنید</p>
                             <div class="social-icons">
                                 <ul>
-                                    <li><a href="#" aria-label="اینستاگرام"><i class="fa fa-instagram"></i></a></li>
-                                    <li><a href="#" aria-label="تلگرام"><i class="fa fa-telegram"></i></a></li>
-                                    <li><a href="#" aria-label="لینکدین"><i class="fa fa-linkedin"></i></a></li>
+                                    <li><a href="https://www.instagram.com/dr_vahid_abdolrahimi/" aria-label="اینستاگرام" target="_blank" rel="noopener"><i class="fa fa-instagram"></i></a></li>
+                                    <li><a href="https://t.me/dr_vahid_abdolrahimi" aria-label="تلگرام" target="_blank" rel="noopener"><i class="fa fa-telegram"></i></a></li>
+                                    <li><a href="https://wa.me/989013434195" aria-label="واتس‌اپ" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -431,6 +484,7 @@
                 <div class="row">
                     <div class="col-lg-12 text-center">
                         <span>تمامی حقوق محفوظ است &copy; {% now "Y" %} — دکتر وحید عبدالرحیمی</span>
+                        <span style="display:block; margin-top:4px; color:#475569; font-size:12px;">شماره نظام پزشکی: <span dir="ltr">۷۷۲۷۹</span></span>
                     </div>
                 </div>
             </div>

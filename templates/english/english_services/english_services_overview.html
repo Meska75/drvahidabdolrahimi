@@ -1,0 +1,145 @@
+{% extends "english/english_base.html" %}
+{% load static %}
+
+{% block title %}Services — Dr. Vahid Abdolrahimi{% endblock %}
+
+{% block meta_description %}<meta name="description" content="Specialized clinic and surgical services of Dr. Vahid Abdolrahimi — Retina & Vitreous Sub-Specialist. Diagnostic, therapeutic, and surgical eye services in Tehran.">{% endblock %}
+
+{% block meta_og %}
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Dr. Vahid Abdolrahimi">
+<meta property="og:title" content="Clinic & Surgical Services — Dr. Vahid Abdolrahimi">
+<meta property="og:description" content="Diagnostic, therapeutic, and surgical eye care services by Dr. Abdolrahimi — Retina & Vitreous Sub-Specialist in Tehran">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo_en.png' %}">
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/services_overview.css' %}">
+<style>
+    /* ===== LTR overrides ===== */
+
+    /* Decorative circle — flip to right side */
+    .sov-hero-section::after {
+        left: auto;
+        right: -100px;
+    }
+
+    /* CTA arrow — LTR hover moves right */
+    .sov-item:hover .sov-cta i {
+        transform: translateX(5px) !important;
+    }
+
+    /* Badge stays bottom-left of image in LTR layout (image is on left) */
+    .sov-badge {
+        right: auto;
+        left: 20px;
+    }
+
+    /* Hero text — left aligned */
+    .sov-hero-section h1,
+    .sov-hero-sub {
+        text-align: left;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="sov-hero-section">
+    <div class="container">
+
+        <!-- Breadcrumb -->
+        <div class="sov-breadcrumb wow fadeInDown" data-wow-delay=".05s">
+            <a href="{% url 'english:english_home' %}">Home</a>
+            <span class="sep">›</span>
+            <span class="current">Services</span>
+        </div>
+
+        <!-- Heading -->
+        <h1 class="wow fadeInUp" data-wow-delay=".1s">
+            Our <span class="grad-text">Specialized</span> Services
+        </h1>
+
+        <p class="sov-hero-sub wow fadeInUp" data-wow-delay=".15s">
+            Dr. Abdolrahimi's clinic offers a full spectrum of diagnostic, therapeutic, and surgical
+            eye care services, utilizing state-of-the-art equipment and the highest quality standards.
+        </p>
+
+    </div>
+</section>
+<!-- End Hero -->
+
+
+<!-- Services List -->
+<section class="sov-list-section">
+    <div class="container">
+
+        <!-- Item 1 — Office Services -->
+        <a href="{% url 'english_services:english_office_services' %}" class="sov-item wow fadeInUp" data-wow-delay=".1s">
+
+            <div class="sov-item-img">
+                <img src="{% static 'images/services/overview/department1.jpg' %}" alt="Dr. Abdolrahimi diagnostic clinic services" loading="lazy">
+                <span class="sov-badge">Clinic</span>
+            </div>
+
+            <div class="sov-item-body">
+                <span class="sov-item-tag">DIAGNOSIS & TREATMENT</span>
+                <div class="sov-divider-line"></div>
+                <h2>Office Services</h2>
+                <p>
+                    Dr. Abdolrahimi's clinic is equipped with the most advanced diagnostic and therapeutic devices available today.
+                    Services include comprehensive eye examination, retinal OCT imaging, fluorescein angiography,
+                    intravitreal injection (Anti-VEGF), visual field testing (perimetry), and intraocular pressure
+                    measurement (tonometry) — all provided in a calm, organized, and fully professional environment.
+                </p>
+                <span class="sov-cta">
+                    View Office Services
+                    <i class="fas fa-arrow-right"></i>
+                </span>
+            </div>
+
+        </a>
+
+        <!-- Item 2 — Surgical Services -->
+        <a href="{% url 'english_services:english_surgery_services' %}" class="sov-item sov-surgery wow fadeInUp" data-wow-delay=".15s">
+
+            <div class="sov-item-img">
+                <img src="{% static 'images/services/overview/department2.jpg' %}" alt="Dr. Abdolrahimi specialized eye surgery" loading="lazy">
+                <span class="sov-badge surgery">Surgery</span>
+            </div>
+
+            <div class="sov-item-body">
+                <span class="sov-item-tag surgery">SPECIALIZED SURGERY</span>
+                <div class="sov-divider-line" style="background: linear-gradient(90deg, #059669, #34d399);"></div>
+                <h2>Surgical Services</h2>
+                <p>
+                    With the most advanced surgical techniques and over 5,000+ successful operations,
+                    Dr. Abdolrahimi performs a wide range of specialized eye surgeries including vitrectomy (retina),
+                    cataract surgery, retinal laser, glaucoma surgery, SLT and YAG laser, and endotamponade.
+                    All procedures are carried out to the highest safety standards with comprehensive pre- and post-operative care.
+                </p>
+                <span class="sov-cta">
+                    View Surgical Services
+                    <i class="fas fa-arrow-right"></i>
+                </span>
+            </div>
+
+        </a>
+
+    </div>
+</section>
+<!-- End Services List -->
+
+
+<!-- Clinic Team -->
+<section class="sov-team-section">
+    <div class="container">
+        {% include "english/components/team_section.html" %}
+    </div>
+</section>
+
+{% endblock %}

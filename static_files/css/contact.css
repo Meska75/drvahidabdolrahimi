@@ -30,7 +30,7 @@
     background: linear-gradient(150deg, #040f1f 0%, #071a35 45%, #0a2d5a 100%);
     position: relative;
     overflow: hidden;
-    padding: 90px 0 160px; /* padding زیاد برای فضای شناور کارت */
+    padding: 90px 0 90px;
     text-align: center;
 }
 
@@ -198,7 +198,7 @@
     border-radius: 28px;
     overflow: hidden;
     box-shadow: 0 40px 100px rgba(0,0,0,.22);
-    margin-top: -110px;
+    margin-top: 40px;
     position: relative;
     z-index: 10;
 }
@@ -514,7 +514,7 @@
 @media (max-width: 991.98px) {
     .contact-hero-section {
         margin-top: 29px;
-        padding: 70px 0 140px;
+        padding: 70px 0 70px;
     }
 
     .contact-hero-section h1 { font-size: 38px; }
@@ -523,7 +523,7 @@
 
     .contact-card {
         flex-direction: column;
-        margin-top: -80px;
+        margin-top: 32px;
     }
 
     .card-info-panel {
@@ -539,7 +539,7 @@
 @media (max-width: 767.98px) {
     .contact-hero-section {
         margin-top: 76px;
-        padding: 50px 0 120px;
+        padding: 50px 0 50px;
     }
 
     .contact-hero-section h1 { font-size: 28px; }
@@ -552,7 +552,7 @@
 
     .contact-card {
         border-radius: 20px;
-        margin-top: -60px;
+        margin-top: 24px;
     }
 
     .uf-row { grid-template-columns: 1fr; gap: 0; }

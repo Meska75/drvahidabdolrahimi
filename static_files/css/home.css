@@ -268,10 +268,11 @@
 .fc-icon.green { background: rgba(52,211,153,.25); color: #34d399; }
 
 .fc-text strong {
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 15px;
+    font-weight: 800;
     color: #fff;
     display: block;
+    line-height: 1.3;
 }
 
 .fc-text span { font-size: 11px; color: #94a3b8; }
@@ -386,6 +387,8 @@
     transition: all .35s cubic-bezier(.4,0,.2,1);
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .feat-card::after {
@@ -414,10 +417,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     font-size: 28px;
     color: var(--primary);
     transition: all .35s;
+    /* آیکون گوشه بالا-راست در RTL */
+    align-self: flex-start;
 }
 
 .feat-card:hover .feat-icon {
@@ -515,6 +520,25 @@
     line-height: 1.85;
     margin-bottom: 28px;
     font-size: 15px;
+    text-align: justify;
+}
+
+/* کادر متن رسمی معرفی دکتر */
+.about-quote-box {
+    background: linear-gradient(135deg, rgba(26,86,219,.04) 0%, rgba(14,165,233,.04) 100%);
+    border: 1px solid rgba(26,86,219,.15);
+    border-right: 4px solid var(--primary, #1a56db);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 28px;
+    position: relative;
+}
+
+.about-quote-box p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 2;
+    color: var(--text-dark, #1e293b);
 }
 
 .about-list {

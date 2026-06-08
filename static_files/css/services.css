@@ -552,6 +552,57 @@
 }
 
 /* ===========================
+   تم سبز — صفحه جراحی
+=========================== */
+
+/* هیرو جراحی */
+.surgery-hero {
+    background: linear-gradient(140deg, #052e16 0%, #064e3b 60%, #065f46 100%) !important;
+}
+.surgery-hero::before { background: rgba(5,150,105,.07); }
+.surgery-hero::after  { background: rgba(52,211,153,.06); }
+
+/* گرادیان متن سبز */
+.grad-text-green {
+    background: linear-gradient(90deg, #34d399, #059669);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* تگ برچسب جراحی */
+.surgery-tag {
+    background: rgba(5,150,105,.22) !important;
+    border-color: rgba(52,211,153,.3) !important;
+    color: #6ee7b7 !important;
+}
+
+/* بج‌های هیرو جراحی */
+.surgery-badge {
+    background: rgba(5,150,105,.12) !important;
+    border-color: rgba(52,211,153,.2) !important;
+    color: #a7f3d0 !important;
+}
+.surgery-badge i { color: #34d399 !important; }
+
+/* کارت سرویس جراحی */
+.surgery-card { border-color: rgba(5,150,105,.15); }
+.surgery-card:hover { border-color: rgba(5,150,105,.35); }
+
+/* placeholder آیکون جراحی */
+.svc-img-placeholder.surgery-placeholder {
+    background: linear-gradient(135deg, #dcfce7 0%, #d1fae5 100%);
+}
+.svc-img-placeholder.surgery-placeholder i { color: rgba(5,150,105,.22); }
+
+/* دایره دکوراتیو جراحی */
+.surgery-deco {
+    background: rgba(5,150,105,.12) !important;
+    border-color: rgba(52,211,153,.2) !important;
+}
+.surgery-deco i { color: rgba(52,211,153,.28) !important; }
+
+/* ===========================
    Responsive
 =========================== */
 @media (max-width: 991.98px) {

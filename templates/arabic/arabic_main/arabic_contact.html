@@ -1,0 +1,184 @@
+{% extends "arabic/arabic_base.html" %}
+{% load static %}
+
+{% block title %}اتصل بنا — د. وحيد عبد الرحيمي{% endblock %}
+
+{% block meta_description %}<meta name="description" content="تواصل مع عيادة د. وحيد عبد الرحيمي — حجز موعد، عنوان العيادة في طهران ميدان ونك، أرقام الهاتف وساعات العمل.">{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ===== هيرو ===== -->
+<section class="contact-hero-section">
+    <div class="hero-grid-overlay"></div>
+    <div class="container">
+
+        <div class="contact-breadcrumb wow fadeInDown" data-wow-delay=".05s">
+            <a href="{% url 'arabic:arabic_home' %}">الرئيسية</a>
+            <span class="sep">›</span>
+            <span class="current">اتصل بنا</span>
+        </div>
+
+        <h1 class="wow fadeInUp" data-wow-delay=".1s">
+            كيف يمكننا<br>
+            <span class="grad-text">مساعدتك؟</span>
+        </h1>
+
+        <p class="hero-sub wow fadeInUp" data-wow-delay=".15s">
+            فريقنا على أهبة الاستعداد لمساعدتك. لحجز موعد أو الحصول على استشارة أو طرح أي سؤال، تواصل معنا عبر إحدى القنوات أدناه.
+        </p>
+
+        <div class="contact-blocks wow fadeInUp" data-wow-delay=".2s">
+
+            <a href="tel:02188648210" class="contact-block">
+                <div class="cb-icon"><i class="fas fa-phone"></i></div>
+                <h4>هاتف العيادة</h4>
+                <span class="cb-value" dir="ltr">021-88648210</span>
+            </a>
+
+            <a href="tel:09013434195" class="contact-block">
+                <div class="cb-icon"><i class="fas fa-mobile-alt"></i></div>
+                <h4>الجوال</h4>
+                <span class="cb-value" dir="ltr">0901-343-4195</span>
+            </a>
+
+            <div class="contact-block">
+                <div class="cb-icon"><i class="fas fa-clock"></i></div>
+                <h4>ساعات العمل</h4>
+                <span class="cb-value">السبت – الخميس</span>
+                <span class="cb-value" style="font-size:12px; color:#64748b; font-weight:500;">11:00 – 14:00</span>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== بطاقة المعلومات + النموذج ===== -->
+<section class="contact-body-section">
+    <div class="container">
+        <div class="contact-card wow fadeInUp" data-wow-delay=".1s">
+
+            <!-- لوحة المعلومات الداكنة -->
+            <div class="card-info-panel">
+
+                <span class="info-panel-tag">تواصل معنا</span>
+                <h3>عيادة<br>د. عبد الرحيمي</h3>
+                <p>نحن هنا للإجابة على استفساراتكم.<br>سنرد عليكم في أقرب وقت ممكن.</p>
+
+                <div class="info-divider"></div>
+
+                <div class="info-item">
+                    <div class="info-item-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="info-item-text">
+                        <h5>العنوان</h5>
+                        <p>طهران، ميدان وانك، شارع غاندي الجنوبي، شارع الشهيدة تركان، رقم 24، الطابق الرابع، وحدة 9</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-item-icon"><i class="fas fa-phone"></i></div>
+                    <div class="info-item-text">
+                        <h5>هاتف العيادة</h5>
+                        <a href="tel:02188648210" dir="ltr">021-88648210</a>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-item-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <div class="info-item-text">
+                        <h5>الجوال</h5>
+                        <a href="tel:09013434195" dir="ltr">0901-343-4195</a>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-item-icon"><i class="fas fa-clock"></i></div>
+                    <div class="info-item-text">
+                        <h5>ساعات العمل</h5>
+                        <p>السبت إلى الخميس: 11:00 – 14:00</p>
+                    </div>
+                </div>
+
+                <div class="info-social">
+                    <p>التواصل الاجتماعي</p>
+                    <div class="info-social-links">
+                        <a href="https://www.instagram.com/dr_vahid_abdolrahimi/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://t.me/dr_vahid_abdolrahimi" target="_blank" rel="noopener" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+                        <a href="https://wa.me/989013434195" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- لوحة النموذج -->
+            <div class="card-form-panel">
+                <h3>أرسل رسالة</h3>
+                <p>أرسل لنا رسالتك وسنرد خلال 24 ساعة عمل.</p>
+
+                <form action="#" method="post">
+                    {% csrf_token %}
+
+                    <div class="uf-row">
+                        <div class="uf-group">
+                            <label class="uf-label" for="ar_name">الاسم الكامل</label>
+                            <input type="text" id="ar_name" name="name" placeholder="مثال: أحمد محمد" required autocomplete="name">
+                            <i class="fas fa-user uf-icon"></i>
+                        </div>
+                        <div class="uf-group">
+                            <label class="uf-label" for="ar_phone">رقم الهاتف</label>
+                            <input type="tel" id="ar_phone" name="phone" placeholder="09XXXXXXXXX" autocomplete="tel">
+                            <i class="fas fa-phone uf-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="uf-group">
+                        <label class="uf-label" for="ar_email">البريد الإلكتروني</label>
+                        <input type="email" id="ar_email" name="email" placeholder="example@email.com" autocomplete="email">
+                        <i class="fas fa-envelope uf-icon"></i>
+                    </div>
+
+                    <div class="uf-group">
+                        <label class="uf-label" for="ar_subject">الموضوع</label>
+                        <input type="text" id="ar_subject" name="subject" placeholder="مثال: حجز موعد" required>
+                        <i class="fas fa-tag uf-icon"></i>
+                    </div>
+
+                    <div class="uf-group textarea-group">
+                        <label class="uf-label" for="ar_message">الرسالة</label>
+                        <textarea id="ar_message" name="message" placeholder="اكتب سؤالك أو رسالتك هنا..." required></textarea>
+                        <i class="fas fa-comment-dots uf-icon"></i>
+                    </div>
+
+                    <button type="submit" class="btn-send">
+                        <i class="fas fa-paper-plane"></i>
+                        إرسال الرسالة
+                    </button>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== الخريطة ===== -->
+<section class="contact-map-section">
+    <div class="map-label">
+        <i class="fas fa-map-marker-alt"></i>
+        موقع العيادة على الخريطة
+    </div>
+    <iframe
+        src="https://maps.google.com/maps?q=35.75431655694686,51.41248217613625&z=16&output=embed"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="موقع عيادة د. عبد الرحيمي">
+    </iframe>
+</section>
+
+{% endblock %}

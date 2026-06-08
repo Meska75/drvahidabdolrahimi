@@ -23,3 +23,15 @@ def english_office_services(request):
 
 def english_surgery_services(request):
     return render(request, 'english/english_services/english_surgery_services.html')
+
+
+def arabic_services_overview(request):
+    return render(request, 'arabic/arabic_services/arabic_services_overview.html')
+
+
+def arabic_office_services(request):
+    return render(request, 'arabic/arabic_services/arabic_office_services.html')
+
+
+def arabic_surgery_services(request):
+    return render(request, 'arabic/arabic_services/arabic_surgery_services.html')

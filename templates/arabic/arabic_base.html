@@ -1,18 +1,18 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %}Dr. Vahid Abdolrahimi — Retina & Laser Sub-Specialist{% endblock %}</title>
+    <title>{% block title %}د. وحيد عبد الرحيمي — أخصائي شبكية العين والليزر{% endblock %}</title>
     <link rel="shortcut icon" href="{% static 'images/logo/favicon.png' %}" type="image/x-icon">
 
     <!-- SEO meta -->
-    {% block meta_description %}<meta name="description" content="Dr. Vahid Abdolrahimi — Ophthalmologist & Retina/Laser Sub-Specialist. Specialist ophthalmology clinic in Tehran, Vanak Square.">{% endblock %}
+    {% block meta_description %}<meta name="description" content="د. وحيد عبد الرحيمي — طبيب عيون وجراح، أخصائي شبكية العين والليزر. عيادة متخصصة في أمراض العيون بطهران، ميدان وانك.">{% endblock %}
     <meta name="robots" content="index, follow">
-    <meta name="author" content="Dr. Vahid Abdolrahimi">
-    <meta name="language" content="en">
+    <meta name="author" content="د. وحيد عبد الرحيمي">
+    <meta name="language" content="ar">
     <meta name="geo.region" content="IR-16">
     <meta name="geo.placename" content="Tehran">
     <meta name="geo.position" content="35.754317;51.412482">
@@ -22,24 +22,24 @@
     <!-- Open Graph -->
     {% block meta_og %}
     <meta property="og:type" content="website">
-    <meta property="og:locale" content="en_US">
-    <meta property="og:site_name" content="Dr. Vahid Abdolrahimi">
-    <meta property="og:title" content="Dr. Vahid Abdolrahimi — Retina &amp; Laser Sub-Specialist">
-    <meta property="og:description" content="Ophthalmologist &amp; Retina/Laser Sub-Specialist — specialist ophthalmology clinic in Tehran, Vanak Square">
+    <meta property="og:locale" content="ar_AR">
+    <meta property="og:site_name" content="د. وحيد عبد الرحيمي">
+    <meta property="og:title" content="د. وحيد عبد الرحيمي — أخصائي شبكية العين والليزر">
+    <meta property="og:description" content="طبيب عيون وجراح، أخصائي شبكية العين والليزر — عيادة متخصصة في طهران، ميدان وانك">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo_en.png' %}">
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.png' %}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Dr. Vahid Abdolrahimi — Retina &amp; Laser Sub-Specialist">
-    <meta name="twitter:description" content="Ophthalmologist &amp; Retina/Laser Sub-Specialist — specialist ophthalmology clinic in Tehran, Vanak Square">
-    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo_en.png' %}">
+    <meta name="twitter:title" content="د. وحيد عبد الرحيمي — أخصائي شبكية العين والليزر">
+    <meta name="twitter:description" content="طبيب عيون وجراح، أخصائي شبكية العين والليزر — عيادة متخصصة في طهران">
+    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.png' %}">
     {% endblock %}
 
-    <!-- Inter font -->
+    <!-- Cairo Arabic font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- CSS files -->
     <link rel="stylesheet" href="{% static 'css/animate-3.7.0.css' %}">
@@ -52,12 +52,12 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <style>
-        /* ===== Base LTR Settings ===== */
+        /* ===== پایه RTL — Cairo ===== */
         html { overflow-x: hidden; }
         body {
-            font-family: 'Inter', Arial, sans-serif !important;
-            direction: ltr;
-            text-align: left;
+            font-family: 'Cairo', Tahoma, Arial, sans-serif !important;
+            direction: rtl;
+            text-align: right;
             color: #64748b;
             overflow-x: hidden;
             background: #071a35;
@@ -66,10 +66,10 @@
         h1, h2, h3, h4, h5, h6,
         p, a, span, div, li, ul, ol,
         input, textarea, select, button, label, td, th {
-            font-family: 'Inter', Arial, sans-serif !important;
+            font-family: 'Cairo', Tahoma, Arial, sans-serif !important;
         }
 
-        /* ===== Top Header ===== */
+        /* ===== نوار بالای هدر ===== */
         .header-top {
             padding: 10px 0;
             background: #071a35;
@@ -86,10 +86,10 @@
             pointer-events: none;
         }
 
-        .header-top .d-md-flex { flex-direction: row; justify-content: flex-start; }
+        .header-top .d-md-flex { flex-direction: row-reverse; justify-content: flex-end; }
         .header-top h6 {
-            margin-left: 0 !important;
-            margin-right: 1.5rem;
+            margin-right: 0 !important;
+            margin-left: 1.5rem;
             color: #94a3b8 !important;
             font-size: 12px !important;
             display: flex;
@@ -105,7 +105,7 @@
 
         .header-top .social-links ul {
             display: flex;
-            justify-content: flex-end;
+            justify-content: flex-start;
             gap: 8px;
             margin: 0;
             padding: 0;
@@ -129,7 +129,7 @@
             color: #fff;
         }
 
-        /* ===== Main Header ===== */
+        /* ===== هدر اصلی ===== */
         #header {
             padding: 0;
             position: fixed;
@@ -157,11 +157,11 @@
             gap: 2.5rem;
         }
 
-        /* ===== Navigation ===== */
+        /* ===== ناوبری ===== */
         #nav-menu-container { margin: 0; }
-        #nav-menu-container ul.nav-menu > li { float: left; }
-        .nav-menu .menu-has-children > ul { left: 0; right: auto; }
-        .nav-menu .menu-has-children > ul li a { text-align: left; }
+        #nav-menu-container ul.nav-menu > li { float: right; }
+        .nav-menu .menu-has-children > ul { right: 0; left: auto; }
+        .nav-menu .menu-has-children > ul li a { text-align: right; }
 
         .nav-menu a {
             color: #cbd5e1 !important;
@@ -170,7 +170,7 @@
             padding: 20px 14px !important;
             text-transform: none !important;
             transition: color .25s !important;
-            letter-spacing: .3px;
+            letter-spacing: 0;
         }
 
         .nav-menu a:hover,
@@ -193,14 +193,14 @@
 
         .nav-menu ul li a:hover { background: rgba(96,165,250,.12) !important; color: #60a5fa !important; }
 
-        /* ===== Footer ===== */
+        /* ===== فوتر ===== */
         .footer-area {
             background: #071a35;
             border-top: 1px solid rgba(255,255,255,.06);
         }
 
-        .footer-widget ul { padding-left: 0; }
-        .footer-widget .single-widget-home ul li { text-align: left; }
+        .footer-widget ul { padding-right: 0; }
+        .footer-widget .single-widget-home ul li { text-align: right; }
         .footer-widget .single-widget-home ul li a {
             color: #94a3b8 !important;
             font-size: 14px;
@@ -210,7 +210,7 @@
         }
         .footer-widget .single-widget-home ul li a:hover { color: #60a5fa !important; }
         .footer-widget .single-widget-home ul li a::before {
-            content: '→ ';
+            content: '← ';
             font-size: 11px;
             opacity: .6;
         }
@@ -226,7 +226,7 @@
         }
 
         .footer-area p { color: #94a3b8; font-size: 14px; }
-        .footer-area p i { color: #60a5fa; margin-right: 8px; }
+        .footer-area p i { color: #60a5fa; margin-left: 8px; }
 
         .footer-area .social-icons ul {
             display: flex;
@@ -260,9 +260,9 @@
 
         .footer-copyright span { color: #64748b; font-size: 13px; }
 
-        /* ===== Superfish arrow fix ===== */
+        /* ===== اصلاح فلش سوپرفیش ===== */
         .sf-arrows .sf-with-ul:after { content: none !important; }
-        .sf-arrows .sf-with-ul { padding-right: 14px !important; padding-left: 14px !important; }
+        .sf-arrows .sf-with-ul { padding-left: 14px !important; padding-right: 14px !important; }
 
         @media (min-width: 768px) and (max-width: 991.98px) {
             #header { top: 0; }
@@ -273,7 +273,7 @@
             .header-top { display: none; }
         }
 
-        /* ===== Language Switcher — Mobile ===== */
+        /* ===== سوئیچر زبان — موبایل ===== */
         .lang-switcher-mobile { display: none; }
 
         @media (max-width: 960px) {
@@ -302,7 +302,7 @@
             .lang-switcher-mobile .lang-sep { color: #334155; font-size: 10px; user-select: none; }
         }
 
-        /* ===== Language Switcher ===== */
+        /* ===== سوئیچر زبان ===== */
         .lang-switcher {
             display: flex;
             align-items: center;
@@ -333,8 +333,12 @@
             user-select: none;
         }
 
-        /* ===== Mobile nav toggle — stays on right (LTR default) ===== */
+        /* ===== منوی موبایل — دکمه سمت چپ (RTL) ===== */
         @media (max-width: 960px) {
+            #mobile-nav-toggle {
+                left: 15px !important;
+                right: auto !important;
+            }
             #mobile-nav .menu-has-children {
                 position: relative;
                 display: flex !important;
@@ -342,12 +346,12 @@
             }
             #mobile-nav .menu-has-children > a {
                 flex: 1;
-                padding-right: 36px !important;
+                padding-left: 36px !important;
             }
             #mobile-nav .menu-has-children > i.lnr {
                 position: absolute !important;
-                right: 8px !important;
-                left: auto !important;
+                left: 8px !important;
+                right: auto !important;
                 top: 50%;
                 transform: translateY(-50%);
                 cursor: pointer;
@@ -366,8 +370,8 @@
     {
         "@context": "https://schema.org",
         "@type": ["Physician", "MedicalBusiness"],
-        "name": "Dr. Vahid Abdolrahimi",
-        "description": "Ophthalmologist & Retina/Laser Sub-Specialist",
+        "name": "د. وحيد عبد الرحيمي",
+        "description": "طبيب عيون وجراح، أخصائي شبكية العين والليزر",
         "medicalSpecialty": "Ophthalmology",
         "telephone": ["021-88648210", "09013434195"],
         "sameAs": [
@@ -376,8 +380,8 @@
         ],
         "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Vanak Square, South Gandhi St., Shahide Torkan St., No. 24, 4th Floor, Unit 9",
-            "addressLocality": "Tehran",
+            "streetAddress": "ميدان وانك، شارع غاندي الجنوبي، شارع الشهيدة تركان، رقم 24، الطابق الرابع، وحدة 9",
+            "addressLocality": "طهران",
             "addressCountry": "IR"
         },
         "openingHoursSpecification": [
@@ -389,10 +393,10 @@
             }
         ],
         "priceRange": "$$",
-        "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo_en.png' %}",
+        "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.png' %}",
         "identifier": {
             "@type": "PropertyValue",
-            "name": "Medical License Number",
+            "name": "رقم الترخيص الطبي",
             "value": "77279"
         }
     }
@@ -414,16 +418,16 @@
                     <div class="col-lg-8 d-md-flex">
                         <h6><span><i class="fa fa-phone"></i></span> 021-88648210</h6>
                         <h6><span><i class="fa fa-mobile"></i></span> 0901-343-4195</h6>
-                        <h6><span><i class="fa fa-map-marker"></i></span> Tehran, Vanak Sq., South Gandhi St., Shahide Torkan St., No. 24, 4th Fl.</h6>
+                        <h6><span><i class="fa fa-map-marker"></i></span> طهران، ميدان وانك، شارع غاندي الجنوبي، شارع الشهيدة تركان، رقم 24، الطابق الرابع</h6>
                     </div>
                     <div class="col-lg-4">
                         <div class="d-flex align-items-center justify-content-end gap-3">
                             <div class="lang-switcher">
                                 <a href="{% url 'main:persian_home' %}">فارسی</a>
                                 <span class="lang-sep">|</span>
-                                <a href="{% url 'english:english_home' %}" class="lang-active">English</a>
+                                <a href="{% url 'english:english_home' %}">English</a>
                                 <span class="lang-sep">|</span>
-                                <a href="{% url 'arabic:arabic_home' %}">العربية</a>
+                                <a href="{% url 'arabic:arabic_home' %}" class="lang-active">العربية</a>
                             </div>
                             <div class="social-links">
                                 <ul>
@@ -442,34 +446,34 @@
             <div class="container">
                 <div class="row align-items-center justify-content-between d-flex">
                     <div id="logo">
-                        <a href="{% url 'english:english_home' %}">
-                            <img src="{% static 'images/logo/logo_en.png' %}" alt="Dr. Vahid Abdolrahimi" title="Dr. Vahid Abdolrahimi" />
+                        <a href="{% url 'arabic:arabic_home' %}">
+                            <img src="{% static 'images/logo/logo_ar.png' %}" alt="د. وحيد عبد الرحيمي" title="د. وحيد عبد الرحيمي" />
                         </a>
                     </div>
                     <div class="lang-switcher-mobile">
                         <a href="{% url 'main:persian_home' %}">فارسی</a>
                         <span class="lang-sep">|</span>
-                        <a href="{% url 'english:english_home' %}" class="lang-active">English</a>
+                        <a href="{% url 'english:english_home' %}">English</a>
                         <span class="lang-sep">|</span>
-                        <a href="{% url 'arabic:arabic_home' %}">العربية</a>
+                        <a href="{% url 'arabic:arabic_home' %}" class="lang-active">العربية</a>
                     </div>
                     <nav id="nav-menu-container">
                         <ul class="nav-menu">
-                            <li {% if request.resolver_match.url_name == 'english_home' %}class="menu-active"{% endif %}>
-                                <a href="{% url 'english:english_home' %}">Home</a>
+                            <li {% if request.resolver_match.url_name == 'arabic_home' %}class="menu-active"{% endif %}>
+                                <a href="{% url 'arabic:arabic_home' %}">الرئيسية</a>
                             </li>
-                            <li {% if request.resolver_match.url_name == 'english_about' %}class="menu-active"{% endif %}>
-                                <a href="{% url 'english:english_about' %}">About</a>
+                            <li {% if request.resolver_match.url_name == 'arabic_about' %}class="menu-active"{% endif %}>
+                                <a href="{% url 'arabic:arabic_about' %}">عن الطبيب</a>
                             </li>
-                            <li class="menu-has-children {% if 'english_services' in request.resolver_match.url_name|default:'' or request.resolver_match.namespace == 'english_services' %}menu-active{% endif %}">
-                                <a href="{% url 'english_services:english_services_overview' %}">Services</a>
+                            <li class="menu-has-children {% if request.resolver_match.namespace == 'arabic_services' %}menu-active{% endif %}">
+                                <a href="{% url 'arabic_services:arabic_services_overview' %}">الخدمات</a>
                                 <ul>
-                                    <li><a href="{% url 'english_services:english_office_services' %}">Office Services</a></li>
-                                    <li><a href="{% url 'english_services:english_surgery_services' %}">Surgical Services</a></li>
+                                    <li><a href="{% url 'arabic_services:arabic_office_services' %}">خدمات العيادة</a></li>
+                                    <li><a href="{% url 'arabic_services:arabic_surgery_services' %}">الخدمات الجراحية</a></li>
                                 </ul>
                             </li>
-                            <li {% if request.resolver_match.url_name == 'english_contact' %}class="menu-active"{% endif %}>
-                                <a href="{% url 'english:english_contact' %}">Contact</a>
+                            <li {% if request.resolver_match.url_name == 'arabic_contact' %}class="menu-active"{% endif %}>
+                                <a href="{% url 'arabic:arabic_contact' %}">اتصل بنا</a>
                             </li>
                         </ul>
                     </nav>
@@ -490,29 +494,29 @@
                 <div class="row">
                     <div class="col-xl-3 col-lg-3">
                         <div class="single-widget-home mb-5 mb-lg-0">
-                            <h3 class="mb-4">Quick Links</h3>
+                            <h3 class="mb-4">روابط سريعة</h3>
                             <ul>
-                                <li class="mb-2"><a href="{% url 'english:english_home' %}">Home</a></li>
-                                <li class="mb-2"><a href="{% url 'english:english_about' %}">About</a></li>
-                                <li class="mb-2"><a href="{% url 'english_services:english_office_services' %}">Office Services</a></li>
-                                <li class="mb-2"><a href="{% url 'english_services:english_surgery_services' %}">Surgical Services</a></li>
-                                <li><a href="{% url 'english:english_contact' %}">Contact</a></li>
+                                <li class="mb-2"><a href="{% url 'arabic:arabic_home' %}">الرئيسية</a></li>
+                                <li class="mb-2"><a href="{% url 'arabic:arabic_about' %}">عن الطبيب</a></li>
+                                <li class="mb-2"><a href="{% url 'arabic_services:arabic_office_services' %}">خدمات العيادة</a></li>
+                                <li class="mb-2"><a href="{% url 'arabic_services:arabic_surgery_services' %}">الخدمات الجراحية</a></li>
+                                <li><a href="{% url 'arabic:arabic_contact' %}">اتصل بنا</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-5">
                         <div class="single-widget-home mb-5 mb-lg-0">
-                            <h3 class="mb-4">Contact Information</h3>
-                            <p class="mb-2"><i class="fa fa-map-marker"></i> Tehran, Vanak Sq., South Gandhi St., Shahide Torkan St., No. 24, 4th Fl., Unit 9</p>
+                            <h3 class="mb-4">معلومات الاتصال</h3>
+                            <p class="mb-2"><i class="fa fa-map-marker"></i> طهران، ميدان وانك، شارع غاندي الجنوبي، شارع الشهيدة تركان، رقم 24، الطابق الرابع، وحدة 9</p>
                             <p class="mb-2"><i class="fa fa-phone"></i> <span dir="ltr">021-88648210</span></p>
                             <p class="mb-2"><i class="fa fa-mobile"></i> <span dir="ltr">0901-343-4195</span></p>
-                            <p><i class="fa fa-clock-o"></i> Sat – Thu &nbsp;|&nbsp; 11:00 – 14:00</p>
+                            <p><i class="fa fa-clock-o"></i> السبت – الخميس &nbsp;|&nbsp; 11:00 – 14:00</p>
                         </div>
                     </div>
                     <div class="col-xl-3 offset-xl-2 col-lg-4">
                         <div class="single-widge-home">
-                            <h3 class="mb-4">Follow Us</h3>
-                            <p class="mb-3">Stay connected on social media</p>
+                            <h3 class="mb-4">تابعونا</h3>
+                            <p class="mb-3">تواصلوا معنا عبر الشبكات الاجتماعية</p>
                             <div class="social-icons">
                                 <ul>
                                     <li><a href="https://www.instagram.com/dr_vahid_abdolrahimi/" aria-label="Instagram" target="_blank" rel="noopener"><i class="fa fa-instagram"></i></a></li>
@@ -529,8 +533,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <span>All Rights Reserved &copy; {% now "Y" %} — Dr. Vahid Abdolrahimi</span>
-                        <span style="display:block; margin-top:4px; color:#475569; font-size:12px;">Medical License No.: 77279</span>
+                        <span>جميع الحقوق محفوظة &copy; {% now "Y" %} — د. وحيد عبد الرحيمي</span>
+                        <span style="display:block; margin-top:4px; color:#475569; font-size:12px;">رقم الترخيص الطبي: 77279</span>
                     </div>
                 </div>
             </div>

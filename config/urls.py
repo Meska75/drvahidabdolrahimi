@@ -25,6 +25,8 @@ urlpatterns = [
     path('services/', include('services.urls')),
     path('en/', include('main.urls_english')),
     path('en/services/', include('services.urls_english')),
+    path('ar/', include('main.urls_arabic')),
+    path('ar/services/', include('services.urls_arabic')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

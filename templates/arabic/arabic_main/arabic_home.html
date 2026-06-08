@@ -1,0 +1,507 @@
+{% extends "arabic/arabic_base.html" %}
+{% load static %}
+
+{% block title %}د. وحيد عبد الرحيمي — أخصائي شبكية العين والليزر{% endblock %}
+
+{% block meta_description %}<meta name="description" content="د. وحيد عبد الرحيمي — طبيب عيون وجراح، أخصائي شبكية العين والليزر. أكثر من 20 عامًا من الخبرة في علاج وجراحة العيون. عيادة متخصصة في طهران، ميدان وانك.">{% endblock %}
+
+{% block meta_og %}
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_AR">
+<meta property="og:site_name" content="د. وحيد عبد الرحيمي">
+<meta property="og:title" content="د. وحيد عبد الرحيمي — أخصائي شبكية العين والليزر">
+<meta property="og:description" content="طبيب عيون وجراح، أخصائي شبكية العين والليزر — عيادة متخصصة في طهران، ميدان وانك.">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.png' %}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="د. وحيد عبد الرحيمي — أخصائي شبكية العين والليزر">
+<meta name="twitter:description" content="طبيب عيون وجراح، أخصائي شبكية العين والليزر — عيادة متخصصة في طهران.">
+<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.png' %}">
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<!-- Leaflet.js -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+{% endblock %}
+
+{% block content %}
+
+<!-- ===== Hero ===== -->
+<section class="hero-section">
+    <div class="hero-bg-slider" id="heroBgSlider">
+        <div class="hero-slide" data-bg="{% static 'images/home/banner/banner-bg.jpg' %}"></div>
+        <div class="hero-slide" data-bg="{% static 'images/home/banner/banner-5bg.jpg' %}"></div>
+        <div class="hero-slide" data-bg="{% static 'images/home/banner/banner-2bg.jpg' %}"></div>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-circle-1"></div>
+    <div class="hero-circle-2"></div>
+
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7 hero-content">
+                <h1 class="hero-title">
+                    الدكتور وحيد<br>
+                    <span class="highlight">عبد الرحيمي</span>
+                </h1>
+                <h2 class="hero-subtitle">أخصائي شبكية العين والليزر</h2>
+                <p class="hero-desc">
+                    مع أكثر من عقدين من الخبرة السريرية في جراحة العيون وعلاجها،
+                    نقدم خدمات متخصصة وفق أعلى المعايير الدولية.
+                </p>
+                <div class="hero-btns">
+                    <a href="{% url 'arabic:arabic_contact' %}" class="btn-hero-primary">
+                        <i class="fa fa-calendar-check-o"></i> حجز موعد
+                    </a>
+                    <a href="{% url 'arabic:arabic_about' %}" class="btn-hero-outline">
+                        <i class="fa fa-user-md"></i> عن الطبيب
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-num">+20<sup>عامًا</sup></div>
+                        <div class="hero-stat-lbl">خبرة سريرية</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-num">+5,000</div>
+                        <div class="hero-stat-lbl">مريض ناجح</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-num">+1,500</div>
+                        <div class="hero-stat-lbl">عملية جراحية</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-num">98<sup>٪</sup></div>
+                        <div class="hero-stat-lbl">رضا المرضى</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 hero-right">
+                <div class="hero-img-bg">
+                    <div class="floating-card fc-top">
+                        <div class="fc-icon blue"><i class="fa fa-eye"></i></div>
+                        <div class="fc-text">
+                            <strong>فحص تخصصي</strong>
+                            <span>أحدث تقنيات التصوير</span>
+                        </div>
+                    </div>
+                    <div class="floating-card fc-bottom">
+                        <div class="fc-icon green"><i class="fa fa-check-circle"></i></div>
+                        <div class="fc-text">
+                            <strong>98٪ رضا المرضى</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== شريط الإحصاءات ===== -->
+<section class="stats-bar">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-3 col-sm-6">
+                <div class="stat-item">
+                    <i class="fa fa-user-md stat-icon"></i>
+                    <span class="stat-num">+20</span>
+                    <span class="stat-lbl">عامًا من الخبرة السريرية</span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="stat-item">
+                    <i class="fa fa-heartbeat stat-icon"></i>
+                    <span class="stat-num">+5,000</span>
+                    <span class="stat-lbl">مريض ناجح</span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="stat-item">
+                    <i class="fas fa-procedures stat-icon"></i>
+                    <span class="stat-num">+1,500</span>
+                    <span class="stat-lbl">عملية جراحية</span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="stat-item">
+                    <i class="fa fa-star stat-icon"></i>
+                    <span class="stat-num">98٪</span>
+                    <span class="stat-lbl">رضا المرضى</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== كروت التخصصات ===== -->
+<section class="features-section">
+    <div class="container">
+        <div class="sec-head">
+            <span class="pre-title">التخصصات</span>
+            <h2>مجالات خبرتنا</h2>
+            <div class="sec-divider"></div>
+            <p>باستخدام أحدث أساليب التشخيص والعلاج، نقدم أعلى معايير الرعاية لصحة بصرك</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                <div class="feat-card">
+                    <div class="feat-icon"><i class="fa fa-search-plus"></i></div>
+                    <h3>فحص العيون التخصصي</h3>
+                    <p>تشخيص ومتابعة دقيقة لأمراض العيون باستخدام أحدث تقنيات OCT وتصوير الأوعية الدموية</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                <div class="feat-card">
+                    <div class="feat-icon"><i class="fa fa-eye"></i></div>
+                    <h3>علاج أمراض الشبكية</h3>
+                    <p>حلول علاجية متقدمة للحفاظ على البصر وتحسينه لدى مرضى أمراض الشبكية</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <div class="feat-card">
+                    <div class="feat-icon"><i class="fas fa-syringe"></i></div>
+                    <h3>الليزر والحقن الزجاجية</h3>
+                    <p>علاجات متخصصة تشمل ليزر الشبكية والحقن داخل الزجاجية لإدارة الأمراض المتقدمة</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="feat-card">
+                    <div class="feat-icon"><i class="fa fa-hospital-o"></i></div>
+                    <h3>العمليات الجراحية</h3>
+                    <p>جراحات متقدمة لشبكية العين والمياه البيضاء والزجاجية بهدف استعادة الصحة البصرية</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== عن الطبيب ===== -->
+<section class="about-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-5 mb-5 mb-lg-0">
+                <div class="about-img-wrap">
+                    <img src="{% static 'images/about/doctor/welcome.png' %}" alt="د. وحيد عبد الرحيمي" loading="lazy">
+                    <div class="exp-badge">
+                        <span class="yrs">+20</span>
+                        <span class="lbl">عامًا خبرة</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 pr-lg-5">
+                <div class="about-text">
+                    <span class="pre-title">عن الطبيب</span>
+                    <h2>أكثر من 20 عامًا من الخبرة في جراحة وعلاج العيون</h2>
+                    <p>
+                        الدكتور وحيد عبد الرحيمي، بخبرة سريرية تمتد لأكثر من 20 عامًا، يُعدّ من أبرز أطباء
+                        العيون في إيران وعضو في الجمعيتين الأوروبية والأمريكية لجراحي العيون. يُقدّم مجموعة
+                        واسعة من الخدمات باستخدام أحدث التقنيات الجراحية، تشمل جراحة الشبكية وليزيك وفيكو
+                        والحول والجفن، وفق أعلى المعايير الدولية.
+                    </p>
+                    <ul class="about-list">
+                        <li>
+                            <span class="li-icon"><i class="fa fa-graduation-cap"></i></span>
+                            طبيب عيون وجراح، أخصائي شبكية العين والليزر
+                        </li>
+                        <li>
+                            <span class="li-icon"><i class="fa fa-globe"></i></span>
+                            عضو الجمعية الأوروبية والأمريكية لجراحي العيون
+                        </li>
+                        <li>
+                            <span class="li-icon"><i class="fa fa-hospital-o"></i></span>
+                            جراحة فيكو، ليزيك، الحول والجفن — علاجية وتجميلية
+                        </li>
+                        <li>
+                            <span class="li-icon"><i class="fa fa-heartbeat"></i></span>
+                            الوقاية ومعالجة مضاعفات العيون السكرية
+                        </li>
+                        <li>
+                            <span class="li-icon"><i class="fa fa-eye"></i></span>
+                            قياس البصر وإجراء وصفة النظارات
+                        </li>
+                    </ul>
+                    <a href="{% url 'arabic:arabic_about' %}" class="btn-about">
+                        المزيد <i class="fa fa-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== خدمات العيادة ===== -->
+<section class="services-office-section">
+    <div class="container">
+        <div class="sec-head">
+            <span class="pre-title">العيادة</span>
+            <h2>خدمات العيادة</h2>
+            <div class="sec-divider"></div>
+            <p>خدمات طب العيون الشاملة في بيئة مجهزة ومريحة مع فحص دقيق واستشارة متخصصة</p>
+        </div>
+        <div class="owl-carousel srv-carousel" id="officeSrvCarousel">
+            <div class="srv-carousel-item">
+                <div class="srv-card">
+                    <div class="card-img">
+                        <img src="{% static 'images/services/overview/department1.jpg' %}" alt="الفحص والاستشارة">
+                        <div class="overlay"></div>
+                        <span class="tag">العيادة</span>
+                    </div>
+                    <div class="card-body-inner">
+                        <h3>الفحص والاستشارة</h3>
+                        <p>تقييم شامل للعين وتوجيه متخصص لاختيار أفضل مسار علاجي</p>
+                    </div>
+                </div>
+            </div>
+            <div class="srv-carousel-item">
+                <div class="srv-card">
+                    <div class="card-img">
+                        <img src="{% static 'images/services/overview/department2.jpg' %}" alt="تصوير OCT">
+                        <div class="overlay"></div>
+                        <span class="tag">العيادة</span>
+                    </div>
+                    <div class="card-body-inner">
+                        <h3>تصوير OCT</h3>
+                        <p>تصوير متقطع متقدم للشبكية والعصب البصري للتشخيص الدقيق</p>
+                    </div>
+                </div>
+            </div>
+            <div class="srv-carousel-item">
+                <div class="srv-card">
+                    <div class="card-img">
+                        <img src="{% static 'images/services/overview/department3.jpg' %}" alt="الحقن داخل الزجاجية">
+                        <div class="overlay"></div>
+                        <span class="tag">العيادة</span>
+                    </div>
+                    <div class="card-body-inner">
+                        <h3>الحقن داخل الزجاجية</h3>
+                        <p>حقن أدوية مضادة للأوعية لعلاج أمراض البقعة الصفراء</p>
+                    </div>
+                </div>
+            </div>
+            <div class="srv-carousel-item">
+                <div class="srv-card">
+                    <div class="card-img">
+                        <img src="{% static 'images/services/overview/department1.jpg' %}" alt="قياس المجال البصري">
+                        <div class="overlay"></div>
+                        <span class="tag">العيادة</span>
+                    </div>
+                    <div class="card-body-inner">
+                        <h3>قياس المجال البصري</h3>
+                        <p>تقييم دقيق للمجال البصري لتشخيص ومتابعة الجلوكوما والأمراض المشابهة</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center srv-more-btn">
+            <a href="{% url 'arabic_services:arabic_office_services' %}" class="btn-about">
+                عرض جميع خدمات العيادة <i class="fa fa-arrow-left"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== الخدمات الجراحية ===== -->
+<section class="services-surgery-section">
+    <div class="container">
+        <div class="sec-head">
+            <span class="pre-title">غرفة العمليات</span>
+            <h2>الخدمات الجراحية</h2>
+            <div class="sec-divider sec-divider-light"></div>
+            <p>جراحة العيون المتقدمة باستخدام أحدث المعدات بهدف استعادة الصحة البصرية والحفاظ عليها</p>
+        </div>
+        <div class="owl-carousel srv-carousel" id="surgerySrvCarousel">
+            <div class="srv-carousel-item">
+                <div class="srv-card">
+                    <div class="card-img">
+                        <img src="{% static 'images/services/overview/department2.jpg' %}" alt="جراحة الشبكية">
+                        <div class="overlay"></div>
+                        <span class="tag tag-surgery">جراحة</span>
+                    </div>
+                    <div class="card-body-inner">
+                        <h3>جراحة الشبكية (فيتريكتومي)</h3>
+                        <p>جراحة متقدمة لعلاج انفصال الشبكية ونزيف الزجاجية</p>
+                    </div>
+                </div>
+            </div>
+            <div class="srv-carousel-item">
+                <div class="srv-card">
+                    <div class="card-img">
+                        <img src="{% static 'images/services/overview/department1.jpg' %}" alt="جراحة المياه البيضاء">
+                        <div class="overlay"></div>
+                        <span class="tag tag-surgery">جراحة</span>
+                    </div>
+                    <div class="card-body-inner">
+                        <h3>جراحة المياه البيضاء (فيكو)</h3>
+                        <p>استحلاب العدسة وزراعة العدسة داخل العين لاستعادة وضوح الرؤية</p>
+                    </div>
+                </div>
+            </div>
+            <div class="srv-carousel-item">
+                <div class="srv-card">
+                    <div class="card-img">
+                        <img src="{% static 'images/services/overview/department3.jpg' %}" alt="ليزر الشبكية">
+                        <div class="overlay"></div>
+                        <span class="tag tag-surgery">جراحة</span>
+                    </div>
+                    <div class="card-body-inner">
+                        <h3>ليزر الشبكية</h3>
+                        <p>علاج التمزقات وبؤر الضعف في الشبكية بالليزر للوقاية من الانفصال</p>
+                    </div>
+                </div>
+            </div>
+            <div class="srv-carousel-item">
+                <div class="srv-card">
+                    <div class="card-img">
+                        <img src="{% static 'images/services/overview/department2.jpg' %}" alt="جراحة الجلوكوما">
+                        <div class="overlay"></div>
+                        <span class="tag tag-surgery">جراحة</span>
+                    </div>
+                    <div class="card-body-inner">
+                        <h3>جراحة الجلوكوما</h3>
+                        <p>التدخلات الجراحية والليزرية للسيطرة على ضغط العين والحفاظ على العصب البصري</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center srv-more-btn">
+            <a href="{% url 'arabic_services:arabic_surgery_services' %}" class="btn-surgery-outline">
+                عرض جميع الخدمات الجراحية <i class="fa fa-arrow-left"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== فريق العيادة ===== -->
+<section class="team-section">
+    <div class="team-bg-img" id="teamBgImg"></div>
+    <div class="team-bg-overlay"></div>
+    <div class="container team-container">
+        {% include "arabic/components/team_section.html" %}
+    </div>
+</section>
+
+
+<!-- ===== معرض الصور ===== -->
+<section class="gallery-section">
+    <div class="container">
+        <div class="sec-head">
+            <span class="pre-title">معرض الصور</span>
+            <h2>صور العيادة</h2>
+            <div class="sec-divider"></div>
+            <p>لمحة عن البيئة المجهزة والمريحة في عيادة د. عبد الرحيمي</p>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item gi-wide-tall" data-full="{% static 'images/home/gallery/feed1.jpg' %}">
+                <img src="{% static 'images/home/gallery/feed1.jpg' %}" alt="صورة العيادة 1" loading="lazy">
+                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
+            </div>
+            <div class="gallery-item" data-full="{% static 'images/home/gallery/feed2.jpg' %}">
+                <img src="{% static 'images/home/gallery/feed2.jpg' %}" alt="صورة العيادة 2" loading="lazy">
+                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
+            </div>
+            <div class="gallery-item" data-full="{% static 'images/home/gallery/feed3.jpg' %}">
+                <img src="{% static 'images/home/gallery/feed3.jpg' %}" alt="صورة العيادة 3" loading="lazy">
+                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
+            </div>
+            <div class="gallery-item" data-full="{% static 'images/home/gallery/feed4.jpg' %}">
+                <img src="{% static 'images/home/gallery/feed4.jpg' %}" alt="صورة العيادة 4" loading="lazy">
+                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
+            </div>
+            <div class="gallery-item" data-full="{% static 'images/home/gallery/feed5.jpg' %}">
+                <img src="{% static 'images/home/gallery/feed5.jpg' %}" alt="صورة العيادة 5" loading="lazy">
+                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
+            </div>
+            <div class="gallery-item gi-wide" data-full="{% static 'images/home/gallery/feed6.jpg' %}">
+                <img src="{% static 'images/home/gallery/feed6.jpg' %}" alt="صورة العيادة 6" loading="lazy">
+                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
+            </div>
+            <div class="gallery-item" data-full="{% static 'images/home/gallery/feed7.jpg' %}">
+                <img src="{% static 'images/home/gallery/feed7.jpg' %}" alt="صورة العيادة 7" loading="lazy">
+                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
+            </div>
+            <div class="gallery-item" data-full="{% static 'images/home/gallery/feed8.jpg' %}">
+                <img src="{% static 'images/home/gallery/feed8.jpg' %}" alt="صورة العيادة 8" loading="lazy">
+                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== الاتصال والخريطة ===== -->
+<section class="contact-home-section">
+    <div class="container">
+        <div class="sec-head">
+            <span class="pre-title">موقع العيادة</span>
+            <h2>اتصل بنا</h2>
+            <div class="sec-divider"></div>
+            <p>لحجز موعد أو الاستفسار، تواصل معنا من خلال أي من القنوات أدناه</p>
+        </div>
+    </div>
+
+    <div class="contact-map-row">
+        <div class="contact-map-wrap">
+            <div id="neshanMap"></div>
+        </div>
+        <div class="contact-building-wrap">
+            <img src="{% static 'images/home/gallery/front_door.jpg' %}" alt="مبنى عيادة د. عبد الرحيمي" class="building-photo" loading="lazy">
+            <div class="building-photo-overlay"></div>
+        </div>
+    </div>
+
+    <div class="contact-info-bar">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-sm-6 ci-item">
+                    <div class="ci-icon-wrap"><i class="fa fa-map-marker"></i></div>
+                    <div class="ci-text">
+                        <strong>عنوان العيادة</strong>
+                        <span>طهران، ميدان وانك، شارع غاندي الجنوبي، شارع الشهيدة تركان، رقم 24</span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 ci-item">
+                    <div class="ci-icon-wrap"><i class="fa fa-phone"></i></div>
+                    <div class="ci-text">
+                        <strong>هاتف العيادة</strong>
+                        <span dir="ltr">021-88648210</span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 ci-item">
+                    <div class="ci-icon-wrap"><i class="fa fa-clock-o"></i></div>
+                    <div class="ci-text">
+                        <strong>ساعات العمل</strong>
+                        <span>السبت – الخميس &nbsp;|&nbsp; 11:00 – 14:00</span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 ci-btn-wrap">
+                    <a href="{% url 'arabic:arabic_contact' %}" class="btn-about">
+                        حجز موعد <i class="fa fa-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== Lightbox ===== -->
+<div class="gallery-lightbox" id="galleryLightbox">
+    <button class="lb-close" id="lbClose" aria-label="إغلاق">&times;</button>
+    <img src="" alt="" id="lbImg" class="lb-img">
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+<script src="{% static 'js/home_ar.js' %}"></script>
+{% endblock %}

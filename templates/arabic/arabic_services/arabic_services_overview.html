@@ -1,0 +1,105 @@
+{% extends "arabic/arabic_base.html" %}
+{% load static %}
+
+{% block title %}الخدمات — د. وحيد عبد الرحيمي{% endblock %}
+
+{% block meta_description %}<meta name="description" content="خدمات د. عبد الرحيمي — أخصائي شبكية العين والزجاجية في طهران. تشخيص وعلاج وجراحة العيون التخصصية بأعلى المعايير الدولية.">{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/services_overview.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ===== هيرو ===== -->
+<section class="sov-hero-section">
+    <div class="container">
+
+        <div class="sov-breadcrumb wow fadeInDown" data-wow-delay=".05s">
+            <a href="{% url 'arabic:arabic_home' %}">الرئيسية</a>
+            <span class="sep">›</span>
+            <span class="current">الخدمات</span>
+        </div>
+
+        <h1 class="wow fadeInUp" data-wow-delay=".1s">
+            خدماتنا <span class="grad-text">التخصصية</span>
+        </h1>
+
+        <p class="sov-hero-sub wow fadeInUp" data-wow-delay=".15s">
+            تقدم عيادة د. عبد الرحيمي مجموعة متكاملة من خدمات طب العيون التشخيصية والعلاجية والجراحية،
+            مستعينةً بأحدث الأجهزة وأعلى معايير الجودة.
+        </p>
+
+    </div>
+</section>
+
+
+<!-- ===== قائمة الخدمات ===== -->
+<section class="sov-list-section">
+    <div class="container">
+
+        <!-- خدمات العيادة -->
+        <a href="{% url 'arabic_services:arabic_office_services' %}" class="sov-item wow fadeInUp" data-wow-delay=".1s">
+
+            <div class="sov-item-img">
+                <img src="{% static 'images/services/overview/department1.jpg' %}" alt="خدمات عيادة د. عبد الرحيمي التشخيصية" loading="lazy">
+                <span class="sov-badge">العيادة</span>
+            </div>
+
+            <div class="sov-item-body">
+                <span class="sov-item-tag">التشخيص والعلاج</span>
+                <div class="sov-divider-line"></div>
+                <h2>خدمات العيادة</h2>
+                <p>
+                    تحتضن عيادة د. عبد الرحيمي أحدث أجهزة التشخيص والعلاج المتاحة اليوم.
+                    تشمل الخدمات: الفحص الشامل للعيون، وتصوير الشبكية بـ OCT، وأنجيوغرافيا الفلورين،
+                    والحقن داخل الزجاجية (مضاد للأوعية)، وقياس المجال البصري (البيريمتري)،
+                    وقياس ضغط العين (التونومتري) — في بيئة هادئة ومنظمة ومحترفة.
+                </p>
+                <span class="sov-cta">
+                    عرض خدمات العيادة
+                    <i class="fas fa-arrow-left"></i>
+                </span>
+            </div>
+
+        </a>
+
+        <!-- الخدمات الجراحية -->
+        <a href="{% url 'arabic_services:arabic_surgery_services' %}" class="sov-item sov-surgery wow fadeInUp" data-wow-delay=".15s">
+
+            <div class="sov-item-img">
+                <img src="{% static 'images/services/overview/department2.jpg' %}" alt="جراحة العيون التخصصية لدى د. عبد الرحيمي" loading="lazy">
+                <span class="sov-badge surgery">جراحة</span>
+            </div>
+
+            <div class="sov-item-body">
+                <span class="sov-item-tag surgery">جراحة متخصصة</span>
+                <div class="sov-divider-line" style="background: linear-gradient(270deg, #059669, #34d399);"></div>
+                <h2>الخدمات الجراحية</h2>
+                <p>
+                    باستخدام أحدث التقنيات الجراحية وبرصيد يتجاوز 1,500 عملية ناجحة،
+                    يُجري د. عبد الرحيمي مجموعة واسعة من جراحات العيون التخصصية تشمل: الفيتريكتومي (الشبكية)،
+                    وجراحة المياه البيضاء، وليزر الشبكية، وجراحة الجلوكوما، وليزر SLT وYAG، والتخثير الداخلي.
+                    جميع العمليات تتم وفق أعلى معايير السلامة مع رعاية شاملة قبل العملية وبعدها.
+                </p>
+                <span class="sov-cta">
+                    عرض الخدمات الجراحية
+                    <i class="fas fa-arrow-left"></i>
+                </span>
+            </div>
+
+        </a>
+
+    </div>
+</section>
+
+
+<!-- ===== فريق العيادة ===== -->
+<section class="sov-team-section">
+    <div class="container">
+        {% include "arabic/components/team_section.html" %}
+    </div>
+</section>
+
+{% endblock %}

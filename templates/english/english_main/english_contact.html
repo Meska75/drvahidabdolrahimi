@@ -198,35 +198,35 @@
                     <!-- Name + Phone row -->
                     <div class="uf-row">
                         <div class="uf-group">
-                            <label class="uf-label">FULL NAME</label>
-                            <input type="text" name="name" placeholder="e.g. John Smith" required>
+                            <label class="uf-label" for="en_name">FULL NAME</label>
+                            <input type="text" id="en_name" name="name" placeholder="e.g. John Smith" required autocomplete="name">
                             <i class="fas fa-user uf-icon"></i>
                         </div>
                         <div class="uf-group">
-                            <label class="uf-label">PHONE NUMBER</label>
-                            <input type="tel" name="phone" placeholder="+98XXXXXXXXXX">
+                            <label class="uf-label" for="en_phone">PHONE NUMBER</label>
+                            <input type="tel" id="en_phone" name="phone" placeholder="+98XXXXXXXXXX" autocomplete="tel">
                             <i class="fas fa-phone uf-icon"></i>
                         </div>
                     </div>
 
                     <!-- Email -->
                     <div class="uf-group">
-                        <label class="uf-label">EMAIL ADDRESS</label>
-                        <input type="email" name="email" placeholder="example@email.com">
+                        <label class="uf-label" for="en_email">EMAIL ADDRESS</label>
+                        <input type="email" id="en_email" name="email" placeholder="example@email.com" autocomplete="email">
                         <i class="fas fa-envelope uf-icon"></i>
                     </div>
 
                     <!-- Subject -->
                     <div class="uf-group">
-                        <label class="uf-label">SUBJECT</label>
-                        <input type="text" name="subject" placeholder="e.g. Book an Appointment" required>
+                        <label class="uf-label" for="en_subject">SUBJECT</label>
+                        <input type="text" id="en_subject" name="subject" placeholder="e.g. Book an Appointment" required>
                         <i class="fas fa-tag uf-icon"></i>
                     </div>
 
                     <!-- Message -->
                     <div class="uf-group textarea-group">
-                        <label class="uf-label">MESSAGE</label>
-                        <textarea name="message" placeholder="Write your question or message here..." required></textarea>
+                        <label class="uf-label" for="en_message">MESSAGE</label>
+                        <textarea id="en_message" name="message" placeholder="Write your question or message here..." required></textarea>
                         <i class="fas fa-comment-dots uf-icon"></i>
                     </div>
 

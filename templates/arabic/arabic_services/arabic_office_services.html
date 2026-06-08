@@ -1,0 +1,188 @@
+{% extends "arabic/arabic_base.html" %}
+{% load static %}
+
+{% block title %}خدمات العيادة — د. وحيد عبد الرحيمي{% endblock %}
+
+{% block meta_description %}<meta name="description" content="الخدمات التشخيصية والعلاجية في عيادة د. عبد الرحيمي — فحص العيون، تصوير OCT، أنجيوغرافيا الفلورين، حقن زجاجية، قياس المجال البصري وقياس ضغط العين في طهران.">{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/services.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ===== هيرو ===== -->
+<section class="services-hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <div class="col-lg-8">
+                <div class="services-hero-content wow fadeInUp" data-wow-delay=".1s">
+
+                    <div class="services-breadcrumb">
+                        <a href="{% url 'arabic:arabic_home' %}">الرئيسية</a>
+                        <span class="sep">›</span>
+                        <a href="{% url 'arabic_services:arabic_services_overview' %}">الخدمات</a>
+                        <span class="sep">›</span>
+                        <span class="current">خدمات العيادة</span>
+                    </div>
+
+                    <span class="services-tag">عيادة د. عبد الرحيمي التخصصية</span>
+
+                    <h1>خدمات العيادة <span class="grad-text">التشخيصية والعلاجية</span></h1>
+
+                    <p>
+                        تحتضن عيادة د. عبد الرحيمي أحدث أجهزة التشخيص والعلاج.
+                        تُقدَّم جميع الخدمات في بيئة هادئة ومنظمة واحترافية تامة.
+                    </p>
+
+                    <div class="hero-service-badges">
+                        <div class="service-badge-item">
+                            <i class="fas fa-microscope"></i>
+                            تشخيص دقيق
+                        </div>
+                        <div class="service-badge-item">
+                            <i class="fas fa-syringe"></i>
+                            علاج متخصص
+                        </div>
+                        <div class="service-badge-item">
+                            <i class="fas fa-calendar-check"></i>
+                            حجز عبر الإنترنت
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-4 d-none d-lg-flex justify-content-center wow fadeInUp" data-wow-delay=".15s">
+                <div class="hero-deco-circle">
+                    <i class="fas fa-stethoscope"></i>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== شبكة الخدمات ===== -->
+<section class="services-grid-section">
+    <div class="container">
+
+        <div class="sec-head wow fadeInUp" data-wow-delay=".1s">
+            <span class="pre-title">خدماتنا</span>
+            <h2>الخدمات التخصصية للعيادة</h2>
+            <div class="sec-divider"></div>
+            <p>مجموعة متكاملة من خدمات التشخيص والعلاج لطب العيون باستخدام أحدث التقنيات</p>
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".1s">
+                <div class="service-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder"><i class="fas fa-eye"></i></div>
+                        <img src="{% static 'images/services/office/svc_office_1.jpg' %}" alt="فحص العيون والاستشارة" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>فحص العيون والاستشارة</h3>
+                        <p>تقييم شامل للعين ووضع خطة علاجية فردية مناسبة لكل مريض.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".15s">
+                <div class="service-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder"><i class="fas fa-microscope"></i></div>
+                        <img src="{% static 'images/services/office/svc_office_2.jpg' %}" alt="تصوير OCT" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>تصوير OCT</h3>
+                        <p>تصوير مقطعي متقدم للشبكية للتشخيص الدقيق لأمراض البقعة الصفراء.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".2s">
+                <div class="service-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder"><i class="fas fa-camera"></i></div>
+                        <img src="{% static 'images/services/office/svc_office_3.jpg' %}" alt="أنجيوغرافيا الفلورين" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>أنجيوغرافيا الفلورين</h3>
+                        <p>تصوير أوعية الشبكية لتشخيص اعتلال الشبكية السكري والانسداد الوعائي.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".1s">
+                <div class="service-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder"><i class="fas fa-syringe"></i></div>
+                        <img src="{% static 'images/services/office/svc_office_4.jpg' %}" alt="الحقن داخل الزجاجية" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>الحقن داخل الزجاجية</h3>
+                        <p>حقن أدوية مضادة للأوعية لعلاج الوذمة البقعية وضمور البقعة الرطب.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".15s">
+                <div class="service-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder"><i class="fas fa-dot-circle"></i></div>
+                        <img src="{% static 'images/services/office/svc_office_5.jpg' %}" alt="قياس المجال البصري" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>قياس المجال البصري (البيريمتري)</h3>
+                        <p>تقييم دقيق للمجال البصري لتشخيص ومتابعة الجلوكوما وأضرار العصب البصري.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".2s">
+                <div class="service-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder"><i class="fas fa-tachometer-alt"></i></div>
+                        <img src="{% static 'images/services/office/svc_office_6.jpg' %}" alt="قياس ضغط العين" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>قياس ضغط العين (التونومتري)</h3>
+                        <p>قياس دقيق لضغط العين داخل المقلة (التونومتري) للكشف المبكر عن الجلوكوما.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== CTA ===== -->
+<section class="services-cta-section">
+    <div class="container">
+        <div class="cta-wrap wow fadeInUp" data-wow-delay=".1s">
+            <h2>هل أنت مستعد لحجز موعد؟</h2>
+            <p>تواصل معنا لتحديد موعد أو للاستفسار عن خدمات العيادة</p>
+            <a href="{% url 'arabic:arabic_contact' %}" class="btn-svc-primary">
+                <i class="fas fa-calendar-check"></i>
+                حجز عبر الإنترنت
+            </a>
+            <a href="tel:02188648210" class="btn-svc-ghost">
+                <i class="fas fa-phone"></i>
+                الاتصال بالعيادة
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

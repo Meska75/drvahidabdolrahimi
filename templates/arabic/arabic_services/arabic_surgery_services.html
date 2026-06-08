@@ -1,0 +1,246 @@
+{% extends "arabic/arabic_base.html" %}
+{% load static %}
+
+{% block title %}الخدمات الجراحية — د. وحيد عبد الرحيمي{% endblock %}
+
+{% block meta_description %}<meta name="description" content="الخدمات الجراحية التخصصية لدى د. وحيد عبد الرحيمي — فيتريكتومي، جراحة المياه البيضاء، ليزر الشبكية، جراحة الجلوكوما، +1,500 عملية ناجحة.">{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/services.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ===== هيرو ===== -->
+<section class="services-hero-section surgery-hero">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <div class="col-lg-8">
+                <div class="services-hero-content wow fadeInUp" data-wow-delay=".1s">
+
+                    <div class="services-breadcrumb">
+                        <a href="{% url 'arabic:arabic_home' %}">الرئيسية</a>
+                        <span class="sep">›</span>
+                        <a href="{% url 'arabic_services:arabic_services_overview' %}">الخدمات</a>
+                        <span class="sep">›</span>
+                        <span class="current">الخدمات الجراحية</span>
+                    </div>
+
+                    <span class="services-tag surgery-tag">أكثر من +1,500 عملية ناجحة</span>
+
+                    <h1>الخدمات <span class="grad-text-green">الجراحية</span> التخصصية</h1>
+
+                    <p>
+                        بخبرة جراحية تمتد لأكثر من 20 عامًا وبرصيد يتجاوز 1,500 عملية ناجحة،
+                        يُجري د. عبد الرحيمي أعقد جراحات العيون التخصصية بأعلى معايير السلامة.
+                    </p>
+
+                    <div class="hero-service-badges">
+                        <div class="service-badge-item surgery-badge">
+                            <i class="fas fa-procedures"></i>
+                            +1,500 عملية ناجحة
+                        </div>
+                        <div class="service-badge-item surgery-badge">
+                            <i class="fas fa-shield-alt"></i>
+                            أعلى معايير السلامة
+                        </div>
+                        <div class="service-badge-item surgery-badge">
+                            <i class="fas fa-calendar-check"></i>
+                            حجز عبر الإنترنت
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-4 d-none d-lg-flex justify-content-center wow fadeInUp" data-wow-delay=".15s">
+                <div class="hero-deco-circle surgery-deco">
+                    <i class="fas fa-hospital-alt"></i>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== شبكة الخدمات الجراحية ===== -->
+<section class="services-grid-section">
+    <div class="container">
+
+        <div class="sec-head wow fadeInUp" data-wow-delay=".1s">
+            <span class="pre-title">غرفة العمليات</span>
+            <h2>الخدمات الجراحية التخصصية</h2>
+            <div class="sec-divider"></div>
+            <p>جراحة العيون المتقدمة باستخدام أحدث التقنيات والمعدات</p>
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".1s">
+                <div class="service-card surgery-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder surgery-placeholder"><i class="fas fa-procedures"></i></div>
+                        <img src="{% static 'images/services/surgery/svc_surg_1.jpg' %}" alt="جراحة الشبكية فيتريكتومي" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>جراحة الشبكية (فيتريكتومي)</h3>
+                        <p>جراحة متقدمة لعلاج انفصال الشبكية ونزيف الزجاجية وغشاء البقعة.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".15s">
+                <div class="service-card surgery-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder surgery-placeholder"><i class="fas fa-eye"></i></div>
+                        <img src="{% static 'images/services/surgery/svc_surg_2.jpg' %}" alt="جراحة المياه البيضاء فيكو" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>جراحة المياه البيضاء (فيكو)</h3>
+                        <p>استحلاب عدسة العين وزراعة عدسة داخل المقلة لاستعادة وضوح الرؤية.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".2s">
+                <div class="service-card surgery-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder surgery-placeholder"><i class="fas fa-bolt"></i></div>
+                        <img src="{% static 'images/services/surgery/svc_surg_3.jpg' %}" alt="ليزر الشبكية" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>ليزر الشبكية</h3>
+                        <p>علاج تمزقات الشبكية ومناطق الضعف بالليزر لمنع الانفصال.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".1s">
+                <div class="service-card surgery-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder surgery-placeholder"><i class="fas fa-compress-arrows-alt"></i></div>
+                        <img src="{% static 'images/services/surgery/svc_surg_4.jpg' %}" alt="جراحة الجلوكوما" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>جراحة الجلوكوما</h3>
+                        <p>التدخلات الجراحية والليزرية للسيطرة على ضغط العين وحماية العصب البصري.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".15s">
+                <div class="service-card surgery-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder surgery-placeholder"><i class="fas fa-crosshairs"></i></div>
+                        <img src="{% static 'images/services/surgery/svc_surg_5.jpg' %}" alt="ليزر SLT وYAG" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>ليزر SLT وYAG</h3>
+                        <p>تدخل ليزري لا جراحي لتخفيض ضغط العين وعلاج انسداد كبسولة العدسة الخلفية.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".2s">
+                <div class="service-card surgery-card">
+                    <div class="svc-img-wrap">
+                        <div class="svc-img-placeholder surgery-placeholder"><i class="fas fa-fill-drip"></i></div>
+                        <img src="{% static 'images/services/surgery/svc_surg_6.jpg' %}" alt="التخثير الداخلي" loading="lazy" onerror="this.style.opacity='0'">
+                        <div class="svc-img-overlay"></div>
+                    </div>
+                    <div class="svc-body">
+                        <h3>التخثير الداخلي (الإندوتامبوناد)</h3>
+                        <p>حقن مواد خاصة داخل الزجاجية للحفاظ على التصاق الشبكية خلال جراحة الشبكية وبعدها.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== لماذا د. عبد الرحيمي؟ ===== -->
+<section class="surgery-why-section">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <div class="col-lg-5 mb-5 mb-lg-0">
+                <div class="why-img-wrap wow fadeInRight" data-wow-delay=".1s">
+                    <div class="why-img-inner">
+                        <img src="{% static 'images/about/doctor/welcome.png' %}" alt="لماذا د. وحيد عبد الرحيمي؟" loading="lazy">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <div class="why-text-wrap wow fadeInLeft" data-wow-delay=".15s">
+                    <span class="pre-title">ميزتنا</span>
+                    <h2>لماذا تختار د. عبد الرحيمي؟</h2>
+                    <div class="why-divider"></div>
+
+                    <div class="why-checklist">
+                        <div class="why-check-item">
+                            <div class="check-icon"><i class="fas fa-check"></i></div>
+                            <span>أكثر من 20 عامًا من الخبرة الجراحية المتخصصة في أمراض الشبكية</span>
+                        </div>
+                        <div class="why-check-item">
+                            <div class="check-icon"><i class="fas fa-check"></i></div>
+                            <span>عضوية في الجمعية الأوروبية والأمريكية لجراحي العيون</span>
+                        </div>
+                        <div class="why-check-item">
+                            <div class="check-icon"><i class="fas fa-check"></i></div>
+                            <span>استخدام أحدث التقنيات والمعدات الجراحية</span>
+                        </div>
+                        <div class="why-check-item">
+                            <div class="check-icon"><i class="fas fa-check"></i></div>
+                            <span>رعاية شاملة قبل العملية وأثناءها وبعدها</span>
+                        </div>
+                        <div class="why-check-item">
+                            <div class="check-icon"><i class="fas fa-check"></i></div>
+                            <span>نسبة رضا المرضى 98٪ وسجل ناجح يزيد على 1,500 عملية</span>
+                        </div>
+                        <div class="why-check-item">
+                            <div class="check-icon"><i class="fas fa-check"></i></div>
+                            <span>بيئة آمنة ومريحة مع فريق طبي متخصص وداعم</span>
+                        </div>
+                    </div>
+
+                    <a href="{% url 'arabic:arabic_contact' %}" class="btn-why-book mt-4">
+                        <i class="fas fa-calendar-check"></i>
+                        حجز موعد جراحي
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== CTA ===== -->
+<section class="services-cta-section">
+    <div class="container">
+        <div class="cta-wrap wow fadeInUp" data-wow-delay=".1s">
+            <h2>هل تحتاج إلى استشارة جراحية؟</h2>
+            <p>تواصل معنا لتحديد موعد أو الاستفسار عن خدماتنا الجراحية</p>
+            <a href="{% url 'arabic:arabic_contact' %}" class="btn-svc-primary">
+                <i class="fas fa-calendar-check"></i>
+                حجز عبر الإنترنت
+            </a>
+            <a href="tel:02188648210" class="btn-svc-ghost">
+                <i class="fas fa-phone"></i>
+                الاتصال بالعيادة
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -19,6 +19,14 @@
             'class': '',
             'id': ''
             });
+            // آیکون‌های شبکه اجتماعی در پایین منوی موبایل
+            $mobile_nav.append(
+                '<div class="mobile-nav-social">' +
+                '<a href="https://www.instagram.com/dr_vahid_abdolrahimi/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa fa-instagram"></i></a>' +
+                '<a href="https://t.me/dr_vahid_abdolrahimi" target="_blank" rel="noopener" aria-label="Telegram"><i class="fa fa-telegram"></i></a>' +
+                '<a href="https://wa.me/989013434195" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>' +
+                '</div>'
+            );
             $('body').append($mobile_nav);
             $('body').prepend('<button type="button" id="mobile-nav-toggle"><i class="lnr lnr-menu"></i></button>');
             $('body').append('<div id="mobile-body-overly"></div>');

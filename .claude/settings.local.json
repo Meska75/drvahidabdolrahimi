@@ -4,7 +4,8 @@
       "Bash(python manage.py check)",
       "Bash(env\\\\Scripts\\\\python manage.py check)",
       "Bash(python -c ' *)",
-      "Bash(env\\\\Scripts\\\\python.exe manage.py check)"
+      "Bash(env\\\\Scripts\\\\python.exe manage.py check)",
+      "PowerShell(Add-Type -Assembly \"System.IO.Compression.FileSystem\"; $zip = [System.IO.Compression.ZipFile]::OpenRead\\(\"c:\\\\Users\\\\Asus\\\\Desktop\\\\drvahidabdolrahimi_deploy.zip\"\\); $total = $zip.Entries.Count; $topLevel = $zip.Entries | ForEach-Object { \\($_.FullName -split '/'\\)[0] } | Sort-Object -Unique; Write-Host \"تعداد فایل‌ها: $total\"; $topLevel | ForEach-Object { Write-Host \"  $_\" }; $zip.Dispose\\(\\))"
     ]
   }
 }

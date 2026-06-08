@@ -295,33 +295,53 @@
             .header-top { display: none; }
         }
 
-        /* ===== سوئیچر زبان — موبایل ===== */
-        .lang-switcher-mobile { display: none; }
+        /* ===== نوار زبان موبایل + جداکننده دسکتاپ ===== */
+        .lang-strip-mobile { display: none; }
+        .lang-social-sep {
+            width: 1px;
+            height: 18px;
+            background: rgba(255,255,255,.12);
+            margin: 0 10px;
+            flex-shrink: 0;
+        }
 
         @media (max-width: 960px) {
-            .lang-switcher-mobile {
+            /* هدر دو ردیفه می‌شود: لوگو + نوار زبان */
+            #header .row.d-flex { flex-wrap: wrap; }
+
+            .lang-strip-mobile {
                 display: flex;
+                width: 100%;
+                order: 10;
+                justify-content: center;
                 align-items: center;
                 gap: 4px;
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-                z-index: 2;
+                padding: 6px 0 9px;
+                border-top: 1px solid rgba(255,255,255,.07);
             }
-            .lang-switcher-mobile a {
+            .lang-strip-mobile a {
                 color: #94a3b8;
                 text-decoration: none !important;
-                font-size: 11px;
-                font-weight: 700;
-                padding: 3px 7px;
-                border-radius: 5px;
+                font-size: 12px;
+                font-weight: 600;
+                padding: 3px 12px;
+                border-radius: 20px;
                 transition: all .2s;
                 white-space: nowrap;
             }
-            .lang-switcher-mobile a:hover { color: #fff; background: rgba(255,255,255,.09); }
-            .lang-switcher-mobile a.lang-active { color: #60a5fa; background: rgba(96,165,250,.1); }
-            .lang-switcher-mobile .lang-sep { color: #334155; font-size: 10px; user-select: none; }
+            .lang-strip-mobile a:hover { color: #fff; background: rgba(255,255,255,.08); }
+            .lang-strip-mobile a.lang-active {
+                color: #60a5fa;
+                background: rgba(96,165,250,.1);
+                border: 1px solid rgba(96,165,250,.22);
+            }
+            .lang-strip-mobile .lang-sep { color: #334155; font-size: 10px; user-select: none; }
+            /* margin-top صفحات برای هدر بلندتر در موبایل */
+            .hero-section,
+            .services-hero-section,
+            .about-hero-section,
+            .contact-hero-section,
+            .sov-hero-section { margin-top: 112px !important; }
         }
 
         /* ===== سوئیچر زبان ===== */
@@ -447,7 +467,7 @@
                         <h6><span><i class="fa fa-map-marker"></i></span> ایران، تهران، میدان ونک، خ. گاندی جنوبی، خ. شهیده ترکان، پلاک ۲۴، طبقه ۴، واحد ۹</h6>
                     </div>
                     <div class="col-lg-4">
-                        <div class="d-flex align-items-center justify-content-end gap-3">
+                        <div class="d-flex align-items-center justify-content-end">
                             <div class="lang-switcher">
                                 <a href="{% url 'main:persian_home' %}" class="lang-active">فارسی</a>
                                 <span class="lang-sep">|</span>
@@ -455,6 +475,7 @@
                                 <span class="lang-sep">|</span>
                                 <a href="{% url 'arabic:arabic_home' %}">العربية</a>
                             </div>
+                            <div class="lang-social-sep"></div>
                             <div class="social-links">
                                 <ul>
                                     <li><a href="https://www.instagram.com/dr_vahid_abdolrahimi/" aria-label="اینستاگرام" target="_blank" rel="noopener"><i class="fa fa-instagram"></i></a></li>
@@ -476,7 +497,7 @@
                             <img src="{% static 'images/logo/logo.png' %}" alt="دکتر وحید عبدالرحیمی" title="دکتر وحید عبدالرحیمی" />
                         </a>
                     </div>
-                    <div class="lang-switcher-mobile">
+                    <div class="lang-strip-mobile">
                         <a href="{% url 'main:persian_home' %}" class="lang-active">فارسی</a>
                         <span class="lang-sep">|</span>
                         <a href="{% url 'english:english_home' %}">English</a>

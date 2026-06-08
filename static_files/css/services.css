@@ -617,7 +617,7 @@
 
 @media (max-width: 767.98px) {
     .services-hero-section {
-        margin-top: 76px;
+        margin-top: 112px; /* هدر ۱۱۲px (76px + ۳۶px نوار زبان) */
         padding: 40px 0 60px;
     }
 
@@ -635,4 +635,12 @@
 
     .why-img-inner img { height: 260px; }
     .why-text-wrap { padding-right: 0; }
+
+    /* کارت‌های خدمات — ۲ ستون در موبایل */
+    .services-grid-section .row > .col-md-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+        padding-right: 8px;
+        padding-left: 8px;
+    }
 }

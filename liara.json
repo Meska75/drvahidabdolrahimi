@@ -1,0 +1,6 @@
+{
+  "platform": "django",
+  "django": {
+    "settingsModule": "config.settings"
+  }
+}

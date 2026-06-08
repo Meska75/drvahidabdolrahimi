@@ -61,6 +61,12 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 
+# فایل‌های تولیدشده توسط collectstatic
+static/
+
+# متغیرهای محیطی
+.env
+
 # Flask stuff:
 instance/
 .webassets-cache

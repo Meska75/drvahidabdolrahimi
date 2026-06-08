@@ -17,6 +17,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/contact.css' %}">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 {% endblock %}
 
 {% block content %}
@@ -198,6 +199,12 @@
                         ارسال پیام
                     </button>
 
+                    <!-- پیام موقت — بعد از راه‌اندازی پنل ادمین حذف می‌شود -->
+                    <div id="form-notice" style="display:none; margin-top:16px; padding:14px 18px; background:#f0f9ff; border:1px solid #bae6fd; border-radius:12px; color:#0369a1; font-size:13px; text-align:center;">
+                        <i class="fas fa-info-circle" style="margin-left:6px;"></i>
+                        این بخش به زودی فعال می‌شود. لطفاً از طریق تلفن یا شبکه‌های اجتماعی تماس بگیرید.
+                    </div>
+
                 </form>
             </div>
             <!-- پایان پانل فرم -->
@@ -210,20 +217,72 @@
 <!-- پایان بدنه اصلی -->
 
 
-<!-- ===== نقشه full-width ===== -->
+<!-- ===== نقشه full-width (نشان) ===== -->
 <section class="contact-map-section">
     <div class="map-label">
         <i class="fas fa-map-marker-alt"></i>
         موقعیت مطب روی نقشه
     </div>
-    <iframe
-        src="https://maps.google.com/maps?q=35.75431655694686,51.41248217613625&z=16&output=embed"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        title="موقعیت مطب دکتر عبدالرحیمی">
-    </iframe>
+    <div id="neshanMapContact"></div>
 </section>
 <!-- پایان نقشه -->
 
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* فرم تماس — موقتاً غیرفعال تا راه‌اندازی پنل ادمین */
+document.querySelector('.card-form-panel form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('form-notice').style.display = 'block';
+    this.querySelector('.btn-send').disabled = true;
+});
+
+window.addEventListener('load', function () {
+    var mapEl = document.getElementById('neshanMapContact');
+    if (!mapEl || typeof L === 'undefined') return;
+
+    var lat    = 35.75431655694686;
+    var lng    = 51.41248217613625;
+    var apiKey = 'service.4b130a29422349a7a3210bf2972459f5';
+
+    var map = L.map('neshanMapContact', {
+        center: [lat, lng],
+        zoom: 16,
+        zoomControl: true,
+        attributionControl: true
+    });
+
+    /* tile نشان با fallback به OpenStreetMap */
+    var neshanFailed = false;
+    var neshanLayer  = L.tileLayer(
+        'https://map.neshan.org/sdk/v1/map/xyz/dreamy/{z}/{x}/{y}.png?x-api-key=' + apiKey,
+        { attribution: '© <a href="https://neshan.org" target="_blank">نشان</a>', maxZoom: 18 }
+    );
+
+    neshanLayer.on('tileerror', function () {
+        if (!neshanFailed) {
+            neshanFailed = true;
+            map.removeLayer(neshanLayer);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© <a href="https://openstreetmap.org" target="_blank">OpenStreetMap</a>'
+            }).addTo(map);
+        }
+    });
+
+    neshanLayer.addTo(map);
+
+    L.marker([lat, lng])
+        .addTo(map)
+        .bindPopup(
+            '<div dir="rtl" style="font-family:Vazirmatn,Tahoma,sans-serif;font-size:13px;padding:4px 8px;">' +
+            '<strong>مطب دکتر وحید عبدالرحیمی</strong><br>' +
+            '<span style="color:#64748b;">تهران، میدان ونک</span></div>'
+        )
+        .openPopup();
+
+    setTimeout(function () { map.invalidateSize(); }, 300);
+});
+</script>
 {% endblock %}

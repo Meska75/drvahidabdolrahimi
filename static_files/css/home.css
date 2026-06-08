@@ -1300,11 +1300,36 @@
 }
 
 @media (max-width: 767px) {
-    /* موبایل: header-top hidden، #header fixed (76px) از بالا */
+    /* موبایل: header-top hidden، #header fixed (112px = 76px + 36px نوار زبان) از بالا */
     .hero-section {
-        margin-top: 76px;
-        min-height: calc(100vh - 76px);
+        margin-top: 112px;
+        min-height: calc(100vh - 112px);
         padding-top: 40px;
+    }
+
+    /* تصویر بنر از بالا-مرکز نمایش داده شود تا کات نشود */
+    .hero-slide {
+        background-position: center top !important;
+    }
+
+    /* پرده گرادیان سمت چپ و راست برای پوشاندن لبه برش */
+    .hero-section::before,
+    .hero-section::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 60px;
+        z-index: 2;
+        pointer-events: none;
+    }
+    .hero-section::before {
+        right: 0;
+        background: linear-gradient(to left, rgba(7, 26, 53, 0.6), transparent);
+    }
+    .hero-section::after {
+        left: 0;
+        background: linear-gradient(to right, rgba(7, 26, 53, 0.6), transparent);
     }
     .hero-title         { font-size: 28px !important; }
     .hero-stats         { gap: 20px; }
@@ -1331,6 +1356,22 @@
     }
     .gallery-item.gi-wide-tall,
     .gallery-item.gi-wide { grid-column: span 1; grid-row: span 1; }
+
+    /* کارت‌های ویژگی صفحه اصلی — ۲ ستون در موبایل */
+    .features-section .row > .col-md-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+
+    /* تیم همکاران — ۲ ستون در موبایل (<576px) */
+    .team-section .row > .col-sm-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+        padding-right: 8px;
+        padding-left: 8px;
+    }
 
     /* تماس — موبایل */
     .contact-home-section { padding-top: 60px; }

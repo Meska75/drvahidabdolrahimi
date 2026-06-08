@@ -1066,9 +1066,9 @@
 }
 
 @media (max-width: 767.98px) {
-    /* موبایل: header-top hidden، #header 76px از بالا */
+    /* موبایل: header-top hidden، #header 112px از بالا (76px + 36px نوار زبان) */
     .about-hero-section {
-        margin-top: 76px;
+        margin-top: 112px;
         padding: 50px 0 70px;
     }
 
@@ -1095,4 +1095,13 @@
 
     .clinic-card { margin: 4px 2px 20px; }
     .clinic-img-wrap { height: 170px; }
+
+    /* کارت‌های تخصص و دستاورد — ۲ ستون در موبایل */
+    .about-expertise-section .row > .col-md-6,
+    .about-achievements-section .row > .col-md-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+        padding-right: 8px;
+        padding-left: 8px;
+    }
 }

@@ -1,0 +1,16 @@
+/* تنظیمات LTR برای صفحه خانه انگلیسی */
+.hero-stat         { text-align: left; }
+.feat-card::after  { transform-origin: left; }
+.about-quote-box   { border-left: 4px solid var(--primary); border-right: none; }
+.stat-num          { font-family: 'Inter', sans-serif !important; }
+.emg-phone         { font-family: 'Inter', sans-serif; }
+.sec-divider       { background: linear-gradient(to right, var(--primary), var(--accent)); }
+.sec-divider-light { background: linear-gradient(to right, #ef4444, #f97316); }
+.services-office-section::before { background: linear-gradient(to right, var(--primary), var(--accent)); }
+.team-section::before            { background: linear-gradient(to right, var(--primary), var(--accent)); }
+.srv-carousel .owl-nav .owl-prev { margin-right: 6px; margin-left: 0; }
+.srv-carousel .owl-nav .owl-next { margin-left: 6px;  margin-right: 0; }
+.srv-card .card-img .tag { right: auto; left: 14px; }
+.exp-badge { left: auto; right: -18px; }
+.hero-circle-1 { left: auto; right: -200px; }
+.hero-circle-2 { right: auto; left: -80px; }

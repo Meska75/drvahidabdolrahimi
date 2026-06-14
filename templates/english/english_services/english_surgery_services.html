@@ -17,54 +17,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/services.css' %}">
-<style>
-    /* ===== LTR overrides ===== */
-
-    /* Section dividers */
-    .sec-divider {
-        background: linear-gradient(to right, var(--primary), var(--accent)) !important;
-    }
-
-    /* Decorative circles in hero — LTR flip */
-    .services-hero-section::before {
-        left: auto;
-        right: -120px;
-    }
-    .services-hero-section::after {
-        right: auto;
-        left: -60px;
-    }
-
-    /* Hero text */
-    .services-hero-content h1,
-    .services-hero-content p { text-align: left; }
-
-    /* Why section — text padding for LTR */
-    .why-text-wrap {
-        padding-right: 0 !important;
-        padding-left: 20px !important;
-    }
-
-    /* Why section divider */
-    .why-divider {
-        background: linear-gradient(to right, #60a5fa, #0ea5e9) !important;
-    }
-
-    /* Why section decorative circle — flip to right */
-    .surgery-why-section::before {
-        left: auto;
-        right: -80px;
-    }
-
-    /* Book button — left-aligned in LTR */
-    .btn-why-book { align-self: flex-start; }
-
-    /* Ghost button — LTR spacing */
-    .btn-svc-ghost {
-        margin-right: 0 !important;
-        margin-left: 12px !important;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'css/services_en.css' %}">
 {% endblock %}
 
 {% block content %}

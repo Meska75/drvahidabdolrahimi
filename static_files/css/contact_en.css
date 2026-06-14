@@ -1,0 +1,36 @@
+/* ===== LTR Overrides for Contact Page — English ===== */
+
+/* Form inputs — switch to LTR */
+.uf-group input,
+.uf-group textarea {
+    direction: ltr !important;
+    text-align: left !important;
+    padding: 10px 0 10px 26px !important;
+    font-family: 'Inter', Arial, sans-serif !important;
+}
+
+/* Icon — move from right to left */
+.uf-group .uf-icon {
+    right: auto !important;
+    left: 2px !important;
+}
+
+/* Send button font */
+.btn-send {
+    font-family: 'Inter', Arial, sans-serif !important;
+}
+
+/* Map label font */
+.map-label {
+    font-family: 'Inter', Arial, sans-serif !important;
+}
+
+/* Decorative circles in hero — LTR flip */
+.contact-hero-section::before {
+    right: auto;
+    left: -150px;
+}
+.contact-hero-section::after {
+    left: auto;
+    right: -100px;
+}

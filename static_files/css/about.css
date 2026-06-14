@@ -1105,3 +1105,8 @@
         padding-left: 8px;
     }
 }
+
+/* متن‌های پاراگرافی — justify برای فارسی و عربی */
+.hero-bio, .bio-text-wrap p, .tl-card p, .expertise-card p,
+.achievement-card p, .clinic-body p, .about-hero-content p,
+.sec-head > p { text-align: justify !important; }

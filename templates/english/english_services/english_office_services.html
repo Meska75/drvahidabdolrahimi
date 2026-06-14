@@ -17,34 +17,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/services.css' %}">
-<style>
-    /* ===== LTR overrides ===== */
-
-    /* Section dividers */
-    .sec-divider {
-        background: linear-gradient(to right, var(--primary), var(--accent)) !important;
-    }
-
-    /* Decorative circles in hero — LTR flip */
-    .services-hero-section::before {
-        left: auto;
-        right: -120px;
-    }
-    .services-hero-section::after {
-        right: auto;
-        left: -60px;
-    }
-
-    /* Hero text */
-    .services-hero-content h1,
-    .services-hero-content p { text-align: left; }
-
-    /* Ghost button — LTR spacing */
-    .btn-svc-ghost {
-        margin-right: 0 !important;
-        margin-left: 12px !important;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'css/services_en.css' %}">
 {% endblock %}
 
 {% block content %}

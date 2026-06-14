@@ -9,7 +9,7 @@ SECRET_KEY = os.environ.get(
     'django-insecure-&l8!^zsr=hc5t07uhmyi)4@=9s=j@@%&v%sw7^&l578ura36uc'
 )
 
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
@@ -89,7 +89,9 @@ STATICFILES_DIRS = [
 ]
 
 # whitenoise — فشرده‌سازی و cache فایل‌های استاتیک در production
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# در development از storage پیش‌فرض Django استفاده می‌شود
+if not DEBUG:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

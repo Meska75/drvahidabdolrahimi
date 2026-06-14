@@ -1,0 +1,327 @@
+/* ===== پایه RTL — عربی (Cairo) ===== */
+html { overflow-x: hidden; }
+body {
+    font-family: 'Cairo', Tahoma, Arial, sans-serif !important;
+    direction: rtl;
+    text-align: right;
+    color: #64748b;
+    overflow-x: hidden;
+    background: #071a35;
+}
+
+h1, h2, h3, h4, h5, h6,
+p, a, span, div, li, ul, ol,
+input, textarea, select, button, label, td, th {
+    font-family: 'Cairo', Tahoma, Arial, sans-serif !important;
+}
+
+/* ===== نوار بالای هدر ===== */
+.header-top {
+    padding: 10px 0;
+    background: #071a35;
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    z-index: 998;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.header-top.header-scrolled {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.header-top .d-md-flex { flex-direction: row-reverse; justify-content: flex-end; }
+.header-top h6 {
+    margin-right: 0 !important;
+    margin-left: 1.5rem;
+    color: #94a3b8 !important;
+    font-size: 12px !important;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.header-top h6 span {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+}
+.header-top h6 i { color: #60a5fa; font-size: 14px; line-height: 1; }
+
+.header-top .social-links ul {
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    float: none !important;
+}
+.header-top .social-links ul li { display: inline-flex; margin: 0; }
+.header-top .social-links ul li a {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    background: rgba(255,255,255,.07);
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    transition: all .25s;
+}
+.header-top .social-links ul li a:hover {
+    background: #1a56db;
+    color: #fff;
+}
+
+/* ===== هدر اصلی ===== */
+#header {
+    padding: 0;
+    position: fixed;
+    left: 0; right: 0;
+    top: 47px;
+    z-index: 997;
+    transition: all .4s;
+    background: rgba(7,26,53,.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+#header.header-scrolled {
+    top: 0;
+    background: rgba(7,26,53,.98);
+    box-shadow: 0 4px 24px rgba(0,0,0,.3);
+}
+
+#logo { padding: 14px 0; }
+#logo img { max-height: 48px; }
+
+#header .row.d-flex {
+    justify-content: flex-start !important;
+    gap: 2.5rem;
+}
+
+/* ===== ناوبری ===== */
+#nav-menu-container { margin: 0; }
+#nav-menu-container ul.nav-menu > li { float: right; }
+.nav-menu .menu-has-children > ul { right: 0; left: auto; }
+.nav-menu .menu-has-children > ul li a { text-align: right; }
+
+.nav-menu a {
+    color: #cbd5e1 !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    padding: 20px 14px !important;
+    text-transform: none !important;
+    transition: color .25s !important;
+    letter-spacing: 0;
+}
+
+.nav-menu a:hover,
+.nav-menu li.menu-active > a { color: #60a5fa !important; }
+
+.nav-menu ul {
+    background: #0d2b55 !important;
+    border: 1px solid rgba(255,255,255,.1) !important;
+    border-radius: 8px !important;
+    padding: 8px !important;
+    margin-top: 0 !important;
+}
+
+.nav-menu ul li a {
+    color: #cbd5e1 !important;
+    border-radius: 6px;
+    padding: 8px 14px !important;
+    font-size: 13px !important;
+}
+
+.nav-menu ul li a:hover { background: rgba(96,165,250,.12) !important; color: #60a5fa !important; }
+
+/* ===== فوتر ===== */
+.footer-area {
+    background: #071a35;
+    border-top: 1px solid rgba(255,255,255,.06);
+}
+
+.footer-widget ul { padding-right: 0; }
+.footer-widget .single-widget-home ul li { text-align: right; }
+.footer-widget .single-widget-home ul li a {
+    color: #94a3b8 !important;
+    font-size: 14px;
+    transition: color .25s;
+    display: inline-block;
+    padding: 3px 0;
+}
+.footer-widget .single-widget-home ul li a:hover { color: #60a5fa !important; }
+.footer-widget .single-widget-home ul li a::before {
+    content: '← ';
+    font-size: 11px;
+    opacity: .6;
+}
+
+.footer-area h3 {
+    color: #fff !important;
+    font-size: 15px !important;
+    text-transform: none !important;
+    margin-bottom: 20px !important;
+    padding-bottom: 12px;
+    border-bottom: 2px solid rgba(26,86,219,.5);
+    display: inline-block;
+}
+
+.footer-area p { color: #94a3b8; font-size: 14px; }
+.footer-area p i { color: #60a5fa; margin-left: 8px; }
+
+.footer-area .social-icons ul {
+    display: flex;
+    gap: 10px;
+    padding: 0;
+    list-style: none;
+}
+
+.footer-area .social-icons ul li a {
+    width: 38px; height: 38px;
+    border-radius: 8px;
+    background: rgba(255,255,255,.07);
+    color: #94a3b8 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    transition: all .25s;
+}
+
+.footer-area .social-icons ul li a:hover {
+    background: #1a56db;
+    color: #fff !important;
+}
+
+.footer-copyright {
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid rgba(255,255,255,.07);
+}
+
+.footer-copyright span { color: #64748b; font-size: 13px; }
+
+/* ===== اصلاح فلش سوپرفیش ===== */
+.sf-arrows .sf-with-ul:after { content: none !important; }
+.sf-arrows .sf-with-ul { padding-left: 14px !important; padding-right: 14px !important; }
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    #header { top: 0; }
+    .header-top { position: relative; }
+}
+@media (max-width: 767.98px) {
+    #header { top: 0; }
+    .header-top { display: none; }
+}
+
+/* ===== نوار زبان موبایل + جداکننده دسکتاپ ===== */
+.lang-strip-mobile { display: none; }
+.lang-social-sep {
+    width: 1px;
+    height: 18px;
+    background: rgba(255,255,255,.12);
+    margin: 0 10px;
+    flex-shrink: 0;
+}
+
+@media (max-width: 960px) {
+    #header .row.d-flex { flex-wrap: wrap; }
+
+    .lang-strip-mobile {
+        display: flex;
+        width: 100%;
+        order: 10;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        padding: 6px 0 9px;
+        border-top: 1px solid rgba(255,255,255,.07);
+    }
+    .lang-strip-mobile a {
+        color: #94a3b8;
+        text-decoration: none !important;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 3px 12px;
+        border-radius: 20px;
+        transition: all .2s;
+        white-space: nowrap;
+    }
+    .lang-strip-mobile a:hover { color: #fff; background: rgba(255,255,255,.08); }
+    .lang-strip-mobile a.lang-active {
+        color: #60a5fa;
+        background: rgba(96,165,250,.1);
+        border: 1px solid rgba(96,165,250,.22);
+    }
+    .lang-strip-mobile .lang-sep { color: #334155; font-size: 10px; user-select: none; }
+    .hero-section,
+    .services-hero-section,
+    .about-hero-section,
+    .contact-hero-section,
+    .sov-hero-section { margin-top: 112px !important; }
+}
+
+/* ===== سوئیچر زبان ===== */
+.lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+.lang-switcher a {
+    color: #94a3b8;
+    text-decoration: none !important;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 7px;
+    border-radius: 5px;
+    transition: all .2s;
+    white-space: nowrap;
+}
+.lang-switcher a:hover {
+    color: #fff;
+    background: rgba(255,255,255,.09);
+}
+.lang-switcher a.lang-active {
+    color: #60a5fa;
+    background: rgba(96,165,250,.1);
+    border: 1px solid rgba(96,165,250,.25);
+}
+.lang-switcher .lang-sep {
+    color: #334155;
+    font-size: 10px;
+    user-select: none;
+}
+
+/* ===== منوی موبایل — دکمه سمت چپ (RTL) ===== */
+@media (max-width: 960px) {
+    #mobile-nav-toggle {
+        left: 15px !important;
+        right: auto !important;
+    }
+    #mobile-nav .menu-has-children {
+        position: relative;
+        display: flex !important;
+        align-items: center;
+    }
+    #mobile-nav .menu-has-children > a {
+        flex: 1;
+        padding-left: 36px !important;
+    }
+    #mobile-nav .menu-has-children > i.lnr {
+        position: absolute !important;
+        left: 8px !important;
+        right: auto !important;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        padding: 6px 8px;
+        color: #94a3b8;
+        flex-shrink: 0;
+        z-index: 1;
+    }
+}

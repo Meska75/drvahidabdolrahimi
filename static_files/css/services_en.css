@@ -1,0 +1,52 @@
+/* ===== LTR overrides for services pages — English ===== */
+
+/* Section dividers */
+.sec-divider {
+    background: linear-gradient(to right, var(--primary), var(--accent)) !important;
+}
+
+/* Decorative circles in hero — LTR flip */
+.services-hero-section::before { left: auto; right: -120px; }
+.services-hero-section::after  { right: auto; left: -60px; }
+
+/* Hero text */
+.services-hero-content h1,
+.services-hero-content p { text-align: left; }
+
+/* Ghost button — LTR spacing */
+.btn-svc-ghost {
+    margin-right: 0 !important;
+    margin-left: 12px !important;
+}
+
+/* ===== Surgery services additional overrides ===== */
+
+/* Why section — text padding for LTR */
+.why-text-wrap {
+    padding-right: 0 !important;
+    padding-left: 20px !important;
+}
+
+/* Why section divider */
+.why-divider {
+    background: linear-gradient(to right, #60a5fa, #0ea5e9) !important;
+}
+
+/* Why section decorative circle — flip to right */
+.surgery-why-section::before { left: auto; right: -80px; }
+
+/* Book button — left-aligned in LTR */
+.btn-why-book { align-self: flex-start; }
+
+/* ===== Services overview page overrides ===== */
+
+.sov-hero-section::after { left: auto; right: -100px; }
+
+.sov-item:hover .sov-cta i { transform: translateX(5px) !important; }
+
+/* Badge stays bottom-left of image in LTR layout */
+.sov-badge { right: auto; left: 20px; }
+
+/* Hero text — left aligned */
+.sov-hero-section h1,
+.sov-hero-sub { text-align: left; }

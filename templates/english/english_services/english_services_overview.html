@@ -18,32 +18,7 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 <link rel="stylesheet" href="{% static 'css/services_overview.css' %}">
-<style>
-    /* ===== LTR overrides ===== */
-
-    /* Decorative circle — flip to right side */
-    .sov-hero-section::after {
-        left: auto;
-        right: -100px;
-    }
-
-    /* CTA arrow — LTR hover moves right */
-    .sov-item:hover .sov-cta i {
-        transform: translateX(5px) !important;
-    }
-
-    /* Badge stays bottom-left of image in LTR layout (image is on left) */
-    .sov-badge {
-        right: auto;
-        left: 20px;
-    }
-
-    /* Hero text — left aligned */
-    .sov-hero-section h1,
-    .sov-hero-sub {
-        text-align: left;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'css/services_en.css' %}">
 {% endblock %}
 
 {% block content %}

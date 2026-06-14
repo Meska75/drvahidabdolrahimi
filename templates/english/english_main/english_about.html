@@ -23,77 +23,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/about.css' %}">
-<style>
-    /* ===== LTR overrides for about.css ===== */
-
-    /* Section dividers — left to right */
-    .sec-divider       { background: linear-gradient(to right, var(--primary), var(--accent)); }
-    .sec-divider-light { background: linear-gradient(to right, #60a5fa, #0ea5e9); }
-
-    /* Hero decorative circles */
-    .about-hero-section::before { left: auto; right: -150px; }
-    .about-hero-section::after  { right: auto; left: -60px; }
-
-    /* Timeline — vertical line on the LEFT */
-    .timeline-wrap {
-        padding-right: 0;
-        padding-left: 36px;
-    }
-    .timeline-wrap::before {
-        right: auto;
-        left: 9px;
-    }
-    .tl-dot {
-        right: auto;
-        left: -46px;
-    }
-    .tl-card:hover { transform: translateX(4px); }
-
-    /* Timeline section decorative circle */
-    .about-timeline-section::before { right: auto; left: -80px; }
-
-    /* Bio section — photo left, text right */
-    .bio-photo-wrap {
-        padding-left: 0;
-        padding-right: 24px;
-    }
-    .bio-photo-deco {
-        left: auto;
-        right: 0;
-    }
-    .bio-text-wrap {
-        padding-right: 0;
-        padding-left: 24px;
-    }
-    .bio-divider { background: linear-gradient(to right, var(--primary), var(--accent)); }
-
-    /* Expertise card deco — top-left corner in LTR */
-    .expertise-card::after {
-        right: auto;
-        left: 0;
-        background: radial-gradient(circle at top left, rgba(26,86,219,.06), transparent 70%);
-    }
-
-    /* Achievement card top bar */
-    .achievement-card::before { background: linear-gradient(to right, var(--primary), var(--accent)); }
-
-    /* Text alignment */
-    .hero-bio, .bio-text-wrap p, .tl-card p, .expertise-card p,
-    .achievement-card p, .clinic-body p, .about-hero-content p,
-    .sec-head > p { text-align: left !important; }
-
-    /* Responsive LTR adjustments */
-    @media (max-width: 991.98px) {
-        .bio-text-wrap { padding-left: 0; padding-top: 30px; }
-        .bio-photo-wrap { padding-right: 0; }
-    }
-    @media (max-width: 767.98px) {
-        .about-hero-content { text-align: left; }
-        .about-breadcrumb   { justify-content: flex-start; }
-        .hero-meta-badges   { justify-content: flex-start; }
-        .tl-item            { padding-left: 10px; padding-right: 0; }
-    }
-</style>
+<link rel="stylesheet" href="{% static 'css/about_en.css' %}">
 {% endblock %}
 
 {% block content %}

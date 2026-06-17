@@ -1,0 +1,1732 @@
+/* ===== صفحات بلاگ — استایل پایه مشترک ===== */
+
+/* باکس شیشه‌ای هیرو */
+.blog-hero-glass {
+    display: inline-block;
+    background: rgba(4, 15, 31, 0.52);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,.13);
+    border-radius: 16px;
+    padding: 28px 44px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.blog-hero-glass .contact-breadcrumb { margin-bottom: 14px; }
+.blog-hero-glass .contact-breadcrumb a { color: #94a3b8; text-decoration: none; transition: color .2s; }
+.blog-hero-glass .contact-breadcrumb a:hover { color: #60a5fa; }
+.blog-hero-glass .contact-breadcrumb .sep { color: #475569; }
+.blog-hero-glass .contact-breadcrumb .current { color: #60a5fa; }
+.blog-hero-glass h1 { color: #fff !important; margin-bottom: 0; }
+
+@media (max-width: 575.98px) {
+    .blog-hero-glass { padding: 20px 22px; }
+    .blog-hero-glass h1 { font-size: 26px !important; }
+}
+
+/* ================================================================
+   هیرو صفحه جزئیات مقاله (blg-detail-hero)
+   تصویر مقاله به صورت فید در پس‌زمینه، تم یکسان با صفحه لیست
+================================================================ */
+.blg-detail-hero {
+    margin-top: 123px; /* header-top(47px) + #header(76px) */
+    background: linear-gradient(140deg, #071a35 0%, #0d2b55 60%, #0a3d72 100%);
+    padding: 58px 0 76px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+/* حلقه‌های تزئینی — همان الگوی blg-hero */
+.blg-detail-hero::before {
+    content: '';
+    position: absolute;
+    width: 560px; height: 560px;
+    border-radius: 50%;
+    background: rgba(26,86,219,.05);
+    top: -230px; right: -140px;
+    pointer-events: none;
+}
+
+.blg-detail-hero::after {
+    content: '';
+    position: absolute;
+    width: 340px; height: 340px;
+    border-radius: 50%;
+    background: rgba(14,165,233,.04);
+    bottom: -130px; left: -80px;
+    pointer-events: none;
+}
+
+/* تصویر مقاله — بسیار فید در پس‌زمینه */
+.blg-detail-hero-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: .13;
+    filter: blur(5px);
+    transform: scale(1.06);
+    pointer-events: none;
+}
+
+/* محتوای داخلی — بالای همه لایه‌ها */
+.blg-detail-hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* breadcrumb مرکزچین */
+.blg-detail-breadcrumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 18px;
+    font-size: .8rem;
+}
+
+.blg-detail-breadcrumb a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color .2s;
+}
+
+.blg-detail-breadcrumb a:hover { color: #60a5fa; }
+.blg-detail-breadcrumb .sep { color: #475569; }
+.blg-detail-breadcrumb .cur {
+    color: #94a3b8;
+    max-width: 280px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* نشان دسته‌بندی */
+.blg-detail-cat-badge {
+    display: inline-block;
+    background: rgba(26,86,219,.25);
+    border: 1px solid rgba(96,165,250,.3);
+    color: #93c5fd;
+    font-size: .71rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    padding: 4px 16px;
+    border-radius: 50px;
+    margin-bottom: 16px;
+}
+
+/* عنوان مقاله */
+.blg-detail-hero h1 {
+    color: #fff !important;
+    font-size: 2.1rem !important;
+    font-weight: 900 !important;
+    line-height: 1.38 !important;
+    margin-bottom: 22px !important;
+}
+
+/* متا — نویسنده، تاریخ، بازدید */
+.blg-detail-hero-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: .82rem;
+    color: #94a3b8;
+}
+
+.blg-detail-hero-meta span { display: flex; align-items: center; gap: 5px; }
+.blg-detail-hero-meta i { color: #60a5fa; font-size: .72rem; }
+
+/* Responsive */
+@media (max-width: 991.98px) {
+    .blg-detail-hero { margin-top: 29px; padding: 46px 0 60px; }
+    .blg-detail-hero h1 { font-size: 1.7rem !important; }
+}
+
+@media (max-width: 767.98px) {
+    .blg-detail-hero { margin-top: 112px; padding: 38px 0 52px; }
+    .blg-detail-hero h1 { font-size: 1.4rem !important; }
+    .blg-detail-hero-meta { gap: 12px; font-size: .78rem; }
+}
+
+/* لیست مقالات */
+.blog-list-section { background: #f8fafc; }
+
+.blog-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 16px rgba(0,0,0,.06);
+    margin-bottom: 32px;
+    overflow: hidden;
+    transition: box-shadow .25s;
+}
+.blog-card:hover { box-shadow: 0 6px 32px rgba(0,0,0,.12); }
+
+.blog-card-img img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+}
+
+.blog-card-body { padding: 24px 28px; }
+
+.blog-cat {
+    display: inline-block;
+    background: #e0f2fe;
+    color: #0369a1;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+}
+
+.blog-card-body h4 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+.blog-card-body h4 a { color: #1e293b; text-decoration: none; }
+.blog-card-body h4 a:hover { color: #1ba0b0; }
+.blog-card-body p { color: #475569; font-size: 14px; line-height: 1.8; margin-bottom: 14px; }
+
+.blog-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 18px;
+}
+
+.blog-read-more {
+    display: inline-block;
+    color: #1ba0b0;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color .2s;
+}
+.blog-read-more:hover { color: #0e7490; }
+
+/* وضعیت خالی */
+.blog-empty {
+    text-align: center;
+    padding: 80px 20px;
+    color: #94a3b8;
+}
+.blog-empty i { font-size: 48px; display: block; margin-bottom: 16px; }
+.blog-empty p { font-size: 16px; }
+
+/* سایدبار */
+.blog-sidebar { position: sticky; top: 100px; }
+
+.sidebar-widget {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    padding: 24px;
+    margin-bottom: 24px;
+}
+.widget-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e2e8f0;
+}
+.cat-list { list-style: none; padding: 0; margin: 0; }
+.cat-list li { border-bottom: 1px solid #f1f5f9; }
+.cat-list li:last-child { border-bottom: none; }
+.cat-list a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    color: #475569;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color .2s;
+}
+.cat-list a:hover { color: #1ba0b0; }
+
+.sidebar-btn {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 14px;
+    padding: 10px 20px;
+}
+
+/* ===== صفحه جزئیات مقاله ===== */
+.blog-detail-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 16px rgba(0,0,0,.06);
+    overflow: hidden;
+    margin-bottom: 32px;
+}
+.blog-detail-img img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    display: block;
+}
+.blog-detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    font-size: 13px;
+    color: #64748b;
+    padding: 20px 28px 0;
+}
+.blog-detail-content {
+    padding: 24px 28px;
+    color: #334155;
+    font-size: 15px;
+    line-height: 2;
+    text-align: justify;
+}
+.blog-detail-content p { margin-bottom: 16px; }
+.blog-detail-back { padding: 0 28px 28px; }
+
+/* مقالات مرتبط در سایدبار */
+.related-post {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+.related-post:last-child { border-bottom: none; }
+.related-post img {
+    width: 60px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+.related-post a {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1e293b;
+    text-decoration: none;
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+.related-post a:hover { color: #1ba0b0; }
+.related-post span { font-size: 12px; color: #94a3b8; }
+
+/* موبایل */
+@media (max-width: 768px) {
+    .blog-card-body { padding: 18px; }
+    .blog-card-meta { gap: 10px; }
+    .blog-detail-content { padding: 18px; }
+    .blog-sidebar { position: static; margin-top: 32px; }
+}
+
+
+/* ================================================================
+   بلاگ — هیرو مانند صفحات خدمات
+   ================================================================ */
+
+.blog-hero-section {
+    margin-top: 123px; /* header-top(47px) + #header(76px) */
+    background: linear-gradient(140deg, #071a35 0%, #0d2b55 55%, #0a3d72 100%);
+    padding: 70px 0 90px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* دایره دکوراتیو بزرگ بالا-راست */
+.blog-hero-section::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: rgba(26,86,219,.05);
+    top: -220px; right: -150px;
+    pointer-events: none;
+}
+
+/* دایره دکوراتیو پایین-چپ */
+.blog-hero-section::after {
+    content: '';
+    position: absolute;
+    width: 380px; height: 380px;
+    border-radius: 50%;
+    background: rgba(14,165,233,.04);
+    border: 1px solid rgba(14,165,233,.07);
+    bottom: -150px; left: -80px;
+    pointer-events: none;
+}
+
+.blog-hero-content .blog-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 18px;
+    font-size: .85rem;
+}
+
+.blog-hero-content .blog-breadcrumb a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color .2s;
+}
+
+.blog-hero-content .blog-breadcrumb a:hover { color: #60a5fa; }
+.blog-hero-content .blog-breadcrumb .sep    { color: #475569; }
+.blog-hero-content .blog-breadcrumb .current { color: #60a5fa; }
+
+.blog-hero-tag {
+    display: inline-block;
+    background: rgba(96,165,250,.15);
+    border: 1px solid rgba(96,165,250,.25);
+    color: #93c5fd;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+}
+
+.blog-hero-content { position: relative; z-index: 2; }
+
+.blog-hero-content h1 {
+    color: #fff !important;
+    font-size: 2.6rem !important;
+    font-weight: 900 !important;
+    line-height: 1.25 !important;
+    margin-bottom: 18px !important;
+}
+
+.blog-grad-text {
+    background: linear-gradient(90deg, #60a5fa, #0ea5e9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.blog-hero-content p {
+    color: #94a3b8;
+    font-size: .95rem;
+    line-height: 1.8;
+    margin-bottom: 28px;
+    max-width: 520px;
+}
+
+.blog-hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.blog-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 8px;
+    padding: 8px 16px;
+    color: #cbd5e1;
+    font-size: .82rem;
+    font-weight: 600;
+}
+
+.blog-hero-badge i { color: #60a5fa; font-size: .9rem; }
+
+/* آیکون دکوراتیو سمت چپ هیرو — مانند صفحات خدمات */
+.blog-hero-deco {
+    position: relative;
+    z-index: 2;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: rgba(14,165,233,.12);
+    border: 1px dashed rgba(14,165,233,.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5.5rem;
+    color: rgba(96,165,250,.28);
+    margin: 0 auto;
+}
+
+/* حلقه میانی چرخنده */
+.blog-hero-deco::before {
+    content: '';
+    position: absolute;
+    width: 290px; height: 290px;
+    border-radius: 50%;
+    border: 1px dashed rgba(14,165,233,.14);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: blogDecoSpin 25s linear infinite;
+}
+
+/* حلقه بیرونی ثابت */
+.blog-hero-deco::after {
+    content: '';
+    position: absolute;
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    border: 1px dashed rgba(96,165,250,.07);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes blogDecoSpin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ================================================================
+   فیلتر دسته‌بندی — نوار pill
+   ================================================================ */
+
+.blog-list-section { background: #f8fafc; }
+
+.blog-section-head {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.blog-section-head .pre-label {
+    display: inline-block;
+    background: #eff6ff;
+    color: #1a56db;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
+.blog-section-head h2 {
+    font-size: 1.8rem !important;
+    font-weight: 800 !important;
+    color: #1e293b !important;
+    margin-bottom: 10px !important;
+}
+
+.blog-sec-divider {
+    width: 50px;
+    height: 4px;
+    background: linear-gradient(to left, #1a56db, #0ea5e9);
+    border-radius: 2px;
+    margin: 0 auto 14px;
+}
+
+.blog-section-head p {
+    color: #64748b;
+    font-size: .9rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* نوار فیلتر */
+.blog-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 36px;
+}
+
+.blog-flt-btn {
+    padding: 7px 20px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 20px;
+    background: #fff;
+    color: #475569;
+    font-size: .83rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all .22s;
+    box-shadow: 0 1px 4px rgba(0,0,0,.04);
+}
+
+.blog-flt-btn:hover {
+    border-color: #1a56db;
+    color: #1a56db;
+    background: #eff6ff;
+}
+
+.blog-flt-btn.is-checked {
+    background: #1a56db;
+    border-color: #1a56db;
+    color: #fff;
+    box-shadow: 0 3px 12px rgba(26,86,219,.3);
+}
+
+/* ================================================================
+   کارت بلاگ — گرید ۳ ستون
+   ================================================================ */
+
+.blog-grid-card {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 14px rgba(0,0,0,.06);
+    margin-bottom: 28px;
+    transition: transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s;
+    height: calc(100% - 28px);
+    display: flex;
+    flex-direction: column;
+}
+
+.blog-grid-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 32px rgba(0,0,0,.12);
+}
+
+/* تصویر */
+.bgc-img-wrap {
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.bgc-img-wrap img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    transition: transform .45s ease;
+}
+
+.blog-grid-card:hover .bgc-img-wrap img {
+    transform: scale(1.06);
+}
+
+/* پلیس‌هولدر بی‌تصویر */
+.bgc-no-img {
+    height: 200px;
+    background: linear-gradient(135deg, #1e3a5f 0%, #0e4d6e 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,.18);
+    font-size: 3rem;
+}
+
+/* نشان دسته روی تصویر */
+.bgc-cat-badge {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    background: #1a56db;
+    color: #fff;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: .7rem;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+
+/* بدنه کارت */
+.bgc-body {
+    padding: 16px 18px 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.bgc-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: .73rem;
+    color: #94a3b8;
+    margin-bottom: 10px;
+}
+
+.bgc-meta i { font-size: .77rem; }
+
+.bgc-title {
+    font-size: .95rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 8px;
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-decoration: none;
+    transition: color .2s;
+}
+
+.bgc-title:hover { color: #1a56db; }
+
+.bgc-excerpt {
+    font-size: .8rem;
+    color: #64748b;
+    line-height: 1.7;
+    margin: 0 0 14px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+}
+
+.bgc-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid #f1f5f9;
+    margin-top: auto;
+}
+
+.bgc-author {
+    font-size: .74rem;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.bgc-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: .78rem;
+    font-weight: 700;
+    color: #1a56db;
+    text-decoration: none;
+    transition: gap .2s, color .2s;
+}
+
+.bgc-read-more:hover { gap: 7px; color: #0e7490; }
+
+/* وضعیت خالی */
+.blog-grid-empty {
+    text-align: center;
+    padding: 80px 20px;
+    color: #94a3b8;
+}
+
+.blog-grid-empty i { font-size: 3.5rem; display: block; margin-bottom: 16px; opacity: .4; }
+
+/* آیتم فیلتر */
+.blog-post-item.bg-hidden { display: none; }
+
+/* ================================================================
+   CTA نهایی — مانند صفحات خدمات
+   ================================================================ */
+
+.blog-cta-section {
+    background: linear-gradient(135deg, #0d1b2e, #1a3a5c);
+    padding: 60px 0;
+    text-align: center;
+}
+
+.blog-cta-section h2 {
+    color: #fff !important;
+    font-size: 1.7rem !important;
+    font-weight: 800 !important;
+    margin-bottom: 12px !important;
+}
+
+.blog-cta-section p {
+    color: #94a3b8;
+    font-size: .95rem;
+    margin-bottom: 28px;
+}
+
+.btn-blog-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #1a56db;
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-size: .92rem;
+    font-weight: 700;
+    text-decoration: none;
+    margin: 6px;
+    transition: background .2s, transform .2s;
+    box-shadow: 0 4px 18px rgba(26,86,219,.35);
+}
+
+.btn-blog-primary:hover {
+    background: #1241a8;
+    transform: translateY(-2px);
+    color: #fff;
+}
+
+.btn-blog-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: #e2e8f0;
+    border: 1.5px solid rgba(255,255,255,.25);
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-size: .92rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin: 6px;
+    transition: all .2s;
+}
+
+.btn-blog-ghost:hover {
+    background: rgba(255,255,255,.08);
+    border-color: rgba(255,255,255,.5);
+    color: #fff;
+}
+
+@media (max-width: 991.98px) {
+    .blog-hero-section {
+        margin-top: 29px;
+        padding: 55px 0 70px;
+    }
+    .blog-hero-content h1 { font-size: 2rem !important; }
+}
+
+@media (max-width: 767.98px) {
+    .blog-hero-section {
+        margin-top: 112px; /* نوار زبان موبایل (76px + 36px) */
+        padding: 46px 0 60px;
+    }
+    .blog-hero-content h1 { font-size: 1.65rem !important; }
+    .blog-hero-content { text-align: center; }
+    .blog-breadcrumb { justify-content: center; }
+    .blog-hero-badges { justify-content: center; }
+    .blog-section-head h2 { font-size: 1.4rem !important; }
+}
+
+
+/* ================================================================
+   بلاگ فارسی — طراحی جدید (blg-*)
+   کلاس‌های مستقل، بدون تداخل با صفحه detail
+   ================================================================ */
+
+/* --------- هیرو --------- */
+.blg-hero {
+    margin-top: 123px; /* header-top(47px) + #header(76px) */
+    background: linear-gradient(140deg, #071a35 0%, #0d2b55 55%, #0a3d72 100%);
+    padding: 68px 0 92px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* دایره دکوراتیو بزرگ — پس‌زمینه */
+.blg-hero::before {
+    content: '';
+    position: absolute;
+    width: 680px; height: 680px;
+    border-radius: 50%;
+    background: rgba(26,86,219,.05);
+    top: -280px; right: -200px;
+    pointer-events: none;
+}
+
+.blg-hero::after {
+    content: '';
+    position: absolute;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    background: rgba(14,165,233,.04);
+    border: 1px solid rgba(14,165,233,.07);
+    bottom: -180px; left: -100px;
+    pointer-events: none;
+}
+
+/* ستون متن — روی دکورها */
+.blg-hero-text { position: relative; z-index: 2; }
+
+/* breadcrumb */
+.blg-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 22px;
+    font-size: .82rem;
+}
+.blg-breadcrumb a { color: #94a3b8; text-decoration: none; transition: color .2s; }
+.blg-breadcrumb a:hover { color: #60a5fa; }
+.blg-breadcrumb .sep { color: #475569; }
+.blg-breadcrumb .cur { color: #60a5fa; }
+
+/* تگ بالای عنوان */
+.blg-eyebrow {
+    display: inline-block;
+    background: rgba(26,86,219,.22);
+    border: 1px solid rgba(96,165,250,.3);
+    color: #93c5fd;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 22px;
+}
+
+/* عنوان اصلی */
+.blg-hero-text h1 {
+    color: #fff !important;
+    font-size: 2.7rem !important;
+    font-weight: 900 !important;
+    line-height: 1.22 !important;
+    margin-bottom: 18px !important;
+}
+
+/* کلمه رنگی در عنوان */
+.blg-accent {
+    background: linear-gradient(90deg, #60a5fa 0%, #38bdf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.blg-hero-text > p {
+    color: #94a3b8;
+    font-size: .95rem;
+    line-height: 1.88;
+    margin-bottom: 32px;
+    max-width: 520px;
+}
+
+/* نشان‌های آماری */
+.blg-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.blg-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 8px;
+    padding: 9px 18px;
+    color: #cbd5e1;
+    font-size: .82rem;
+    font-weight: 600;
+}
+.blg-stat i { color: #60a5fa; }
+
+/* --------- المان دکوراتیو راست — کارت‌های انباشته --------- */
+.blg-deco-wrap {
+    position: relative;
+    z-index: 2;
+    height: 290px;
+    max-width: 320px;
+    margin: 0 auto;
+}
+
+/* هر سه کارت به پایین-راست ثابت می‌شوند و چرخش می‌خورند */
+.blg-deco-card {
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 252px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,.1);
+    overflow: hidden;
+    transform-origin: bottom right;
+}
+
+/* کارت پشت */
+.blg-deco-card:nth-child(1) {
+    height: 198px;
+    background: rgba(26,86,219,.14);
+    transform: rotate(-8deg);
+}
+
+/* کارت وسط */
+.blg-deco-card:nth-child(2) {
+    height: 210px;
+    background: rgba(14,165,233,.11);
+    transform: rotate(-4deg);
+}
+
+/* کارت جلو (دیده می‌شود) */
+.blg-deco-card:nth-child(3) {
+    height: 225px;
+    background: rgba(7,26,53,.78);
+    border-color: rgba(255,255,255,.14);
+    transform: rotate(0);
+}
+
+/* بخش تصویر فیک در کارت */
+.blg-deco-card-img {
+    width: 100%;
+    height: 116px;
+    background: linear-gradient(135deg, rgba(26,86,219,.25) 0%, rgba(14,165,233,.18) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.8rem;
+    color: rgba(255,255,255,.18);
+}
+
+.blg-deco-card-body { padding: 14px 16px; }
+
+/* خطوط فیک متن */
+.blg-deco-line {
+    height: 7px;
+    border-radius: 4px;
+    background: rgba(255,255,255,.1);
+    margin-bottom: 8px;
+}
+.blg-deco-line--l { width: 90%; }
+.blg-deco-line--m { width: 68%; }
+.blg-deco-line--s { width: 44%; background: rgba(96,165,250,.22); }
+
+
+/* --------- بدنه صفحه — فیلتر + گرید --------- */
+.blg-body {
+    background: #f8fafc;
+    padding: 72px 0 80px;
+}
+
+/* نوار فیلتر دسته‌بندی */
+.blg-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 46px;
+}
+
+.blg-flt {
+    padding: 7px 22px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 20px;
+    background: #fff;
+    color: #475569;
+    font-size: .83rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all .22s;
+    box-shadow: 0 1px 4px rgba(0,0,0,.04);
+}
+
+.blg-flt:hover {
+    border-color: #1a56db;
+    color: #1a56db;
+    background: #eff6ff;
+}
+
+.blg-flt.active {
+    background: #1a56db;
+    border-color: #1a56db;
+    color: #fff;
+    box-shadow: 0 3px 14px rgba(26,86,219,.28);
+}
+
+/* کارت مقاله */
+.blg-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(0,0,0,.06);
+    border: 1px solid #f1f5f9;
+    margin-bottom: 28px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 28px);
+    transition: transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s;
+}
+
+.blg-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 44px rgba(0,0,0,.1);
+}
+
+/* تصویر کارت */
+.blg-card-thumb {
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.blg-card-thumb img {
+    width: 100%;
+    height: 196px;
+    object-fit: cover;
+    display: block;
+    transition: transform .5s ease;
+}
+
+.blg-card:hover .blg-card-thumb img { transform: scale(1.07); }
+
+/* پلیس‌هولدر بدون تصویر */
+.blg-card-noimg {
+    height: 196px;
+    background: linear-gradient(135deg, #0d2451 0%, #0a3d72 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.2rem;
+    color: rgba(255,255,255,.15);
+}
+
+/* نشان دسته روی تصویر */
+.blg-cat-pill {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    background: #1a56db;
+    color: #fff;
+    font-size: .68rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.25);
+}
+
+/* بدنه کارت */
+.blg-card-body {
+    padding: 18px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* متا (تاریخ، بازدید) */
+.blg-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: .72rem;
+    color: #94a3b8;
+    margin-bottom: 10px;
+}
+.blg-card-meta i { font-size: .75rem; }
+
+/* عنوان مقاله */
+.blg-card-title {
+    font-size: .97rem;
+    font-weight: 700;
+    color: #1e293b;
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-decoration: none;
+    transition: color .2s;
+    margin: 0 0 9px;
+    display: block;
+}
+.blg-card-title:hover { color: #1a56db; }
+
+/* خلاصه */
+.blg-card-excerpt {
+    font-size: .8rem;
+    color: #64748b;
+    line-height: 1.75;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin: 0 0 16px;
+    flex: 1;
+}
+
+/* فوتر کارت */
+.blg-card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid #f1f5f9;
+    margin-top: auto;
+}
+
+.blg-card-author {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: .72rem;
+    color: #94a3b8;
+}
+
+/* دکمه ادامه مطلب */
+.blg-more-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: .78rem;
+    font-weight: 700;
+    color: #1a56db;
+    text-decoration: none;
+    transition: gap .2s, color .2s;
+}
+.blg-more-link:hover { gap: 8px; color: #0e7490; }
+
+/* حالت خالی */
+.blg-empty-state {
+    text-align: center;
+    padding: 90px 20px;
+    color: #94a3b8;
+}
+.blg-empty-state i { font-size: 4rem; display: block; margin-bottom: 18px; opacity: .35; }
+.blg-empty-state p { font-size: 1rem; }
+
+/* نوتیس نتیجه فیلتر */
+.blg-filter-notice {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    padding: 9px 14px;
+    font-size: .82rem;
+    color: #1d4ed8;
+    margin-bottom: 22px;
+}
+.blg-filter-notice i { font-size: .8rem; }
+
+/* پنهان‌سازی با فیلتر */
+.blg-post-item.is-hidden { display: none; }
+
+
+/* --------- CTA نهایی --------- */
+.blg-cta {
+    background: linear-gradient(135deg, #0d1b2e 0%, #1a3a5c 100%);
+    padding: 68px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.blg-cta::before {
+    content: '';
+    position: absolute;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    background: rgba(26,86,219,.06);
+    top: -160px; left: -110px;
+    pointer-events: none;
+}
+
+.blg-cta h2 {
+    color: #fff !important;
+    font-size: 1.8rem !important;
+    font-weight: 800 !important;
+    margin-bottom: 12px !important;
+    position: relative;
+}
+
+.blg-cta p {
+    color: #94a3b8;
+    font-size: .95rem;
+    margin-bottom: 30px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-blg-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #1a56db;
+    color: #fff !important;
+    padding: 13px 30px;
+    border-radius: 10px;
+    font-size: .93rem;
+    font-weight: 700;
+    text-decoration: none;
+    margin: 6px;
+    transition: background .22s, transform .22s;
+    box-shadow: 0 4px 20px rgba(26,86,219,.35);
+}
+.btn-blg-primary:hover { background: #1241a8; transform: translateY(-2px); color: #fff !important; }
+
+.btn-blg-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: #e2e8f0 !important;
+    border: 1.5px solid rgba(255,255,255,.22);
+    padding: 13px 30px;
+    border-radius: 10px;
+    font-size: .93rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin: 6px;
+    transition: all .22s;
+}
+.btn-blg-ghost:hover { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.5); color: #fff !important; }
+
+
+/* --------- سایدبار فیلتر --------- */
+.blg-sidebar {
+    position: sticky;
+    top: 96px;
+}
+
+.blg-widget {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #e8f0fe;
+    box-shadow: 0 2px 12px rgba(0,0,0,.05);
+    padding: 20px;
+    margin-bottom: 18px;
+}
+
+.blg-widget-title {
+    font-size: .84rem !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+    text-transform: none !important;
+    margin-bottom: 14px !important;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eff6ff;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.blg-widget-title i { color: #1a56db; font-size: .85rem; }
+
+.blg-filter-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.blg-filter-list li + li { margin-top: 2px; }
+
+.blg-filter-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 11px;
+    border-radius: 8px;
+    color: #475569;
+    font-size: .82rem;
+    text-decoration: none;
+    transition: all .18s;
+    line-height: 1.3;
+}
+
+.blg-filter-item:hover {
+    background: #eff6ff;
+    color: #1a56db;
+    text-decoration: none;
+}
+
+.blg-filter-item.is-active {
+    background: #1a56db;
+    color: #fff !important;
+    font-weight: 600;
+}
+
+.blg-filter-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 20px;
+    background: #f1f5f9;
+    color: #64748b;
+    font-size: .68rem;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 0 5px;
+    flex-shrink: 0;
+    margin-right: 4px;
+}
+
+.blg-filter-item.is-active .blg-filter-count {
+    background: rgba(255,255,255,.22);
+    color: #fff;
+}
+
+/* --------- Responsive --------- */
+@media (max-width: 991.98px) {
+    .blg-hero {
+        margin-top: 29px;
+        padding: 56px 0 72px;
+    }
+    .blg-hero-text h1 { font-size: 2rem !important; }
+    .blg-sidebar { position: static; margin-top: 40px; }
+}
+
+@media (max-width: 767.98px) {
+    .blg-hero {
+        margin-top: 112px; /* نوار زبان موبایل (76px + 36px) */
+        padding: 46px 0 60px;
+    }
+    .blg-hero-text h1 { font-size: 1.65rem !important; }
+    .blg-hero-text { text-align: center; }
+    .blg-breadcrumb { justify-content: center; }
+    .blg-stats { justify-content: center; }
+    .blg-body { padding: 50px 0 60px; }
+}
+
+
+/* ================================================================
+   ویجت پربازدیدترین مقالات در سایدبار
+================================================================ */
+.blg-popular-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.blg-popular-item {
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+}
+
+.blg-popular-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.blg-popular-link {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition: color .2s;
+}
+
+.blg-popular-link:hover { text-decoration: none; }
+.blg-popular-link:hover .blg-popular-title { color: #1a56db; }
+
+.blg-popular-thumb {
+    width: 62px;
+    height: 52px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.blg-popular-nothumb {
+    width: 62px;
+    height: 52px;
+    border-radius: 8px;
+    background: #e8f0fe;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1a56db;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.blg-popular-meta { flex: 1; min-width: 0; }
+
+.blg-popular-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: .83rem;
+    font-weight: 600;
+    color: #1e293b;
+    line-height: 1.45;
+    margin-bottom: 4px;
+    transition: color .2s;
+}
+
+.blg-popular-views {
+    font-size: .74rem;
+    color: #94a3b8;
+}
+
+.blg-popular-views i { margin-left: 2px; font-size: .7rem; }
+
+
+/* ================================================================
+   صفحه‌بندی (Pagination)
+================================================================ */
+.blg-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 42px;
+    padding-top: 24px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.blg-page-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 38px;
+    height: 38px;
+    padding: 0 10px;
+    border-radius: 8px;
+    font-size: .85rem;
+    font-weight: 600;
+    color: #475569;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    text-decoration: none;
+    transition: all .2s;
+    cursor: pointer;
+}
+
+.blg-page-btn:hover {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+    color: #1a56db;
+    text-decoration: none;
+}
+
+.blg-page-btn.is-active {
+    background: #1a56db;
+    border-color: #1a56db;
+    color: #fff !important;
+    cursor: default;
+    pointer-events: none;
+}
+
+.blg-page-btn.is-disabled {
+    opacity: .35;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+@media (max-width: 767.98px) {
+    .blg-pagination { gap: 4px; }
+    .blg-page-btn { min-width: 34px; height: 34px; font-size: .8rem; }
+}
+
+
+/* ================================================================
+   بخش نظرات مقاله (Comments)
+================================================================ */
+
+/* جداکننده بالای بخش */
+.cmt-section {
+    margin-top: 40px;
+    padding-top: 38px;
+    border-top: 2px solid rgba(255,255,255,.15);
+}
+
+/* عنوان بخش */
+.cmt-section-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cmt-section-title i { color: #1a56db; }
+
+.cmt-count {
+    font-size: .78rem;
+    font-weight: 700;
+    color: #1a56db;
+    background: #eff6ff;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-right: 4px;
+}
+
+/* پیام موفقیت */
+.cmt-success {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #15803d;
+    font-weight: 600;
+    font-size: .9rem;
+    margin-bottom: 28px;
+}
+
+.cmt-success i { font-size: 1.2rem; flex-shrink: 0; }
+
+/* هر نظر */
+.cmt-list { margin-bottom: 32px; }
+
+.cmt-item {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.cmt-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1a56db 0%, #0ea5e9 100%);
+    color: #fff;
+    font-size: .95rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    text-transform: uppercase;
+}
+
+.cmt-bubble {
+    flex: 1;
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 14px;
+    padding: 14px 18px;
+    transition: border-color .2s;
+}
+
+.cmt-bubble:hover { border-color: rgba(255,255,255,.35); }
+
+.cmt-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+
+.cmt-name {
+    font-weight: 700;
+    font-size: .88rem;
+    color: #ffffff;
+}
+
+.cmt-date {
+    font-size: .76rem;
+    color: #cbd5e1;
+}
+
+.cmt-body {
+    font-size: .9rem;
+    color: #e2e8f0;
+    line-height: 1.8;
+    margin: 0;
+}
+
+/* حالت خالی */
+.cmt-empty {
+    text-align: center;
+    padding: 24px 0 16px;
+    color: #cbd5e1;
+    font-size: .88rem;
+    margin-bottom: 24px;
+}
+
+.cmt-empty i { font-size: 2rem; display: block; margin-bottom: 8px; opacity: .3; }
+
+/* فرم ثبت نظر */
+.cmt-form-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 28px 26px;
+}
+
+.cmt-form-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cmt-form-title i { color: #1a56db; }
+
+.cmt-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.cmt-form-group { margin-bottom: 16px; }
+
+.cmt-form-group label {
+    font-size: .8rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.cmt-req { color: #dc2626; }
+
+.cmt-form-control {
+    width: 100%;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: .9rem;
+    color: #1e293b;
+    background: #f8fafc;
+    transition: border-color .2s, box-shadow .2s;
+    outline: none;
+    font-family: inherit;
+    display: block;
+}
+
+.cmt-form-control:focus {
+    border-color: #1a56db;
+    box-shadow: 0 0 0 3px rgba(26,86,219,.1);
+    background: #fff;
+}
+
+.cmt-form-control--textarea {
+    resize: vertical;
+    min-height: 110px;
+}
+
+.cmt-form-note {
+    font-size: .78rem;
+    color: #94a3b8;
+    margin-bottom: 18px;
+    line-height: 1.6;
+}
+
+.cmt-form-note i { color: #fbbf24; }
+
+.cmt-submit-btn {
+    background: #1a56db;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 30px;
+    font-size: .9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+    font-family: inherit;
+}
+
+.cmt-submit-btn:hover { background: #1547b8; transform: translateY(-1px); }
+.cmt-submit-btn i { margin-left: 6px; }
+
+@media (max-width: 575.98px) {
+    .cmt-form-row { grid-template-columns: 1fr; }
+    .cmt-form-card { padding: 20px 16px; }
+}

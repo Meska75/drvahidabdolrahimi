@@ -1,0 +1,386 @@
+/* ================================================================
+   video.css — صفحه ویدیوها
+   ================================================================ */
+
+/* ===== بخش اصلی ===== */
+.videos-section {
+    padding: 50px 0 70px;
+    background: #f8fafc;
+}
+
+/* ===== سایدبار فیلتر — همان الگوی گالری ===== */
+.videos-sidebar {
+    position: sticky;
+    top: 85px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 22px 18px;
+    box-shadow: 0 2px 16px rgba(0,0,0,.06);
+}
+
+.videos-filter-title {
+    font-size: .85rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.vfilter-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.vfilter-list li {
+    margin-bottom: 4px;
+}
+
+.vfilter-btn {
+    display: block;
+    width: 100%;
+    text-align: right;
+    padding: 9px 12px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #475569;
+    font-size: .88rem;
+    font-family: inherit;
+    transition: background .18s, color .18s;
+    position: relative;
+    line-height: 1.5;
+}
+
+.vfilter-btn::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #cbd5e1;
+    margin-left: 8px;
+    vertical-align: middle;
+    transition: background .18s;
+}
+
+.vfilter-btn:hover   { background: #f0f9ff; color: #0e7490; }
+.vfilter-btn.is-checked { background: #ecfeff; color: #0e7490; font-weight: 600; }
+.vfilter-btn.is-checked::before { background: #0e7490; }
+
+/* موبایل */
+@media (max-width: 991px) {
+    .videos-sidebar {
+        position: static;
+        padding: 14px 16px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+    }
+
+    .videos-filter-title { display: none; }
+
+    .vfilter-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .vfilter-list li { margin-bottom: 0; }
+
+    .vfilter-btn {
+        width: auto;
+        display: inline-block;
+        padding: 6px 14px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 20px;
+        font-size: .82rem;
+    }
+
+    .vfilter-btn::before { display: none; }
+    .vfilter-btn.is-checked { border-color: #0e7490; background: #ecfeff; }
+}
+
+/* ===== کارت ویدیو ===== */
+.video-card-wrap {
+    margin-bottom: 24px;
+}
+
+.video-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,.07);
+    cursor: pointer;
+    transition: transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s;
+}
+
+.video-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 32px rgba(0,0,0,.13);
+}
+
+/* نسبت 16:9 */
+.video-thumb-wrap {
+    position: relative;
+    padding-bottom: 56.25%;
+    background: #0f172a;
+    overflow: hidden;
+}
+
+.video-thumb-wrap img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .45s ease, opacity .3s;
+}
+
+.video-card:hover .video-thumb-wrap img {
+    transform: scale(1.06);
+    opacity: .75;
+}
+
+/* پلیس‌هولدر بی‌تصویر */
+.video-thumb-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+    color: rgba(255,255,255,.2);
+    font-size: 3.5rem;
+}
+
+/* دکمه پلی */
+.video-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 24px rgba(0,0,0,.35);
+    transition: background .25s, transform .25s;
+    z-index: 2;
+}
+
+.video-play-btn i {
+    color: #0e7490;
+    font-size: 1.25rem;
+    margin-right: -3px; /* تراز بصری آیکون پلی */
+}
+
+.video-card:hover .video-play-btn {
+    background: #0e7490;
+    transform: translate(-50%, -50%) scale(1.12);
+}
+
+.video-card:hover .video-play-btn i {
+    color: #fff;
+}
+
+/* نشان مدت زمان */
+.video-duration-badge {
+    position: absolute;
+    bottom: 9px;
+    left: 10px;
+    background: rgba(0,0,0,.72);
+    color: #fff;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: .7rem;
+    font-family: 'Courier New', monospace;
+    letter-spacing: .03em;
+    direction: ltr;
+    z-index: 2;
+}
+
+/* RTL: مدت زمان سمت راست */
+[dir="rtl"] .video-duration-badge {
+    left: auto;
+    right: 10px;
+}
+
+/* ===== بدنه کارت ===== */
+.video-card-body {
+    padding: 14px 16px 16px;
+}
+
+.video-cat-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    background: #ecfeff;
+    color: #0e7490;
+    border-radius: 12px;
+    font-size: .71rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    border: 1px solid #a5f3fc;
+}
+
+.video-title {
+    font-size: .92rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 6px;
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.video-desc-text {
+    font-size: .78rem;
+    color: #64748b;
+    margin: 0 0 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.55;
+}
+
+.video-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 10px;
+    border-top: 1px solid #f1f5f9;
+    color: #94a3b8;
+    font-size: .74rem;
+}
+
+.video-meta-row i { font-size: .78rem; }
+
+/* ===== مودال پلیر ===== */
+.vm-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.94);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: vmIn .22s ease;
+}
+
+.vm-overlay.vm-active { display: flex; }
+
+@keyframes vmIn {
+    from { opacity: 0; transform: scale(.97); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+.vm-box {
+    width: 100%;
+    max-width: 920px;
+    background: #0f172a;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,.6);
+}
+
+/* پلیر 16:9 */
+.vm-player {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    overflow: hidden;
+}
+
+.vm-player iframe,
+.vm-player video {
+    position: absolute;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+    border: none;
+}
+
+/* اطلاعات ویدیو زیر پلیر */
+.vm-info {
+    padding: 16px 20px 20px;
+}
+
+.vm-category {
+    font-size: .71rem;
+    font-weight: 600;
+    color: #38bdf8;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.vm-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin: 0 0 6px;
+    line-height: 1.45;
+}
+
+.vm-desc {
+    font-size: .82rem;
+    color: rgba(255,255,255,.5);
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* دکمه بستن */
+.vm-close {
+    position: absolute;
+    top: 14px;
+    left: 18px;
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background .2s;
+    line-height: 1;
+    z-index: 10000;
+}
+
+.vm-close:hover { background: rgba(255,255,255,.22); }
+
+/* ===== حالت خالی ===== */
+.videos-empty {
+    text-align: center;
+    padding: 80px 20px;
+    color: #94a3b8;
+}
+
+.videos-empty i {
+    font-size: 3.5rem;
+    display: block;
+    margin-bottom: 16px;
+    opacity: .45;
+}
+
+/* ===== انیمیشن fade برای فیلتر ===== */
+.video-card-wrap {
+    transition: opacity .25s;
+}
+
+.video-card-wrap.v-hidden {
+    display: none;
+}

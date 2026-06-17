@@ -1,0 +1,192 @@
+{% extends "persian/persian_base.html" %}
+{% load static %}
+
+{% block title %}{{ post.title_fa }} — دکتر وحید عبدالرحیمی{% endblock %}
+
+{% block meta_description %}<meta name="description" content="{{ post.summary_fa|default:post.title_fa }}">{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ===== هیرو مقاله ===== -->
+<section class="blg-detail-hero">
+    {% if post.image %}
+    <div class="blg-detail-hero-bg" style="background-image: url('{{ post.image.url }}');"></div>
+    {% endif %}
+    <div class="container">
+        <div class="blg-detail-hero-inner wow fadeInUp" data-wow-delay=".05s">
+
+            <nav class="blg-detail-breadcrumb">
+                <a href="{% url 'main:persian_home' %}">خانه</a>
+                <span class="sep">›</span>
+                <a href="{% url 'blog:persian_blog_list' %}">مقالات</a>
+                <span class="sep">›</span>
+                <span class="cur">{{ post.title_fa }}</span>
+            </nav>
+
+            {% if post.category %}
+            <span class="blg-detail-cat-badge">{{ post.category.name_fa }}</span>
+            {% endif %}
+
+            <h1>{{ post.title_fa }}</h1>
+
+            <div class="blg-detail-hero-meta">
+                <span><i class="fa fa-user-o"></i> {{ post.author }}</span>
+                <span><i class="fa fa-calendar-o"></i> {{ post.published_at|date:"j F Y" }}</span>
+                <span><i class="fa fa-eye"></i> {{ post.views_count }} بازدید</span>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ===== محتوای مقاله ===== -->
+<section class="blog-detail-section section-padding">
+    <div class="container">
+        <div class="row">
+
+            <!-- متن اصلی -->
+            <div class="col-lg-8">
+                <article class="blog-detail-card wow fadeInUp" data-wow-delay=".05s">
+
+                    {% if post.image %}
+                    <div class="blog-detail-img">
+                        <img class="img-fluid" src="{{ post.image.url }}" alt="{{ post.title_fa }}">
+                    </div>
+                    {% endif %}
+
+                    <div class="blog-detail-content">
+                        {{ post.content_fa|safe }}
+                    </div>
+
+                    <div class="blog-detail-back">
+                        <a href="{% url 'blog:persian_blog_list' %}" class="template-btn">← بازگشت به مقالات</a>
+                    </div>
+
+                </article>
+            </div>
+
+            <!-- سایدبار -->
+            <div class="col-lg-4">
+                <div class="blog-sidebar">
+
+                    {% if related %}
+                    <div class="sidebar-widget">
+                        <h4 class="widget-title">مقالات مرتبط</h4>
+                        {% for r in related %}
+                        <div class="related-post">
+                            {% if r.image %}
+                            <img src="{{ r.image.url }}" alt="{{ r.title_fa }}">
+                            {% endif %}
+                            <div>
+                                <a href="{% url 'blog:persian_blog_detail' r.slug %}">{{ r.title_fa }}</a>
+                                <span>{{ r.published_at|date:"Y/m/d" }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div class="sidebar-widget">
+                        <h4 class="widget-title">رزرو نوبت</h4>
+                        <p>برای مشاوره یا رزرو نوبت با مطب تماس بگیرید.</p>
+                        <a href="{% url 'main:persian_contact' %}" class="template-btn sidebar-btn">تماس با ما</a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ===== بخش نظرات ===== -->
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="cmt-section wow fadeInUp" data-wow-delay=".05s">
+
+                    <!-- پیام موفقیت -->
+                    {% if commented %}
+                    <div class="cmt-success">
+                        <i class="fa fa-check-circle"></i>
+                        نظر شما با موفقیت ثبت شد و پس از تأیید نمایش داده می‌شود.
+                    </div>
+                    {% endif %}
+
+                    <!-- لیست نظرات تأیید شده -->
+                    <h3 class="cmt-section-title">
+                        <i class="fa fa-comments-o"></i>
+                        نظرات
+                        {% if comments %}<span class="cmt-count">{{ comments|length }}</span>{% endif %}
+                    </h3>
+
+                    {% if comments %}
+                    <div class="cmt-list">
+                        {% for cmt in comments %}
+                        <div class="cmt-item">
+                            <div class="cmt-avatar">{{ cmt.name|slice:":1" }}</div>
+                            <div class="cmt-bubble">
+                                <div class="cmt-meta">
+                                    <span class="cmt-name">{{ cmt.name }}</span>
+                                    <span class="cmt-date">{{ cmt.created_at|date:"Y/m/d" }}</span>
+                                </div>
+                                <p class="cmt-body">{{ cmt.body }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="cmt-empty">
+                        <i class="fa fa-comments-o"></i>
+                        هنوز نظری ثبت نشده است. اولین نفری باشید که نظر می‌دهید.
+                    </div>
+                    {% endif %}
+
+                    <!-- فرم ثبت نظر -->
+                    <div class="cmt-form-card">
+                        <h4 class="cmt-form-title">
+                            <i class="fa fa-pencil-square-o"></i>
+                            ثبت نظر
+                        </h4>
+                        <p class="cmt-form-note">
+                            <i class="fa fa-info-circle"></i>
+                            نظر شما پس از بررسی توسط مدیر سایت نمایش داده می‌شود.
+                        </p>
+                        <form method="post" novalidate>
+                            {% csrf_token %}
+                            <div class="cmt-form-row">
+                                <div class="cmt-form-group">
+                                    <label for="id_name">نام <span class="cmt-req">*</span></label>
+                                    {{ form.name }}
+                                    {% if form.name.errors %}
+                                    <small style="color:#dc2626;">{{ form.name.errors|join:", " }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="cmt-form-group">
+                                    <label for="id_email">ایمیل <small style="color:#94a3b8;">(اختیاری)</small></label>
+                                    {{ form.email }}
+                                </div>
+                            </div>
+                            <div class="cmt-form-group">
+                                <label for="id_body">متن نظر <span class="cmt-req">*</span></label>
+                                {{ form.body }}
+                                {% if form.body.errors %}
+                                <small style="color:#dc2626;">{{ form.body.errors|join:", " }}</small>
+                                {% endif %}
+                            </div>
+                            <button type="submit" class="cmt-submit-btn">
+                                <i class="fa fa-paper-plane"></i> ارسال نظر
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- ===== پایان بخش نظرات ===== -->
+
+    </div>
+</section>
+
+{% endblock %}

@@ -162,6 +162,15 @@
                                     <li><a href="{% url 'english_services:english_surgery_services' %}">Surgical Services</a></li>
                                 </ul>
                             </li>
+                            <li {% if request.resolver_match.namespace == 'english_blog' %}class="menu-active"{% endif %}>
+                                <a href="{% url 'english_blog:english_blog_list' %}">Articles</a>
+                            </li>
+                            <li {% if request.resolver_match.namespace == 'english_gallery' %}class="menu-active"{% endif %}>
+                                <a href="{% url 'english_gallery:english_gallery' %}">Gallery</a>
+                            </li>
+                            <li {% if request.resolver_match.namespace == 'english_videos' %}class="menu-active"{% endif %}>
+                                <a href="{% url 'english_videos:english_videos' %}">Videos</a>
+                            </li>
                             <li {% if request.resolver_match.url_name == 'english_contact' %}class="menu-active"{% endif %}>
                                 <a href="{% url 'english:english_contact' %}">Contact</a>
                             </li>
@@ -190,6 +199,7 @@
                                 <li class="mb-2"><a href="{% url 'english:english_about' %}">About</a></li>
                                 <li class="mb-2"><a href="{% url 'english_services:english_office_services' %}">Office Services</a></li>
                                 <li class="mb-2"><a href="{% url 'english_services:english_surgery_services' %}">Surgical Services</a></li>
+                                <li class="mb-2"><a href="{% url 'english_blog:english_blog_list' %}">Articles</a></li>
                                 <li><a href="{% url 'english:english_contact' %}">Contact</a></li>
                             </ul>
                         </div>

@@ -21,12 +21,22 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', include('main.urls')),
     path('services/', include('services.urls')),
     path('en/', include('main.urls_english')),
     path('en/services/', include('services.urls_english')),
     path('ar/', include('main.urls_arabic')),
     path('ar/services/', include('services.urls_arabic')),
+    path('blog/', include('blog.urls')),
+    path('en/blog/', include('blog.urls_english')),
+    path('ar/blog/', include('blog.urls_arabic')),
+    path('gallery/', include('gallery.urls')),
+    path('en/gallery/', include('gallery.urls_english')),
+    path('ar/gallery/', include('gallery.urls_arabic')),
+    path('videos/', include('videos.urls')),
+    path('en/videos/', include('videos.urls_english')),
+    path('ar/videos/', include('videos.urls_arabic')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

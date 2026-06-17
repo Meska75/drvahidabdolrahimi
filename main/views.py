@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from .models import FaqItem
 
 
 def _detect_lang(request):
@@ -21,7 +22,8 @@ def persian_home(request):
         if lang == 'en':
             return redirect('/en/')
 
-    response = render(request, 'persian/persian_main/persian_home.html')
+    faqs = FaqItem.objects.filter(is_active=True)[:6]
+    response = render(request, 'persian/persian_main/persian_home.html', {'faqs': faqs})
     response.set_cookie('dr_lang', 'fa', max_age=60 * 60 * 24 * 30, samesite='Lax')
     return response
 
@@ -34,9 +36,14 @@ def persian_contact(request):
     return render(request, 'persian/persian_main/persian_contact.html')
 
 
+def persian_faq(request):
+    faqs = FaqItem.objects.filter(is_active=True).order_by('category', 'sort_order', 'id')
+    return render(request, 'persian/persian_main/persian_faq.html', {'faqs': faqs})
+
+
 def english_home(request):
-    response = render(request, 'english/english_main/english_home.html')
-    # ثبت انتخاب کاربر — دیگر auto-redirect نخواهد شد
+    faqs = FaqItem.objects.filter(is_active=True)[:6]
+    response = render(request, 'english/english_main/english_home.html', {'faqs': faqs})
     response.set_cookie('dr_lang', 'en', max_age=60 * 60 * 24 * 30, samesite='Lax')
     return response
 
@@ -49,9 +56,14 @@ def english_contact(request):
     return render(request, 'english/english_main/english_contact.html')
 
 
+def english_faq(request):
+    faqs = FaqItem.objects.filter(is_active=True).order_by('category', 'sort_order', 'id')
+    return render(request, 'english/english_main/english_faq.html', {'faqs': faqs})
+
+
 def arabic_home(request):
-    response = render(request, 'arabic/arabic_main/arabic_home.html')
-    # ثبت انتخاب کاربر — دیگر auto-redirect نخواهد شد
+    faqs = FaqItem.objects.filter(is_active=True)[:6]
+    response = render(request, 'arabic/arabic_main/arabic_home.html', {'faqs': faqs})
     response.set_cookie('dr_lang', 'ar', max_age=60 * 60 * 24 * 30, samesite='Lax')
     return response
 
@@ -62,3 +74,8 @@ def arabic_about(request):
 
 def arabic_contact(request):
     return render(request, 'arabic/arabic_main/arabic_contact.html')
+
+
+def arabic_faq(request):
+    faqs = FaqItem.objects.filter(is_active=True).order_by('category', 'sort_order', 'id')
+    return render(request, 'arabic/arabic_main/arabic_faq.html', {'faqs': faqs})

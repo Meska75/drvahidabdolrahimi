@@ -1,0 +1,609 @@
+/* ================================================================
+   gallery.css — گالری تصاویر با فیلتر Isotope و لایه‌بندی آجری
+   ================================================================ */
+
+/* ================================================================
+   هدر صفحه گالری
+   ================================================================ */
+.gal-page-header {
+    margin-top: 123px;
+    background: linear-gradient(140deg, #071a35 0%, #0d2b55 55%, #0a3d72 100%);
+    padding: 56px 0 52px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+/* حلقه‌های تزئینی */
+.gal-page-header .gal-deco-circle {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.06);
+    pointer-events: none;
+}
+.gal-page-header .gal-deco-circle:nth-child(1) { width:500px; height:500px; top:-200px; right:-120px; }
+.gal-page-header .gal-deco-circle:nth-child(2) { width:320px; height:320px; top:-60px;  right:30px;  border-color:rgba(255,255,255,.04); }
+.gal-page-header .gal-deco-circle:nth-child(3) { width:420px; height:420px; bottom:-200px; left:-100px; }
+.gal-page-header .gal-deco-circle:nth-child(4) { width:200px; height:200px; bottom:-60px;  left:60px;   border-color:rgba(255,255,255,.04); }
+
+/* خط درخشان افقی زیر */
+.gal-page-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, rgba(99,179,237,.5) 30%, rgba(26,86,219,.8) 50%, rgba(99,179,237,.5) 70%, transparent 100%);
+}
+
+.gal-header-inner {
+    position: relative;
+    z-index: 2;
+}
+
+/* Eyebrow label */
+.gal-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.6);
+    margin-bottom: 18px;
+}
+.gal-eyebrow::before,
+.gal-eyebrow::after {
+    content: '';
+    width: 32px;
+    height: 1.5px;
+    background: rgba(255,255,255,.3);
+    display: inline-block;
+}
+
+/* عنوان اصلی */
+.gal-page-header h1 {
+    font-size: 2.4rem !important;
+    font-weight: 900 !important;
+    color: #fff !important;
+    margin: 0 0 18px !important;
+    line-height: 1.2;
+    text-shadow: 0 2px 20px rgba(0,0,0,.3);
+}
+
+/* breadcrumb */
+.gal-breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: .8rem;
+    color: rgba(255,255,255,.5);
+    margin-bottom: 28px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+.gal-breadcrumb a { color: rgba(255,255,255,.7); text-decoration: none; transition: color .2s; }
+.gal-breadcrumb a:hover { color: #fff; }
+.gal-breadcrumb .sep { color: rgba(255,255,255,.25); font-size: .7rem; }
+
+/* آمار */
+.gal-header-stats {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 40px;
+    padding: 10px 8px;
+    backdrop-filter: blur(10px);
+}
+.gal-stat-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: .8rem;
+    color: rgba(255,255,255,.75);
+    padding: 0 20px;
+}
+.gal-stat-item + .gal-stat-item {
+    border-inline-start: 1px solid rgba(255,255,255,.18);
+}
+.gal-stat-item i { color: rgba(255,255,255,.5); }
+.gal-stat-num {
+    font-weight: 900;
+    color: #fff;
+    font-size: 1.15rem;
+}
+
+@media (max-width: 767px) {
+    .gal-page-header { padding: 42px 0 38px; }
+    .gal-page-header h1 { font-size: 1.7rem !important; }
+    .gal-stat-item { padding: 0 12px; font-size: .74rem; }
+    .gal-stat-num { font-size: .95rem; }
+}
+
+/* ================================================================
+   نوار فیلتر افقی
+   ================================================================ */
+.gal-filter-bar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 26px 0 22px;
+    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 28px;
+}
+
+.gal-filter-bar .filter-btn {
+    width: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 20px;
+    border: 1.5px solid #dde4ef;
+    border-radius: 30px;
+    font-size: .84rem;
+    font-weight: 600;
+    color: #475569;
+    background: #fff;
+    cursor: pointer;
+    transition: all .22s cubic-bezier(.4,0,.2,1);
+    font-family: inherit;
+    line-height: 1.4;
+    box-shadow: 0 1px 4px rgba(0,0,0,.05);
+}
+.gal-filter-bar .filter-btn::before { display: none; }
+.gal-filter-bar .filter-btn:hover {
+    border-color: #1a56db;
+    color: #1a56db;
+    background: #f0f5ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(26,86,219,.15);
+}
+.gal-filter-bar .filter-btn.is-checked {
+    background: linear-gradient(135deg, #1a56db 0%, #0e7490 100%);
+    border-color: transparent;
+    color: #fff;
+    font-weight: 700;
+    box-shadow: 0 4px 16px rgba(26,86,219,.4);
+    transform: translateY(-2px);
+}
+.gal-filter-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 10px;
+    font-size: .67rem;
+    font-weight: 700;
+    background: rgba(255,255,255,.22);
+}
+.gal-filter-bar .filter-btn:not(.is-checked) .gal-filter-count {
+    background: #e8f0fe;
+    color: #1a56db;
+}
+
+@media (max-width: 767px) {
+    .gal-filter-bar { gap: 8px; padding: 18px 0 16px; }
+    .gal-filter-bar .filter-btn { padding: 7px 15px; font-size: .8rem; }
+}
+
+/* ================================================================
+   گرید ۴ ستون (بدون سایدبار)
+   ================================================================ */
+.gal-grid-wrap .gallery-item,
+.gal-grid-wrap .grid-sizer { width: 25%; padding: 6px; }
+
+@media (max-width: 1199px) {
+    .gal-grid-wrap .gallery-item,
+    .gal-grid-wrap .grid-sizer { width: 33.333%; }
+}
+@media (max-width: 767px) {
+    .gal-grid-wrap .gallery-item,
+    .gal-grid-wrap .grid-sizer { width: 50%; }
+}
+@media (max-width: 480px) {
+    .gal-grid-wrap .gallery-item,
+    .gal-grid-wrap .grid-sizer { width: 100%; }
+}
+
+/* ================================================================
+   لایت‌باکس — ناوبری prev/next
+   ================================================================ */
+.lb-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.22);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background .2s, transform .2s;
+    z-index: 10001;
+    backdrop-filter: blur(6px);
+}
+.lb-nav:hover { background: rgba(255,255,255,.22); transform: translateY(-50%) scale(1.1); }
+.lb-nav.lb-nav-disabled { opacity: .25; cursor: default; pointer-events: none; }
+.lb-prev { right: 24px; }
+.lb-next { left: 24px; }
+
+.lb-counter {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,.45);
+    font-size: .76rem;
+    letter-spacing: .06em;
+    pointer-events: none;
+}
+
+@media (max-width: 600px) {
+    .lb-prev { right: 8px; }
+    .lb-next { left: 8px; }
+    .lb-nav { width: 38px; height: 38px; font-size: .85rem; }
+}
+
+/* ===== بخش اصلی ===== */
+.gallery-section {
+    padding: 50px 0 70px;
+    background: #f8fafc;
+}
+
+/* ===== سایدبار فیلتر ===== */
+.gallery-sidebar {
+    position: sticky;
+    top: 85px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 22px 18px;
+    box-shadow: 0 2px 16px rgba(0,0,0,.06);
+}
+
+.gallery-filter-title {
+    font-size: .85rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.filter-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.filter-list li {
+    margin-bottom: 4px;
+}
+
+.filter-btn {
+    display: block;
+    width: 100%;
+    text-align: right;
+    padding: 9px 12px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #475569;
+    font-size: .88rem;
+    font-family: inherit;
+    transition: background .18s, color .18s;
+    position: relative;
+    line-height: 1.5;
+}
+
+.filter-btn::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #cbd5e1;
+    margin-left: 8px;
+    vertical-align: middle;
+    transition: background .18s;
+}
+
+.filter-btn:hover {
+    background: #f0f9ff;
+    color: #0e7490;
+}
+
+.filter-btn.is-checked {
+    background: #ecfeff;
+    color: #0e7490;
+    font-weight: 600;
+}
+
+.filter-btn.is-checked::before {
+    background: #0e7490;
+}
+
+/* فیلتر موبایل — نوار افقی */
+@media (max-width: 991px) {
+    .gallery-sidebar {
+        position: static;
+        padding: 14px 16px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+    }
+
+    .gallery-filter-title {
+        display: none;
+    }
+
+    .filter-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .filter-list li {
+        margin-bottom: 0;
+    }
+
+    .filter-btn {
+        width: auto;
+        display: inline-block;
+        padding: 6px 14px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 20px;
+        font-size: .82rem;
+    }
+
+    .filter-btn::before {
+        display: none;
+    }
+
+    .filter-btn.is-checked {
+        border-color: #0e7490;
+        background: #ecfeff;
+    }
+}
+
+/* ===== گرید آجری Isotope ===== */
+.gallery-grid {
+    /* Isotope مدیریت position را برعهده می‌گیرد */
+}
+
+/* عرض ستون‌ها */
+.gallery-item,
+.grid-sizer {
+    width: 33.333%;
+    padding: 6px;
+}
+
+@media (max-width: 991px) {
+    .gallery-item,
+    .grid-sizer { width: 50%; }
+}
+
+@media (max-width: 480px) {
+    .gallery-item,
+    .grid-sizer { width: 100%; }
+}
+
+/* ===== کارت تصویر ===== */
+.gallery-img-wrap {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #e2e8f0;
+    display: block;
+    /* سایه ظریف */
+    box-shadow: 0 1px 6px rgba(0,0,0,.08);
+    transition: box-shadow .3s;
+}
+
+.gallery-img-wrap:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,.14);
+}
+
+.gallery-img-wrap img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform .45s cubic-bezier(.4,0,.2,1);
+}
+
+/* ===== اورلی اطلاعات ===== */
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(
+        to top,
+        rgba(2, 18, 36, .96) 0%,
+        rgba(2, 18, 36, .90) 22%,
+        rgba(2, 18, 36, .72) 44%,
+        rgba(2, 18, 36, .42) 64%,
+        rgba(2, 18, 36, .14) 82%,
+        transparent 100%
+    );
+    padding: 56px 14px 14px;
+    color: #fff;
+    direction: rtl;
+
+    /* پنهان — انیمیشن slide-up */
+    transform: translateY(100%);
+    transition: transform .35s cubic-bezier(.4,0,.2,1);
+}
+
+/* دسکتاپ: hover */
+@media (hover: hover) and (pointer: fine) {
+    .gallery-img-wrap:hover .gallery-overlay {
+        transform: translateY(0);
+    }
+
+    .gallery-img-wrap:hover img {
+        transform: scale(1.06);
+    }
+}
+
+/* موبایل: کلاس اضافه می‌شه با تپ */
+.gallery-img-wrap.overlay-visible .gallery-overlay {
+    transform: translateY(0);
+}
+
+.gallery-img-wrap.overlay-visible img {
+    transform: scale(1.03);
+}
+
+.overlay-title {
+    font-size: .88rem;
+    font-weight: 700;
+    margin: 0 0 4px;
+    line-height: 1.4;
+    color: #fff;
+    text-shadow: 0 1px 6px rgba(0,0,0,.9), 0 2px 14px rgba(0,0,0,.7);
+}
+
+.overlay-desc {
+    font-size: .76rem;
+    margin: 0 0 8px;
+    opacity: .92;
+    line-height: 1.55;
+    color: #e2e8f0;
+    text-shadow: 0 1px 4px rgba(0,0,0,.8);
+}
+
+.overlay-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.overlay-tag {
+    background: rgba(255,255,255,.18);
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: 12px;
+    padding: 2px 9px;
+    font-size: .69rem;
+    backdrop-filter: blur(6px);
+    white-space: nowrap;
+}
+
+/* آیکون بزرگ‌نمایی هنگام hover دسکتاپ */
+.gallery-zoom-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.22);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.1rem;
+    opacity: 0;
+    transition: opacity .3s, transform .35s;
+    pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .gallery-img-wrap:hover .gallery-zoom-icon {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* ===== لایت‌باکس ===== */
+.lb-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .93);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    animation: lbFadeIn .2s ease;
+}
+
+.lb-overlay.lb-active {
+    display: flex;
+}
+
+@keyframes lbFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.lb-close {
+    position: absolute;
+    top: 14px;
+    left: 18px;
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: background .2s;
+    line-height: 1;
+}
+
+.lb-close:hover {
+    background: rgba(255,255,255,.25);
+}
+
+.lb-img {
+    max-width: 90vw;
+    max-height: 82vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.6);
+}
+
+.lb-caption {
+    color: rgba(255,255,255,.75);
+    margin-top: 14px;
+    font-size: .88rem;
+    text-align: center;
+    max-width: 500px;
+}
+
+/* ===== حالت خالی ===== */
+.gallery-empty {
+    text-align: center;
+    padding: 80px 20px;
+    color: #94a3b8;
+}
+
+.gallery-empty i {
+    font-size: 3.5rem;
+    display: block;
+    margin-bottom: 16px;
+    opacity: .5;
+}
+
+.gallery-empty p {
+    font-size: 1rem;
+}

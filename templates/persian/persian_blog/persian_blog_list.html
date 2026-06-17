@@ -1,0 +1,343 @@
+{% extends "persian/persian_base.html" %}
+{% load static %}
+
+{% block title %}مقالات — دکتر وحید عبدالرحیمی{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="مقالات و محتوای تخصصی چشم‌پزشکی از دکتر وحید عبدالرحیمی — فوق تخصص شبکیه و لیزر تهران">
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ===== هیرو ===== -->
+<section class="blg-hero">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <!-- ستون متن -->
+            <div class="col-lg-7">
+                <div class="blg-hero-text wow fadeInRight" data-wow-delay=".1s">
+
+                    <nav class="blg-breadcrumb">
+                        <a href="{% url 'main:persian_home' %}">خانه</a>
+                        <span class="sep">›</span>
+                        <span class="cur">مقالات</span>
+                    </nav>
+
+                    <span class="blg-eyebrow">محتوای آموزشی و تخصصی</span>
+
+                    <h1>آخرین <span class="blg-accent">مقالات</span><br>چشم‌پزشکی</h1>
+
+                    <p>
+                        مطالب علمی و آموزشی درباره بیماری‌های چشم، روش‌های درمانی نوین
+                        و نکات مراقبتی از دیدگاه دکتر وحید عبدالرحیمی — فوق تخصص شبکیه و لیزر.
+                    </p>
+
+                    <div class="blg-stats">
+                        <div class="blg-stat">
+                            <i class="fa fa-file-text-o"></i>
+                            {{ total_posts }} مقاله
+                        </div>
+                        <div class="blg-stat">
+                            <i class="fa fa-folder-o"></i>
+                            {{ categories|length }} دسته‌بندی
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- المان دکوراتیو -->
+            <div class="col-lg-5 d-none d-lg-block">
+                <div class="blg-deco-wrap wow fadeInLeft" data-wow-delay=".15s">
+                    <div class="blg-deco-card">
+                        <div class="blg-deco-card-img"><i class="fa fa-newspaper-o"></i></div>
+                        <div class="blg-deco-card-body">
+                            <div class="blg-deco-line blg-deco-line--l"></div>
+                            <div class="blg-deco-line blg-deco-line--m"></div>
+                        </div>
+                    </div>
+                    <div class="blg-deco-card">
+                        <div class="blg-deco-card-img"><i class="fa fa-stethoscope"></i></div>
+                        <div class="blg-deco-card-body">
+                            <div class="blg-deco-line blg-deco-line--l"></div>
+                            <div class="blg-deco-line blg-deco-line--m"></div>
+                        </div>
+                    </div>
+                    <div class="blg-deco-card">
+                        <div class="blg-deco-card-img"><i class="fa fa-eye"></i></div>
+                        <div class="blg-deco-card-body">
+                            <div class="blg-deco-line blg-deco-line--l"></div>
+                            <div class="blg-deco-line blg-deco-line--m"></div>
+                            <div class="blg-deco-line blg-deco-line--s"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== لیست مقالات + سایدبار ===== -->
+<section class="blg-body">
+    <div class="container">
+        <div class="row">
+
+            <!-- ===== سایدبار فیلتر (راست در RTL) ===== -->
+            <div class="col-lg-3">
+                <aside class="blg-sidebar">
+
+                    <!-- فیلتر دسته‌بندی -->
+                    <div class="blg-widget wow fadeInRight" data-wow-delay=".1s">
+                        <h3 class="blg-widget-title">
+                            <i class="fa fa-folder-o"></i> دسته‌بندی‌ها
+                        </h3>
+                        <ul class="blg-filter-list">
+                            <li>
+                                {% if active_year %}
+                                <a href="?year={{ active_year }}"
+                                {% else %}
+                                <a href="{% url 'blog:persian_blog_list' %}"
+                                {% endif %}
+                                   class="blg-filter-item {% if not active_cat %}is-active{% endif %}">
+                                    <span>همه مقالات</span>
+                                    <span class="blg-filter-count">{{ total_posts }}</span>
+                                </a>
+                            </li>
+                            {% for cat in categories %}
+                            <li>
+                                {% if active_year %}
+                                <a href="?cat={{ cat.id }}&year={{ active_year }}"
+                                {% else %}
+                                <a href="?cat={{ cat.id }}"
+                                {% endif %}
+                                   class="blg-filter-item {% if active_cat == cat.id %}is-active{% endif %}">
+                                    <span>{{ cat.name_fa }}</span>
+                                    <span class="blg-filter-count">{{ cat.post_count }}</span>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <!-- فیلتر سال -->
+                    {% if years %}
+                    <div class="blg-widget wow fadeInRight" data-wow-delay=".15s">
+                        <h3 class="blg-widget-title">
+                            <i class="fa fa-calendar-o"></i> بازه زمانی
+                        </h3>
+                        <ul class="blg-filter-list">
+                            <li>
+                                {% if active_cat %}
+                                <a href="?cat={{ active_cat }}"
+                                {% else %}
+                                <a href="{% url 'blog:persian_blog_list' %}"
+                                {% endif %}
+                                   class="blg-filter-item {% if not active_year %}is-active{% endif %}">
+                                    <span>همه سال‌ها</span>
+                                </a>
+                            </li>
+                            {% for item in years %}
+                            <li>
+                                {% if active_cat %}
+                                <a href="?cat={{ active_cat }}&year={{ item.year }}"
+                                {% else %}
+                                <a href="?year={{ item.year }}"
+                                {% endif %}
+                                   class="blg-filter-item {% if active_year == item.year %}is-active{% endif %}">
+                                    <span>{{ item.year }}</span>
+                                    <span class="blg-filter-count">{{ item.count }}</span>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    <!-- ریست فیلترها (فقط وقتی فیلتر فعال است) -->
+                    {% if active_cat or active_year %}
+                    <div class="blg-widget wow fadeInRight" data-wow-delay=".2s">
+                        <a href="{% url 'blog:persian_blog_list' %}" class="blg-filter-item"
+                           style="justify-content:center; color:#dc2626; background:#fff5f5; border:1px solid #fecaca;">
+                            <i class="fa fa-times-circle-o ml-1"></i>
+                            حذف همه فیلترها
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    <!-- پربازدیدترین مقالات -->
+                    {% if popular_posts %}
+                    <div class="blg-widget wow fadeInRight" data-wow-delay=".25s">
+                        <h3 class="blg-widget-title">
+                            <i class="fa fa-bar-chart"></i> پربازدیدترین مقالات
+                        </h3>
+                        <ul class="blg-popular-list">
+                            {% for p in popular_posts %}
+                            <li class="blg-popular-item">
+                                <a href="{% url 'blog:persian_blog_detail' p.slug %}" class="blg-popular-link">
+                                    {% if p.image %}
+                                    <img src="{{ p.image.url }}" alt="{{ p.title_fa }}" class="blg-popular-thumb">
+                                    {% else %}
+                                    <div class="blg-popular-nothumb"><i class="fa fa-file-text-o"></i></div>
+                                    {% endif %}
+                                    <div class="blg-popular-meta">
+                                        <span class="blg-popular-title">{{ p.title_fa }}</span>
+                                        <span class="blg-popular-views">
+                                            <i class="fa fa-eye"></i> {{ p.views_count }} بازدید
+                                        </span>
+                                    </div>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                </aside>
+            </div>
+            <!-- ===== پایان سایدبار ===== -->
+
+
+            <!-- ===== گرید مقالات ===== -->
+            <div class="col-lg-9">
+
+                <!-- نمایش نتیجه فیلتر فعال -->
+                {% if active_cat or active_year %}
+                <div class="blg-filter-notice wow fadeInUp" data-wow-delay=".08s">
+                    <i class="fa fa-filter"></i>
+                    نمایش {{ page_obj.paginator.count }} مقاله
+                    {% if active_cat %}
+                        {% for cat in categories %}{% if cat.id == active_cat %}در دسته «{{ cat.name_fa }}»{% endif %}{% endfor %}
+                    {% endif %}
+                    {% if active_year %}در سال {{ active_year }}{% endif %}
+                </div>
+                {% endif %}
+
+                {% if posts %}
+                <div class="row">
+                    {% for post in posts %}
+                    <div class="col-md-6 wow fadeInUp"
+                         data-wow-delay=".{{ forloop.counter0 }}5s">
+
+                        <article class="blg-card">
+
+                            <div class="blg-card-thumb">
+                                <a href="{% url 'blog:persian_blog_detail' post.slug %}">
+                                    {% if post.image %}
+                                    <img src="{{ post.image.url }}" alt="{{ post.title_fa }}" loading="lazy">
+                                    {% else %}
+                                    <div class="blg-card-noimg"><i class="fa fa-file-text-o"></i></div>
+                                    {% endif %}
+                                </a>
+                                {% if post.category %}
+                                <span class="blg-cat-pill">{{ post.category.name_fa }}</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="blg-card-body">
+
+                                <div class="blg-card-meta">
+                                    <span><i class="fa fa-calendar-o"></i> {{ post.published_at|date:"j F Y" }}</span>
+                                    <span><i class="fa fa-eye"></i> {{ post.views_count }} بازدید</span>
+                                </div>
+
+                                <a href="{% url 'blog:persian_blog_detail' post.slug %}" class="blg-card-title">
+                                    {{ post.title_fa }}
+                                </a>
+
+                                {% if post.summary_fa %}
+                                <p class="blg-card-excerpt">{{ post.summary_fa }}</p>
+                                {% endif %}
+
+                                <div class="blg-card-foot">
+                                    <span class="blg-card-author">
+                                        <i class="fa fa-user-o"></i> {{ post.author }}
+                                    </span>
+                                    <a href="{% url 'blog:persian_blog_detail' post.slug %}" class="blg-more-link">
+                                        ادامه مطلب <i class="fa fa-long-arrow-left"></i>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </article>
+
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- صفحه‌بندی -->
+                {% if page_obj.has_other_pages %}
+                <nav class="blg-pagination wow fadeInUp" data-wow-delay=".2s">
+                    {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}{% if active_cat %}&cat={{ active_cat }}{% endif %}{% if active_year %}&year={{ active_year }}{% endif %}"
+                       class="blg-page-btn"><i class="fa fa-chevron-right"></i></a>
+                    {% else %}
+                    <span class="blg-page-btn is-disabled"><i class="fa fa-chevron-right"></i></span>
+                    {% endif %}
+
+                    {% for i in page_obj.paginator.page_range %}
+                    <a href="?page={{ i }}{% if active_cat %}&cat={{ active_cat }}{% endif %}{% if active_year %}&year={{ active_year }}{% endif %}"
+                       class="blg-page-btn {% if i == page_obj.number %}is-active{% endif %}">{{ i }}</a>
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}{% if active_cat %}&cat={{ active_cat }}{% endif %}{% if active_year %}&year={{ active_year }}{% endif %}"
+                       class="blg-page-btn"><i class="fa fa-chevron-left"></i></a>
+                    {% else %}
+                    <span class="blg-page-btn is-disabled"><i class="fa fa-chevron-left"></i></span>
+                    {% endif %}
+                </nav>
+                {% endif %}
+
+                {% else %}
+                <div class="blg-empty-state">
+                    <i class="fa fa-file-text-o"></i>
+                    <p>
+                        {% if active_cat or active_year %}
+                        مقاله‌ای با این فیلتر یافت نشد.
+                        {% else %}
+                        هنوز مقاله‌ای منتشر نشده است.
+                        {% endif %}
+                    </p>
+                    {% if active_cat or active_year %}
+                    <a href="{% url 'blog:persian_blog_list' %}" class="btn-blg-primary mt-3"
+                       style="font-size:.85rem; padding:10px 22px;">
+                        نمایش همه مقالات
+                    </a>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+            </div>
+            <!-- ===== پایان گرید ===== -->
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== CTA ===== -->
+<section class="blg-cta">
+    <div class="container">
+        <div class="wow fadeInUp" data-wow-delay=".1s">
+            <h2>سوال پزشکی دارید؟</h2>
+            <p>برای مشاوره تخصصی یا رزرو نوبت ویزیت با مطب دکتر عبدالرحیمی تماس بگیرید</p>
+            <a href="{% url 'main:persian_contact' %}" class="btn-blg-primary">
+                <i class="fa fa-calendar-check-o"></i>
+                رزرو نوبت
+            </a>
+            <a href="tel:02188648210" class="btn-blg-ghost">
+                <i class="fa fa-phone"></i>
+                تماس با مطب
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

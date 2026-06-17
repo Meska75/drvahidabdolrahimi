@@ -1,0 +1,266 @@
+{% extends "arabic/arabic_base.html" %}
+{% load static %}
+
+{% block title %}معرض الصور — د. وحيد عبد الرحيمي{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="معرض صور عيادة د. وحيد عبد الرحيمي، غرفة العمليات والفريق الطبي — أخصائي الشبكية والليزر في طهران">
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/gallery.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ===== هيرو الصفحة ===== -->
+<section class="gal-page-header">
+    <span class="gal-deco-circle"></span>
+    <span class="gal-deco-circle"></span>
+    <span class="gal-deco-circle"></span>
+    <span class="gal-deco-circle"></span>
+
+    <div class="container">
+        <div class="gal-header-inner wow fadeInUp" data-wow-delay=".05s">
+
+            <div class="gal-eyebrow">
+                <i class="fa fa-camera"></i>
+                ألبوم الصور
+            </div>
+
+            <h1>معرض صور العيادة والأنشطة الطبية</h1>
+
+            <nav class="gal-breadcrumb">
+                <a href="{% url 'arabic:arabic_home' %}">الرئيسية</a>
+                <span class="sep">›</span>
+                <span>معرض الصور</span>
+            </nav>
+
+            {% if total_count %}
+            <div class="gal-header-stats">
+                <div class="gal-stat-item">
+                    <i class="fa fa-image"></i>
+                    <span class="gal-stat-num">{{ total_count }}</span>
+                    صورة
+                </div>
+                {% if tag_count %}
+                <div class="gal-stat-item">
+                    <i class="fa fa-tags"></i>
+                    <span class="gal-stat-num">{{ tag_count }}</span>
+                    تصنيف
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</section>
+
+<!-- ===== قسم المعرض ===== -->
+<section class="gallery-section">
+    <div class="container-fluid px-lg-5">
+
+        <!-- شريط الفلترة الأفقي -->
+        {% if tags %}
+        <div class="gal-filter-bar wow fadeInUp" data-wow-delay=".08s">
+            <button class="filter-btn is-checked" data-filter="*">
+                جميع الصور
+                {% if total_count %}<span class="gal-filter-count">{{ total_count }}</span>{% endif %}
+            </button>
+            {% for tag in tags %}
+            <button class="filter-btn" data-filter=".tag-{{ tag.slug }}">
+                {{ tag.name_ar|default:tag.name_fa }}
+                <span class="gal-filter-count">{{ tag.image_count }}</span>
+            </button>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- شبكة الصور -->
+        {% if images %}
+        <div class="gal-grid-wrap">
+            <div class="gallery-grid" id="gallery-grid">
+                <div class="grid-sizer"></div>
+                {% for img in images %}
+                <div class="gallery-item {{ img.tag_classes }} wow fadeIn" data-wow-delay="{{ forloop.counter0|add:1 }}00ms">
+                    <div class="gallery-img-wrap"
+                         data-src="{{ img.image.url }}"
+                         data-title="{{ img.title_ar|default:img.title_fa }}">
+                        <img src="{{ img.image.url }}"
+                             alt="{{ img.alt_ar|default:img.title_ar }}"
+                             loading="lazy">
+                        <div class="gallery-overlay">
+                            {% if img.title_ar or img.title_fa %}
+                            <h6 class="overlay-title">{{ img.title_ar|default:img.title_fa }}</h6>
+                            {% endif %}
+                            {% if img.description_ar or img.description_fa %}
+                            <p class="overlay-desc">{{ img.description_ar|default:img.description_fa }}</p>
+                            {% endif %}
+                            {% if img.tags.all %}
+                            <div class="overlay-tags">
+                                {% for tag in img.tags.all %}
+                                <span class="overlay-tag">{{ tag.name_ar|default:tag.name_fa }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="gallery-zoom-icon">
+                            <i class="fa fa-expand"></i>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+        <div class="gallery-empty">
+            <i class="fa fa-image"></i>
+            <p>لا توجد صور في المعرض حالياً.</p>
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+
+<!-- ===== لايت بوكس ===== -->
+<div class="lb-overlay" id="lb-overlay" role="dialog" aria-modal="true">
+    <button class="lb-close" id="lb-close" aria-label="إغلاق">&times;</button>
+    <div class="lb-counter" id="lb-counter"></div>
+    <button class="lb-nav lb-prev" id="lb-prev" aria-label="الصورة السابقة">
+        <i class="fa fa-chevron-right"></i>
+    </button>
+    <img class="lb-img" id="lb-img" src="" alt="">
+    <button class="lb-nav lb-next" id="lb-next" aria-label="الصورة التالية">
+        <i class="fa fa-chevron-left"></i>
+    </button>
+    <p class="lb-caption" id="lb-caption"></p>
+</div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+
+<script>
+(function ($) {
+    'use strict';
+
+    var $grid = null;
+    var $touchTarget = null;
+    var visibleImages = [];
+    var currentIndex = 0;
+
+    function buildVisibleArray() {
+        visibleImages = [];
+        $('.gallery-item:not(.isotope-hidden) .gallery-img-wrap').each(function () {
+            visibleImages.push({ src: $(this).data('src'), title: $(this).data('title') || '' });
+        });
+    }
+
+    /* ---- Isotope ---- */
+    var $galleryGrid = $('#gallery-grid');
+    if ($galleryGrid.length) {
+        $galleryGrid.imagesLoaded(function () {
+            $grid = $galleryGrid.isotope({
+                itemSelector: '.gallery-item',
+                layoutMode: 'masonry',
+                masonry: { columnWidth: '.grid-sizer', gutter: 0 }
+            });
+            buildVisibleArray();
+        });
+    }
+
+    /* ---- فلترة ---- */
+    $(document).on('click', '.filter-btn', function () {
+        var filterVal = $(this).data('filter');
+        if ($grid) { $grid.isotope({ filter: filterVal }); }
+        $('.filter-btn').removeClass('is-checked');
+        $(this).addClass('is-checked');
+        setTimeout(buildVisibleArray, 350);
+    });
+
+    /* ---- لايت بوكس ---- */
+    function updateLB() {
+        var img = visibleImages[currentIndex];
+        $('#lb-img').attr('src', img.src);
+        $('#lb-caption').text(img.title);
+        $('#lb-counter').text((currentIndex + 1) + ' / ' + visibleImages.length);
+        $('#lb-prev').toggleClass('lb-nav-disabled', currentIndex === 0);
+        $('#lb-next').toggleClass('lb-nav-disabled', currentIndex === visibleImages.length - 1);
+    }
+
+    function openLB(src) {
+        var idx = 0;
+        for (var i = 0; i < visibleImages.length; i++) {
+            if (visibleImages[i].src === src) { idx = i; break; }
+        }
+        currentIndex = idx;
+        updateLB();
+        $('#lb-overlay').addClass('lb-active');
+        $('body').css('overflow', 'hidden');
+    }
+
+    function closeLB() {
+        $('#lb-overlay').removeClass('lb-active');
+        setTimeout(function () { $('#lb-img').attr('src', ''); }, 220);
+        $('body').css('overflow', '');
+        $touchTarget = null;
+    }
+
+    /* دسكتوب */
+    $(document).on('click', '.gallery-img-wrap', function () {
+        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            openLB($(this).data('src'));
+        }
+    });
+
+    /* موبايل */
+    $(document).on('touchend', '.gallery-img-wrap', function (e) {
+        if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            e.preventDefault();
+            var $this = $(this);
+            var isSame = ($touchTarget && $touchTarget[0] === $this[0]);
+            if (isSame && $this.hasClass('overlay-visible')) {
+                openLB($this.data('src'));
+            } else {
+                $('.gallery-img-wrap').not($this).removeClass('overlay-visible');
+                $this.addClass('overlay-visible');
+                $touchTarget = $this;
+            }
+        }
+    });
+
+    /* إغلاق */
+    $('#lb-close').on('click', closeLB);
+    $('#lb-overlay').on('click', function (e) { if (e.target === this) closeLB(); });
+
+    /* التنقل — RTL: يمين=السابق، يسار=التالي */
+    $('#lb-prev').on('click', function (e) {
+        e.stopPropagation();
+        if (currentIndex > 0) { currentIndex--; updateLB(); }
+    });
+    $('#lb-next').on('click', function (e) {
+        e.stopPropagation();
+        if (currentIndex < visibleImages.length - 1) { currentIndex++; updateLB(); }
+    });
+
+    $(document).on('keydown', function (e) {
+        if (!$('#lb-overlay').hasClass('lb-active')) return;
+        if (e.key === 'Escape') { closeLB(); }
+        if (e.key === 'ArrowRight' && currentIndex > 0) { currentIndex--; updateLB(); }
+        if (e.key === 'ArrowLeft' && currentIndex < visibleImages.length - 1) { currentIndex++; updateLB(); }
+    });
+
+    $(document).on('touchend', function (e) {
+        if (!$(e.target).closest('.gallery-img-wrap').length) {
+            $('.gallery-img-wrap').removeClass('overlay-visible');
+            $touchTarget = null;
+        }
+    });
+
+}(jQuery));
+</script>
+{% endblock %}

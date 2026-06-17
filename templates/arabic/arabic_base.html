@@ -162,6 +162,15 @@
                                     <li><a href="{% url 'arabic_services:arabic_surgery_services' %}">الخدمات الجراحية</a></li>
                                 </ul>
                             </li>
+                            <li {% if request.resolver_match.namespace == 'arabic_blog' %}class="menu-active"{% endif %}>
+                                <a href="{% url 'arabic_blog:arabic_blog_list' %}">المقالات</a>
+                            </li>
+                            <li {% if request.resolver_match.namespace == 'arabic_gallery' %}class="menu-active"{% endif %}>
+                                <a href="{% url 'arabic_gallery:arabic_gallery' %}">المعرض</a>
+                            </li>
+                            <li {% if request.resolver_match.namespace == 'arabic_videos' %}class="menu-active"{% endif %}>
+                                <a href="{% url 'arabic_videos:arabic_videos' %}">الفيديوهات</a>
+                            </li>
                             <li {% if request.resolver_match.url_name == 'arabic_contact' %}class="menu-active"{% endif %}>
                                 <a href="{% url 'arabic:arabic_contact' %}">اتصل بنا</a>
                             </li>
@@ -190,6 +199,7 @@
                                 <li class="mb-2"><a href="{% url 'arabic:arabic_about' %}">عن الطبيب</a></li>
                                 <li class="mb-2"><a href="{% url 'arabic_services:arabic_office_services' %}">خدمات العيادة</a></li>
                                 <li class="mb-2"><a href="{% url 'arabic_services:arabic_surgery_services' %}">الخدمات الجراحية</a></li>
+                                <li class="mb-2"><a href="{% url 'arabic_blog:arabic_blog_list' %}">المقالات</a></li>
                                 <li><a href="{% url 'arabic:arabic_contact' %}">اتصل بنا</a></li>
                             </ul>
                         </div>

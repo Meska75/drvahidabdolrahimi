@@ -152,6 +152,15 @@
                                     <li><a href="{% url 'services:persian_surgery_services' %}">خدمات جراحی</a></li>
                                 </ul>
                             </li>
+                            <li {% if request.resolver_match.namespace == 'blog' %}class="menu-active"{% endif %}>
+                                <a href="{% url 'blog:persian_blog_list' %}">مقالات</a>
+                            </li>
+                            <li {% if request.resolver_match.namespace == 'gallery' %}class="menu-active"{% endif %}>
+                                <a href="{% url 'gallery:persian_gallery' %}">گالری</a>
+                            </li>
+                            <li {% if request.resolver_match.namespace == 'videos' %}class="menu-active"{% endif %}>
+                                <a href="{% url 'videos:persian_videos' %}">ویدیوها</a>
+                            </li>
                             <li {% if request.resolver_match.url_name == 'persian_contact' %}class="menu-active"{% endif %}>
                                 <a href="{% url 'main:persian_contact' %}">تماس با ما</a>
                             </li>
@@ -180,6 +189,7 @@
                                 <li class="mb-2"><a href="{% url 'main:persian_about' %}">درباره دکتر</a></li>
                                 <li class="mb-2"><a href="{% url 'services:persian_office_services' %}">خدمات مطب</a></li>
                                 <li class="mb-2"><a href="{% url 'services:persian_surgery_services' %}">خدمات جراحی</a></li>
+                                <li class="mb-2"><a href="{% url 'blog:persian_blog_list' %}">مقالات</a></li>
                                 <li><a href="{% url 'main:persian_contact' %}">تماس با ما</a></li>
                             </ul>
                         </div>

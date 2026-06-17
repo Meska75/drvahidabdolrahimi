@@ -21,8 +21,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ckeditor',
+    'ckeditor_uploader',
     'main',
     'services',
+    'blog',
+    'accounts',
+    'team',
+    'gallery',
+    'videos',
 ]
 
 MIDDLEWARE = [
@@ -94,6 +101,51 @@ if not DEBUG:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# ===== تنظیمات CKEditor =====
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = 'pillow'
+
+CKEDITOR_CONFIGS = {
+    # ویرایشگر راست‌چین (فارسی / عربی)
+    'rtl': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Format', 'FontSize'],
+            ['Bold', 'Italic', 'Underline', 'Strike'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', 'Blockquote'],
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['BidiLtr', 'BidiRtl'],
+            ['Link', 'Unlink'],
+            ['Image', 'Table', 'HorizontalRule'],
+            ['RemoveFormat', 'Source'],
+        ],
+        'height': 450,
+        'width': '100%',
+        'language': 'fa',
+        'contentsLangDirection': 'rtl',
+        'extraPlugins': 'bidi',
+    },
+    # ویرایشگر چپ‌چین (انگلیسی)
+    'ltr': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Format', 'FontSize'],
+            ['Bold', 'Italic', 'Underline', 'Strike'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', 'Blockquote'],
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['BidiLtr', 'BidiRtl'],
+            ['Link', 'Unlink'],
+            ['Image', 'Table', 'HorizontalRule'],
+            ['RemoveFormat', 'Source'],
+        ],
+        'height': 450,
+        'width': '100%',
+        'language': 'en',
+        'contentsLangDirection': 'ltr',
+        'extraPlugins': 'bidi',
+    },
+}
 
 # ===== تنظیمات امنیتی پروداکشن =====
 if not DEBUG:

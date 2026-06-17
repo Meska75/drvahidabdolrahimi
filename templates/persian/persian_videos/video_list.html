@@ -1,0 +1,222 @@
+{% extends "persian/persian_base.html" %}
+{% load static %}
+
+{% block title %}ویدیوها — دکتر وحید عبدالرحیمی{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="ویدیوهای آموزشی و اطلاع‌رسانی دکتر وحید عبدالرحیمی — فوق تخصص شبکیه و لیزر تهران">
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/gallery.css' %}">
+<link rel="stylesheet" href="{% static 'css/video.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ===== هدر صفحه ===== -->
+<section class="gal-page-header">
+    <span class="gal-deco-circle"></span>
+    <span class="gal-deco-circle"></span>
+    <span class="gal-deco-circle"></span>
+    <span class="gal-deco-circle"></span>
+    <div class="container">
+        <div class="gal-header-inner wow fadeInUp" data-wow-delay=".05s">
+            <div class="gal-eyebrow">
+                <i class="fa fa-play-circle"></i>
+                ویدیوها
+            </div>
+            <h1>ویدیوهای آموزشی و اطلاع‌رسانی</h1>
+            <nav class="gal-breadcrumb">
+                <a href="{% url 'main:persian_home' %}">خانه</a>
+                <span class="sep">›</span>
+                <span>ویدیوها</span>
+            </nav>
+            {% if total_count %}
+            <div class="gal-header-stats">
+                <div class="gal-stat-item">
+                    <i class="fa fa-video-camera"></i>
+                    <span class="gal-stat-num">{{ total_count }}</span>
+                    ویدیو
+                </div>
+                {% if cat_count %}
+                <div class="gal-stat-item">
+                    <i class="fa fa-tags"></i>
+                    <span class="gal-stat-num">{{ cat_count }}</span>
+                    دسته‌بندی
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- ===== بخش ویدیوها ===== -->
+<section class="videos-section">
+    <div class="container">
+
+        <!-- نوار فیلتر افقی -->
+        {% if categories %}
+        <div class="gal-filter-bar wow fadeInUp" data-wow-delay=".08s">
+            <button class="filter-btn is-checked" data-category="all">
+                همه ویدیوها
+                {% if total_count %}<span class="gal-filter-count">{{ total_count }}</span>{% endif %}
+            </button>
+            {% for cat in categories %}
+            <button class="filter-btn" data-category="{{ cat.id }}">
+                {{ cat.name_fa }}
+                <span class="gal-filter-count">{{ cat.video_count }}</span>
+            </button>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if videos %}
+        <div class="row" id="videos-grid">
+            {% for video in videos %}
+            <div class="col-md-6 col-xl-4 video-card-wrap wow fadeInUp"
+                 data-wow-delay="{{ forloop.counter0|add:1 }}00ms"
+                 data-category="{{ video.category_id|default:'' }}">
+                        <div class="video-card wow fadeInUp"
+                             data-wow-delay=".05s"
+                             data-source-type="{{ video.source_type }}"
+                             data-file-url="{% if video.file_path %}{{ video.file_path.url }}{% endif %}"
+                             data-embed-code="{{ video.embed_code }}"
+                             data-title="{{ video.title_fa }}"
+                             data-desc="{{ video.description_fa|striptags|truncatechars:120 }}">
+
+                            <!-- تامبنیل -->
+                            <div class="video-thumb-wrap">
+                                {% if video.thumbnail %}
+                                <img src="{{ video.thumbnail.url }}" alt="{{ video.title_fa }}" loading="lazy">
+                                {% else %}
+                                <div class="video-thumb-placeholder">
+                                    <i class="fa fa-play-circle"></i>
+                                </div>
+                                {% endif %}
+
+                                <div class="video-play-btn">
+                                    <i class="fa fa-play"></i>
+                                </div>
+
+                                {% if video.duration_display %}
+                                <span class="video-duration-badge">{{ video.duration_display }}</span>
+                                {% endif %}
+                            </div>
+
+                            <!-- اطلاعات ویدیو -->
+                            <div class="video-card-body">
+                                {% if video.category %}
+                                <span class="video-cat-badge">{{ video.category.name_fa }}</span>
+                                {% endif %}
+                                <h5 class="video-title">{{ video.title_fa }}</h5>
+                                {% if video.description_fa %}
+                                <p class="video-desc-text">{{ video.description_fa|striptags }}</p>
+                                {% endif %}
+                                {% if video.published_at %}
+                                <div class="video-meta-row">
+                                    <span><i class="fa fa-calendar-o ml-1"></i> {{ video.published_at|date:"Y/m/d" }}</span>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+        {% else %}
+        <div class="videos-empty">
+            <i class="fa fa-video-camera"></i>
+            <p>در حال حاضر ویدیویی برای نمایش وجود ندارد.</p>
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+
+<!-- ===== مودال پلیر ===== -->
+<div class="vm-overlay" id="vm-overlay" role="dialog" aria-modal="true" aria-label="پخش ویدیو">
+    <button class="vm-close" id="vm-close" aria-label="بستن">&times;</button>
+    <div class="vm-box">
+        <div class="vm-player" id="vm-player">
+            <!-- پلیر توسط JS وارد می‌شود -->
+        </div>
+        <div class="vm-info">
+            <p class="vm-category" id="vm-cat"></p>
+            <h4 class="vm-title" id="vm-title"></h4>
+            <p class="vm-desc" id="vm-desc"></p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+<script>
+(function ($) {
+    'use strict';
+
+    /* ---- فیلتر دسته‌بندی ---- */
+    $(document).on('click', '.filter-btn[data-category]', function () {
+        var cat = $(this).data('category');
+        $('.filter-btn[data-category]').removeClass('is-checked');
+        $(this).addClass('is-checked');
+
+        if (cat === 'all') {
+            $('.video-card-wrap').removeClass('v-hidden');
+        } else {
+            $('.video-card-wrap').addClass('v-hidden');
+            $('.video-card-wrap[data-category="' + cat + '"]').removeClass('v-hidden');
+        }
+    });
+
+    /* ---- مودال ویدیو ---- */
+    function buildPlayer(sourceType, fileUrl, embedCode) {
+        if (sourceType === 'upload' && fileUrl) {
+            return '<video controls autoplay style="width:100%;height:100%;position:absolute;inset:0;">' +
+                   '<source src="' + fileUrl + '"></video>';
+        }
+        if (embedCode) {
+            return embedCode;
+        }
+        return '<div style="color:rgba(255,255,255,.4);display:flex;align-items:center;' +
+               'justify-content:center;height:100%;font-size:.9rem;">منبع ویدیو تعریف نشده</div>';
+    }
+
+    function openVM($card) {
+        var sourceType = $card.data('source-type');
+        var fileUrl    = $card.data('file-url') || '';
+        var embedCode  = $card.data('embed-code') || '';
+
+        $('#vm-player').html(buildPlayer(sourceType, fileUrl, embedCode));
+        $('#vm-title').text($card.data('title') || '');
+        $('#vm-desc').text($card.data('desc') || '');
+        $('#vm-cat').text($card.find('.video-cat-badge').text().trim());
+
+        $('#vm-overlay').addClass('vm-active');
+        $('body').css('overflow', 'hidden');
+    }
+
+    function closeVM() {
+        $('#vm-overlay').removeClass('vm-active');
+        $('#vm-player').html(''); /* توقف ویدیو با خالی کردن iframe */
+        $('body').css('overflow', '');
+    }
+
+    $(document).on('click', '.video-card', function () {
+        openVM($(this));
+    });
+
+    $('#vm-close').on('click', closeVM);
+    $('#vm-overlay').on('click', function (e) {
+        if (e.target === this) closeVM();
+    });
+    $(document).on('keydown', function (e) {
+        if (e.key === 'Escape') closeVM();
+    });
+
+}(jQuery));
+</script>
+{% endblock %}

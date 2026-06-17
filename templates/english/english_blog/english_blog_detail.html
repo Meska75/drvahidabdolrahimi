@@ -1,0 +1,188 @@
+{% extends "english/english_base.html" %}
+{% load static %}
+
+{% block title %}{{ post.title_en }} — Dr. Vahid Abdolrahimi{% endblock %}
+
+{% block meta_description %}<meta name="description" content="{{ post.summary_en|default:post.title_en }}">{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+<link rel="stylesheet" href="{% static 'css/blog_en.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ===== Hero ===== -->
+<section class="blg-detail-hero">
+    {% if post.image %}
+    <div class="blg-detail-hero-bg" style="background-image: url('{{ post.image.url }}');"></div>
+    {% endif %}
+    <div class="container">
+        <div class="blg-detail-hero-inner wow fadeInUp" data-wow-delay=".05s">
+
+            <nav class="blg-detail-breadcrumb">
+                <a href="{% url 'english:english_home' %}">Home</a>
+                <span class="sep">›</span>
+                <a href="{% url 'english_blog:english_blog_list' %}">Articles</a>
+                <span class="sep">›</span>
+                <span class="cur">{{ post.title_en|default:post.title_fa }}</span>
+            </nav>
+
+            {% if post.category %}
+            <span class="blg-detail-cat-badge">{{ post.category.name_en|default:post.category.name_fa }}</span>
+            {% endif %}
+
+            <h1>{{ post.title_en|default:post.title_fa }}</h1>
+
+            <div class="blg-detail-hero-meta">
+                <span><i class="fa fa-user-o"></i> {{ post.author }}</span>
+                <span><i class="fa fa-calendar-o"></i> {{ post.published_at|date:"M j, Y" }}</span>
+                <span><i class="fa fa-eye"></i> {{ post.views_count }} views</span>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ===== Article Content ===== -->
+<section class="blog-detail-section section-padding">
+    <div class="container">
+        <div class="row">
+
+            <!-- Main content -->
+            <div class="col-lg-8">
+                <article class="blog-detail-card wow fadeInUp" data-wow-delay=".05s">
+
+                    {% if post.image %}
+                    <div class="blog-detail-img">
+                        <img class="img-fluid" src="{{ post.image.url }}" alt="{{ post.title_en }}">
+                    </div>
+                    {% endif %}
+
+                    <div class="blog-detail-content">
+                        {{ post.content_en|safe }}
+                    </div>
+
+                    <div class="blog-detail-back">
+                        <a href="{% url 'english_blog:english_blog_list' %}" class="template-btn">← Back to Articles</a>
+                    </div>
+
+                </article>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="blog-sidebar">
+
+                    {% if related %}
+                    <div class="sidebar-widget">
+                        <h4 class="widget-title">Related Articles</h4>
+                        {% for r in related %}
+                        <div class="related-post">
+                            {% if r.image %}<img src="{{ r.image.url }}" alt="{{ r.title_en }}">{% endif %}
+                            <div>
+                                <a href="{% url 'english_blog:english_blog_detail' r.slug %}">{{ r.title_en }}</a>
+                                <span>{{ r.published_at|date:"Y/m/d" }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div class="sidebar-widget">
+                        <h4 class="widget-title">Book an Appointment</h4>
+                        <p>Contact our clinic for a consultation or appointment.</p>
+                        <a href="{% url 'english:english_contact' %}" class="template-btn sidebar-btn">Contact Us</a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ===== Comments ===== -->
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="cmt-section wow fadeInUp" data-wow-delay=".05s" style="text-align:left; direction:ltr;">
+
+                    {% if commented %}
+                    <div class="cmt-success">
+                        <i class="fa fa-check-circle"></i>
+                        Your comment was submitted and will appear after review.
+                    </div>
+                    {% endif %}
+
+                    <h3 class="cmt-section-title">
+                        <i class="fa fa-comments-o"></i>
+                        Comments
+                        {% if comments %}<span class="cmt-count">{{ comments|length }}</span>{% endif %}
+                    </h3>
+
+                    {% if comments %}
+                    <div class="cmt-list">
+                        {% for cmt in comments %}
+                        <div class="cmt-item">
+                            <div class="cmt-avatar">{{ cmt.name|slice:":1" }}</div>
+                            <div class="cmt-bubble">
+                                <div class="cmt-meta">
+                                    <span class="cmt-name">{{ cmt.name }}</span>
+                                    <span class="cmt-date">{{ cmt.created_at|date:"M j, Y" }}</span>
+                                </div>
+                                <p class="cmt-body">{{ cmt.body }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="cmt-empty">
+                        <i class="fa fa-comments-o"></i>
+                        No comments yet. Be the first to leave one!
+                    </div>
+                    {% endif %}
+
+                    <div class="cmt-form-card">
+                        <h4 class="cmt-form-title">
+                            <i class="fa fa-pencil-square-o"></i>
+                            Leave a Comment
+                        </h4>
+                        <p class="cmt-form-note">
+                            <i class="fa fa-info-circle"></i>
+                            Your comment will be visible after admin approval.
+                        </p>
+                        <form method="post" novalidate>
+                            {% csrf_token %}
+                            <div class="cmt-form-row">
+                                <div class="cmt-form-group">
+                                    <label for="id_name">Name <span class="cmt-req">*</span></label>
+                                    {{ form.name }}
+                                    {% if form.name.errors %}
+                                    <small style="color:#dc2626;">{{ form.name.errors|join:", " }}</small>
+                                    {% endif %}
+                                </div>
+                                <div class="cmt-form-group">
+                                    <label for="id_email">Email <small style="color:#94a3b8;">(optional)</small></label>
+                                    {{ form.email }}
+                                </div>
+                            </div>
+                            <div class="cmt-form-group">
+                                <label for="id_body">Comment <span class="cmt-req">*</span></label>
+                                {{ form.body }}
+                                {% if form.body.errors %}
+                                <small style="color:#dc2626;">{{ form.body.errors|join:", " }}</small>
+                                {% endif %}
+                            </div>
+                            <button type="submit" class="cmt-submit-btn" style="direction:ltr;">
+                                <i class="fa fa-paper-plane"></i> Post Comment
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- ===== End Comments ===== -->
+
+    </div>
+</section>
+
+{% endblock %}

@@ -253,6 +253,7 @@
     line-height: 1.85;
     margin-bottom: 32px;
     flex-shrink: 0;
+    text-align: justify;
 }
 
 /* جداکننده */
@@ -365,6 +366,7 @@
     font-size: 13px;
     color: var(--text-muted);
     margin-bottom: 30px;
+    text-align: justify;
 }
 
 /* ===========================

@@ -1,5 +1,7 @@
+import html as _html
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.html import strip_tags
 
 
 class ContactMessage(models.Model):
@@ -208,6 +210,21 @@ class PatientTestimonial(models.Model):
         verbose_name = 'نظر بیمار'
         verbose_name_plural = 'نظرات بیماران'
         ordering = ['-created_at']
+
+    def _plain(self, value):
+        return _html.unescape(strip_tags(value or ''))
+
+    @property
+    def content_fa_plain(self):
+        return self._plain(self.content_fa)
+
+    @property
+    def content_en_plain(self):
+        return self._plain(self.content_en or self.content_fa)
+
+    @property
+    def content_ar_plain(self):
+        return self._plain(self.content_ar or self.content_fa)
 
     def __str__(self):
         status = 'تأیید شده' if self.is_approved else 'در انتظار'

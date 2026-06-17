@@ -99,7 +99,7 @@
                          data-src="{{ img.image.url }}"
                          data-title="{{ img.title_en|default:img.title_fa }}">
                         <img src="{{ img.image.url }}"
-                             alt="{{ img.alt_en|default:img.title_en }}"
+                             alt="{{ img.alt_en|default:img.title_en|default:img.alt_fa|default:img.title_fa }}"
                              loading="lazy">
                         <div class="gallery-overlay">
                             {% if img.title_en or img.title_fa %}

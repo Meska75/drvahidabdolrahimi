@@ -87,6 +87,41 @@
 })(jQuery);
 
 
+/* ===== Swiper Patient Testimonials ===== */
+if (typeof Swiper !== 'undefined' && document.querySelector('.tst-swiper')) {
+    /* duplicate slides to at least 8 so loop: true is always seamless */
+    (function () {
+        var wrapper = document.querySelector('.tst-swiper .swiper-wrapper');
+        if (!wrapper) return;
+        var orig = Array.from(wrapper.querySelectorAll('.swiper-slide'));
+        if (!orig.length) return;
+        var i = 0;
+        while (wrapper.querySelectorAll('.swiper-slide').length < 8) {
+            wrapper.appendChild(orig[i % orig.length].cloneNode(true));
+            i++;
+        }
+    })();
+
+    new Swiper('.tst-swiper', {
+        loop: true,
+        speed: 600,
+        autoplay: { delay: 5000, disableOnInteraction: false },
+        centeredSlides: true,
+        grabCursor: true,
+        spaceBetween: 30,
+        navigation: {
+            nextEl: '.tst-swiper .swiper-button-next',
+            prevEl: '.tst-swiper .swiper-button-prev',
+        },
+        breakpoints: {
+            0:    { slidesPerView: 1,   spaceBetween: 16 },
+            768:  { slidesPerView: 1.5, spaceBetween: 24 },
+            1100: { slidesPerView: 3,   spaceBetween: 30 },
+        }
+    });
+}
+
+
 /* ===== Map (Leaflet + Neshan tile) ===== */
 window.addEventListener('load', function () {
     var mapEl = document.getElementById('neshanMap');

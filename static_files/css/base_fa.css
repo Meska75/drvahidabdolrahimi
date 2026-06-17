@@ -180,7 +180,7 @@ input, textarea, select, button, label, td, th {
     display: inline-block;
 }
 
-.footer-area p { color: #94a3b8; font-size: 14px; }
+.footer-area p { color: #94a3b8; font-size: 14px; text-align: justify; }
 .footer-area p i { color: #60a5fa; margin-left: 8px; }
 
 .footer-area .social-icons ul {

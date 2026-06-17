@@ -23,6 +23,13 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/faq.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<style>
+    .faq-home-section .faq-toggle { text-align: left; }
+    .faq-home-section .faq-q-text { text-align: left; }
+    .faq-home-section .faq-ans-body { text-align: left; }
+</style>
 <!-- Leaflet.js -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="{% static 'css/home_en.css' %}">
@@ -43,7 +50,7 @@
 
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-7 hero-content">
+            <div class="col-lg-6 hero-content">
                 <h1 class="hero-title">
                     Dr. Vahid<br>
                     <span class="highlight">Abdolrahimi</span>
@@ -53,47 +60,52 @@
                     With over two decades of clinical experience in ophthalmic surgery and treatment,
                     delivering specialized services to the highest international standards.
                 </p>
-                <div class="hero-btns">
-                    <a href="{% url 'english:english_contact' %}" class="btn-hero-primary">
-                        <i class="fa fa-calendar-check-o"></i> Book Appointment
-                    </a>
-                    <a href="{% url 'english:english_about' %}" class="btn-hero-outline">
-                        <i class="fa fa-user-md"></i> About the Doctor
-                    </a>
-                </div>
-                <div class="hero-stats">
-                    <div class="hero-stat">
-                        <div class="hero-stat-num">20+<sup>yrs</sup></div>
-                        <div class="hero-stat-lbl">Clinical Experience</div>
-                    </div>
-                    <div class="hero-stat">
-                        <div class="hero-stat-num">5,000+</div>
-                        <div class="hero-stat-lbl">Patients Treated</div>
-                    </div>
-                    <div class="hero-stat">
-                        <div class="hero-stat-num">1,500+</div>
-                        <div class="hero-stat-lbl">Surgeries Performed</div>
-                    </div>
-                    <div class="hero-stat">
-                        <div class="hero-stat-num">98<sup>%</sup></div>
-                        <div class="hero-stat-lbl">Patient Satisfaction</div>
-                    </div>
-                </div>
             </div>
-            <div class="col-lg-5 hero-right">
-                <div class="hero-img-bg">
-                    <div class="floating-card fc-top">
-                        <div class="fc-icon blue"><i class="fa fa-eye"></i></div>
-                        <div class="fc-text">
-                            <strong>Specialist Examination</strong>
-                            <span>Latest imaging technology</span>
-                        </div>
-                    </div>
-                    <div class="floating-card fc-bottom">
-                        <div class="fc-icon green"><i class="fa fa-check-circle"></i></div>
-                        <div class="fc-text">
-                            <strong>98% Patient Satisfaction</strong>
-                        </div>
+            <div class="col-lg-6 hero-right">
+                <div class="hero-right-wrap">
+                    <div class="hero-ring hero-ring-1"></div>
+                    <div class="hero-ring hero-ring-2"></div>
+                    <div class="hero-img-bg">
+                        <!-- Card 1: Book Appointment -->
+                        <a href="{% url 'english:english_contact' %}" class="floating-card fc-top">
+                            <div class="fc-icon green"><i class="fa fa-calendar-check-o"></i></div>
+                            <div class="fc-text">
+                                <strong>Book Appointment</strong>
+                                <span>Dr. Abdolrahimi</span>
+                            </div>
+                        </a>
+                        <!-- Card 2: About the Doctor -->
+                        <a href="{% url 'english:english_about' %}" class="floating-card fc-tr">
+                            <div class="fc-icon blue"><i class="fa fa-user-md"></i></div>
+                            <div class="fc-text">
+                                <strong>About the Doctor</strong>
+                                <span>Background &amp; Expertise</span>
+                            </div>
+                        </a>
+                        <!-- Card 3: Clinic Services -->
+                        <a href="{% url 'english_services:english_office_services' %}" class="floating-card fc-bottom">
+                            <div class="fc-icon blue"><i class="fa fa-stethoscope"></i></div>
+                            <div class="fc-text">
+                                <strong>Clinic Services</strong>
+                                <span>Exam &amp; Treatment</span>
+                            </div>
+                        </a>
+                        <!-- Card 4: Surgical Services -->
+                        <a href="{% url 'english_services:english_surgery_services' %}" class="floating-card fc-bl">
+                            <div class="fc-icon gold"><i class="fa fa-medkit"></i></div>
+                            <div class="fc-text">
+                                <strong>Surgical Services</strong>
+                                <span>Specialist Procedures</span>
+                            </div>
+                        </a>
+                        <!-- Card 5: AI Consultation — disabled until launch -->
+                        <a href="#" class="floating-card fc-mid" style="display:none;right:auto;left:-68px;">
+                            <div class="fc-icon purple"><i class="fa fa-laptop"></i></div>
+                            <div class="fc-text">
+                                <strong>AI Consultation</strong>
+                                <span>Smart Medical Advice</span>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -392,6 +404,55 @@
 </section>
 
 
+<!-- ===== Patient Testimonials ===== -->
+{% if testimonials %}
+<section class="testimonials-section">
+    <div class="container">
+        <div class="sec-head">
+            <span class="pre-title">Patient Experiences</span>
+            <h2>What Our Patients Say</h2>
+            <div class="sec-divider"></div>
+            <p>Real experiences from patients who trusted Dr. Abdolrahimi with their eye health</p>
+        </div>
+    </div>
+    <div class="swiper tst-swiper">
+        <div class="swiper-wrapper">
+            {% for t in testimonials %}
+            <div class="swiper-slide">
+                <div class="tst-card">
+                    <div class="tst-header">
+                        <div class="tst-avatar"><i class="fa fa-user"></i></div>
+                        <div class="tst-info">
+                            <h4 class="tst-name">{{ t.name_en|default:t.name_fa }}</h4>
+                            <span class="tst-role">Verified Patient</span>
+                            {% if t.rating %}
+                            <div class="tst-stars">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= t.rating %}
+                                        <i class="fa fa-star"></i>
+                                    {% else %}
+                                        <i class="fa fa-star-o"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="tst-content">
+                        <div class="tst-quote-icon"><i class="fa fa-quote-right"></i></div>
+                        <p class="tst-body">{{ t.content_en_plain }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+</section>
+{% endif %}
+
+
 <!-- ===== Gallery ===== -->
 <section class="gallery-section">
     <div class="container">
@@ -437,6 +498,51 @@
         </div>
     </div>
 </section>
+
+
+<!-- ===== FAQ Section ===== -->
+{% if faqs %}
+<section class="faq-home-section">
+    <div class="container">
+        <div class="sec-head wow fadeInUp" data-wow-delay=".1s">
+            <span class="pre-title">Questions &amp; Answers</span>
+            <h2>Frequently Asked Questions</h2>
+            <div class="sec-divider"></div>
+            <p>Answers to common patient questions about services, booking appointments, and treatments</p>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div id="faqHomeEn">
+                    {% for faq in faqs %}
+                    <div class="faq-item wow fadeInUp" data-wow-delay=".{{ forloop.counter0 }}8s">
+                        <div id="faqHen{{ forloop.counter }}">
+                            <button class="faq-toggle {% if not forloop.first %}collapsed{% endif %}"
+                                    data-toggle="collapse"
+                                    data-target="#faqBen{{ forloop.counter }}"
+                                    aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+                                <span class="faq-num">{{ forloop.counter }}</span>
+                                <span class="faq-q-text">{{ faq.question_en|default:faq.question_fa }}</span>
+                                <span class="faq-chevron"><i class="fa fa-chevron-down"></i></span>
+                            </button>
+                        </div>
+                        <div id="faqBen{{ forloop.counter }}"
+                             class="collapse {% if forloop.first %}show{% endif %}"
+                             data-parent="#faqHomeEn">
+                            <div class="faq-ans-body">{{ faq.answer_en|default:faq.answer_fa }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="text-center mt-4 wow fadeInUp" data-wow-delay=".3s">
+                    <a href="{% url 'english:english_faq' %}" class="btn-about">
+                        View All Questions <i class="fa fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
 
 
 <!-- ===== Contact Section ===== -->
@@ -504,6 +610,7 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
 <script src="{% static 'js/home_en.js' %}"></script>
 {% endblock %}

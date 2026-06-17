@@ -14,7 +14,7 @@
     <meta name="author" content="دکتر وحید عبدالرحیمی">
     {% block canonical %}<link rel="canonical" href="{{ request.build_absolute_uri }}">{% endblock %}
 
-    <!-- Open Graph -->
+    <!-- Open Graph + Twitter Card -->
     {% block meta_og %}
     <meta property="og:type" content="website">
     <meta property="og:locale" content="fa_IR">
@@ -23,6 +23,12 @@
     <meta property="og:description" content="جراح و متخصص چشم، فوق تخصص شبکیه و لیزر — مطب تخصصی چشم‌پزشکی در تهران، میدان ونک">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.png' %}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="دکتر وحید عبدالرحیمی — فوق تخصص شبکیه و لیزر">
+    <meta name="twitter:description" content="جراح و متخصص چشم، فوق تخصص شبکیه و لیزر — مطب تخصصی چشم‌پزشکی در تهران، میدان ونک">
+    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.png' %}">
     {% endblock %}
 
     <!-- فونت وزیر‌متن -->
@@ -40,6 +46,7 @@
     <link rel="stylesheet" href="{% static 'css/linearicons.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/base_fa.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
 
     {% block extra_css %}{% endblock %}
 
@@ -51,7 +58,7 @@
         "name": "دکتر وحید عبدالرحیمی",
         "description": "جراح و متخصص چشم — فوق تخصص شبکیه و لیزر",
         "medicalSpecialty": "Ophthalmology",
-        "telephone": ["021-88648210", "09013434195"],
+        "telephone": ["+98-21-88648210", "+98-901-343-4195"],
         "sameAs": [
             "https://www.instagram.com/dr_vahid_abdolrahimi/",
             "https://t.me/dr_vahid_abdolrahimi"
@@ -166,6 +173,27 @@
                             </li>
                         </ul>
                     </nav>
+                    <!-- دکمه جستجو -->
+                    <div class="header-search">
+                        <button id="searchOpenBtn" class="search-btn-toggle" aria-label="جستجو" aria-expanded="false">
+                            <i class="fa fa-search"></i>
+                            <span class="search-btn-label">جستجو</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- پنل جستجو — داخل #header تا با sticky هدر همراه شود -->
+            <div id="searchSlidePanel" class="search-slide-panel">
+                <div class="container">
+                    <form class="search-slide-form" action="{% url 'main:persian_search' %}" method="get">
+                        <input type="search" id="searchSlideInput" name="q" placeholder="جستجو در مقالات، خدمات، ویدیوها و بیشتر..." autocomplete="off" maxlength="100">
+                        <button type="submit" class="search-slide-submit">
+                            <i class="fa fa-search"></i> جستجو
+                        </button>
+                        <button type="button" id="searchCloseBtn" class="search-slide-close" aria-label="بستن">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -242,6 +270,7 @@
     <script src="{% static 'js/vendor/jquery.nice-select.min.js' %}"></script>
     <script src="{% static 'js/vendor/superfish.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/search.js' %}"></script>
 
     {% block extra_js %}{% endblock %}
 </body>

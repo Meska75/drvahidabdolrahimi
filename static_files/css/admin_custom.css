@@ -1,0 +1,712 @@
+/* ============================================================
+   استایل سفارشی پنل ادمین — دکتر عبدالرحیمی
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap');
+
+/* ============================================================
+   ۱. ریست پایه — overflow افقی
+   ============================================================ */
+html,
+body {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+}
+
+.wrapper {
+    overflow-x: hidden !important;
+}
+
+body,
+.wrapper,
+.content-wrapper,
+.main-header,
+.main-sidebar,
+.main-footer {
+    font-family: 'Vazirmatn', Tahoma, Arial, sans-serif !important;
+}
+
+/* ============================================================
+   ۲. RTL پایه
+   ============================================================ */
+body {
+    direction: rtl;
+    text-align: right;
+}
+
+/* ناحیه محتوا — رنگ مشخص تا هیچ متنی با پس‌زمینه تداخل نداشته باشد */
+.content-wrapper {
+    background: #f4f6f9 !important;
+    color: #1e293b !important;
+    min-height: 100vh !important;
+}
+
+.content-wrapper h1,
+.content-wrapper h2,
+.content-wrapper h3,
+.content-wrapper h4,
+.content-wrapper h5,
+.content-wrapper h6,
+.content-wrapper p,
+.content-wrapper span,
+.content-wrapper label,
+.content-wrapper a:not(.btn):not(.quick-card):not(.stat-link):not(.alert-card) {
+    color: #1e293b;
+}
+
+/* ============================================================
+   ۳. Sidebar RTL
+   ============================================================ */
+.main-sidebar {
+    right: 0 !important;
+    left: auto !important;
+}
+
+.content-wrapper,
+.main-footer {
+    margin-right: 250px !important;
+    margin-left: 0 !important;
+    transition: margin-right 0.3s ease-in-out !important;
+}
+
+body.sidebar-collapse .content-wrapper,
+body.sidebar-collapse .main-footer {
+    margin-right: 4.6rem !important;
+}
+
+@media (max-width: 991.98px) {
+    .content-wrapper,
+    .main-footer {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+    }
+
+    .main-sidebar {
+        transform: translateX(250px) !important;
+    }
+
+    body.sidebar-open .main-sidebar {
+        transform: translateX(0) !important;
+    }
+}
+
+/* ============================================================
+   ۴. Navbar
+   ============================================================ */
+.main-header.navbar {
+    background: linear-gradient(135deg, #0f766e 0%, #0891b2 100%) !important;
+    border-bottom: none !important;
+}
+
+.main-header .navbar {
+    direction: rtl;
+}
+
+.navbar-nav {
+    flex-direction: row;
+}
+
+/* ============================================================
+   ۵. Sidebar استایل
+   ============================================================ */
+.main-sidebar,
+.sidebar {
+    background: #1e293b !important;
+}
+
+.brand-link {
+    background: rgba(0,0,0,0.25) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+    padding: 12px 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+.brand-image {
+    width: 34px !important;
+    height: 34px !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+    object-fit: contain !important;
+    filter: brightness(0) invert(1) !important;
+    opacity: 0.9 !important;
+}
+
+.brand-text {
+    font-family: 'Vazirmatn', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    color: #fff !important;
+    line-height: 1.25 !important;
+    white-space: nowrap !important;
+}
+
+.brand-text::after {
+    content: 'چشم‌پزشکی';
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.5);
+}
+
+body.sidebar-collapse .brand-text { display: none !important; }
+body.sidebar-collapse .brand-link  { justify-content: center !important; }
+body.sidebar-collapse .brand-image { width: 30px !important; height: 30px !important; }
+
+[class*=sidebar-dark] .nav-sidebar .nav-link p,
+.nav-sidebar .nav-link p {
+    font-family: 'Vazirmatn', sans-serif !important;
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.8) !important;
+}
+
+[class*=sidebar-dark-teal] .nav-sidebar > .nav-item > .nav-link.active {
+    background: linear-gradient(135deg, #0f766e, #0891b2) !important;
+    color: #fff !important;
+}
+
+.nav-sidebar .nav-link {
+    border-radius: 6px !important;
+    margin: 1px 8px !important;
+    transition: all 0.2s !important;
+}
+
+.nav-sidebar .nav-link:hover {
+    background: rgba(255,255,255,0.08) !important;
+}
+
+.nav-sidebar .nav-link .nav-icon {
+    margin-left: 8px !important;
+    margin-right: 0 !important;
+    width: 1.4rem !important;
+    text-align: center !important;
+    color: rgba(255,255,255,0.6) !important;
+}
+
+.user-panel {
+    border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+    padding: 12px 16px !important;
+}
+
+.user-panel .info {
+    padding-right: 8px !important;
+    padding-left: 0 !important;
+}
+
+.user-panel .info a {
+    color: rgba(255,255,255,0.85) !important;
+}
+
+/* ============================================================
+   ۶. Breadcrumb
+   ============================================================ */
+.breadcrumb {
+    direction: rtl;
+    padding: 6px 12px;
+    background: transparent !important;
+}
+
+.breadcrumb-item,
+.breadcrumb-item a,
+.breadcrumb-item.active {
+    color: #64748b !important;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+    padding: 0 4px;
+    color: #94a3b8;
+}
+
+/* ============================================================
+   ۷. جدول‌ها و فرم‌ها
+   ============================================================ */
+.dataTables_wrapper,
+#result_list {
+    direction: rtl;
+    text-align: right;
+}
+
+th, td {
+    text-align: right !important;
+    color: #1e293b !important;
+}
+
+.form-row, .form-group, fieldset {
+    direction: rtl;
+}
+
+label {
+    font-weight: 500;
+    color: #374151 !important;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="url"],
+textarea,
+select {
+    direction: rtl;
+    text-align: right;
+    color: #1e293b !important;
+}
+
+.module h2, .module caption, .inline-group h2 {
+    font-family: 'Vazirmatn', sans-serif;
+    font-weight: 700;
+    color: #1e293b !important;
+}
+
+.submit-row {
+    direction: rtl;
+    text-align: right;
+}
+
+/* ============================================================
+   ۸. سایر المان‌های ادمین
+   ============================================================ */
+.dropdown-menu {
+    direction: rtl;
+    text-align: right;
+}
+
+#changelist-filter {
+    direction: rtl;
+    text-align: right;
+    background: #fff !important;
+}
+
+#changelist-filter h2,
+#changelist-filter h3 {
+    font-family: 'Vazirmatn', sans-serif;
+    color: #1e293b !important;
+}
+
+#changelist-filter li a {
+    color: #374151 !important;
+}
+
+.actions { direction: rtl; }
+
+ul.object-tools {
+    direction: rtl;
+    float: right !important;
+    margin-right: 0 !important;
+}
+
+.card {
+    border-radius: 10px;
+}
+
+.card-header {
+    font-family: 'Vazirmatn', sans-serif;
+    font-weight: 700;
+    color: #1e293b !important;
+    background: #f8fafc !important;
+}
+
+.card-body {
+    color: #1e293b !important;
+}
+
+.main-footer {
+    direction: rtl;
+    font-family: 'Vazirmatn', sans-serif;
+    font-size: 0.82rem;
+    color: #64748b !important;
+    background: #fff !important;
+}
+
+/* ============================================================
+   ۹. داشبورد اختصاصی
+   ============================================================ */
+
+.dr-dashboard {
+    padding: 16px;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    color: #1e293b;
+}
+
+/* ===== خوش‌آمدگویی ===== */
+.dash-welcome {
+    background: linear-gradient(135deg, #0f766e 0%, #0891b2 60%, #7c3aed 100%);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 28px;
+    color: #fff !important;
+    box-shadow: 0 4px 24px rgba(8,145,178,0.22);
+    position: relative;
+    overflow: hidden;
+}
+
+.dash-welcome * { color: #fff !important; }
+
+.dash-welcome::before {
+    content: '';
+    position: absolute;
+    top: -40px; left: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+}
+
+.dash-welcome::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: 30%;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+}
+
+.dash-welcome-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+}
+
+.dash-welcome-text h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0 0 4px;
+}
+
+.dash-welcome-text p {
+    font-size: 0.95rem;
+    opacity: 0.85;
+    margin: 0;
+}
+
+.wave {
+    display: inline-block;
+    animation: wave 1.4s ease-in-out infinite;
+}
+
+@keyframes wave {
+    0%,100% { transform: rotate(0deg); }
+    25%      { transform: rotate(15deg); }
+    75%      { transform: rotate(-10deg); }
+}
+
+.dash-welcome-logo img {
+    height: 70px;
+    opacity: 0.9;
+    filter: brightness(0) invert(1);
+}
+
+/* ===== عنوان‌های بخش‌ها — رنگ مشخص ===== */
+.dash-section { margin-bottom: 28px; }
+
+.dash-section-title {
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+    background: transparent !important;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dash-section-title i {
+    color: #0891b2 !important;
+}
+
+/* ===== هشدارها ===== */
+.dash-alerts { margin-bottom: 28px; }
+
+.alert-card {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    border-radius: 12px;
+    text-decoration: none !important;
+    transition: all 0.25s;
+    border: 2px solid transparent;
+    gap: 14px;
+}
+
+.alert-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.alert-card.alert-danger  { background: #fff1f2; border-color: #fecdd3; }
+.alert-card.alert-warning { background: #fffbeb; border-color: #fde68a; }
+.alert-card.alert-info    { background: #f0f9ff; border-color: #bae6fd; }
+.alert-card.alert-danger:hover  { border-color: #f87171; }
+.alert-card.alert-warning:hover { border-color: #f59e0b; }
+.alert-card.alert-info:hover    { border-color: #38bdf8; }
+
+.alert-card-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; flex-shrink: 0;
+}
+
+.alert-danger  .alert-card-icon { background: #fee2e2; color: #dc2626 !important; }
+.alert-warning .alert-card-icon { background: #fef3c7; color: #d97706 !important; }
+.alert-info    .alert-card-icon { background: #e0f2fe; color: #0891b2 !important; }
+
+.alert-card-num {
+    display: block;
+    font-size: 1.5rem; font-weight: 800; line-height: 1;
+}
+
+.alert-danger  .alert-card-num { color: #dc2626 !important; }
+.alert-warning .alert-card-num { color: #d97706 !important; }
+.alert-info    .alert-card-num { color: #0891b2 !important; }
+
+.alert-card-label { font-size: 0.82rem; color: #64748b !important; font-weight: 500; }
+.alert-card-arrow { color: #94a3b8 !important; font-size: 0.8rem; }
+
+/* ===== کارت‌های آمار ===== */
+.stat-card {
+    border-radius: 14px;
+    padding: 20px 22px;
+    position: relative; overflow: hidden;
+    color: #fff !important;
+    display: flex; flex-direction: column; gap: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    transition: transform 0.25s, box-shadow 0.25s;
+    min-height: 140px;
+}
+
+.stat-card * { color: #fff !important; }
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: -30px; left: -30px;
+    width: 150px; height: 150px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+}
+
+.stat-blue   { background: linear-gradient(135deg, #1d4ed8, #3b82f6); }
+.stat-green  { background: linear-gradient(135deg, #15803d, #22c55e); }
+.stat-teal   { background: linear-gradient(135deg, #0f766e, #2dd4bf); }
+.stat-purple { background: linear-gradient(135deg, #6d28d9, #a78bfa); }
+
+.stat-icon  { font-size: 1.8rem; opacity: 0.85; }
+.stat-num   { font-size: 2.4rem; font-weight: 800; line-height: 1; }
+.stat-label { font-size: 0.85rem; opacity: 0.88; font-weight: 500; }
+.stat-sub   { font-size: 0.75rem; opacity: 0.7; }
+
+.stat-link {
+    margin-top: auto;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.8) !important;
+    text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+    width: fit-content;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 1px;
+}
+
+.stat-link:hover { color: #fff !important; }
+
+/* ===== دسترسی سریع ===== */
+.quick-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px 12px;
+    border-radius: 14px;
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    text-decoration: none !important;
+    color: #1e293b !important;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.25s;
+    position: relative;
+    min-height: 100px;
+    width: 100%;
+}
+
+.quick-card:hover {
+    border-color: #0891b2;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(8,145,178,0.15);
+    color: #0f766e !important;
+    text-decoration: none !important;
+}
+
+.quick-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.25rem;
+    color: #fff !important;
+    flex-shrink: 0;
+}
+
+.qc-badge {
+    position: absolute; top: 8px; left: 8px;
+    background: #dc2626;
+    color: #fff !important;
+    font-size: 0.7rem; font-weight: 700;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+}
+
+/* ===== فعالیت اخیر ===== */
+.activity-card {
+    background: #fff;
+    border-radius: 14px;
+    border: 1.5px solid #e2e8f0;
+    overflow: hidden;
+    height: 100%;
+}
+
+.activity-card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid #f1f5f9;
+    background: #f8fafc;
+}
+
+.activity-card-header h6 {
+    margin: 0;
+    font-size: 0.88rem; font-weight: 700;
+    color: #1e293b !important;
+    display: flex; align-items: center; gap: 7px;
+}
+
+.activity-more {
+    font-size: 0.78rem;
+    color: #0891b2 !important;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.activity-more:hover { text-decoration: underline; }
+
+.activity-card-body { padding: 8px 0; }
+
+.activity-list { list-style: none; margin: 0; padding: 0; }
+
+.activity-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 18px;
+    border-bottom: 1px solid #f8fafc;
+    transition: background 0.15s;
+}
+
+.activity-item:last-child { border-bottom: none; }
+.activity-item:hover { background: #f8fafc; }
+
+.activity-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0f766e, #0891b2);
+    color: #fff !important;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; font-weight: 700;
+    flex-shrink: 0;
+}
+
+.activity-info { flex: 1; min-width: 0; }
+
+.activity-info a {
+    font-size: 0.85rem; font-weight: 600;
+    color: #1e293b !important;
+    text-decoration: none;
+    display: block;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.activity-info a:hover { color: #0891b2 !important; }
+
+.activity-meta {
+    font-size: 0.75rem;
+    color: #94a3b8 !important;
+    display: block;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.activity-time {
+    font-size: 0.72rem;
+    color: #94a3b8 !important;
+    white-space: nowrap; flex-shrink: 0;
+}
+
+.activity-empty {
+    text-align: center;
+    padding: 32px 16px;
+    color: #94a3b8 !important;
+}
+
+.activity-empty i { font-size: 2rem; margin-bottom: 8px; display: block; }
+.activity-empty p { margin: 0; font-size: 0.85rem; }
+
+/* ===== چارت‌ها ===== */
+.chart-card {
+    background: #fff;
+    border-radius: 14px;
+    border: 1.5px solid #e2e8f0;
+    padding: 20px;
+    height: 100%;
+}
+
+.chart-card-title {
+    font-size: 0.88rem !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 7px;
+}
+
+.chart-card-title i { color: #0891b2 !important; }
+
+.chart-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* ============================================================
+   ۱۰. Scrollbar سفارشی
+   ============================================================ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #0891b2; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #0f766e; }
+
+/* ============================================================
+   ۱۱. فیکس‌های متفرقه
+   ============================================================ */
+/* جلوگیری از overflow در صفحه‌های list */
+#changelist { overflow-x: auto; }
+
+/* تب‌های changeform */
+.nav-tabs .nav-link {
+    font-family: 'Vazirmatn', sans-serif;
+    font-size: 0.88rem;
+    color: #475569 !important;
+}
+
+.nav-tabs .nav-link.active { color: #0f766e !important; }
+
+/* inline formset */
+.inline-related { direction: rtl; }
+
+/* pagination */
+.pagination { direction: ltr; }

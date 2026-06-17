@@ -1,5 +1,5 @@
 /* LTR overrides for English blog pages */
 .blog-card-meta { direction: ltr; }
 .blog-detail-meta { direction: ltr; }
-.blog-detail-content { text-align: left; }
+.blog-detail-content { text-align: justify; }
 .cat-list a { flex-direction: row; }

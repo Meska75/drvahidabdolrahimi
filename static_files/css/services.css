@@ -160,6 +160,7 @@
     line-height: 1.9;
     margin-bottom: 28px;
     max-width: 560px;
+    text-align: justify;
 }
 
 /* بج‌های سریع در هیرو */
@@ -308,6 +309,7 @@
     color: var(--text-muted);
     line-height: 1.75;
     margin: 0;
+    text-align: justify;
 }
 
 /* ===========================
@@ -398,6 +400,7 @@
     font-size: 14px;
     line-height: 1.95;
     margin-bottom: 24px;
+    text-align: justify;
 }
 
 /* لیست ویژگی‌ها */

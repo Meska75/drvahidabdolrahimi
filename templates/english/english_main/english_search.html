@@ -1,0 +1,167 @@
+{% extends 'english/english_base.html' %}
+{% load static %}
+
+{% block title %}Search Results{% if query %} — {{ query }}{% endif %} | Dr. Vahid Abdolrahimi{% endblock %}
+
+{% block content %}
+
+<!-- Search Hero -->
+<section class="search-page-hero">
+    <div class="container">
+        <h1><i class="fa fa-search" style="margin-right:10px;opacity:.8;"></i>Search</h1>
+        <form class="search-main-form search-ltr" action="{% url 'english:english_search' %}" method="get" style="direction:ltr;">
+            <input type="search" name="q" value="{{ query|default:'' }}" placeholder="What are you looking for?" autocomplete="off" maxlength="100" style="direction:ltr;">
+            <button type="submit"><i class="fa fa-search"></i> Search</button>
+        </form>
+        {% if query %}
+            {% if total %}
+                <p class="search-summary-text">
+                    Found <strong>{{ total }}</strong> result{{ total|pluralize }} for "<strong>{{ query }}</strong>"
+                </p>
+            {% else %}
+                <p class="search-summary-text">No results found for "<strong>{{ query }}</strong>"</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</section>
+
+<!-- Results -->
+<section class="search-results-section">
+    <div class="container search-ltr">
+
+        {% if not query %}
+            <div class="search-empty-state">
+                <i class="fa fa-search"></i>
+                <h3>Enter a search term</h3>
+                <p>You can search across articles, services, FAQs, videos, and team members.</p>
+            </div>
+
+        {% elif total == 0 %}
+            <div class="search-empty-state">
+                <i class="fa fa-frown-o"></i>
+                <h3>No results found</h3>
+                <p>Try a different keyword, or browse one of the site sections directly.</p>
+            </div>
+
+        {% else %}
+
+            <!-- Articles -->
+            {% if posts %}
+            <div class="result-group">
+                <div class="result-group-title">
+                    <i class="fa fa-newspaper-o"></i> Articles ({{ posts|length }})
+                </div>
+                {% for post in posts %}
+                <a href="{% url 'english_blog:english_blog_detail' post.slug %}" class="result-card">
+                    <div class="result-card-icon rc-blog"><i class="fa fa-file-text-o"></i></div>
+                    <div class="result-card-body">
+                        <span class="result-card-title">{{ post.title_en|default:post.title_fa }}</span>
+                        {% with snippet=post.summary_en|default:post.summary_fa %}
+                            {% if snippet %}<p class="result-card-snippet">{{ snippet|truncatewords:20 }}</p>{% endif %}
+                        {% endwith %}
+                        <div class="result-card-meta">
+                            <span class="result-badge"><i class="fa fa-user"></i> {{ post.author }}</span>
+                            {% if post.category %}<span class="result-badge"><i class="fa fa-tag"></i> {{ post.category.name_en|default:post.category.name_fa }}</span>{% endif %}
+                        </div>
+                    </div>
+                    <i class="fa fa-chevron-right result-card-arrow"></i>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Services -->
+            {% if services %}
+            <div class="result-group">
+                <div class="result-group-title">
+                    <i class="fa fa-stethoscope"></i> Services ({{ services|length }})
+                </div>
+                {% for svc in services %}
+                <a href="{% url 'english_services:english_services_overview' %}" class="result-card">
+                    <div class="result-card-icon rc-service">
+                        {% if svc.icon_class %}<i class="{{ svc.icon_class }}"></i>{% else %}<i class="fa fa-medkit"></i>{% endif %}
+                    </div>
+                    <div class="result-card-body">
+                        <span class="result-card-title">{{ svc.title_en|default:svc.title_fa }}</span>
+                        {% with desc=svc.description_en|default:svc.description_fa %}
+                            {% if desc %}<p class="result-card-snippet">{{ desc|truncatewords:20 }}</p>{% endif %}
+                        {% endwith %}
+                        <div class="result-card-meta">
+                            <span class="result-badge"><i class="fa fa-tag"></i> {{ svc.category.name_en|default:svc.category.name_fa }}</span>
+                        </div>
+                    </div>
+                    <i class="fa fa-chevron-right result-card-arrow"></i>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- FAQs -->
+            {% if faqs %}
+            <div class="result-group">
+                <div class="result-group-title">
+                    <i class="fa fa-question-circle"></i> FAQs ({{ faqs|length }})
+                </div>
+                {% for faq in faqs %}
+                <a href="{% url 'english:english_faq' %}" class="result-card">
+                    <div class="result-card-icon rc-faq"><i class="fa fa-question"></i></div>
+                    <div class="result-card-body">
+                        <span class="result-card-title">{{ faq.question_en|default:faq.question_fa }}</span>
+                        {% with ans=faq.answer_en|default:faq.answer_fa %}
+                            {% if ans %}<p class="result-card-snippet">{{ ans|striptags|truncatewords:20 }}</p>{% endif %}
+                        {% endwith %}
+                    </div>
+                    <i class="fa fa-chevron-right result-card-arrow"></i>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Videos -->
+            {% if videos %}
+            <div class="result-group">
+                <div class="result-group-title">
+                    <i class="fa fa-play-circle"></i> Videos ({{ videos|length }})
+                </div>
+                {% for vid in videos %}
+                <a href="{% url 'english_videos:english_videos' %}" class="result-card">
+                    <div class="result-card-icon rc-video"><i class="fa fa-video-camera"></i></div>
+                    <div class="result-card-body">
+                        <span class="result-card-title">{{ vid.title_en|default:vid.title_fa }}</span>
+                        {% with desc=vid.description_en|default:vid.description_fa %}
+                            {% if desc %}<p class="result-card-snippet">{{ desc|truncatewords:20 }}</p>{% endif %}
+                        {% endwith %}
+                    </div>
+                    <i class="fa fa-chevron-right result-card-arrow"></i>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Team -->
+            {% if team %}
+            <div class="result-group">
+                <div class="result-group-title">
+                    <i class="fa fa-users"></i> Team Members ({{ team|length }})
+                </div>
+                {% for member in team %}
+                <a href="#" class="result-card">
+                    <div class="result-card-icon rc-team"><i class="fa fa-user-md"></i></div>
+                    <div class="result-card-body">
+                        <span class="result-card-title">{{ member.name_en|default:member.name_fa }}</span>
+                        {% with ttl=member.title_en|default:member.title_fa %}
+                            {% if ttl %}<p class="result-card-snippet">{{ ttl }}</p>{% endif %}
+                        {% endwith %}
+                    </div>
+                    <i class="fa fa-chevron-right result-card-arrow"></i>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+        {% endif %}
+
+    </div>
+</section>
+
+{% endblock %}

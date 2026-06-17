@@ -8,4 +8,5 @@ urlpatterns = [
     path('about/', views.persian_about, name='persian_about'),
     path('contact/', views.persian_contact, name='persian_contact'),
     path('faq/', views.persian_faq, name='persian_faq'),
+    path('search/', views.persian_search, name='persian_search'),
 ]

@@ -49,7 +49,7 @@
 /* Text alignment */
 .hero-bio, .bio-text-wrap p, .tl-card p, .expertise-card p,
 .achievement-card p, .clinic-body p, .about-hero-content p,
-.sec-head > p { text-align: left !important; }
+.sec-head > p { text-align: justify !important; }
 
 @media (max-width: 991.98px) {
     .bio-text-wrap { padding-left: 0; padding-top: 30px; }

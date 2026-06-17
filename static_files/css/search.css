@@ -1,0 +1,371 @@
+/* ============================================================
+   استایل جستجو — پنل + صفحه نتایج
+   ============================================================ */
+
+/* ===== دکمه جستجو در هدر ===== */
+.header-search { display: inline-flex; align-items: center; margin-right: 12px; }
+
+/*
+ * در base_fa/ar/en، هدر از justify-content:flex-start استفاده می‌کند.
+ * با margin-inline-start:auto دکمه جستجو را به انتهای مخالف (چپ در RTL، راست در LTR) می‌چسبانیم.
+ */
+#header .header-search {
+    margin-inline-start: auto;
+    margin-inline-end: 0;
+}
+
+.search-btn-toggle {
+    background: #0f766e;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 7px 14px;
+    border-radius: 8px;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(15,118,110,0.28);
+    white-space: nowrap;
+}
+
+.search-btn-label {
+    font-size: 0.82rem;
+    font-family: inherit;
+}
+
+@media (max-width: 575px) {
+    .search-btn-label { display: none; }
+}
+
+.search-btn-toggle:hover {
+    background: #0d6560;
+    box-shadow: 0 4px 14px rgba(15,118,110,0.38);
+    transform: translateY(-1px);
+}
+
+.search-btn-toggle[aria-expanded="true"] {
+    background: #0891b2;
+    box-shadow: 0 2px 8px rgba(8,145,178,0.3);
+}
+
+/* ===== پنل جستجو — با max-height animation (بدون absolute positioning) ===== */
+.search-slide-panel {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    background: #fff;
+    border-top: 0 solid #0f766e;
+    box-shadow: none;
+    transition: max-height 0.28s ease, opacity 0.22s ease, border-top-width 0.1s, padding 0.22s ease, box-shadow 0.22s ease;
+    padding: 0;
+    /* بدون position:absolute — جریان عادی سند */
+}
+
+.search-slide-panel.active {
+    max-height: 120px;
+    opacity: 1;
+    border-top-width: 3px;
+    padding: 16px 0;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    pointer-events: all;
+}
+
+.search-slide-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    direction: rtl;
+}
+
+.search-slide-form input[type="search"] {
+    flex: 1;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 11px 16px;
+    font-size: 1rem;
+    font-family: inherit;
+    direction: rtl;
+    transition: border-color 0.2s;
+    color: #1e293b;
+    background: #f8fafc;
+    outline: none;
+}
+
+.search-slide-form input[type="search"]:focus {
+    border-color: #0f766e;
+    background: #fff;
+}
+
+.search-slide-form input[type="search"]::placeholder {
+    color: #94a3b8;
+}
+
+.search-slide-submit {
+    background: linear-gradient(135deg, #0f766e, #0891b2);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 22px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+}
+
+.search-slide-submit:hover { opacity: 0.88; }
+
+.search-slide-close {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+    line-height: 1;
+}
+
+.search-slide-close:hover {
+    color: #dc2626;
+    background: #fee2e2;
+}
+
+/* ===== Hero صفحه نتایج ===== */
+/*
+ * header-top: fixed، ارتفاع ≈47px
+ * #header: fixed، top:47px، ارتفاع ≈76px
+ * جمع: ≈123px — padding-top این مقدار را پوشش می‌دهد
+ */
+.search-page-hero {
+    background: linear-gradient(135deg, #0f766e 0%, #0891b2 100%);
+    padding: 130px 0 48px;
+    text-align: center;
+    color: #fff;
+}
+
+.search-page-hero h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #fff;
+}
+
+/* فرم اصلی داخل صفحه نتایج */
+.search-main-form {
+    display: flex;
+    align-items: center;
+    max-width: 640px;
+    margin: 0 auto 20px;
+    gap: 0;
+    direction: rtl;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.search-main-form input[type="search"] {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 14px 20px;
+    font-size: 1rem;
+    font-family: inherit;
+    direction: rtl;
+    color: #1e293b;
+    background: transparent;
+}
+
+.search-main-form input[type="search"]::placeholder { color: #94a3b8; }
+
+.search-main-form button[type="submit"] {
+    background: linear-gradient(135deg, #0f766e, #0891b2);
+    color: #fff;
+    border: none;
+    padding: 14px 28px;
+    font-size: 1rem;
+    font-family: inherit;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+}
+
+.search-main-form button[type="submit"]:hover { opacity: 0.88; }
+
+.search-summary-text {
+    color: rgba(255,255,255,0.88);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.search-summary-text strong {
+    color: #fff;
+    font-weight: 700;
+}
+
+/* ===== بخش نتایج ===== */
+.search-results-section {
+    padding: 48px 0 64px;
+    background: #f8fafc;
+}
+
+/* خالی بودن نتیجه */
+.search-empty-state {
+    text-align: center;
+    padding: 64px 20px;
+    color: #94a3b8;
+}
+
+.search-empty-state i {
+    font-size: 4rem;
+    margin-bottom: 16px;
+    display: block;
+    opacity: 0.4;
+}
+
+.search-empty-state h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 8px;
+}
+
+.search-empty-state p { font-size: 0.95rem; margin: 0; }
+
+/* عنوان هر گروه نتایج */
+.result-group { margin-bottom: 40px; }
+
+.result-group-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f766e;
+    border-right: 4px solid #0f766e;
+    padding-right: 12px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* کارت هر نتیجه */
+.result-card {
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    text-decoration: none;
+    color: inherit;
+}
+
+.result-card:hover {
+    border-color: #0891b2;
+    box-shadow: 0 4px 16px rgba(8,145,178,0.12);
+    transform: translateY(-1px);
+    text-decoration: none;
+    color: inherit;
+}
+
+.result-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: #fff;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.rc-blog     { background: linear-gradient(135deg, #1d4ed8, #3b82f6); }
+.rc-service  { background: linear-gradient(135deg, #0f766e, #2dd4bf); }
+.rc-faq      { background: linear-gradient(135deg, #d97706, #fbbf24); }
+.rc-video    { background: linear-gradient(135deg, #6d28d9, #a78bfa); }
+.rc-team     { background: linear-gradient(135deg, #dc2626, #f87171); }
+
+.result-card-body { flex: 1; min-width: 0; }
+
+.result-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 6px;
+    display: block;
+    line-height: 1.4;
+}
+
+.result-card:hover .result-card-title { color: #0f766e; }
+
+.result-card-snippet {
+    font-size: 0.85rem;
+    color: #64748b;
+    line-height: 1.7;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.result-card-meta {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.result-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.result-card-arrow {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    align-self: center;
+}
+
+/* ===== LTR اصلاحات برای انگلیسی ===== */
+.search-ltr .search-slide-form,
+.search-ltr .search-main-form,
+.search-ltr .result-group-title {
+    direction: ltr;
+}
+
+.search-ltr .result-group-title {
+    border-right: none;
+    border-left: 4px solid #0f766e;
+    padding-right: 0;
+    padding-left: 12px;
+}
+
+.search-ltr .search-main-form input[type="search"] {
+    direction: ltr;
+}

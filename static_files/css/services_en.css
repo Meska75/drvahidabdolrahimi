@@ -10,8 +10,8 @@
 .services-hero-section::after  { right: auto; left: -60px; }
 
 /* Hero text */
-.services-hero-content h1,
-.services-hero-content p { text-align: left; }
+.services-hero-content h1 { text-align: left; }
+.services-hero-content p  { text-align: justify; }
 
 /* Ghost button — LTR spacing */
 .btn-svc-ghost {

@@ -1,0 +1,167 @@
+{% extends 'arabic/arabic_base.html' %}
+{% load static %}
+
+{% block title %}نتائج البحث{% if query %} — {{ query }}{% endif %} | د. وحيد عبد الرحيمي{% endblock %}
+
+{% block content %}
+
+<!-- قسم البحث الرئيسي -->
+<section class="search-page-hero">
+    <div class="container">
+        <h1><i class="fa fa-search" style="margin-left:10px;opacity:.8;"></i>البحث في الموقع</h1>
+        <form class="search-main-form" action="{% url 'arabic:arabic_search' %}" method="get">
+            <input type="search" name="q" value="{{ query|default:'' }}" placeholder="عمّ تبحث؟" autocomplete="off" maxlength="100">
+            <button type="submit"><i class="fa fa-search"></i> بحث</button>
+        </form>
+        {% if query %}
+            {% if total %}
+                <p class="search-summary-text">
+                    تم العثور على <strong>{{ total }}</strong> نتيجة لـ «<strong>{{ query }}</strong>»
+                </p>
+            {% else %}
+                <p class="search-summary-text">لم يتم العثور على نتائج لـ «<strong>{{ query }}</strong>»</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</section>
+
+<!-- النتائج -->
+<section class="search-results-section">
+    <div class="container">
+
+        {% if not query %}
+            <div class="search-empty-state">
+                <i class="fa fa-search"></i>
+                <h3>أدخل كلمة البحث</h3>
+                <p>يمكنك البحث في المقالات والخدمات والأسئلة الشائعة والفيديوهات وأعضاء الفريق.</p>
+            </div>
+
+        {% elif total == 0 %}
+            <div class="search-empty-state">
+                <i class="fa fa-frown-o"></i>
+                <h3>لم يتم العثور على نتائج</h3>
+                <p>جرّب كلمة أخرى أو تصفح أقسام الموقع مباشرةً.</p>
+            </div>
+
+        {% else %}
+
+            <!-- المقالات -->
+            {% if posts %}
+            <div class="result-group">
+                <div class="result-group-title">
+                    <i class="fa fa-newspaper-o"></i> المقالات ({{ posts|length }})
+                </div>
+                {% for post in posts %}
+                <a href="{% url 'arabic_blog:arabic_blog_detail' post.slug %}" class="result-card">
+                    <div class="result-card-icon rc-blog"><i class="fa fa-file-text-o"></i></div>
+                    <div class="result-card-body">
+                        <span class="result-card-title">{{ post.title_ar|default:post.title_fa }}</span>
+                        {% with snippet=post.summary_ar|default:post.summary_fa %}
+                            {% if snippet %}<p class="result-card-snippet">{{ snippet|truncatewords:20 }}</p>{% endif %}
+                        {% endwith %}
+                        <div class="result-card-meta">
+                            <span class="result-badge"><i class="fa fa-user"></i> {{ post.author }}</span>
+                            {% if post.category %}<span class="result-badge"><i class="fa fa-tag"></i> {{ post.category.name_ar|default:post.category.name_fa }}</span>{% endif %}
+                        </div>
+                    </div>
+                    <i class="fa fa-chevron-left result-card-arrow"></i>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- الخدمات -->
+            {% if services %}
+            <div class="result-group">
+                <div class="result-group-title">
+                    <i class="fa fa-stethoscope"></i> الخدمات ({{ services|length }})
+                </div>
+                {% for svc in services %}
+                <a href="{% url 'arabic_services:arabic_services_overview' %}" class="result-card">
+                    <div class="result-card-icon rc-service">
+                        {% if svc.icon_class %}<i class="{{ svc.icon_class }}"></i>{% else %}<i class="fa fa-medkit"></i>{% endif %}
+                    </div>
+                    <div class="result-card-body">
+                        <span class="result-card-title">{{ svc.title_ar|default:svc.title_fa }}</span>
+                        {% with desc=svc.description_ar|default:svc.description_fa %}
+                            {% if desc %}<p class="result-card-snippet">{{ desc|truncatewords:20 }}</p>{% endif %}
+                        {% endwith %}
+                        <div class="result-card-meta">
+                            <span class="result-badge"><i class="fa fa-tag"></i> {{ svc.category.name_ar|default:svc.category.name_fa }}</span>
+                        </div>
+                    </div>
+                    <i class="fa fa-chevron-left result-card-arrow"></i>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- الأسئلة الشائعة -->
+            {% if faqs %}
+            <div class="result-group">
+                <div class="result-group-title">
+                    <i class="fa fa-question-circle"></i> الأسئلة الشائعة ({{ faqs|length }})
+                </div>
+                {% for faq in faqs %}
+                <a href="{% url 'arabic:arabic_faq' %}" class="result-card">
+                    <div class="result-card-icon rc-faq"><i class="fa fa-question"></i></div>
+                    <div class="result-card-body">
+                        <span class="result-card-title">{{ faq.question_ar|default:faq.question_fa }}</span>
+                        {% with ans=faq.answer_ar|default:faq.answer_fa %}
+                            {% if ans %}<p class="result-card-snippet">{{ ans|striptags|truncatewords:20 }}</p>{% endif %}
+                        {% endwith %}
+                    </div>
+                    <i class="fa fa-chevron-left result-card-arrow"></i>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- الفيديوهات -->
+            {% if videos %}
+            <div class="result-group">
+                <div class="result-group-title">
+                    <i class="fa fa-play-circle"></i> الفيديوهات ({{ videos|length }})
+                </div>
+                {% for vid in videos %}
+                <a href="{% url 'arabic_videos:arabic_videos' %}" class="result-card">
+                    <div class="result-card-icon rc-video"><i class="fa fa-video-camera"></i></div>
+                    <div class="result-card-body">
+                        <span class="result-card-title">{{ vid.title_ar|default:vid.title_fa }}</span>
+                        {% with desc=vid.description_ar|default:vid.description_fa %}
+                            {% if desc %}<p class="result-card-snippet">{{ desc|truncatewords:20 }}</p>{% endif %}
+                        {% endwith %}
+                    </div>
+                    <i class="fa fa-chevron-left result-card-arrow"></i>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- أعضاء الفريق -->
+            {% if team %}
+            <div class="result-group">
+                <div class="result-group-title">
+                    <i class="fa fa-users"></i> أعضاء الفريق ({{ team|length }})
+                </div>
+                {% for member in team %}
+                <a href="#" class="result-card">
+                    <div class="result-card-icon rc-team"><i class="fa fa-user-md"></i></div>
+                    <div class="result-card-body">
+                        <span class="result-card-title">{{ member.name_ar|default:member.name_fa }}</span>
+                        {% with ttl=member.title_ar|default:member.title_fa %}
+                            {% if ttl %}<p class="result-card-snippet">{{ ttl }}</p>{% endif %}
+                        {% endwith %}
+                    </div>
+                    <i class="fa fa-chevron-left result-card-arrow"></i>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+        {% endif %}
+
+    </div>
+</section>
+
+{% endblock %}

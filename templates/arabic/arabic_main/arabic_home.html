@@ -23,6 +23,8 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/faq.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <!-- Leaflet.js -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 {% endblock %}
@@ -42,7 +44,7 @@
 
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-7 hero-content">
+            <div class="col-lg-6 hero-content">
                 <h1 class="hero-title">
                     الدكتور وحيد<br>
                     <span class="highlight">عبد الرحيمي</span>
@@ -52,47 +54,52 @@
                     مع أكثر من عقدين من الخبرة السريرية في جراحة العيون وعلاجها،
                     نقدم خدمات متخصصة وفق أعلى المعايير الدولية.
                 </p>
-                <div class="hero-btns">
-                    <a href="{% url 'arabic:arabic_contact' %}" class="btn-hero-primary">
-                        <i class="fa fa-calendar-check-o"></i> حجز موعد
-                    </a>
-                    <a href="{% url 'arabic:arabic_about' %}" class="btn-hero-outline">
-                        <i class="fa fa-user-md"></i> عن الطبيب
-                    </a>
-                </div>
-                <div class="hero-stats">
-                    <div class="hero-stat">
-                        <div class="hero-stat-num">+20<sup>عامًا</sup></div>
-                        <div class="hero-stat-lbl">خبرة سريرية</div>
-                    </div>
-                    <div class="hero-stat">
-                        <div class="hero-stat-num">+5,000</div>
-                        <div class="hero-stat-lbl">مريض ناجح</div>
-                    </div>
-                    <div class="hero-stat">
-                        <div class="hero-stat-num">+1,500</div>
-                        <div class="hero-stat-lbl">عملية جراحية</div>
-                    </div>
-                    <div class="hero-stat">
-                        <div class="hero-stat-num">98<sup>٪</sup></div>
-                        <div class="hero-stat-lbl">رضا المرضى</div>
-                    </div>
-                </div>
             </div>
-            <div class="col-lg-5 hero-right">
-                <div class="hero-img-bg">
-                    <div class="floating-card fc-top">
-                        <div class="fc-icon blue"><i class="fa fa-eye"></i></div>
-                        <div class="fc-text">
-                            <strong>فحص تخصصي</strong>
-                            <span>أحدث تقنيات التصوير</span>
-                        </div>
-                    </div>
-                    <div class="floating-card fc-bottom">
-                        <div class="fc-icon green"><i class="fa fa-check-circle"></i></div>
-                        <div class="fc-text">
-                            <strong>98٪ رضا المرضى</strong>
-                        </div>
+            <div class="col-lg-6 hero-right">
+                <div class="hero-right-wrap">
+                    <div class="hero-ring hero-ring-1"></div>
+                    <div class="hero-ring hero-ring-2"></div>
+                    <div class="hero-img-bg">
+                        <!-- بطاقة ١: حجز موعد -->
+                        <a href="{% url 'arabic:arabic_contact' %}" class="floating-card fc-top">
+                            <div class="fc-icon green"><i class="fa fa-calendar-check-o"></i></div>
+                            <div class="fc-text">
+                                <strong>حجز موعد</strong>
+                                <span>د. عبد الرحيمي</span>
+                            </div>
+                        </a>
+                        <!-- بطاقة ٢: عن الطبيب -->
+                        <a href="{% url 'arabic:arabic_about' %}" class="floating-card fc-tr">
+                            <div class="fc-icon blue"><i class="fa fa-user-md"></i></div>
+                            <div class="fc-text">
+                                <strong>عن الطبيب</strong>
+                                <span>السيرة والتخصصات</span>
+                            </div>
+                        </a>
+                        <!-- بطاقة ٣: خدمات العيادة -->
+                        <a href="{% url 'arabic_services:arabic_office_services' %}" class="floating-card fc-bottom">
+                            <div class="fc-icon blue"><i class="fa fa-stethoscope"></i></div>
+                            <div class="fc-text">
+                                <strong>خدمات العيادة</strong>
+                                <span>الفحص والعلاج</span>
+                            </div>
+                        </a>
+                        <!-- بطاقة ٤: الخدمات الجراحية -->
+                        <a href="{% url 'arabic_services:arabic_surgery_services' %}" class="floating-card fc-bl">
+                            <div class="fc-icon gold"><i class="fa fa-medkit"></i></div>
+                            <div class="fc-text">
+                                <strong>الخدمات الجراحية</strong>
+                                <span>العمليات المتخصصة</span>
+                            </div>
+                        </a>
+                        <!-- بطاقة ٥: استشارة الذكاء الاصطناعي — معطّلة حتى الإطلاق -->
+                        <a href="#" class="floating-card fc-mid" style="display:none;">
+                            <div class="fc-icon purple"><i class="fa fa-laptop"></i></div>
+                            <div class="fc-text">
+                                <strong>استشارة ذكية</strong>
+                                <span>الذكاء الاصطناعي الطبي</span>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -390,6 +397,55 @@
 </section>
 
 
+<!-- ===== آراء المرضى ===== -->
+{% if testimonials %}
+<section class="testimonials-section">
+    <div class="container">
+        <div class="sec-head">
+            <span class="pre-title">تجارب المرضى</span>
+            <h2>آراء مرضانا</h2>
+            <div class="sec-divider"></div>
+            <p>تجارب حقيقية لمرضى وثقوا بدكتور عبد الرحيمي في رعاية صحة أعينهم</p>
+        </div>
+    </div>
+    <div class="swiper tst-swiper" dir="rtl">
+        <div class="swiper-wrapper">
+            {% for t in testimonials %}
+            <div class="swiper-slide">
+                <div class="tst-card">
+                    <div class="tst-header">
+                        <div class="tst-avatar"><i class="fa fa-user"></i></div>
+                        <div class="tst-info">
+                            <h4 class="tst-name">{{ t.name_ar|default:t.name_fa }}</h4>
+                            <span class="tst-role">مريض موثوق</span>
+                            {% if t.rating %}
+                            <div class="tst-stars">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= t.rating %}
+                                        <i class="fa fa-star"></i>
+                                    {% else %}
+                                        <i class="fa fa-star-o"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="tst-content">
+                        <div class="tst-quote-icon"><i class="fa fa-quote-right"></i></div>
+                        <p class="tst-body">{{ t.content_ar_plain }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+</section>
+{% endif %}
+
+
 <!-- ===== معرض الصور ===== -->
 <section class="gallery-section">
     <div class="container">
@@ -435,6 +491,51 @@
         </div>
     </div>
 </section>
+
+
+<!-- ===== الأسئلة الشائعة ===== -->
+{% if faqs %}
+<section class="faq-home-section">
+    <div class="container">
+        <div class="sec-head wow fadeInUp" data-wow-delay=".1s">
+            <span class="pre-title">إجابات لأسئلتكم</span>
+            <h2>الأسئلة الشائعة</h2>
+            <div class="sec-divider"></div>
+            <p>إجابات على الأسئلة الشائعة حول الخدمات وحجز المواعيد وطرق العلاج</p>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div id="faqHomeAr">
+                    {% for faq in faqs %}
+                    <div class="faq-item wow fadeInUp" data-wow-delay=".{{ forloop.counter0 }}8s">
+                        <div id="faqHar{{ forloop.counter }}">
+                            <button class="faq-toggle {% if not forloop.first %}collapsed{% endif %}"
+                                    data-toggle="collapse"
+                                    data-target="#faqBar{{ forloop.counter }}"
+                                    aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+                                <span class="faq-num">{{ forloop.counter }}</span>
+                                <span class="faq-q-text">{{ faq.question_ar|default:faq.question_fa }}</span>
+                                <span class="faq-chevron"><i class="fa fa-chevron-down"></i></span>
+                            </button>
+                        </div>
+                        <div id="faqBar{{ forloop.counter }}"
+                             class="collapse {% if forloop.first %}show{% endif %}"
+                             data-parent="#faqHomeAr">
+                            <div class="faq-ans-body">{{ faq.answer_ar|default:faq.answer_fa }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="text-center mt-4 wow fadeInUp" data-wow-delay=".3s">
+                    <a href="{% url 'arabic:arabic_faq' %}" class="btn-about">
+                        عرض جميع الأسئلة <i class="fa fa-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
 
 
 <!-- ===== الاتصال والخريطة ===== -->
@@ -502,6 +603,7 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
 <script src="{% static 'js/home_ar.js' %}"></script>
 {% endblock %}

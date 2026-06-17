@@ -51,6 +51,7 @@
     <link rel="stylesheet" href="{% static 'css/linearicons.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/base_ar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
 
     {% block extra_css %}{% endblock %}
 
@@ -62,7 +63,7 @@
         "name": "د. وحيد عبد الرحيمي",
         "description": "طبيب عيون وجراح، أخصائي شبكية العين والليزر",
         "medicalSpecialty": "Ophthalmology",
-        "telephone": ["021-88648210", "09013434195"],
+        "telephone": ["+98-21-88648210", "+98-901-343-4195"],
         "sameAs": [
             "https://www.instagram.com/dr_vahid_abdolrahimi/",
             "https://t.me/dr_vahid_abdolrahimi"
@@ -176,6 +177,27 @@
                             </li>
                         </ul>
                     </nav>
+                    <!-- زر البحث -->
+                    <div class="header-search">
+                        <button id="searchOpenBtn" class="search-btn-toggle" aria-label="بحث" aria-expanded="false">
+                            <i class="fa fa-search"></i>
+                            <span class="search-btn-label">بحث</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- لوحة البحث — داخل #header لتبقى مع الرأسية اللاصقة -->
+            <div id="searchSlidePanel" class="search-slide-panel">
+                <div class="container">
+                    <form class="search-slide-form" action="{% url 'arabic:arabic_search' %}" method="get">
+                        <input type="search" id="searchSlideInput" name="q" placeholder="ابحث في المقالات والخدمات والفيديوهات..." autocomplete="off" maxlength="100">
+                        <button type="submit" class="search-slide-submit">
+                            <i class="fa fa-search"></i> بحث
+                        </button>
+                        <button type="button" id="searchCloseBtn" class="search-slide-close" aria-label="إغلاق">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -252,6 +274,7 @@
     <script src="{% static 'js/vendor/jquery.nice-select.min.js' %}"></script>
     <script src="{% static 'js/vendor/superfish.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/search.js' %}"></script>
 
     {% block extra_js %}{% endblock %}
 </body>

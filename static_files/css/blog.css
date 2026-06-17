@@ -193,7 +193,7 @@
 .blog-card-body h4 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
 .blog-card-body h4 a { color: #1e293b; text-decoration: none; }
 .blog-card-body h4 a:hover { color: #1ba0b0; }
-.blog-card-body p { color: #475569; font-size: 14px; line-height: 1.8; margin-bottom: 14px; }
+.blog-card-body p { color: #475569; font-size: 14px; line-height: 1.8; margin-bottom: 14px; text-align: justify; }
 
 .blog-card-meta {
     display: flex;
@@ -422,6 +422,7 @@
     line-height: 1.8;
     margin-bottom: 28px;
     max-width: 520px;
+    text-align: justify;
 }
 
 .blog-hero-badges {
@@ -900,6 +901,7 @@
     line-height: 1.88;
     margin-bottom: 32px;
     max-width: 520px;
+    text-align: justify;
 }
 
 /* نشان‌های آماری */

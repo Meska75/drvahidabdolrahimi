@@ -51,6 +51,7 @@
     <link rel="stylesheet" href="{% static 'css/linearicons.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/base_en.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
 
     {% block extra_css %}{% endblock %}
 
@@ -107,7 +108,7 @@
                     <div class="col-lg-8 d-md-flex">
                         <h6><span><i class="fa fa-phone"></i></span> +98-21-88648210</h6>
                         <h6><span><i class="fa fa-mobile"></i></span> +98-901-343-4195</h6>
-                        <h6><span><i class="fa fa-map-marker"></i></span> Unit 9, 4th Floor, 24 Shahide Torkan St., Vanak Sq., Tehran, Iran</h6>
+                        <h6 style="white-space:nowrap;"><span><i class="fa fa-map-marker"></i></span> Unit 9, 4th Floor, 24 Shahide Torkan St., Vanak Sq., Tehran, Iran</h6>
                     </div>
                     <div class="col-lg-4">
                         <div class="d-flex align-items-center justify-content-end">
@@ -176,6 +177,27 @@
                             </li>
                         </ul>
                     </nav>
+                    <!-- Search button -->
+                    <div class="header-search" style="margin-right:0;margin-left:10px;">
+                        <button id="searchOpenBtn" class="search-btn-toggle" aria-label="Search" aria-expanded="false">
+                            <i class="fa fa-search"></i>
+                            <span class="search-btn-label">Search</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Search panel — inside #header so it stays with sticky header -->
+            <div id="searchSlidePanel" class="search-slide-panel">
+                <div class="container">
+                    <form class="search-slide-form search-ltr" action="{% url 'english:english_search' %}" method="get" style="direction:ltr;">
+                        <button type="button" id="searchCloseBtn" class="search-slide-close" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <input type="search" id="searchSlideInput" name="q" placeholder="Search articles, services, videos and more..." autocomplete="off" maxlength="100" style="direction:ltr;">
+                        <button type="submit" class="search-slide-submit">
+                            <i class="fa fa-search"></i> Search
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -252,6 +274,7 @@
     <script src="{% static 'js/vendor/jquery.nice-select.min.js' %}"></script>
     <script src="{% static 'js/vendor/superfish.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/search.js' %}"></script>
 
     {% block extra_js %}{% endblock %}
 </body>

@@ -54,7 +54,7 @@
 
                     {% if post.image %}
                     <div class="blog-detail-img">
-                        <img class="img-fluid" src="{{ post.image.url }}" alt="{{ post.title_ar }}">
+                        <img class="img-fluid" src="{{ post.image.url }}" alt="{{ post.title_ar|default:post.title_fa }}">
                     </div>
                     {% endif %}
 
@@ -78,7 +78,7 @@
                         <h4 class="widget-title">مقالات ذات صلة</h4>
                         {% for r in related %}
                         <div class="related-post">
-                            {% if r.image %}<img src="{{ r.image.url }}" alt="{{ r.title_ar }}">{% endif %}
+                            {% if r.image %}<img src="{{ r.image.url }}" alt="{{ r.title_ar|default:r.title_fa }}">{% endif %}
                             <div>
                                 <a href="{% url 'arabic_blog:arabic_blog_detail' r.slug %}">{{ r.title_ar }}</a>
                                 <span>{{ r.published_at|date:"Y/m/d" }}</span>

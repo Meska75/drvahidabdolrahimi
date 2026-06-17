@@ -17,6 +17,8 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/faq.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <!-- Leaflet.js — استاندارد، بدون وابستگی به SDK نشان -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 {% endblock %}
@@ -36,7 +38,7 @@
 
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-7 hero-content">
+            <div class="col-lg-6 hero-content">
                 <h1 class="hero-title">
                     دکتر وحید<br>
                     <span class="highlight">عبدالرحیمی</span>
@@ -46,47 +48,52 @@
                     با بیش از دو دهه تجربه بالینی در حوزه جراحی و درمان بیماری‌های چشم، ارائه‌دهنده
                     خدمات تخصصی در بالاترین استانداردهای بین‌المللی.
                 </p>
-                <div class="hero-btns">
-                    <a href="{% url 'main:persian_contact' %}" class="btn-hero-primary">
-                        <i class="fa fa-calendar-check-o"></i> رزرو نوبت
-                    </a>
-                    <a href="{% url 'main:persian_about' %}" class="btn-hero-outline">
-                        <i class="fa fa-user-md"></i> درباره دکتر
-                    </a>
-                </div>
-                <div class="hero-stats">
-                    <div class="hero-stat">
-                        <div class="hero-stat-num">+۲۰<sup>سال</sup></div>
-                        <div class="hero-stat-lbl">تجربه بالینی</div>
-                    </div>
-                    <div class="hero-stat">
-                        <div class="hero-stat-num">+۵۰۰۰</div>
-                        <div class="hero-stat-lbl">بیمار موفق</div>
-                    </div>
-                    <div class="hero-stat">
-                        <div class="hero-stat-num">+۱۵۰۰</div>
-                        <div class="hero-stat-lbl">عمل جراحی</div>
-                    </div>
-                    <div class="hero-stat">
-                        <div class="hero-stat-num">۹۸<sup>٪</sup></div>
-                        <div class="hero-stat-lbl">رضایت بیماران</div>
-                    </div>
-                </div>
             </div>
-            <div class="col-lg-5 hero-right">
-                <div class="hero-img-bg">
-                    <div class="floating-card fc-top">
-                        <div class="fc-icon blue"><i class="fa fa-eye"></i></div>
-                        <div class="fc-text">
-                            <strong>معاینه تخصصی</strong>
-                            <span>آخرین تکنولوژی تصویربرداری</span>
-                        </div>
-                    </div>
-                    <div class="floating-card fc-bottom">
-                        <div class="fc-icon green"><i class="fa fa-check-circle"></i></div>
-                        <div class="fc-text">
-                            <strong>۹۸٪ رضایت بیماران</strong>
-                        </div>
+            <div class="col-lg-6 hero-right">
+                <div class="hero-right-wrap">
+                    <div class="hero-ring hero-ring-1"></div>
+                    <div class="hero-ring hero-ring-2"></div>
+                    <div class="hero-img-bg">
+                        <!-- کارت ۱: رزرو نوبت -->
+                        <a href="{% url 'main:persian_contact' %}" class="floating-card fc-top">
+                            <div class="fc-icon green"><i class="fa fa-calendar-check-o"></i></div>
+                            <div class="fc-text">
+                                <strong>رزرو نوبت</strong>
+                                <span>دکتر عبدالرحیمی</span>
+                            </div>
+                        </a>
+                        <!-- کارت ۲: درباره دکتر -->
+                        <a href="{% url 'main:persian_about' %}" class="floating-card fc-tr">
+                            <div class="fc-icon blue"><i class="fa fa-user-md"></i></div>
+                            <div class="fc-text">
+                                <strong>درباره دکتر</strong>
+                                <span>سابقه و تخصص‌ها</span>
+                            </div>
+                        </a>
+                        <!-- کارت ۳: خدمات مطب -->
+                        <a href="{% url 'services:persian_office_services' %}" class="floating-card fc-bottom">
+                            <div class="fc-icon blue"><i class="fa fa-stethoscope"></i></div>
+                            <div class="fc-text">
+                                <strong>خدمات مطب</strong>
+                                <span>معاینه و درمان</span>
+                            </div>
+                        </a>
+                        <!-- کارت ۴: خدمات جراحی -->
+                        <a href="{% url 'services:persian_surgery_services' %}" class="floating-card fc-bl">
+                            <div class="fc-icon gold"><i class="fa fa-medkit"></i></div>
+                            <div class="fc-text">
+                                <strong>خدمات جراحی</strong>
+                                <span>عمل‌های تخصصی</span>
+                            </div>
+                        </a>
+                        <!-- کارت ۵: مشاوره هوش مصنوعی — غیرفعال تا راه‌اندازی -->
+                        <a href="#" class="floating-card fc-mid" style="display:none;">
+                            <div class="fc-icon purple"><i class="fa fa-laptop"></i></div>
+                            <div class="fc-text">
+                                <strong>مشاوره هوشمند</strong>
+                                <span>هوش مصنوعی پزشکی</span>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -413,6 +420,55 @@
 {% endcomment %}
 
 
+<!-- ===== نظرات بیماران ===== -->
+{% if testimonials %}
+<section class="testimonials-section">
+    <div class="container">
+        <div class="sec-head">
+            <span class="pre-title">تجربه بیماران</span>
+            <h2>نظرات بیماران ما</h2>
+            <div class="sec-divider"></div>
+            <p>تجربه واقعی بیمارانی که سلامت بینایی خود را به دکتر عبدالرحیمی سپردند</p>
+        </div>
+    </div>
+    <div class="swiper tst-swiper" dir="rtl">
+        <div class="swiper-wrapper">
+            {% for t in testimonials %}
+            <div class="swiper-slide">
+                <div class="tst-card">
+                    <div class="tst-header">
+                        <div class="tst-avatar"><i class="fa fa-user"></i></div>
+                        <div class="tst-info">
+                            <h4 class="tst-name">{{ t.name_fa }}</h4>
+                            <span class="tst-role">بیمار تأیید شده</span>
+                            {% if t.rating %}
+                            <div class="tst-stars">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= t.rating %}
+                                        <i class="fa fa-star"></i>
+                                    {% else %}
+                                        <i class="fa fa-star-o"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="tst-content">
+                        <div class="tst-quote-icon"><i class="fa fa-quote-right"></i></div>
+                        <p class="tst-body">{{ t.content_fa_plain }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+</section>
+{% endif %}
+
+
 <!-- ===== گالری تصاویر ===== -->
 <section class="gallery-section">
     <div class="container">
@@ -470,7 +526,7 @@
             <p>پاسخ سوالات رایج بیماران درباره خدمات، نحوه رزرو نوبت و روش‌های درمانی</p>
         </div>
         <div class="row">
-            <div class="col-lg-8 offset-lg-2">
+            <div class="col-12">
                 <div id="faqHomeAccordion">
                     {% for faq in faqs %}
                     <div class="faq-item wow fadeInUp" data-wow-delay=".{{ forloop.counter0 }}8s">
@@ -487,7 +543,7 @@
                         <div id="faqB{{ forloop.counter }}"
                              class="collapse {% if forloop.first %}show{% endif %}"
                              data-parent="#faqHomeAccordion">
-                            <div class="faq-body">{{ faq.answer_fa }}</div>
+                            <div class="faq-ans-body">{{ faq.answer_fa }}</div>
                         </div>
                     </div>
                     {% endfor %}
@@ -573,6 +629,7 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
 <script src="{% static 'js/home.js' %}"></script>
 {% endblock %}

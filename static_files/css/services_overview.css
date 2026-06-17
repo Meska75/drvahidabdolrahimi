@@ -198,6 +198,7 @@
     color: var(--text-muted);
     line-height: 1.95;
     margin-bottom: 28px;
+    text-align: justify;
 }
 
 /* لینک "ورود به صفحه" */

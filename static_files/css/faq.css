@@ -85,7 +85,13 @@
     line-height: 1.85;
 }
 
-/* ===== بدنه صفحه ===== */
+/* ===== بخش FAQ در صفحه اول ===== */
+.faq-home-section {
+    padding: 80px 0 90px;
+    background: #f8fafc;
+}
+
+/* ===== بدنه صفحه مستقل ===== */
 .faq-body {
     background: #f8fafc;
     padding: 72px 0 90px;

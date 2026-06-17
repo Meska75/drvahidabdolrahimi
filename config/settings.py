@@ -15,6 +15,7 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(','
 
 # ===== اپ‌های نصب‌شده =====
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -145,6 +146,130 @@ CKEDITOR_CONFIGS = {
         'contentsLangDirection': 'ltr',
         'extraPlugins': 'bidi',
     },
+}
+
+# ===== احراز هویت چندروشه =====
+AUTHENTICATION_BACKENDS = [
+    'accounts.backends.FlexibleAuthBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+# ===== تنظیمات Jazzmin (پنل ادمین حرفه‌ای) =====
+JAZZMIN_SETTINGS = {
+    "site_title": "پنل مدیریت",
+    "site_header": "دکتر عبدالرحیمی",
+    "site_brand": "دکتر عبدالرحیمی",
+    "site_logo": "images/logo/logo.png",
+    "login_logo": "images/logo/logo.png",
+    "site_icon": "images/logo/favicon.png",
+    "welcome_sign": "خوش آمدید — می‌توانید با یوزرنیم، ایمیل یا شماره موبایل وارد شوید",
+    "copyright": "دکتر وحید عبدالرحیمی",
+    "search_model": ["blog.Post", "main.ContactMessage", "gallery.GalleryImage"],
+    "user_avatar": None,
+
+    "topmenu_links": [
+        {"name": "مشاهده سایت", "url": "/", "new_window": True, "icon": "fas fa-external-link-alt"},
+        {"name": "پیام‌های تماس", "url": "/admin/main/contactmessage/", "icon": "fas fa-envelope"},
+        {"model": "auth.User"},
+    ],
+
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "hide_apps": [],
+    "hide_models": [],
+
+    "order_with_respect_to": [
+        "main", "blog", "gallery", "videos", "team", "services", "accounts", "auth",
+    ],
+
+    "custom_links": {
+        "blog": [{
+            "name": "نوشتن مقاله جدید",
+            "url": "/admin/blog/post/add/",
+            "icon": "fas fa-plus-circle",
+            "permissions": ["blog.add_post"],
+        }],
+        "gallery": [{
+            "name": "افزودن تصویر",
+            "url": "/admin/gallery/galleryimage/add/",
+            "icon": "fas fa-plus-circle",
+            "permissions": ["gallery.add_galleryimage"],
+        }],
+        "videos": [{
+            "name": "افزودن ویدیو",
+            "url": "/admin/videos/sitevideo/add/",
+            "icon": "fas fa-plus-circle",
+            "permissions": ["videos.add_sitevideo"],
+        }],
+    },
+
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.group": "fas fa-users",
+        "main.ContactMessage": "fas fa-envelope",
+        "main.FaqItem": "fas fa-question-circle",
+        "main.PatientTestimonial": "fas fa-star",
+        "main.SiteSetting": "fas fa-cog",
+        "main.SiteBanner": "fas fa-image",
+        "main.DoctorEducation": "fas fa-graduation-cap",
+        "main.DoctorAchievement": "fas fa-award",
+        "main.DoctorClinic": "fas fa-hospital",
+        "blog.Post": "fas fa-newspaper",
+        "blog.Category": "fas fa-tags",
+        "blog.Comment": "fas fa-comments",
+        "gallery.GalleryImage": "fas fa-images",
+        "gallery.GalleryTag": "fas fa-tag",
+        "team.TeamMember": "fas fa-user-md",
+        "videos.SiteVideo": "fas fa-video",
+        "videos.VideoCategory": "fas fa-film",
+        "services.ServiceCategory": "fas fa-list",
+        "services.ServiceItem": "fas fa-stethoscope",
+        "accounts.UserProfile": "fas fa-id-card",
+    },
+
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
+    "related_modal_active": True,
+    "custom_css": "css/admin_custom.css",
+    "custom_js": "js/admin_jazzmin.js",
+    "use_google_fonts_cdn": True,
+    "show_ui_builder": False,
+    "changeform_format": "horizontal_tabs",
+    "language_chooser": False,
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": True,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": "navbar-info",
+    "accent": "accent-teal",
+    "navbar": "navbar-dark",
+    "no_navbar_border": True,
+    "navbar_fixed": True,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": True,
+    "sidebar": "sidebar-dark-teal",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": True,
+    "sidebar_nav_compact_style": True,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": False,
+    "theme": "default",
+    "dark_mode_theme": None,
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success",
+    },
+    "actions_sticky_top": True,
 }
 
 # ===== تنظیمات امنیتی پروداکشن =====

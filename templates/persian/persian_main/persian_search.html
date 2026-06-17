@@ -1,0 +1,182 @@
+{% extends 'persian/persian_base.html' %}
+{% load static %}
+
+{% block title %}نتایج جستجو{% if query %} — {{ query }}{% endif %} | دکتر وحید عبدالرحیمی{% endblock %}
+
+{% block content %}
+
+<!-- هیرو جستجو -->
+<section class="search-page-hero">
+    <div class="container">
+        <h1><i class="fa fa-search" style="margin-left:10px;opacity:.8;"></i>جستجو در سایت</h1>
+        <form class="search-main-form" action="{% url 'main:persian_search' %}" method="get">
+            <input type="search" name="q" value="{{ query|default:'' }}" placeholder="دنبال چه چیزی می‌گردید؟" autocomplete="off" maxlength="100">
+            <button type="submit"><i class="fa fa-search"></i> جستجو</button>
+        </form>
+        {% if query %}
+            {% if total %}
+                <p class="search-summary-text">
+                    <strong>{{ total }}</strong> نتیجه برای «<strong>{{ query }}</strong>» یافت شد
+                </p>
+            {% else %}
+                <p class="search-summary-text">نتیجه‌ای برای «<strong>{{ query }}</strong>» پیدا نشد</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</section>
+
+<!-- نتایج -->
+<section class="search-results-section">
+    <div class="container">
+
+        {% if not query %}
+            <div class="search-empty-state">
+                <i class="fa fa-search"></i>
+                <h3>عبارت جستجو را وارد کنید</h3>
+                <p>می‌توانید در میان مقالات، خدمات، سوالات متداول، ویدیوها و اعضای تیم جستجو کنید.</p>
+            </div>
+
+        {% elif total == 0 %}
+            <div class="search-empty-state">
+                <i class="fa fa-frown-o"></i>
+                <h3>نتیجه‌ای یافت نشد</h3>
+                <p>کلمه دیگری امتحان کنید یا یکی از بخش‌های سایت را مستقیماً مرور کنید.</p>
+            </div>
+
+        {% else %}
+
+            <!-- مقالات -->
+            {% if posts %}
+            <div class="result-group">
+                <div class="result-group-title">
+                    <i class="fa fa-newspaper-o"></i> مقالات ({{ posts|length }})
+                </div>
+                {% for post in posts %}
+                <a href="{% url 'blog:persian_blog_detail' post.slug %}" class="result-card">
+                    <div class="result-card-icon rc-blog"><i class="fa fa-file-text-o"></i></div>
+                    <div class="result-card-body">
+                        <span class="result-card-title">{{ post.title_fa }}</span>
+                        {% if post.summary_fa %}
+                            <p class="result-card-snippet">{{ post.summary_fa|truncatewords:20 }}</p>
+                        {% endif %}
+                        <div class="result-card-meta">
+                            <span class="result-badge"><i class="fa fa-user"></i> {{ post.author }}</span>
+                            {% if post.category %}<span class="result-badge"><i class="fa fa-tag"></i> {{ post.category.name_fa }}</span>{% endif %}
+                        </div>
+                    </div>
+                    <i class="fa fa-chevron-left result-card-arrow"></i>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- خدمات -->
+            {% if services %}
+            <div class="result-group">
+                <div class="result-group-title">
+                    <i class="fa fa-stethoscope"></i> خدمات ({{ services|length }})
+                </div>
+                {% for svc in services %}
+                <a href="{% url 'services:persian_services_overview' %}" class="result-card">
+                    <div class="result-card-icon rc-service">
+                        {% if svc.icon_class %}<i class="{{ svc.icon_class }}"></i>{% else %}<i class="fa fa-medkit"></i>{% endif %}
+                    </div>
+                    <div class="result-card-body">
+                        <span class="result-card-title">{{ svc.title_fa }}</span>
+                        {% if svc.description_fa %}
+                            <p class="result-card-snippet">{{ svc.description_fa|truncatewords:20 }}</p>
+                        {% endif %}
+                        <div class="result-card-meta">
+                            <span class="result-badge"><i class="fa fa-tag"></i> {{ svc.category.name_fa }}</span>
+                        </div>
+                    </div>
+                    <i class="fa fa-chevron-left result-card-arrow"></i>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- سوالات متداول -->
+            {% if faqs %}
+            <div class="result-group">
+                <div class="result-group-title">
+                    <i class="fa fa-question-circle"></i> سوالات متداول ({{ faqs|length }})
+                </div>
+                {% for faq in faqs %}
+                <a href="{% url 'main:persian_faq' %}" class="result-card">
+                    <div class="result-card-icon rc-faq"><i class="fa fa-question"></i></div>
+                    <div class="result-card-body">
+                        <span class="result-card-title">{{ faq.question_fa }}</span>
+                        {% if faq.answer_fa %}
+                            <p class="result-card-snippet">{{ faq.answer_fa|striptags|truncatewords:20 }}</p>
+                        {% endif %}
+                        {% if faq.category %}
+                        <div class="result-card-meta">
+                            <span class="result-badge"><i class="fa fa-folder"></i> {{ faq.category }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <i class="fa fa-chevron-left result-card-arrow"></i>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- ویدیوها -->
+            {% if videos %}
+            <div class="result-group">
+                <div class="result-group-title">
+                    <i class="fa fa-play-circle"></i> ویدیوها ({{ videos|length }})
+                </div>
+                {% for vid in videos %}
+                <a href="{% url 'videos:persian_videos' %}" class="result-card">
+                    <div class="result-card-icon rc-video"><i class="fa fa-video-camera"></i></div>
+                    <div class="result-card-body">
+                        <span class="result-card-title">{{ vid.title_fa }}</span>
+                        {% if vid.description_fa %}
+                            <p class="result-card-snippet">{{ vid.description_fa|truncatewords:20 }}</p>
+                        {% endif %}
+                        {% if vid.category %}
+                        <div class="result-card-meta">
+                            <span class="result-badge"><i class="fa fa-tag"></i> {{ vid.category.name_fa }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <i class="fa fa-chevron-left result-card-arrow"></i>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- اعضای تیم -->
+            {% if team %}
+            <div class="result-group">
+                <div class="result-group-title">
+                    <i class="fa fa-users"></i> اعضای تیم ({{ team|length }})
+                </div>
+                {% for member in team %}
+                <a href="#" class="result-card">
+                    <div class="result-card-icon rc-team"><i class="fa fa-user-md"></i></div>
+                    <div class="result-card-body">
+                        <span class="result-card-title">{{ member.name_fa }}</span>
+                        {% if member.title_fa %}
+                            <p class="result-card-snippet">{{ member.title_fa }}</p>
+                        {% endif %}
+                        {% if member.bio_fa %}
+                        <div class="result-card-meta">
+                            <span class="result-badge"><i class="fa fa-info-circle"></i> {{ member.bio_fa|truncatewords:6 }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <i class="fa fa-chevron-left result-card-arrow"></i>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+        {% endif %}
+
+    </div>
+</section>
+
+{% endblock %}

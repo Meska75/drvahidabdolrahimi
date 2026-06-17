@@ -1,0 +1,488 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static dashboard_stats %}
+
+{% block title %}داشبورد | پنل مدیریت دکتر عبدالرحیمی{% endblock %}
+
+{% block breadcrumbs %}
+<div class="container-fluid">
+    <ol class="breadcrumb my-0 px-2">
+        <li class="breadcrumb-item active">داشبورد</li>
+    </ol>
+</div>
+{% endblock %}
+
+{% block content %}
+{% get_dashboard_stats as s %}
+
+<div class="dr-dashboard" dir="rtl">
+
+    <!-- ===== هدر خوش‌آمدگویی ===== -->
+    <div class="dash-welcome">
+        <div class="dash-welcome-inner">
+            <div class="dash-welcome-text">
+                <h2>سلام، {{ request.user.first_name|default:request.user.username }} <span class="wave">👋</span></h2>
+                <p>امروز چه کاری می‌خواهید انجام دهید؟</p>
+            </div>
+            <div class="dash-welcome-logo">
+                <img src="{% static 'images/logo/logo.png' %}" alt="لوگو">
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== هشدارها (نمایش فقط در صورت وجود) ===== -->
+    {% if s.unread_messages or s.pending_comments or s.pending_opinions %}
+    <div class="dash-alerts">
+        <h5 class="dash-section-title"><i class="fas fa-bell"></i> موارد نیازمند توجه</h5>
+        <div class="row">
+            {% if s.unread_messages %}
+            <div class="col-md-4 col-sm-6 mb-3">
+                <a href="/admin/main/contactmessage/?is_read__exact=0" class="alert-card alert-danger">
+                    <div class="alert-card-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="alert-card-body">
+                        <span class="alert-card-num">{{ s.unread_messages }}</span>
+                        <span class="alert-card-label">پیام خوانده‌نشده</span>
+                    </div>
+                    <div class="alert-card-arrow"><i class="fas fa-arrow-left"></i></div>
+                </a>
+            </div>
+            {% endif %}
+            {% if s.pending_comments %}
+            <div class="col-md-4 col-sm-6 mb-3">
+                <a href="/admin/blog/comment/?is_approved__exact=0" class="alert-card alert-warning">
+                    <div class="alert-card-icon"><i class="fas fa-comments"></i></div>
+                    <div class="alert-card-body">
+                        <span class="alert-card-num">{{ s.pending_comments }}</span>
+                        <span class="alert-card-label">نظر منتظر تأیید</span>
+                    </div>
+                    <div class="alert-card-arrow"><i class="fas fa-arrow-left"></i></div>
+                </a>
+            </div>
+            {% endif %}
+            {% if s.pending_opinions %}
+            <div class="col-md-4 col-sm-6 mb-3">
+                <a href="/admin/main/patienttestimonial/?is_approved__exact=0" class="alert-card alert-info">
+                    <div class="alert-card-icon"><i class="fas fa-star"></i></div>
+                    <div class="alert-card-body">
+                        <span class="alert-card-num">{{ s.pending_opinions }}</span>
+                        <span class="alert-card-label">نظر بیمار منتظر تأیید</span>
+                    </div>
+                    <div class="alert-card-arrow"><i class="fas fa-arrow-left"></i></div>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- ===== کارت‌های آماری ===== -->
+    <div class="dash-section">
+        <h5 class="dash-section-title"><i class="fas fa-chart-bar"></i> آمار کلی</h5>
+        <div class="row">
+            <!-- مقالات -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="stat-card stat-blue">
+                    <div class="stat-icon"><i class="fas fa-newspaper"></i></div>
+                    <div class="stat-body">
+                        <div class="stat-num">{{ s.published_posts }}</div>
+                        <div class="stat-label">مقاله منتشرشده</div>
+                        {% if s.draft_posts %}
+                        <div class="stat-sub">{{ s.draft_posts }} پیش‌نویس</div>
+                        {% endif %}
+                    </div>
+                    <a href="/admin/blog/post/" class="stat-link">مشاهده همه <i class="fas fa-arrow-left"></i></a>
+                </div>
+            </div>
+            <!-- گالری -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="stat-card stat-green">
+                    <div class="stat-icon"><i class="fas fa-images"></i></div>
+                    <div class="stat-body">
+                        <div class="stat-num">{{ s.gallery_images }}</div>
+                        <div class="stat-label">تصویر گالری</div>
+                    </div>
+                    <a href="/admin/gallery/galleryimage/" class="stat-link">مشاهده همه <i class="fas fa-arrow-left"></i></a>
+                </div>
+            </div>
+            <!-- ویدیوها -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="stat-card stat-teal">
+                    <div class="stat-icon"><i class="fas fa-video"></i></div>
+                    <div class="stat-body">
+                        <div class="stat-num">{{ s.published_videos }}</div>
+                        <div class="stat-label">ویدیو منتشرشده</div>
+                        {% if s.total_videos != s.published_videos %}
+                        <div class="stat-sub">{{ s.total_videos }} کل</div>
+                        {% endif %}
+                    </div>
+                    <a href="/admin/videos/sitevideo/" class="stat-link">مشاهده همه <i class="fas fa-arrow-left"></i></a>
+                </div>
+            </div>
+            <!-- تیم -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="stat-card stat-purple">
+                    <div class="stat-icon"><i class="fas fa-user-md"></i></div>
+                    <div class="stat-body">
+                        <div class="stat-num">{{ s.team_members }}</div>
+                        <div class="stat-label">عضو تیم فعال</div>
+                    </div>
+                    <a href="/admin/team/teammember/" class="stat-link">مشاهده همه <i class="fas fa-arrow-left"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== دسترسی سریع ===== -->
+    <div class="dash-section">
+        <h5 class="dash-section-title"><i class="fas fa-bolt"></i> دسترسی سریع</h5>
+        <div class="row quick-access-row">
+
+            <div class="col-lg-3 col-md-4 col-6 mb-3">
+                <a href="/admin/blog/post/add/" class="quick-card">
+                    <div class="quick-icon bg-primary"><i class="fas fa-pen-nib"></i></div>
+                    <span>نوشتن مقاله جدید</span>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6 mb-3">
+                <a href="/admin/gallery/galleryimage/add/" class="quick-card">
+                    <div class="quick-icon bg-success"><i class="fas fa-camera"></i></div>
+                    <span>افزودن تصویر به گالری</span>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6 mb-3">
+                <a href="/admin/videos/sitevideo/add/" class="quick-card">
+                    <div class="quick-icon bg-info"><i class="fas fa-film"></i></div>
+                    <span>افزودن ویدیو جدید</span>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6 mb-3">
+                <a href="/admin/main/contactmessage/" class="quick-card {% if s.unread_messages %}quick-card-badge{% endif %}">
+                    <div class="quick-icon bg-danger"><i class="fas fa-envelope-open-text"></i></div>
+                    <span>پیام‌های تماس</span>
+                    {% if s.unread_messages %}<span class="qc-badge">{{ s.unread_messages }}</span>{% endif %}
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6 mb-3">
+                <a href="/admin/blog/comment/?is_approved__exact=0" class="quick-card {% if s.pending_comments %}quick-card-badge{% endif %}">
+                    <div class="quick-icon bg-warning"><i class="fas fa-comments"></i></div>
+                    <span>تأیید نظرات بلاگ</span>
+                    {% if s.pending_comments %}<span class="qc-badge">{{ s.pending_comments }}</span>{% endif %}
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6 mb-3">
+                <a href="/admin/main/patienttestimonial/" class="quick-card">
+                    <div class="quick-icon" style="background:#7c3aed;"><i class="fas fa-star"></i></div>
+                    <span>نظرات بیماران</span>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6 mb-3">
+                <a href="/admin/team/teammember/" class="quick-card">
+                    <div class="quick-icon" style="background:#0891b2;"><i class="fas fa-user-md"></i></div>
+                    <span>مدیریت تیم</span>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6 mb-3">
+                <a href="/admin/services/serviceitem/" class="quick-card">
+                    <div class="quick-icon" style="background:#059669;"><i class="fas fa-stethoscope"></i></div>
+                    <span>مدیریت خدمات</span>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6 mb-3">
+                <a href="/admin/main/faqitem/" class="quick-card">
+                    <div class="quick-icon" style="background:#d97706;"><i class="fas fa-question-circle"></i></div>
+                    <span>سؤالات متداول</span>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6 mb-3">
+                <a href="/admin/main/sitebanner/" class="quick-card">
+                    <div class="quick-icon" style="background:#dc2626;"><i class="fas fa-image"></i></div>
+                    <span>بنرهای سایت</span>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6 mb-3">
+                <a href="/admin/main/sitesetting/" class="quick-card">
+                    <div class="quick-icon" style="background:#475569;"><i class="fas fa-cog"></i></div>
+                    <span>تنظیمات سایت</span>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6 mb-3">
+                <a href="/admin/auth/user/add/" class="quick-card">
+                    <div class="quick-icon" style="background:#1e40af;"><i class="fas fa-user-plus"></i></div>
+                    <span>افزودن کاربر جدید</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== چارت‌های آماری ===== -->
+    <div class="dash-section">
+        <h5 class="dash-section-title"><i class="fas fa-chart-line"></i> تحلیل و روند محتوا</h5>
+        <div class="row mb-3">
+
+            <!-- دونات: توزیع محتوا -->
+            <div class="col-lg-4 mb-4">
+                <div class="chart-card">
+                    <div class="chart-card-title"><i class="fas fa-chart-pie"></i> توزیع محتوای سایت</div>
+                    <div class="chart-wrapper" style="height:240px;">
+                        <canvas id="chartDist"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ستونی: مقالات ماهانه -->
+            <div class="col-lg-8 mb-4">
+                <div class="chart-card">
+                    <div class="chart-card-title"><i class="fas fa-calendar-alt"></i> مقالات منتشرشده در ماه‌های اخیر</div>
+                    <div class="chart-wrapper" style="height:240px;">
+                        <canvas id="chartMonthly"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+
+            <!-- افقی: محبوب‌ترین مقالات -->
+            <div class="col-lg-12 mb-4">
+                <div class="chart-card">
+                    <div class="chart-card-title"><i class="fas fa-fire"></i> محبوب‌ترین مقالات (بر اساس بازدید)</div>
+                    <div class="chart-wrapper" style="height:220px;">
+                        <canvas id="chartTopPosts"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== فعالیت اخیر ===== -->
+    <div class="dash-section">
+        <div class="row">
+
+            <!-- پیام‌های اخیر -->
+            <div class="col-lg-6 mb-4">
+                <div class="activity-card">
+                    <div class="activity-card-header">
+                        <h6><i class="fas fa-envelope text-danger"></i> آخرین پیام‌های خوانده‌نشده</h6>
+                        <a href="/admin/main/contactmessage/" class="activity-more">مشاهده همه</a>
+                    </div>
+                    <div class="activity-card-body">
+                        {% if s.recent_messages %}
+                        <ul class="activity-list">
+                            {% for msg in s.recent_messages %}
+                            <li class="activity-item">
+                                <div class="activity-avatar">{{ msg.full_name|slice:":1" }}</div>
+                                <div class="activity-info">
+                                    <a href="/admin/main/contactmessage/{{ msg.id }}/change/">{{ msg.full_name }}</a>
+                                    <span class="activity-meta">
+                                        {% if msg.subject %}{{ msg.subject|truncatechars:30 }}{% endif %}
+                                        · {{ msg.phone }}
+                                    </span>
+                                </div>
+                                <div class="activity-time">{{ msg.created_at|timesince }} پیش</div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <div class="activity-empty">
+                            <i class="fas fa-check-circle text-success"></i>
+                            <p>پیام خوانده‌نشده‌ای وجود ندارد</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- نظرات منتظر تأیید -->
+            <div class="col-lg-6 mb-4">
+                <div class="activity-card">
+                    <div class="activity-card-header">
+                        <h6><i class="fas fa-comments text-warning"></i> نظرات منتظر تأیید</h6>
+                        <a href="/admin/blog/comment/?is_approved__exact=0" class="activity-more">مشاهده همه</a>
+                    </div>
+                    <div class="activity-card-body">
+                        {% if s.recent_comments %}
+                        <ul class="activity-list">
+                            {% for cmt in s.recent_comments %}
+                            <li class="activity-item">
+                                <div class="activity-avatar">{{ cmt.name|slice:":1" }}</div>
+                                <div class="activity-info">
+                                    <a href="/admin/blog/comment/{{ cmt.id }}/change/">{{ cmt.name }}</a>
+                                    <span class="activity-meta">
+                                        {{ cmt.post.title_fa|truncatechars:35 }}
+                                    </span>
+                                </div>
+                                <div class="activity-time">{{ cmt.created_at|timesince }} پیش</div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <div class="activity-empty">
+                            <i class="fas fa-check-circle text-success"></i>
+                            <p>نظر در انتظار تأییدی وجود ندارد</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div><!-- /.dr-dashboard -->
+
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    Chart.defaults.font.family = "'Vazirmatn', Tahoma, sans-serif";
+    Chart.defaults.color = '#475569';
+
+    /* ---- ۱. توزیع محتوا (دونات) ---- */
+    var ctxDist = document.getElementById('chartDist');
+    if (ctxDist) {
+        new Chart(ctxDist, {
+            type: 'doughnut',
+            data: {
+                labels: {{ s.chart_dist_labels|safe }},
+                datasets: [{
+                    data: {{ s.chart_dist_data|safe }},
+                    backgroundColor: ['#3b82f6','#22c55e','#2dd4bf','#a78bfa','#f59e0b'],
+                    borderWidth: 2,
+                    borderColor: '#fff',
+                    hoverOffset: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        rtl: true,
+                        labels: { padding: 14, font: { size: 12 } }
+                    },
+                    tooltip: { rtl: true }
+                },
+                cutout: '62%'
+            }
+        });
+    }
+
+    /* ---- ۲. مقالات ماهانه (ستونی) ---- */
+    var ctxMonthly = document.getElementById('chartMonthly');
+    if (ctxMonthly) {
+        var monthLabels = {{ s.chart_monthly_labels|safe }};
+        var monthCounts = {{ s.chart_monthly_counts|safe }};
+
+        /* اگر داده‌ای نیست پیام نشان بده */
+        if (monthLabels.length === 0) {
+            monthLabels = ['داده‌ای ثبت نشده'];
+            monthCounts = [0];
+        }
+
+        new Chart(ctxMonthly, {
+            type: 'bar',
+            data: {
+                labels: monthLabels,
+                datasets: [{
+                    label: 'مقالات منتشرشده',
+                    data: monthCounts,
+                    backgroundColor: 'rgba(8,145,178,0.75)',
+                    borderColor: '#0891b2',
+                    borderWidth: 1.5,
+                    borderRadius: 6,
+                    borderSkipped: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { rtl: true }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1, font: { size: 11 } },
+                        grid: { color: '#f1f5f9' }
+                    },
+                    x: {
+                        ticks: { font: { size: 11 } },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    }
+
+    /* ---- ۳. محبوب‌ترین مقالات (افقی) ---- */
+    var ctxTop = document.getElementById('chartTopPosts');
+    if (ctxTop) {
+        var topLabels = {{ s.chart_top_labels|safe }};
+        var topViews  = {{ s.chart_top_views|safe }};
+
+        if (topLabels.length === 0) {
+            topLabels = ['هنوز بازدیدی ثبت نشده'];
+            topViews  = [0];
+        }
+
+        new Chart(ctxTop, {
+            type: 'bar',
+            data: {
+                labels: topLabels,
+                datasets: [{
+                    label: 'بازدید',
+                    data: topViews,
+                    backgroundColor: [
+                        'rgba(59,130,246,0.8)',
+                        'rgba(34,197,94,0.8)',
+                        'rgba(45,212,191,0.8)',
+                        'rgba(167,139,250,0.8)',
+                        'rgba(245,158,11,0.8)',
+                        'rgba(220,38,38,0.8)'
+                    ],
+                    borderRadius: 5,
+                    borderSkipped: false
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { rtl: true }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1, font: { size: 11 } },
+                        grid: { color: '#f1f5f9' }
+                    },
+                    y: {
+                        ticks: { font: { size: 11 } },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

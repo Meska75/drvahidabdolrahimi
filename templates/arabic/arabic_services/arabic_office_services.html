@@ -78,89 +78,22 @@
 
         <div class="row">
 
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".1s">
+            {% for item in items %}
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp">
                 <div class="service-card">
                     <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-eye"></i></div>
-                        <img src="{% static 'images/services/office/svc_office_1.jpg' %}" alt="فحص العيون والاستشارة" loading="lazy" onerror="this.style.opacity='0'">
+                        {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.title_ar|default:item.title_fa }}" loading="lazy">
+                        {% endif %}
                         <div class="svc-img-overlay"></div>
                     </div>
                     <div class="svc-body">
-                        <h3>فحص العيون والاستشارة</h3>
-                        <p>تقييم شامل للعين ووضع خطة علاجية فردية مناسبة لكل مريض.</p>
+                        <h3>{{ item.title_ar|default:item.title_fa }}</h3>
+                        <p>{{ item.description_ar|default:item.description_fa }}</p>
                     </div>
                 </div>
             </div>
-
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".15s">
-                <div class="service-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-microscope"></i></div>
-                        <img src="{% static 'images/services/office/svc_office_2.jpg' %}" alt="تصوير OCT" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>تصوير OCT</h3>
-                        <p>تصوير مقطعي متقدم للشبكية للتشخيص الدقيق لأمراض البقعة الصفراء.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".2s">
-                <div class="service-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-camera"></i></div>
-                        <img src="{% static 'images/services/office/svc_office_3.jpg' %}" alt="أنجيوغرافيا الفلورين" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>أنجيوغرافيا الفلورين</h3>
-                        <p>تصوير أوعية الشبكية لتشخيص اعتلال الشبكية السكري والانسداد الوعائي.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".1s">
-                <div class="service-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-syringe"></i></div>
-                        <img src="{% static 'images/services/office/svc_office_4.jpg' %}" alt="الحقن داخل الزجاجية" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>الحقن داخل الزجاجية</h3>
-                        <p>حقن أدوية مضادة للأوعية لعلاج الوذمة البقعية وضمور البقعة الرطب.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".15s">
-                <div class="service-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-dot-circle"></i></div>
-                        <img src="{% static 'images/services/office/svc_office_5.jpg' %}" alt="قياس المجال البصري" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>قياس المجال البصري (البيريمتري)</h3>
-                        <p>تقييم دقيق للمجال البصري لتشخيص ومتابعة الجلوكوما وأضرار العصب البصري.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".2s">
-                <div class="service-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-tachometer-alt"></i></div>
-                        <img src="{% static 'images/services/office/svc_office_6.jpg' %}" alt="قياس ضغط العين" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>قياس ضغط العين (التونومتري)</h3>
-                        <p>قياس دقيق لضغط العين داخل المقلة (التونومتري) للكشف المبكر عن الجلوكوما.</p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
 
         </div>
     </div>

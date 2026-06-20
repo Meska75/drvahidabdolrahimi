@@ -34,9 +34,16 @@
 <!-- ===== Hero ===== -->
 <section class="hero-section">
     <div class="hero-bg-slider" id="heroBgSlider">
-        <div class="hero-slide" data-bg="{% static 'images/home/banner/banner-bg.jpg' %}"></div>
-        <div class="hero-slide" data-bg="{% static 'images/home/banner/banner-5bg.jpg' %}"></div>
-        <div class="hero-slide" data-bg="{% static 'images/home/banner/banner-2bg.jpg' %}"></div>
+        {% if banners %}
+            {% for banner in banners %}
+            <div class="hero-slide" data-bg="{{ banner.image.url }}"
+                 {% if banner.alt_ar %}title="{{ banner.alt_ar }}"{% endif %}></div>
+            {% endfor %}
+        {% else %}
+            <div class="hero-slide" data-bg="{% static 'images/home/banner/banner-bg.jpg' %}"></div>
+            <div class="hero-slide" data-bg="{% static 'images/home/banner/banner-5bg.jpg' %}"></div>
+            <div class="hero-slide" data-bg="{% static 'images/home/banner/banner-2bg.jpg' %}"></div>
+        {% endif %}
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-circle-1"></div>
@@ -115,29 +122,29 @@
             <div class="col-lg-3 col-sm-6">
                 <div class="stat-item">
                     <i class="fa fa-user-md stat-icon"></i>
-                    <span class="stat-num">+20</span>
-                    <span class="stat-lbl">عامًا من الخبرة السريرية</span>
+                    <span class="stat-num">{{ site_settings.stat_years.value_ar|default:"+20" }}</span>
+                    <span class="stat-lbl">{{ site_settings.stat_years_label.value_ar|default:"عامًا من الخبرة السريرية" }}</span>
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6">
                 <div class="stat-item">
                     <i class="fa fa-heartbeat stat-icon"></i>
-                    <span class="stat-num">+5,000</span>
-                    <span class="stat-lbl">مريض ناجح</span>
+                    <span class="stat-num">{{ site_settings.stat_patients.value_ar|default:"+5,000" }}</span>
+                    <span class="stat-lbl">{{ site_settings.stat_patients_label.value_ar|default:"مريض ناجح" }}</span>
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6">
                 <div class="stat-item">
                     <i class="fas fa-procedures stat-icon"></i>
-                    <span class="stat-num">+1,500</span>
-                    <span class="stat-lbl">عملية جراحية</span>
+                    <span class="stat-num">{{ site_settings.stat_surgeries.value_ar|default:"+1,500" }}</span>
+                    <span class="stat-lbl">{{ site_settings.stat_surgeries_label.value_ar|default:"عملية جراحية" }}</span>
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6">
                 <div class="stat-item">
                     <i class="fa fa-star stat-icon"></i>
-                    <span class="stat-num">98٪</span>
-                    <span class="stat-lbl">رضا المرضى</span>
+                    <span class="stat-num">{{ site_settings.stat_satisfaction.value_ar|default:"98٪" }}</span>
+                    <span class="stat-lbl">{{ site_settings.stat_satisfaction_label.value_ar|default:"رضا المرضى" }}</span>
                 </div>
             </div>
         </div>
@@ -253,58 +260,25 @@
             <p>خدمات طب العيون الشاملة في بيئة مجهزة ومريحة مع فحص دقيق واستشارة متخصصة</p>
         </div>
         <div class="owl-carousel srv-carousel" id="officeSrvCarousel">
+            {% for item in office_items %}
             <div class="srv-carousel-item">
                 <div class="srv-card">
                     <div class="card-img">
-                        <img src="{% static 'images/services/overview/department1.jpg' %}" alt="الفحص والاستشارة">
+                        {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.title_ar|default:item.title_fa }}">
+                        {% else %}
+                        <img src="{% static 'images/services/overview/department1.jpg' %}" alt="{{ item.title_ar|default:item.title_fa }}">
+                        {% endif %}
                         <div class="overlay"></div>
                         <span class="tag">العيادة</span>
                     </div>
                     <div class="card-body-inner">
-                        <h3>الفحص والاستشارة</h3>
-                        <p>تقييم شامل للعين وتوجيه متخصص لاختيار أفضل مسار علاجي</p>
+                        <h3>{{ item.title_ar|default:item.title_fa }}</h3>
+                        <p>{{ item.summary_ar|default:item.summary_fa }}</p>
                     </div>
                 </div>
             </div>
-            <div class="srv-carousel-item">
-                <div class="srv-card">
-                    <div class="card-img">
-                        <img src="{% static 'images/services/overview/department2.jpg' %}" alt="تصوير OCT">
-                        <div class="overlay"></div>
-                        <span class="tag">العيادة</span>
-                    </div>
-                    <div class="card-body-inner">
-                        <h3>تصوير OCT</h3>
-                        <p>تصوير متقطع متقدم للشبكية والعصب البصري للتشخيص الدقيق</p>
-                    </div>
-                </div>
-            </div>
-            <div class="srv-carousel-item">
-                <div class="srv-card">
-                    <div class="card-img">
-                        <img src="{% static 'images/services/overview/department3.jpg' %}" alt="الحقن داخل الزجاجية">
-                        <div class="overlay"></div>
-                        <span class="tag">العيادة</span>
-                    </div>
-                    <div class="card-body-inner">
-                        <h3>الحقن داخل الزجاجية</h3>
-                        <p>حقن أدوية مضادة للأوعية لعلاج أمراض البقعة الصفراء</p>
-                    </div>
-                </div>
-            </div>
-            <div class="srv-carousel-item">
-                <div class="srv-card">
-                    <div class="card-img">
-                        <img src="{% static 'images/services/overview/department1.jpg' %}" alt="قياس المجال البصري">
-                        <div class="overlay"></div>
-                        <span class="tag">العيادة</span>
-                    </div>
-                    <div class="card-body-inner">
-                        <h3>قياس المجال البصري</h3>
-                        <p>تقييم دقيق للمجال البصري لتشخيص ومتابعة الجلوكوما والأمراض المشابهة</p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
         <div class="text-center srv-more-btn">
             <a href="{% url 'arabic_services:arabic_office_services' %}" class="btn-about">
@@ -325,58 +299,25 @@
             <p>جراحة العيون المتقدمة باستخدام أحدث المعدات بهدف استعادة الصحة البصرية والحفاظ عليها</p>
         </div>
         <div class="owl-carousel srv-carousel" id="surgerySrvCarousel">
+            {% for item in surgery_items %}
             <div class="srv-carousel-item">
                 <div class="srv-card">
                     <div class="card-img">
-                        <img src="{% static 'images/services/overview/department2.jpg' %}" alt="جراحة الشبكية">
+                        {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.title_ar|default:item.title_fa }}">
+                        {% else %}
+                        <img src="{% static 'images/services/overview/department2.jpg' %}" alt="{{ item.title_ar|default:item.title_fa }}">
+                        {% endif %}
                         <div class="overlay"></div>
                         <span class="tag tag-surgery">جراحة</span>
                     </div>
                     <div class="card-body-inner">
-                        <h3>جراحة الشبكية (فيتريكتومي)</h3>
-                        <p>جراحة متقدمة لعلاج انفصال الشبكية ونزيف الزجاجية</p>
+                        <h3>{{ item.title_ar|default:item.title_fa }}</h3>
+                        <p>{{ item.summary_ar|default:item.summary_fa }}</p>
                     </div>
                 </div>
             </div>
-            <div class="srv-carousel-item">
-                <div class="srv-card">
-                    <div class="card-img">
-                        <img src="{% static 'images/services/overview/department1.jpg' %}" alt="جراحة المياه البيضاء">
-                        <div class="overlay"></div>
-                        <span class="tag tag-surgery">جراحة</span>
-                    </div>
-                    <div class="card-body-inner">
-                        <h3>جراحة المياه البيضاء (فيكو)</h3>
-                        <p>استحلاب العدسة وزراعة العدسة داخل العين لاستعادة وضوح الرؤية</p>
-                    </div>
-                </div>
-            </div>
-            <div class="srv-carousel-item">
-                <div class="srv-card">
-                    <div class="card-img">
-                        <img src="{% static 'images/services/overview/department3.jpg' %}" alt="ليزر الشبكية">
-                        <div class="overlay"></div>
-                        <span class="tag tag-surgery">جراحة</span>
-                    </div>
-                    <div class="card-body-inner">
-                        <h3>ليزر الشبكية</h3>
-                        <p>علاج التمزقات وبؤر الضعف في الشبكية بالليزر للوقاية من الانفصال</p>
-                    </div>
-                </div>
-            </div>
-            <div class="srv-carousel-item">
-                <div class="srv-card">
-                    <div class="card-img">
-                        <img src="{% static 'images/services/overview/department2.jpg' %}" alt="جراحة الجلوكوما">
-                        <div class="overlay"></div>
-                        <span class="tag tag-surgery">جراحة</span>
-                    </div>
-                    <div class="card-body-inner">
-                        <h3>جراحة الجلوكوما</h3>
-                        <p>التدخلات الجراحية والليزرية للسيطرة على ضغط العين والحفاظ على العصب البصري</p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
         <div class="text-center srv-more-btn">
             <a href="{% url 'arabic_services:arabic_surgery_services' %}" class="btn-surgery-outline">
@@ -456,38 +397,13 @@
             <p>لمحة عن البيئة المجهزة والمريحة في عيادة د. عبد الرحيمي</p>
         </div>
         <div class="gallery-grid">
-            <div class="gallery-item gi-wide-tall" data-full="{% static 'images/home/gallery/feed1.jpg' %}">
-                <img src="{% static 'images/home/gallery/feed1.jpg' %}" alt="صورة العيادة 1" loading="lazy">
+            {% for img in gallery_images %}
+            <div class="gallery-item {% if forloop.first %}gi-wide-tall{% elif forloop.counter == 6 %}gi-wide{% endif %}"
+                 data-full="{{ img.image.url }}">
+                <img src="{{ img.image.url }}" alt="{{ img.alt_ar|default:img.title_ar }}" loading="lazy">
                 <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
             </div>
-            <div class="gallery-item" data-full="{% static 'images/home/gallery/feed2.jpg' %}">
-                <img src="{% static 'images/home/gallery/feed2.jpg' %}" alt="صورة العيادة 2" loading="lazy">
-                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
-            </div>
-            <div class="gallery-item" data-full="{% static 'images/home/gallery/feed3.jpg' %}">
-                <img src="{% static 'images/home/gallery/feed3.jpg' %}" alt="صورة العيادة 3" loading="lazy">
-                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
-            </div>
-            <div class="gallery-item" data-full="{% static 'images/home/gallery/feed4.jpg' %}">
-                <img src="{% static 'images/home/gallery/feed4.jpg' %}" alt="صورة العيادة 4" loading="lazy">
-                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
-            </div>
-            <div class="gallery-item" data-full="{% static 'images/home/gallery/feed5.jpg' %}">
-                <img src="{% static 'images/home/gallery/feed5.jpg' %}" alt="صورة العيادة 5" loading="lazy">
-                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
-            </div>
-            <div class="gallery-item gi-wide" data-full="{% static 'images/home/gallery/feed6.jpg' %}">
-                <img src="{% static 'images/home/gallery/feed6.jpg' %}" alt="صورة العيادة 6" loading="lazy">
-                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
-            </div>
-            <div class="gallery-item" data-full="{% static 'images/home/gallery/feed7.jpg' %}">
-                <img src="{% static 'images/home/gallery/feed7.jpg' %}" alt="صورة العيادة 7" loading="lazy">
-                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
-            </div>
-            <div class="gallery-item" data-full="{% static 'images/home/gallery/feed8.jpg' %}">
-                <img src="{% static 'images/home/gallery/feed8.jpg' %}" alt="صورة العيادة 8" loading="lazy">
-                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>

@@ -89,95 +89,22 @@
 
         <div class="row">
 
-            <!-- جراحی ۱ -->
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".1s">
+            {% for item in items %}
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp">
                 <div class="service-card">
                     <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-cut"></i></div>
-                        <img src="{% static 'images/services/surgery/svc_surg_1.jpg' %}" alt="جراحی شبکیه ویترکتومی" loading="lazy" onerror="this.style.opacity='0'">
+                        {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.title_fa }}" loading="lazy">
+                        {% endif %}
                         <div class="svc-img-overlay"></div>
                     </div>
                     <div class="svc-body">
-                        <h3>جراحی شبکیه (ویترکتومی)</h3>
-                        <p>جراحی پیشرفته زجاجیه برای درمان جداشدگی شبکیه و خونریزی زجاجیه.</p>
+                        <h3>{{ item.title_fa }}</h3>
+                        <p>{{ item.description_fa }}</p>
                     </div>
                 </div>
             </div>
-
-            <!-- جراحی ۲ -->
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".15s">
-                <div class="service-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-eye"></i></div>
-                        <img src="{% static 'images/services/surgery/svc_surg_2.jpg' %}" alt="جراحی آب مروارید" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>جراحی آب مروارید (کاتاراکت)</h3>
-                        <p>فیکوامولسیفیکاسیون با کمترین برش و کاشت لنز پریمیوم برای بازگرداندن دید.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- جراحی ۳ -->
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".2s">
-                <div class="service-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-bolt"></i></div>
-                        <img src="{% static 'images/services/surgery/svc_surg_3.jpg' %}" alt="لیزر شبکیه" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>لیزر شبکیه</h3>
-                        <p>درمان پارگی‌ها و ضایعات شبکیه با لیزر آرگون برای حفاظت از بینایی.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- جراحی ۴ -->
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".1s">
-                <div class="service-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-procedures"></i></div>
-                        <img src="{% static 'images/services/surgery/svc_surg_4.jpg' %}" alt="جراحی گلوکوم" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>جراحی گلوکوم</h3>
-                        <p>تراب‌کولکتومی و کاشت ایمپلنت تخلیه زلالیه برای کنترل دائمی فشار چشم.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- جراحی ۵ -->
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".15s">
-                <div class="service-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-layer-group"></i></div>
-                        <img src="{% static 'images/services/surgery/svc_surg_5.jpg' %}" alt="لیزر گلوکوم" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>لیزر گلوکوم (SLT / YAG)</h3>
-                        <p>لیزر انتخابی SLT و ایریدوتومی YAG برای کاهش فشار بدون جراحی باز.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- جراحی ۶ -->
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".2s">
-                <div class="service-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-fill-drip"></i></div>
-                        <img src="{% static 'images/services/surgery/svc_surg_6.jpg' %}" alt="اندوتامپوناد" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>اندوتامپوناد (گاز / سیلیکون)</h3>
-                        <p>استفاده از گاز یا روغن سیلیکون برای تثبیت شبکیه پس از ویترکتومی.</p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
 
         </div>
     </div>

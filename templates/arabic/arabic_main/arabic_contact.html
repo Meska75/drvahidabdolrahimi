@@ -120,7 +120,14 @@
                 <h3>أرسل رسالة</h3>
                 <p>أرسل لنا رسالتك وسنرد خلال 24 ساعة عمل.</p>
 
-                <form action="#" method="post">
+                {% if sent %}
+                <div style="margin-bottom:20px; padding:16px 20px; background:#f0fdf4; border:1.5px solid #86efac; border-radius:12px; color:#166534; font-size:14px; text-align:center;">
+                    <i class="fas fa-check-circle" style="margin-left:8px; color:#16a34a;"></i>
+                    تم إرسال رسالتك بنجاح. سنتواصل معك في أقرب وقت ممكن.
+                </div>
+                {% endif %}
+
+                <form action="{% url 'arabic:arabic_contact' %}" method="post">
                     {% csrf_token %}
 
                     <div class="uf-row">
@@ -159,10 +166,6 @@
                         إرسال الرسالة
                     </button>
 
-                    <div id="form-notice" style="display:none; margin-top:16px; padding:14px 18px; background:#f0f9ff; border:1px solid #bae6fd; border-radius:12px; color:#0369a1; font-size:13px; text-align:center;">
-                        <i class="fas fa-info-circle" style="margin-left:6px;"></i>
-                        ستكون هذه الخاصية متاحة قريباً. يُرجى التواصل معنا عبر الهاتف أو وسائل التواصل الاجتماعي.
-                    </div>
 
                 </form>
             </div>

@@ -40,9 +40,16 @@
 <!-- ===== Hero ===== -->
 <section class="hero-section">
     <div class="hero-bg-slider" id="heroBgSlider">
-        <div class="hero-slide" data-bg="{% static 'images/home/banner/banner-bg.jpg' %}"></div>
-        <div class="hero-slide" data-bg="{% static 'images/home/banner/banner-5bg.jpg' %}"></div>
-        <div class="hero-slide" data-bg="{% static 'images/home/banner/banner-2bg.jpg' %}"></div>
+        {% if banners %}
+            {% for banner in banners %}
+            <div class="hero-slide" data-bg="{{ banner.image.url }}"
+                 {% if banner.alt_en %}title="{{ banner.alt_en }}"{% endif %}></div>
+            {% endfor %}
+        {% else %}
+            <div class="hero-slide" data-bg="{% static 'images/home/banner/banner-bg.jpg' %}"></div>
+            <div class="hero-slide" data-bg="{% static 'images/home/banner/banner-5bg.jpg' %}"></div>
+            <div class="hero-slide" data-bg="{% static 'images/home/banner/banner-2bg.jpg' %}"></div>
+        {% endif %}
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-circle-1"></div>
@@ -121,29 +128,29 @@
             <div class="col-lg-3 col-sm-6">
                 <div class="stat-item">
                     <i class="fa fa-user-md stat-icon"></i>
-                    <span class="stat-num">20+</span>
-                    <span class="stat-lbl">Years of Clinical Experience</span>
+                    <span class="stat-num">{{ site_settings.stat_years.value_en|default:"20+" }}</span>
+                    <span class="stat-lbl">{{ site_settings.stat_years_label.value_en|default:"Years of Clinical Experience" }}</span>
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6">
                 <div class="stat-item">
                     <i class="fa fa-heartbeat stat-icon"></i>
-                    <span class="stat-num">5,000+</span>
-                    <span class="stat-lbl">Patients Treated</span>
+                    <span class="stat-num">{{ site_settings.stat_patients.value_en|default:"5,000+" }}</span>
+                    <span class="stat-lbl">{{ site_settings.stat_patients_label.value_en|default:"Patients Treated" }}</span>
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6">
                 <div class="stat-item">
                     <i class="fas fa-procedures stat-icon"></i>
-                    <span class="stat-num">1,500+</span>
-                    <span class="stat-lbl">Surgeries Performed</span>
+                    <span class="stat-num">{{ site_settings.stat_surgeries.value_en|default:"1,500+" }}</span>
+                    <span class="stat-lbl">{{ site_settings.stat_surgeries_label.value_en|default:"Surgeries Performed" }}</span>
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6">
                 <div class="stat-item">
                     <i class="fa fa-star stat-icon"></i>
-                    <span class="stat-num">98%</span>
-                    <span class="stat-lbl">Patient Satisfaction</span>
+                    <span class="stat-num">{{ site_settings.stat_satisfaction.value_en|default:"98%" }}</span>
+                    <span class="stat-lbl">{{ site_settings.stat_satisfaction_label.value_en|default:"Patient Satisfaction" }}</span>
                 </div>
             </div>
         </div>
@@ -260,58 +267,25 @@
             <p>Comprehensive ophthalmic services in a well-equipped, comfortable environment with thorough examination and professional consultation</p>
         </div>
         <div class="owl-carousel srv-carousel" id="officeSrvCarousel">
+            {% for item in office_items %}
             <div class="srv-carousel-item">
                 <div class="srv-card">
                     <div class="card-img">
-                        <img src="{% static 'images/services/overview/department1.jpg' %}" alt="Examination & Consultation">
+                        {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.title_en|default:item.title_fa }}">
+                        {% else %}
+                        <img src="{% static 'images/services/overview/department1.jpg' %}" alt="{{ item.title_en|default:item.title_fa }}">
+                        {% endif %}
                         <div class="overlay"></div>
                         <span class="tag">Office</span>
                     </div>
                     <div class="card-body-inner">
-                        <h3>Examination &amp; Consultation</h3>
-                        <p>Thorough eye assessment and professional guidance for selecting the best treatment path</p>
+                        <h3>{{ item.title_en|default:item.title_fa }}</h3>
+                        <p>{{ item.summary_en|default:item.summary_fa }}</p>
                     </div>
                 </div>
             </div>
-            <div class="srv-carousel-item">
-                <div class="srv-card">
-                    <div class="card-img">
-                        <img src="{% static 'images/services/overview/department2.jpg' %}" alt="OCT Imaging">
-                        <div class="overlay"></div>
-                        <span class="tag">Office</span>
-                    </div>
-                    <div class="card-body-inner">
-                        <h3>OCT Imaging</h3>
-                        <p>Advanced retinal and optic nerve imaging for precise disease diagnosis</p>
-                    </div>
-                </div>
-            </div>
-            <div class="srv-carousel-item">
-                <div class="srv-card">
-                    <div class="card-img">
-                        <img src="{% static 'images/services/overview/department3.jpg' %}" alt="Intravitreal Injection">
-                        <div class="overlay"></div>
-                        <span class="tag">Office</span>
-                    </div>
-                    <div class="card-body-inner">
-                        <h3>Intravitreal Injection</h3>
-                        <p>Anti-VEGF drug injections for the treatment of macular diseases</p>
-                    </div>
-                </div>
-            </div>
-            <div class="srv-carousel-item">
-                <div class="srv-card">
-                    <div class="card-img">
-                        <img src="{% static 'images/services/overview/department1.jpg' %}" alt="Visual Field Test">
-                        <div class="overlay"></div>
-                        <span class="tag">Office</span>
-                    </div>
-                    <div class="card-body-inner">
-                        <h3>Visual Field Test</h3>
-                        <p>Precise visual field evaluation for diagnosis and monitoring of conditions such as glaucoma</p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
         <div class="text-center srv-more-btn">
             <a href="{% url 'english_services:english_office_services' %}" class="btn-about">
@@ -332,58 +306,25 @@
             <p>Advanced ophthalmic surgery using the latest equipment, aimed at restoring and preserving visual health</p>
         </div>
         <div class="owl-carousel srv-carousel" id="surgerySrvCarousel">
+            {% for item in surgery_items %}
             <div class="srv-carousel-item">
                 <div class="srv-card">
                     <div class="card-img">
-                        <img src="{% static 'images/services/overview/department2.jpg' %}" alt="Vitrectomy">
+                        {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.title_en|default:item.title_fa }}">
+                        {% else %}
+                        <img src="{% static 'images/services/overview/department2.jpg' %}" alt="{{ item.title_en|default:item.title_fa }}">
+                        {% endif %}
                         <div class="overlay"></div>
                         <span class="tag tag-surgery">Surgery</span>
                     </div>
                     <div class="card-body-inner">
-                        <h3>Retinal Surgery (Vitrectomy)</h3>
-                        <p>Advanced retinal surgery for the treatment of retinal detachment and vitreous hemorrhage</p>
+                        <h3>{{ item.title_en|default:item.title_fa }}</h3>
+                        <p>{{ item.summary_en|default:item.summary_fa }}</p>
                     </div>
                 </div>
             </div>
-            <div class="srv-carousel-item">
-                <div class="srv-card">
-                    <div class="card-img">
-                        <img src="{% static 'images/services/overview/department1.jpg' %}" alt="Cataract Surgery">
-                        <div class="overlay"></div>
-                        <span class="tag tag-surgery">Surgery</span>
-                    </div>
-                    <div class="card-body-inner">
-                        <h3>Cataract Surgery (Phaco)</h3>
-                        <p>Phacoemulsification with intraocular lens implantation to restore visual clarity</p>
-                    </div>
-                </div>
-            </div>
-            <div class="srv-carousel-item">
-                <div class="srv-card">
-                    <div class="card-img">
-                        <img src="{% static 'images/services/overview/department3.jpg' %}" alt="Retinal Laser">
-                        <div class="overlay"></div>
-                        <span class="tag tag-surgery">Surgery</span>
-                    </div>
-                    <div class="card-body-inner">
-                        <h3>Retinal Laser</h3>
-                        <p>Laser treatment of retinal tears and weaknesses to prevent detachment</p>
-                    </div>
-                </div>
-            </div>
-            <div class="srv-carousel-item">
-                <div class="srv-card">
-                    <div class="card-img">
-                        <img src="{% static 'images/services/overview/department2.jpg' %}" alt="Glaucoma Surgery">
-                        <div class="overlay"></div>
-                        <span class="tag tag-surgery">Surgery</span>
-                    </div>
-                    <div class="card-body-inner">
-                        <h3>Glaucoma Surgery</h3>
-                        <p>Surgical and laser interventions to control eye pressure and prevent optic nerve damage</p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
         <div class="text-center srv-more-btn">
             <a href="{% url 'english_services:english_surgery_services' %}" class="btn-surgery-outline">
@@ -463,38 +404,13 @@
             <p>A glimpse into the well-equipped and welcoming environment of Dr. Abdolrahimi's clinic</p>
         </div>
         <div class="gallery-grid">
-            <div class="gallery-item gi-wide-tall" data-full="{% static 'images/home/gallery/feed1.jpg' %}">
-                <img src="{% static 'images/home/gallery/feed1.jpg' %}" alt="Clinic Photo 1" loading="lazy">
+            {% for img in gallery_images %}
+            <div class="gallery-item {% if forloop.first %}gi-wide-tall{% elif forloop.counter == 6 %}gi-wide{% endif %}"
+                 data-full="{{ img.image.url }}">
+                <img src="{{ img.image.url }}" alt="{{ img.alt_en|default:img.title_en }}" loading="lazy">
                 <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
             </div>
-            <div class="gallery-item" data-full="{% static 'images/home/gallery/feed2.jpg' %}">
-                <img src="{% static 'images/home/gallery/feed2.jpg' %}" alt="Clinic Photo 2" loading="lazy">
-                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
-            </div>
-            <div class="gallery-item" data-full="{% static 'images/home/gallery/feed3.jpg' %}">
-                <img src="{% static 'images/home/gallery/feed3.jpg' %}" alt="Clinic Photo 3" loading="lazy">
-                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
-            </div>
-            <div class="gallery-item" data-full="{% static 'images/home/gallery/feed4.jpg' %}">
-                <img src="{% static 'images/home/gallery/feed4.jpg' %}" alt="Clinic Photo 4" loading="lazy">
-                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
-            </div>
-            <div class="gallery-item" data-full="{% static 'images/home/gallery/feed5.jpg' %}">
-                <img src="{% static 'images/home/gallery/feed5.jpg' %}" alt="Clinic Photo 5" loading="lazy">
-                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
-            </div>
-            <div class="gallery-item gi-wide" data-full="{% static 'images/home/gallery/feed6.jpg' %}">
-                <img src="{% static 'images/home/gallery/feed6.jpg' %}" alt="Clinic Photo 6" loading="lazy">
-                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
-            </div>
-            <div class="gallery-item" data-full="{% static 'images/home/gallery/feed7.jpg' %}">
-                <img src="{% static 'images/home/gallery/feed7.jpg' %}" alt="Clinic Photo 7" loading="lazy">
-                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
-            </div>
-            <div class="gallery-item" data-full="{% static 'images/home/gallery/feed8.jpg' %}">
-                <img src="{% static 'images/home/gallery/feed8.jpg' %}" alt="Clinic Photo 8" loading="lazy">
-                <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>

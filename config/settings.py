@@ -56,6 +56,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'main.context_processors.site_context',
             ],
         },
     },
@@ -211,6 +212,7 @@ JAZZMIN_SETTINGS = {
         "main.FaqItem": "fas fa-question-circle",
         "main.PatientTestimonial": "fas fa-star",
         "main.SiteSetting": "fas fa-cog",
+        "main.SocialLinks": "fas fa-share-alt",
         "main.SiteBanner": "fas fa-image",
         "main.DoctorEducation": "fas fa-graduation-cap",
         "main.DoctorAchievement": "fas fa-award",
@@ -271,6 +273,19 @@ JAZZMIN_UI_TWEAKS = {
     },
     "actions_sticky_top": True,
 }
+
+# ===== تنظیمات ایمیل (Gmail SMTP) =====
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+DEFAULT_FROM_EMAIL = os.environ.get(
+    'DEFAULT_FROM_EMAIL',
+    f'پنل مدیریت دکتر عبدالرحیمی <{os.environ.get("EMAIL_HOST_USER", "")}>'
+)
+SERVER_EMAIL = EMAIL_HOST_USER
 
 # ===== تنظیمات امنیتی پروداکشن =====
 if not DEBUG:

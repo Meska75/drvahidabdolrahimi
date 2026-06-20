@@ -1,0 +1,93 @@
+{% load static %}
+{% load jazzmin %}
+{% get_jazzmin_settings request as jazzmin_settings %}
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if success %}حساب فعال شد{% else %}لینک نامعتبر{% endif %} | {{ jazzmin_settings.site_title }}</title>
+    <link rel="stylesheet" href="{% static 'vendor/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/adminlte/css/adminlte.min.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800&display=swap" rel="stylesheet">
+    {% if jazzmin_settings.custom_css %}
+    <link rel="stylesheet" href="{% static jazzmin_settings.custom_css %}">
+    {% endif %}
+    <link rel="shortcut icon" href="{% static jazzmin_settings.site_icon %}" type="image/png">
+</head>
+<body class="al-body">
+
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;">
+    <div style="background:#fff;border-radius:20px;padding:48px 40px;max-width:480px;width:100%;
+                text-align:center;box-shadow:0 8px 40px rgba(0,0,0,0.10);">
+
+        {% if success %}
+
+        <!-- موفقیت -->
+        <div style="width:88px;height:88px;border-radius:50%;
+                    background:linear-gradient(135deg,#0f766e,#0891b2);
+                    display:flex;align-items:center;justify-content:center;
+                    margin:0 auto 24px;
+                    box-shadow:0 8px 24px rgba(8,145,178,0.38);
+                    font-size:2.2rem;color:#fff;
+                    animation:bounceIn 0.6s cubic-bezier(0.34,1.56,0.64,1);">
+            <i class="fas fa-check"></i>
+        </div>
+        <h2 style="font-size:1.5rem;font-weight:800;color:#0f172a;margin:0 0 12px;">
+            ایمیل تأیید شد!
+        </h2>
+        <p style="color:#64748b;font-size:0.92rem;line-height:1.75;margin:0 0 32px;">
+            حساب کاربری <strong style="color:#0f766e;">{{ username }}</strong>
+            با موفقیت فعال شد.<br>
+            اکنون می‌توانید وارد پنل مدیریت شوید.
+        </p>
+        <a href="{% url 'admin:index' %}"
+           style="display:inline-flex;align-items:center;gap:10px;
+                  background:linear-gradient(135deg,#0f766e,#0891b2);
+                  color:#fff;text-decoration:none;
+                  padding:14px 32px;border-radius:12px;
+                  font-size:1rem;font-weight:700;
+                  box-shadow:0 6px 20px rgba(8,145,178,0.38);">
+            <i class="fas fa-sign-in-alt"></i>
+            ورود به پنل مدیریت
+        </a>
+
+        {% else %}
+
+        <!-- خطا -->
+        <div style="width:88px;height:88px;border-radius:50%;
+                    background:linear-gradient(135deg,#dc2626,#f87171);
+                    display:flex;align-items:center;justify-content:center;
+                    margin:0 auto 24px;
+                    box-shadow:0 8px 24px rgba(220,38,38,0.35);
+                    font-size:2.2rem;color:#fff;">
+            <i class="fas fa-times"></i>
+        </div>
+        <h2 style="font-size:1.5rem;font-weight:800;color:#0f172a;margin:0 0 12px;">
+            لینک منقضی شده است
+        </h2>
+        <p style="color:#64748b;font-size:0.92rem;line-height:1.75;margin:0 0 32px;">
+            لینک تأیید ایمیل شما منقضی شده یا قبلاً استفاده شده است.<br>
+            لطفاً از ادمین بخواهید لینک جدید ارسال کند.
+        </p>
+        <div style="background:#fef3c7;border:1px solid #fde68a;border-radius:12px;
+                    padding:14px 18px;text-align:right;font-size:0.85rem;color:#92400e;">
+            <i class="fas fa-info-circle" style="margin-left:8px;"></i>
+            لینک‌های تأیید ایمیل فقط <strong>۴۸ ساعت</strong> اعتبار دارند.
+        </div>
+
+        {% endif %}
+
+    </div>
+</div>
+
+<style>
+@keyframes bounceIn {
+    0%   { transform: scale(0.3); opacity: 0; }
+    60%  { transform: scale(1.1); }
+    100% { transform: scale(1);   opacity: 1; }
+}
+</style>
+</body>
+</html>

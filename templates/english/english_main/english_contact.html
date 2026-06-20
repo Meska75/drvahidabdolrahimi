@@ -156,7 +156,14 @@
                 <h3>Send a Message</h3>
                 <p>Send us your message — we reply within 24 business hours.</p>
 
-                <form action="#" method="post">
+                {% if sent %}
+                <div style="margin-bottom:20px; padding:16px 20px; background:#f0fdf4; border:1.5px solid #86efac; border-radius:12px; color:#166534; font-size:14px; text-align:center;">
+                    <i class="fas fa-check-circle" style="margin-right:8px; color:#16a34a;"></i>
+                    Your message was sent successfully. We will contact you as soon as possible.
+                </div>
+                {% endif %}
+
+                <form action="{% url 'english:english_contact' %}" method="post">
                     {% csrf_token %}
 
                     <!-- Name + Phone row -->
@@ -199,10 +206,6 @@
                         Send Message
                     </button>
 
-                    <div id="form-notice" style="display:none; margin-top:16px; padding:14px 18px; background:#f0f9ff; border:1px solid #bae6fd; border-radius:12px; color:#0369a1; font-size:13px; text-align:center;">
-                        <i class="fas fa-info-circle" style="margin-right:6px;"></i>
-                        This feature will be available soon. Please contact us by phone or social media.
-                    </div>
 
                 </form>
             </div>

@@ -9,80 +9,30 @@
 
 <div class="row">
 
-    <div class="col-lg-3 col-sm-6 mb-4 mb-lg-0">
-        <div class="team-card wow fadeInUp" data-wow-delay=".1s" data-bg="{% static 'images/team/doctor2.jpg' %}">
+    {% for member in team_members %}
+    <div class="col-lg-3 col-sm-6 mb-4 {% if not forloop.last %}mb-lg-0{% endif %}">
+        <div class="team-card wow fadeInUp" data-wow-delay=".{{ forloop.counter }}s"
+             {% if member.photo %}data-bg="{{ member.photo.url }}"{% endif %}>
             <div class="img-wrap">
-                <img src="{% static 'images/team/doctor2.jpg' %}" alt="Ms. Faraji" loading="lazy">
+                {% if member.photo %}
+                <img src="{{ member.photo.url }}" alt="{{ member.name_en|default:member.name_fa }}" loading="lazy">
+                {% else %}
+                <img src="{% static 'images/team/doctor1.jpg' %}" alt="{{ member.name_en|default:member.name_fa }}" loading="lazy">
+                {% endif %}
             </div>
             <div class="card-info">
-                <h3>Ms. Faraji</h3>
-                <span class="role">Optometrist</span>
+                <h3>{{ member.name_en|default:member.name_fa }}</h3>
+                <span class="role">{{ member.title_en|default:member.title_fa }}</span>
                 <div class="member-socials">
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    {% if member.instagram_url %}<a href="{{ member.instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>{% endif %}
+                    {% if member.whatsapp_number %}<a href="https://wa.me/{{ member.whatsapp_number }}" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>{% endif %}
+                    {% if member.telegram_url %}<a href="{{ member.telegram_url }}" target="_blank" rel="noopener" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>{% endif %}
+                    {% if member.linkedin_url %}<a href="{{ member.linkedin_url }}" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>{% endif %}
                 </div>
-                <p>Providing specialized optometry services including vision testing and eyeglass/lens prescription</p>
+                <p>{{ member.bio_en|default:member.bio_fa }}</p>
             </div>
         </div>
     </div>
-
-    <div class="col-lg-3 col-sm-6 mb-4 mb-lg-0">
-        <div class="team-card wow fadeInUp" data-wow-delay=".15s" data-bg="{% static 'images/team/doctor3.jpg' %}">
-            <div class="img-wrap">
-                <img src="{% static 'images/team/doctor3.jpg' %}" alt="Ms. Hedieh Hama-Vandi" loading="lazy">
-            </div>
-            <div class="card-info">
-                <h3>Ms. Hedieh Hama-Vandi</h3>
-                <span class="role">Medical Assistant</span>
-                <div class="member-socials">
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-                <p>Assisting in clinical services and patient care coordination</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-3 col-sm-6 mb-4 mb-sm-0">
-        <div class="team-card wow fadeInUp" data-wow-delay=".2s" data-bg="{% static 'images/team/doctor4.jpg' %}">
-            <div class="img-wrap">
-                <img src="{% static 'images/team/doctor4.jpg' %}" alt="Ms. Darya Parnian" loading="lazy">
-            </div>
-            <div class="card-info">
-                <h3>Ms. Darya Parnian</h3>
-                <span class="role">Medical Assistant</span>
-                <div class="member-socials">
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-                <p>Assisting in clinical services and treatment coordination</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-3 col-sm-6">
-        <div class="team-card wow fadeInUp" data-wow-delay=".25s" data-bg="{% static 'images/team/doctor1.jpg' %}">
-            <div class="img-wrap">
-                <img src="{% static 'images/team/doctor1.jpg' %}" alt="Staff Member" loading="lazy">
-            </div>
-            <div class="card-info">
-                <h3>Staff Member</h3>
-                <span class="role">Position</span>
-                <div class="member-socials">
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-                <p>Description</p>
-            </div>
-        </div>
-    </div>
+    {% endfor %}
 
 </div>

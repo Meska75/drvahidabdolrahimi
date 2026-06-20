@@ -257,65 +257,21 @@
             <div class="col-lg-8 offset-lg-2">
                 <div class="timeline-wrap">
 
-                    <!-- Item 1 -->
-                    <div class="tl-item wow fadeInUp" data-wow-delay=".1s">
+                    {% for edu in educations %}
+                    <div class="tl-item wow fadeInUp" data-wow-delay=".{{ forloop.counter }}s">
                         <div class="tl-dot"></div>
                         <div class="tl-card">
-                            <span class="tl-year">1986 – 1993</span>
+                            <span class="tl-year">{{ edu.year }}</span>
                             <div class="tl-card-header">
-                                <div class="tl-icon">
-                                    <i class="fas fa-user-md"></i>
-                                </div>
-                                <h3>General Medicine (M.D.)</h3>
+                                <div class="tl-icon"><i class="fas fa-graduation-cap"></i></div>
+                                <h3>{{ edu.degree_en }}</h3>
                             </div>
-                            <p>Graduated with a Doctor of Medicine degree from Iran University of Medical Sciences</p>
+                            <p>{{ edu.institution_en }}</p>
                         </div>
                     </div>
-
-                    <!-- Item 2 -->
-                    <div class="tl-item wow fadeInUp" data-wow-delay=".15s">
-                        <div class="tl-dot"></div>
-                        <div class="tl-card">
-                            <span class="tl-year">1995 – 1999</span>
-                            <div class="tl-card-header">
-                                <div class="tl-icon">
-                                    <i class="fas fa-eye"></i>
-                                </div>
-                                <h3>Ophthalmology Residency</h3>
-                            </div>
-                            <p>Completed ophthalmology residency and obtained board certification from Iran University of Medical Sciences</p>
-                        </div>
-                    </div>
-
-                    <!-- Item 3 -->
-                    <div class="tl-item wow fadeInUp" data-wow-delay=".2s">
-                        <div class="tl-dot"></div>
-                        <div class="tl-card">
-                            <span class="tl-year">1999 – 2001</span>
-                            <div class="tl-card-header">
-                                <div class="tl-icon">
-                                    <i class="fas fa-certificate"></i>
-                                </div>
-                                <h3>Retina &amp; Laser Fellowship</h3>
-                            </div>
-                            <p>Obtained a Retina and Laser sub-specialty fellowship from prestigious national and international centers; admitted as a member of the European and American Societies of Ophthalmologists</p>
-                        </div>
-                    </div>
-
-                    <!-- Item 4 -->
-                    <div class="tl-item wow fadeInUp" data-wow-delay=".25s">
-                        <div class="tl-dot"></div>
-                        <div class="tl-card">
-                            <span class="tl-year">2001 – Present</span>
-                            <div class="tl-card-header">
-                                <div class="tl-icon">
-                                    <i class="fas fa-hospital-alt"></i>
-                                </div>
-                                <h3>Specialist Clinical Practice</h3>
-                            </div>
-                            <p>Providing specialist surgical and therapeutic services at a private clinic and leading medical centers in Tehran — over 20 years of successful practice</p>
-                        </div>
-                    </div>
+                    {% empty %}
+                    <p>Education details not yet entered in the admin panel.</p>
+                    {% endfor %}
 
                 </div>
             </div>
@@ -415,29 +371,16 @@
 
         <div class="row">
 
-            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0 wow fadeInUp" data-wow-delay=".1s">
+            {% for ach in achievements %}
+            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0 wow fadeInUp" data-wow-delay=".{{ forloop.counter }}s">
                 <div class="achievement-card">
-                    <div class="achievement-num">30+</div>
-                    <h3>Scientific Articles</h3>
-                    <p>Research papers published in prestigious national and international journals in the field of retinal diseases</p>
+                    <div class="achievement-num">{{ ach.year }}</div>
+                    <h3>{{ ach.title_en|default:ach.title_fa }}</h3>
                 </div>
             </div>
-
-            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0 wow fadeInUp" data-wow-delay=".15s">
-                <div class="achievement-card">
-                    <div class="achievement-num">20+</div>
-                    <h3>Scientific Presentations</h3>
-                    <p>Lectures delivered at national and international ophthalmology congresses and seminars</p>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".2s">
-                <div class="achievement-card">
-                    <div class="achievement-num">5</div>
-                    <h3>Professional Memberships</h3>
-                    <p>Active member of the Iranian Ophthalmology Society, the Retina and Vitreous Society, and other specialist associations</p>
-                </div>
-            </div>
+            {% empty %}
+            <div class="col-12"><p class="text-center">Achievement details not yet entered in the admin panel.</p></div>
+            {% endfor %}
 
         </div>
     </div>
@@ -455,16 +398,17 @@
             <p>Dr. Abdolrahimi sees patients and delivers clinical services at the following specialist centres</p>
         </div>
 
-        <!-- Clinic cards slider -->
         <div class="clinics-slider owl-carousel">
 
-            <!-- Clinic 1 — Novin Didegan -->
+            {% for clinic in clinics %}
             <div class="clinic-card">
                 <div class="clinic-img-wrap">
                     <div class="clinic-img-placeholder">
                         <i class="fas fa-hospital-alt"></i>
                     </div>
-                    <img src="{% static 'images/about/clinics/clinic1.jpg' %}" alt="Novin Didegan Super-Specialist Clinic" loading="lazy" onerror="this.style.opacity='0'">
+                    {% if clinic.image %}
+                    <img src="{{ clinic.image.url }}" alt="{{ clinic.name_en }}" loading="lazy">
+                    {% endif %}
                     <div class="clinic-img-overlay">
                         <span class="clinic-badge">
                             <i class="fas fa-map-marker-alt"></i>
@@ -473,127 +417,39 @@
                     </div>
                 </div>
                 <div class="clinic-body">
-                    <h3 class="clinic-name">Novin Didegan Super-Specialist Clinic</h3>
+                    <h3 class="clinic-name">{{ clinic.name_en }}</h3>
                     <div class="clinic-info">
+                        {% if clinic.address_en %}
                         <div class="clinic-info-item">
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>Shahid Beheshti St., Qaem Maqam Farahani St., Mirza Hassani Alley, No. 24</span>
+                            <span>{{ clinic.address_en }}</span>
                         </div>
+                        {% endif %}
+                        {% if clinic.phone_1 %}
                         <div class="clinic-info-item">
                             <i class="fas fa-phone"></i>
-                            <span>021-88703688</span>
+                            <span>{{ clinic.phone_1 }}{% if clinic.phone_2 %} &nbsp;|&nbsp; {{ clinic.phone_2 }}{% endif %}</span>
                         </div>
+                        {% endif %}
                     </div>
+                    {% if clinic.schedule_en %}
                     <div class="clinic-schedule">
-                        <div class="schedule-title">
-                            <i class="fas fa-phone"></i>
-                            Contact Hours
-                        </div>
+                        <div class="schedule-title"><i class="fas fa-clock"></i> Office Hours</div>
                         <div class="schedule-list">
-                            <div class="schedule-item">
-                                <span class="day">Sat – Thu</span>
-                                <span class="time">10:00 – 20:00</span>
-                            </div>
+                            <div class="schedule-item"><span>{{ clinic.schedule_en }}</span></div>
                         </div>
                     </div>
+                    {% endif %}
+                    {% if clinic.map_url %}
+                    <a href="{{ clinic.map_url }}" target="_blank" rel="noopener" class="clinic-map-link">
+                        <i class="fas fa-map-marked-alt"></i> View on Map
+                    </a>
+                    {% endif %}
                 </div>
             </div>
-
-            <!-- Clinic 2 — Vanak Eye Surgery Center -->
-            <div class="clinic-card">
-                <div class="clinic-img-wrap">
-                    <div class="clinic-img-placeholder">
-                        <i class="fas fa-hospital-alt"></i>
-                    </div>
-                    <img src="{% static 'images/about/clinics/clinic2.jpg' %}" alt="Vanak Eye Surgery Center" loading="lazy" onerror="this.style.opacity='0'">
-                    <div class="clinic-img-overlay">
-                        <span class="clinic-badge">
-                            <i class="fas fa-map-marker-alt"></i>
-                            Tehran
-                        </span>
-                    </div>
-                </div>
-                <div class="clinic-body">
-                    <h3 class="clinic-name">Vanak Eye Surgery Center</h3>
-                    <div class="clinic-info">
-                        <div class="clinic-info-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Tehran, Vanak Square, Haghani Expressway, after South Gandhi St., No. 50</span>
-                        </div>
-                        <div class="clinic-info-item">
-                            <i class="fas fa-phone"></i>
-                            <span>021-88874394 &nbsp;|&nbsp; 021-88874397</span>
-                        </div>
-                    </div>
-                    <div class="clinic-schedule">
-                        <div class="schedule-title">
-                            <i class="fas fa-phone"></i>
-                            Contact Hours
-                        </div>
-                        <div class="schedule-list">
-                            <div class="schedule-item">
-                                <span class="day">Sat – Thu</span>
-                                <span class="time">10:00 – 20:00</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Clinic 3 — Private Practice -->
-            <div class="clinic-card">
-                <div class="clinic-img-wrap">
-                    <div class="clinic-img-placeholder">
-                        <i class="fas fa-clinic-medical"></i>
-                    </div>
-                    <img src="{% static 'images/about/clinics/clinic3.jpg' %}" alt="Dr. Abdolrahimi's Private Practice" loading="lazy" onerror="this.style.opacity='0'">
-                    <div class="clinic-img-overlay">
-                        <span class="clinic-badge">
-                            <i class="fas fa-map-marker-alt"></i>
-                            Tehran — Vanak
-                        </span>
-                    </div>
-                </div>
-                <div class="clinic-body">
-                    <h3 class="clinic-name">Dr. Vahid Abdolrahimi's Private Practice</h3>
-                    <div class="clinic-info">
-                        <div class="clinic-info-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Tehran, Vanak Sq., South Gandhi St., Shahide Torkan St. (No. 19), No. 24, 4th Fl., Unit 9</span>
-                        </div>
-                        <div class="clinic-info-item">
-                            <i class="fas fa-phone"></i>
-                            <span>021-88648210</span>
-                        </div>
-                        <div class="clinic-info-item">
-                            <i class="fas fa-mobile-alt"></i>
-                            <span>0901-343-4195</span>
-                        </div>
-                    </div>
-                    <div class="clinic-schedule">
-                        <div class="schedule-title">
-                            <i class="fas fa-clock"></i>
-                            Office Hours
-                        </div>
-                        <div class="schedule-list">
-                            <div class="schedule-item">
-                                <span class="day">Sat – Thu</span>
-                                <span class="time">11:00 – 14:00</span>
-                            </div>
-                            <div class="schedule-item">
-                                <span class="day">Friday</span>
-                                <span class="time">Closed</span>
-                            </div>
-                        </div>
-                        <!-- Social links -->
-                        <div class="clinic-social">
-                            <a href="https://www.instagram.com/dr_vahid_abdolrahimi/" target="_blank" rel="noopener" class="ig" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                            <a href="https://t.me/dr_vahid_abdolrahimi" target="_blank" rel="noopener" class="tg" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
-                            <a href="https://wa.me/989013434195" target="_blank" rel="noopener" class="wa" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% empty %}
+            <p class="text-center">Clinic details not yet entered in the admin panel.</p>
+            {% endfor %}
 
         </div>
 

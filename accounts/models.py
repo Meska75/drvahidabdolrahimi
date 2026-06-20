@@ -1,5 +1,7 @@
+import uuid
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 class UserProfile(models.Model):
@@ -35,3 +37,23 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f'{self.user.username} ({self.get_role_display()})'
+
+
+class EmailVerificationToken(models.Model):
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE,
+        related_name='email_token', verbose_name='کاربر'
+    )
+    token = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'توکن تأیید ایمیل'
+        verbose_name_plural = 'توکن‌های تأیید ایمیل'
+
+    def is_expired(self):
+        # لینک تأیید ۴۸ ساعت اعتبار دارد
+        return (timezone.now() - self.created_at).total_seconds() > 48 * 3600
+
+    def __str__(self):
+        return f'توکن برای {self.user.username}'

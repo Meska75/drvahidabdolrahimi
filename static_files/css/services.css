@@ -233,7 +233,10 @@
     border: 1px solid var(--border);
     border-radius: 20px;
     overflow: hidden;
-    height: 100%;
+    /* ارتفاع ثابت — مستقل از طول متن */
+    height: 340px;
+    display: flex;
+    flex-direction: column;
     transition: all .32s;
     box-shadow: 0 2px 12px rgba(0,0,0,.05);
 }
@@ -244,27 +247,13 @@
     border-color: rgba(26,86,219,.18);
 }
 
-/* ناحیه تصویر */
+/* ناحیه تصویر — ارتفاع ثابت */
 .svc-img-wrap {
     position: relative;
-    aspect-ratio: 16 / 9;
+    height: 190px;
+    flex-shrink: 0;
     overflow: hidden;
     background: linear-gradient(135deg, #dbeafe 0%, #e8f0fe 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* آیکون placeholder وقتی عکس موجود نیست */
-.svc-img-placeholder {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 52px;
-    color: rgba(26,86,219,.18);
-    z-index: 1;
 }
 
 .svc-img-wrap img {
@@ -273,7 +262,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: 2;
     transition: transform .5s ease;
 }
 
@@ -291,9 +279,13 @@
 
 .service-card:hover .svc-img-overlay { opacity: 1; }
 
-/* بدنه متنی کارت */
+/* بدنه متنی کارت — ارتفاع باقیمانده، متن کوتاه‌شده */
 .svc-body {
-    padding: 18px 20px 22px;
+    padding: 16px 20px 18px;
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .svc-body h3 {
@@ -302,6 +294,11 @@
     color: var(--text-dark);
     margin-bottom: 8px;
     line-height: 1.45;
+    /* جلوگیری از سرریز عنوان */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .svc-body p {
@@ -310,6 +307,11 @@
     line-height: 1.75;
     margin: 0;
     text-align: justify;
+    /* نمایش حداکثر ۳ خط — بقیه با ... */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 
 /* ===========================

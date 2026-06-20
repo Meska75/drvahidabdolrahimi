@@ -57,12 +57,12 @@ class SiteSetting(models.Model):
     is_editable = models.BooleanField(default=True, verbose_name='قابل ویرایش')
 
     class Meta:
-        verbose_name = 'تنظیم سایت'
-        verbose_name_plural = 'تنظیمات سایت'
+        verbose_name = 'آمار نمایشی'
+        verbose_name_plural = 'اعداد و آمار نمایشی سایت'
         ordering = ['group_name', 'key']
 
     def __str__(self):
-        return f'{self.group_name} / {self.key}'
+        return f'{self.label_fa}'
 
 
 class SiteBanner(models.Model):
@@ -163,6 +163,32 @@ class DoctorClinic(models.Model):
 
     def __str__(self):
         return self.name_fa
+
+
+class SocialLinks(models.Model):
+    """لینک‌های شبکه‌های اجتماعی — فقط یک رکورد در DB ذخیره می‌شود"""
+    instagram = models.URLField(blank=True, verbose_name='اینستاگرام')
+    telegram = models.URLField(blank=True, verbose_name='تلگرام')
+    whatsapp = models.URLField(blank=True, verbose_name='واتس‌اپ')
+    youtube = models.URLField(blank=True, verbose_name='یوتیوب')
+    aparat = models.URLField(blank=True, verbose_name='آپارات')
+    linkedin = models.URLField(blank=True, verbose_name='لینکدین')
+
+    class Meta:
+        verbose_name = 'لینک‌های شبکه اجتماعی'
+        verbose_name_plural = 'لینک‌های شبکه اجتماعی'
+
+    def __str__(self):
+        return 'لینک‌های شبکه‌های اجتماعی'
+
+    def save(self, *args, **kwargs):
+        self.pk = 1  # singleton — فقط یک رکورد
+        super().save(*args, **kwargs)
+
+    @classmethod
+    def get(cls):
+        obj, _ = cls.objects.get_or_create(pk=1)
+        return obj
 
 
 class FaqItem(models.Model):

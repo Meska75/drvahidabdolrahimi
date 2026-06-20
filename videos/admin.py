@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import format_html
 from ckeditor.widgets import CKEditorWidget
 from .models import VideoCategory, SiteVideo
 
@@ -15,7 +16,7 @@ class VideoCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(SiteVideo)
 class SiteVideoAdmin(admin.ModelAdmin):
-    list_display = ('title_fa', 'category', 'source_type', 'platform', 'is_published', 'sort_order')
+    list_display = ('preview', 'title_fa', 'category', 'source_type', 'platform', 'is_published', 'sort_order')
     list_editable = ('is_published', 'sort_order')
     list_filter = ('is_published', 'source_type', 'platform', 'category')
     search_fields = ('title_fa', 'title_en')
@@ -27,6 +28,22 @@ class SiteVideoAdmin(admin.ModelAdmin):
         ('رسانه', {'fields': ('thumbnail', 'duration_sec')}),
         ('انتشار', {'fields': ('is_published', 'published_at', 'sort_order', 'views_count')}),
     )
+
+    @admin.display(description='پیش‌نمایش')
+    def preview(self, obj):
+        if obj.thumbnail:
+            return format_html(
+                '<img src="{}" style="width:72px;height:50px;object-fit:cover;'
+                'border-radius:6px;border:1px solid #475569;display:block;">',
+                obj.thumbnail.url
+            )
+        icons = {'youtube': '▶ YouTube', 'aparat': '▶ آپارات', 'direct': '📁 فایل'}
+        label = icons.get(obj.platform, '🎬 ویدیو')
+        return format_html(
+            '<span style="background:#334155;color:#94a3b8;padding:3px 10px;'
+            'border-radius:6px;font-size:0.78rem;white-space:nowrap;">{}</span>',
+            label
+        )
 
     class Media:
         js = ('js/admin_video_fields.js',)

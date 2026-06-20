@@ -9,80 +9,30 @@
 
 <div class="row">
 
-    <div class="col-lg-3 col-sm-6 mb-4 mb-lg-0">
-        <div class="team-card wow fadeInUp" data-wow-delay=".1s" data-bg="{% static 'images/team/doctor2.jpg' %}">
+    {% for member in team_members %}
+    <div class="col-lg-3 col-sm-6 mb-4 {% if not forloop.last %}mb-lg-0{% endif %}">
+        <div class="team-card wow fadeInUp" data-wow-delay=".{{ forloop.counter }}s"
+             {% if member.photo %}data-bg="{{ member.photo.url }}"{% endif %}>
             <div class="img-wrap">
-                <img src="{% static 'images/team/doctor2.jpg' %}" alt="خانم فرجی" loading="lazy">
+                {% if member.photo %}
+                <img src="{{ member.photo.url }}" alt="{{ member.name_fa }}" loading="lazy">
+                {% else %}
+                <img src="{% static 'images/team/doctor1.jpg' %}" alt="{{ member.name_fa }}" loading="lazy">
+                {% endif %}
             </div>
             <div class="card-info">
-                <h3>خانم فرجی</h3>
-                <span class="role">کارشناس بینایی‌سنجی</span>
+                <h3>{{ member.name_fa }}</h3>
+                <span class="role">{{ member.title_fa }}</span>
                 <div class="member-socials">
-                    <a href="#" aria-label="اینستاگرام"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="واتس‌اپ"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" aria-label="تلگرام"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="#" aria-label="لینکدین"><i class="fab fa-linkedin-in"></i></a>
+                    {% if member.instagram_url %}<a href="{{ member.instagram_url }}" target="_blank" rel="noopener" aria-label="اینستاگرام"><i class="fab fa-instagram"></i></a>{% endif %}
+                    {% if member.whatsapp_number %}<a href="https://wa.me/{{ member.whatsapp_number }}" target="_blank" rel="noopener" aria-label="واتس‌اپ"><i class="fab fa-whatsapp"></i></a>{% endif %}
+                    {% if member.telegram_url %}<a href="{{ member.telegram_url }}" target="_blank" rel="noopener" aria-label="تلگرام"><i class="fab fa-telegram-plane"></i></a>{% endif %}
+                    {% if member.linkedin_url %}<a href="{{ member.linkedin_url }}" target="_blank" rel="noopener" aria-label="لینکدین"><i class="fab fa-linkedin-in"></i></a>{% endif %}
                 </div>
-                <p>ارائه خدمات تخصصی بینایی‌سنجی و تجویز عدسی و عینک</p>
+                <p>{{ member.bio_fa }}</p>
             </div>
         </div>
     </div>
-
-    <div class="col-lg-3 col-sm-6 mb-4 mb-lg-0">
-        <div class="team-card wow fadeInUp" data-wow-delay=".15s" data-bg="{% static 'images/team/doctor3.jpg' %}">
-            <div class="img-wrap">
-                <img src="{% static 'images/team/doctor3.jpg' %}" alt="خانم هدیه هماوندی" loading="lazy">
-            </div>
-            <div class="card-info">
-                <h3>خانم هدیه هماوندی</h3>
-                <span class="role">دستیار پزشک</span>
-                <div class="member-socials">
-                    <a href="#" aria-label="اینستاگرام"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="واتس‌اپ"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" aria-label="تلگرام"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="#" aria-label="لینکدین"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-                <p>همکاری در ارائه خدمات بالینی و مراقبت از بیماران</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-3 col-sm-6 mb-4 mb-sm-0">
-        <div class="team-card wow fadeInUp" data-wow-delay=".2s" data-bg="{% static 'images/team/doctor4.jpg' %}">
-            <div class="img-wrap">
-                <img src="{% static 'images/team/doctor4.jpg' %}" alt="خانم دریا پرنیان" loading="lazy">
-            </div>
-            <div class="card-info">
-                <h3>خانم دریا پرنیان</h3>
-                <span class="role">دستیار پزشک</span>
-                <div class="member-socials">
-                    <a href="#" aria-label="اینستاگرام"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="واتس‌اپ"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" aria-label="تلگرام"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="#" aria-label="لینکدین"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-                <p>همکاری در ارائه خدمات بالینی و هماهنگی امور درمانی</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-3 col-sm-6">
-        <div class="team-card wow fadeInUp" data-wow-delay=".25s" data-bg="{% static 'images/team/doctor1.jpg' %}">
-            <div class="img-wrap">
-                <img src="{% static 'images/team/doctor1.jpg' %}" alt="همکار مطب" loading="lazy">
-            </div>
-            <div class="card-info">
-                <h3>نام همکار</h3>
-                <span class="role">سمت همکار</span>
-                <div class="member-socials">
-                    <a href="#" aria-label="اینستاگرام"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="واتس‌اپ"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" aria-label="تلگرام"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="#" aria-label="لینکدین"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-                <p>توضیحات همکار</p>
-            </div>
-        </div>
-    </div>
+    {% endfor %}
 
 </div>

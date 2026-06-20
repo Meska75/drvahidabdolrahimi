@@ -78,89 +78,22 @@
 
         <div class="row">
 
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".1s">
+            {% for item in items %}
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp">
                 <div class="service-card surgery-card">
                     <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder surgery-placeholder"><i class="fas fa-procedures"></i></div>
-                        <img src="{% static 'images/services/surgery/svc_surg_1.jpg' %}" alt="جراحة الشبكية فيتريكتومي" loading="lazy" onerror="this.style.opacity='0'">
+                        {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.title_ar|default:item.title_fa }}" loading="lazy">
+                        {% endif %}
                         <div class="svc-img-overlay"></div>
                     </div>
                     <div class="svc-body">
-                        <h3>جراحة الشبكية (فيتريكتومي)</h3>
-                        <p>جراحة متقدمة لعلاج انفصال الشبكية ونزيف الزجاجية وغشاء البقعة.</p>
+                        <h3>{{ item.title_ar|default:item.title_fa }}</h3>
+                        <p>{{ item.description_ar|default:item.description_fa }}</p>
                     </div>
                 </div>
             </div>
-
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".15s">
-                <div class="service-card surgery-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder surgery-placeholder"><i class="fas fa-eye"></i></div>
-                        <img src="{% static 'images/services/surgery/svc_surg_2.jpg' %}" alt="جراحة المياه البيضاء فيكو" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>جراحة المياه البيضاء (فيكو)</h3>
-                        <p>استحلاب عدسة العين وزراعة عدسة داخل المقلة لاستعادة وضوح الرؤية.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".2s">
-                <div class="service-card surgery-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder surgery-placeholder"><i class="fas fa-bolt"></i></div>
-                        <img src="{% static 'images/services/surgery/svc_surg_3.jpg' %}" alt="ليزر الشبكية" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>ليزر الشبكية</h3>
-                        <p>علاج تمزقات الشبكية ومناطق الضعف بالليزر لمنع الانفصال.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".1s">
-                <div class="service-card surgery-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder surgery-placeholder"><i class="fas fa-compress-arrows-alt"></i></div>
-                        <img src="{% static 'images/services/surgery/svc_surg_4.jpg' %}" alt="جراحة الجلوكوما" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>جراحة الجلوكوما</h3>
-                        <p>التدخلات الجراحية والليزرية للسيطرة على ضغط العين وحماية العصب البصري.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".15s">
-                <div class="service-card surgery-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder surgery-placeholder"><i class="fas fa-crosshairs"></i></div>
-                        <img src="{% static 'images/services/surgery/svc_surg_5.jpg' %}" alt="ليزر SLT وYAG" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>ليزر SLT وYAG</h3>
-                        <p>تدخل ليزري لا جراحي لتخفيض ضغط العين وعلاج انسداد كبسولة العدسة الخلفية.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".2s">
-                <div class="service-card surgery-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder surgery-placeholder"><i class="fas fa-fill-drip"></i></div>
-                        <img src="{% static 'images/services/surgery/svc_surg_6.jpg' %}" alt="التخثير الداخلي" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>التخثير الداخلي (الإندوتامبوناد)</h3>
-                        <p>حقن مواد خاصة داخل الزجاجية للحفاظ على التصاق الشبكية خلال جراحة الشبكية وبعدها.</p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
 
         </div>
     </div>

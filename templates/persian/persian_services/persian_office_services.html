@@ -89,95 +89,22 @@
 
         <div class="row">
 
-            <!-- خدمت ۱ -->
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".1s">
+            {% for item in items %}
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp">
                 <div class="service-card">
                     <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-eye"></i></div>
-                        <img src="{% static 'images/services/office/svc_office_1.jpg' %}" alt="معاینه و مشاوره چشم" loading="lazy" onerror="this.style.opacity='0'">
+                        {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.title_fa }}" loading="lazy">
+                        {% endif %}
                         <div class="svc-img-overlay"></div>
                     </div>
                     <div class="svc-body">
-                        <h3>معاینه و مشاوره چشم</h3>
-                        <p>بررسی جامع وضعیت چشم و ارائه برنامه درمانی اختصاصی برای هر بیمار.</p>
+                        <h3>{{ item.title_fa }}</h3>
+                        <p>{{ item.description_fa }}</p>
                     </div>
                 </div>
             </div>
-
-            <!-- خدمت ۲ -->
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".15s">
-                <div class="service-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-microscope"></i></div>
-                        <img src="{% static 'images/services/office/svc_office_2.jpg' %}" alt="تصویربرداری OCT" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>تصویربرداری OCT</h3>
-                        <p>تصویربرداری مقطعی پیشرفته از شبکیه برای تشخیص دقیق بیماری‌های ماکولا.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- خدمت ۳ -->
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".2s">
-                <div class="service-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-camera"></i></div>
-                        <img src="{% static 'images/services/office/svc_office_3.jpg' %}" alt="فلوئورسین آنژیوگرافی" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>فلوئورسین آنژیوگرافی</h3>
-                        <p>عکس‌برداری از عروق شبکیه برای تشخیص رتینوپاتی دیابتی و انسداد وریدی.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- خدمت ۴ -->
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".1s">
-                <div class="service-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-syringe"></i></div>
-                        <img src="{% static 'images/services/office/svc_office_4.jpg' %}" alt="تزریق داخل زجاجیه" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>تزریق داخل زجاجیه</h3>
-                        <p>تزریق داروهای ضد رگزایی (Anti-VEGF) برای درمان ادم ماکولا و AMD مرطوب.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- خدمت ۵ -->
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".15s">
-                <div class="service-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-dot-circle"></i></div>
-                        <img src="{% static 'images/services/office/svc_office_5.jpg' %}" alt="آزمون میدان بینایی" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>آزمون میدان بینایی (پریمتری)</h3>
-                        <p>ارزیابی دقیق میدان بینایی برای تشخیص و پایش گلوکوم و آسیب عصب بینایی.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- خدمت ۶ -->
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".2s">
-                <div class="service-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-tachometer-alt"></i></div>
-                        <img src="{% static 'images/services/office/svc_office_6.jpg' %}" alt="اندازه‌گیری فشار چشم" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>اندازه‌گیری فشار چشم</h3>
-                        <p>اندازه‌گیری دقیق فشار داخل چشم (تونومتری) برای تشخیص زودهنگام گلوکوم.</p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
 
         </div>
     </div>

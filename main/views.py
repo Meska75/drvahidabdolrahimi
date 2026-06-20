@@ -1,6 +1,13 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
-from .models import FaqItem, PatientTestimonial
+from .models import (
+    FaqItem, PatientTestimonial, ContactMessage,
+    DoctorEducation, DoctorAchievement, DoctorClinic, SiteBanner,
+)
+from .forms import ContactMessageForm
+from team.models import TeamMember
+from services.models import ServiceItem
+from gallery.models import GalleryImage
 
 
 def _detect_lang(request):
@@ -14,8 +21,25 @@ def _detect_lang(request):
     return 'fa'
 
 
+def _service_context():
+    """داده‌های خدمات و تیم برای صفحه اصلی — کاروسل‌ها."""
+    return {
+        'office_items': ServiceItem.objects.filter(type='office', is_active=True)[:6],
+        'surgery_items': ServiceItem.objects.filter(type='surgery', is_active=True)[:6],
+        'team_members': TeamMember.objects.filter(is_active=True),
+    }
+
+
+def _about_context():
+    """داده‌های مشترک صفحه درباره در هر سه زبان."""
+    return {
+        'educations': DoctorEducation.objects.all(),
+        'achievements': DoctorAchievement.objects.all(),
+        'clinics': DoctorClinic.objects.filter(is_active=True),
+    }
+
+
 def persian_home(request):
-    # اگر کاربر هنوز زبانی انتخاب نکرده، بر اساس مرورگر redirect کن
     if 'dr_lang' not in request.COOKIES:
         lang = _detect_lang(request)
         if lang == 'ar':
@@ -25,20 +49,39 @@ def persian_home(request):
 
     faqs = FaqItem.objects.filter(is_active=True)[:6]
     testimonials = PatientTestimonial.objects.order_by('sort_order', '-created_at')[:6]
-    response = render(request, 'persian/persian_main/persian_home.html', {
+    gallery_images = GalleryImage.objects.filter(is_active=True).order_by('sort_order')[:8]
+    banners = SiteBanner.objects.filter(location='home_hero', is_active=True).order_by('sort_order')
+    ctx = _service_context()
+    ctx.update({
         'faqs': faqs,
         'testimonials': testimonials,
+        'gallery_images': gallery_images,
+        'banners': banners,
     })
+    response = render(request, 'persian/persian_main/persian_home.html', ctx)
     response.set_cookie('dr_lang', 'fa', max_age=60 * 60 * 24 * 30, samesite='Lax')
     return response
 
 
 def persian_about(request):
-    return render(request, 'persian/persian_main/persian_about.html')
+    return render(request, 'persian/persian_main/persian_about.html', _about_context())
 
 
 def persian_contact(request):
-    return render(request, 'persian/persian_main/persian_contact.html')
+    form = ContactMessageForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        ContactMessage.objects.create(
+            full_name=form.cleaned_data['name'],
+            phone=form.cleaned_data.get('phone', ''),
+            email=form.cleaned_data.get('email', ''),
+            subject=form.cleaned_data.get('subject', ''),
+            message=form.cleaned_data['message'],
+            language='fa',
+        )
+        return redirect(request.path + '?sent=1')
+    return render(request, 'persian/persian_main/persian_contact.html', {
+        'sent': request.GET.get('sent') == '1',
+    })
 
 
 def persian_faq(request):
@@ -49,20 +92,39 @@ def persian_faq(request):
 def english_home(request):
     faqs = FaqItem.objects.filter(is_active=True)[:6]
     testimonials = PatientTestimonial.objects.order_by('sort_order', '-created_at')[:6]
-    response = render(request, 'english/english_main/english_home.html', {
+    gallery_images = GalleryImage.objects.filter(is_active=True).order_by('sort_order')[:8]
+    banners = SiteBanner.objects.filter(location='home_hero', is_active=True).order_by('sort_order')
+    ctx = _service_context()
+    ctx.update({
         'faqs': faqs,
         'testimonials': testimonials,
+        'gallery_images': gallery_images,
+        'banners': banners,
     })
+    response = render(request, 'english/english_main/english_home.html', ctx)
     response.set_cookie('dr_lang', 'en', max_age=60 * 60 * 24 * 30, samesite='Lax')
     return response
 
 
 def english_about(request):
-    return render(request, 'english/english_main/english_about.html')
+    return render(request, 'english/english_main/english_about.html', _about_context())
 
 
 def english_contact(request):
-    return render(request, 'english/english_main/english_contact.html')
+    form = ContactMessageForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        ContactMessage.objects.create(
+            full_name=form.cleaned_data['name'],
+            phone=form.cleaned_data.get('phone', ''),
+            email=form.cleaned_data.get('email', ''),
+            subject=form.cleaned_data.get('subject', ''),
+            message=form.cleaned_data['message'],
+            language='en',
+        )
+        return redirect(request.path + '?sent=1')
+    return render(request, 'english/english_main/english_contact.html', {
+        'sent': request.GET.get('sent') == '1',
+    })
 
 
 def english_faq(request):
@@ -73,20 +135,39 @@ def english_faq(request):
 def arabic_home(request):
     faqs = FaqItem.objects.filter(is_active=True)[:6]
     testimonials = PatientTestimonial.objects.order_by('sort_order', '-created_at')[:6]
-    response = render(request, 'arabic/arabic_main/arabic_home.html', {
+    gallery_images = GalleryImage.objects.filter(is_active=True).order_by('sort_order')[:8]
+    banners = SiteBanner.objects.filter(location='home_hero', is_active=True).order_by('sort_order')
+    ctx = _service_context()
+    ctx.update({
         'faqs': faqs,
         'testimonials': testimonials,
+        'gallery_images': gallery_images,
+        'banners': banners,
     })
+    response = render(request, 'arabic/arabic_main/arabic_home.html', ctx)
     response.set_cookie('dr_lang', 'ar', max_age=60 * 60 * 24 * 30, samesite='Lax')
     return response
 
 
 def arabic_about(request):
-    return render(request, 'arabic/arabic_main/arabic_about.html')
+    return render(request, 'arabic/arabic_main/arabic_about.html', _about_context())
 
 
 def arabic_contact(request):
-    return render(request, 'arabic/arabic_main/arabic_contact.html')
+    form = ContactMessageForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        ContactMessage.objects.create(
+            full_name=form.cleaned_data['name'],
+            phone=form.cleaned_data.get('phone', ''),
+            email=form.cleaned_data.get('email', ''),
+            subject=form.cleaned_data.get('subject', ''),
+            message=form.cleaned_data['message'],
+            language='ar',
+        )
+        return redirect(request.path + '?sent=1')
+    return render(request, 'arabic/arabic_main/arabic_contact.html', {
+        'sent': request.GET.get('sent') == '1',
+    })
 
 
 def arabic_faq(request):
@@ -99,11 +180,8 @@ def arabic_faq(request):
 def _search_db(query, lang):
     """جستجو در تمام مدل‌های محتوایی — لیست‌ها برمی‌گردانند نه QuerySet."""
     from blog.models import Post
-    from services.models import ServiceItem
     from videos.models import SiteVideo
-    from team.models import TeamMember
 
-    # فیلدهای اصلی بر اساس زبان، همراه fallback به فارسی
     if lang == 'en':
         post_q    = Q(title_en__icontains=query) | Q(summary_en__icontains=query) | Q(title_fa__icontains=query)
         service_q = Q(title_en__icontains=query) | Q(description_en__icontains=query) | Q(title_fa__icontains=query)

@@ -93,95 +93,22 @@
 
         <div class="row">
 
-            <!-- Surgery 1 -->
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".1s">
+            {% for item in items %}
+            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp">
                 <div class="service-card">
                     <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-cut"></i></div>
-                        <img src="{% static 'images/services/surgery/svc_surg_1.jpg' %}" alt="Retinal Surgery — Vitrectomy" loading="lazy" onerror="this.style.opacity='0'">
+                        {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.title_en|default:item.title_fa }}" loading="lazy">
+                        {% endif %}
                         <div class="svc-img-overlay"></div>
                     </div>
                     <div class="svc-body">
-                        <h3>Retinal Surgery (Vitrectomy)</h3>
-                        <p>Advanced vitreous surgery for treatment of retinal detachment and vitreous hemorrhage.</p>
+                        <h3>{{ item.title_en|default:item.title_fa }}</h3>
+                        <p>{{ item.description_en|default:item.description_fa }}</p>
                     </div>
                 </div>
             </div>
-
-            <!-- Surgery 2 -->
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".15s">
-                <div class="service-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-eye"></i></div>
-                        <img src="{% static 'images/services/surgery/svc_surg_2.jpg' %}" alt="Cataract Surgery" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>Cataract Surgery</h3>
-                        <p>Phacoemulsification with minimal incision and premium IOL implantation to restore clear vision.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Surgery 3 -->
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".2s">
-                <div class="service-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-bolt"></i></div>
-                        <img src="{% static 'images/services/surgery/svc_surg_3.jpg' %}" alt="Retinal Laser" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>Retinal Laser</h3>
-                        <p>Treatment of retinal tears and lesions with argon laser to protect and preserve vision.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Surgery 4 -->
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".1s">
-                <div class="service-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-procedures"></i></div>
-                        <img src="{% static 'images/services/surgery/svc_surg_4.jpg' %}" alt="Glaucoma Surgery" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>Glaucoma Surgery</h3>
-                        <p>Trabeculectomy and aqueous drainage implant for long-term intraocular pressure control.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Surgery 5 -->
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".15s">
-                <div class="service-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-layer-group"></i></div>
-                        <img src="{% static 'images/services/surgery/svc_surg_5.jpg' %}" alt="Glaucoma Laser" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>Glaucoma Laser (SLT / YAG)</h3>
-                        <p>Selective laser trabeculoplasty (SLT) and YAG iridotomy to reduce IOP without open surgery.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Surgery 6 -->
-            <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp" data-wow-delay=".2s">
-                <div class="service-card">
-                    <div class="svc-img-wrap">
-                        <div class="svc-img-placeholder"><i class="fas fa-fill-drip"></i></div>
-                        <img src="{% static 'images/services/surgery/svc_surg_6.jpg' %}" alt="Endotamponade" loading="lazy" onerror="this.style.opacity='0'">
-                        <div class="svc-img-overlay"></div>
-                    </div>
-                    <div class="svc-body">
-                        <h3>Endotamponade (Gas / Silicone)</h3>
-                        <p>Use of gas or silicone oil to stabilize the retina following vitrectomy.</p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
 
         </div>
     </div>

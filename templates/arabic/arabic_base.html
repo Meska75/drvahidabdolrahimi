@@ -106,9 +106,13 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 d-md-flex">
+                        {% if main_clinic %}
+                        {% if main_clinic.phone_1 %}<h6><span><i class="fa fa-phone"></i></span> {{ main_clinic.phone_1 }}</h6>{% endif %}
+                        {% if main_clinic.phone_2 %}<h6><span><i class="fa fa-mobile"></i></span> {{ main_clinic.phone_2 }}</h6>{% endif %}
+                        {% if main_clinic.address_ar %}<h6><span><i class="fa fa-map-marker"></i></span> {{ main_clinic.address_ar }}</h6>{% endif %}
+                        {% else %}
                         <h6><span><i class="fa fa-phone"></i></span> 021-88648210</h6>
-                        <h6><span><i class="fa fa-mobile"></i></span> 0901-343-4195</h6>
-                        <h6><span><i class="fa fa-map-marker"></i></span> طهران، ميدان وانك، شارع غاندي الجنوبي، شارع الشهيدة تركان، رقم 24، الطابق الرابع</h6>
+                        {% endif %}
                     </div>
                     <div class="col-lg-4">
                         <div class="d-flex align-items-center justify-content-end">
@@ -122,9 +126,11 @@
                             <div class="lang-social-sep"></div>
                             <div class="social-links">
                                 <ul>
-                                    <li><a href="https://www.instagram.com/dr_vahid_abdolrahimi/" aria-label="Instagram" target="_blank" rel="noopener"><i class="fa fa-instagram"></i></a></li>
-                                    <li><a href="https://t.me/dr_vahid_abdolrahimi" aria-label="Telegram" target="_blank" rel="noopener"><i class="fa fa-telegram"></i></a></li>
-                                    <li><a href="https://wa.me/989013434195" aria-label="WhatsApp" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a></li>
+                                    {% if social_links.instagram %}<li><a href="{{ social_links.instagram }}" aria-label="Instagram" target="_blank" rel="noopener"><i class="fa fa-instagram"></i></a></li>{% endif %}
+                                    {% if social_links.telegram %}<li><a href="{{ social_links.telegram }}" aria-label="Telegram" target="_blank" rel="noopener"><i class="fa fa-telegram"></i></a></li>{% endif %}
+                                    {% if social_links.whatsapp %}<li><a href="{{ social_links.whatsapp }}" aria-label="WhatsApp" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a></li>{% endif %}
+                                    {% if social_links.youtube %}<li><a href="{{ social_links.youtube }}" aria-label="YouTube" target="_blank" rel="noopener"><i class="fa fa-youtube-play"></i></a></li>{% endif %}
+                                    {% if social_links.aparat %}<li><a href="{{ social_links.aparat }}" aria-label="Aparat" target="_blank" rel="noopener"><i class="fa fa-play-circle"></i></a></li>{% endif %}
                                 </ul>
                             </div>
                         </div>
@@ -229,10 +235,14 @@
                     <div class="col-xl-4 col-lg-5">
                         <div class="single-widget-home mb-5 mb-lg-0">
                             <h3 class="mb-4">معلومات الاتصال</h3>
-                            <p class="mb-2"><i class="fa fa-map-marker"></i> طهران، ميدان وانك، شارع غاندي الجنوبي، شارع الشهيدة تركان، رقم 24، الطابق الرابع، وحدة 9</p>
+                            {% if main_clinic %}
+                            {% if main_clinic.address_ar %}<p class="mb-2"><i class="fa fa-map-marker"></i> {{ main_clinic.address_ar }}</p>{% endif %}
+                            {% if main_clinic.phone_1 %}<p class="mb-2"><i class="fa fa-phone"></i> <span dir="ltr">{{ main_clinic.phone_1 }}</span></p>{% endif %}
+                            {% if main_clinic.phone_2 %}<p class="mb-2"><i class="fa fa-mobile"></i> <span dir="ltr">{{ main_clinic.phone_2 }}</span></p>{% endif %}
+                            {% if main_clinic.schedule_ar %}<p><i class="fa fa-clock-o"></i> {{ main_clinic.schedule_ar }}</p>{% endif %}
+                            {% else %}
                             <p class="mb-2"><i class="fa fa-phone"></i> <span dir="ltr">021-88648210</span></p>
-                            <p class="mb-2"><i class="fa fa-mobile"></i> <span dir="ltr">0901-343-4195</span></p>
-                            <p><i class="fa fa-clock-o"></i> السبت – الخميس &nbsp;|&nbsp; 11:00 – 14:00</p>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-xl-3 offset-xl-2 col-lg-4">
@@ -241,9 +251,11 @@
                             <p class="mb-3">تواصلوا معنا عبر الشبكات الاجتماعية</p>
                             <div class="social-icons">
                                 <ul>
-                                    <li><a href="https://www.instagram.com/dr_vahid_abdolrahimi/" aria-label="Instagram" target="_blank" rel="noopener"><i class="fa fa-instagram"></i></a></li>
-                                    <li><a href="https://t.me/dr_vahid_abdolrahimi" aria-label="Telegram" target="_blank" rel="noopener"><i class="fa fa-telegram"></i></a></li>
-                                    <li><a href="https://wa.me/989013434195" aria-label="WhatsApp" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a></li>
+                                    {% if social_links.instagram %}<li><a href="{{ social_links.instagram }}" aria-label="Instagram" target="_blank" rel="noopener"><i class="fa fa-instagram"></i></a></li>{% endif %}
+                                    {% if social_links.telegram %}<li><a href="{{ social_links.telegram }}" aria-label="Telegram" target="_blank" rel="noopener"><i class="fa fa-telegram"></i></a></li>{% endif %}
+                                    {% if social_links.whatsapp %}<li><a href="{{ social_links.whatsapp }}" aria-label="WhatsApp" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a></li>{% endif %}
+                                    {% if social_links.youtube %}<li><a href="{{ social_links.youtube }}" aria-label="YouTube" target="_blank" rel="noopener"><i class="fa fa-youtube-play"></i></a></li>{% endif %}
+                                    {% if social_links.aparat %}<li><a href="{{ social_links.aparat }}" aria-label="Aparat" target="_blank" rel="noopener"><i class="fa fa-play-circle"></i></a></li>{% endif %}
                                 </ul>
                             </div>
                         </div>

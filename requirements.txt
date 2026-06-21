@@ -7,3 +7,7 @@ whitenoise==6.9.0
 django-ckeditor==6.7.3
 django-js-asset==4.0.1
 django-jazzmin==3.0.4
+requests==2.34.2
+django-imagekit==6.1.0
+pilkit==3.0
+django-cleanup==9.0.0

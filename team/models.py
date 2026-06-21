@@ -1,4 +1,7 @@
 from django.db import models
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFit
+from utils.image_validators import validate_image_size
 
 
 class TeamMember(models.Model):
@@ -11,8 +14,12 @@ class TeamMember(models.Model):
     bio_fa = models.TextField(blank=True, verbose_name='معرفی فارسی')
     bio_en = models.TextField(blank=True, verbose_name='English Bio')
     bio_ar = models.TextField(blank=True, verbose_name='السيرة الذاتية')
-    photo = models.ImageField(
-        upload_to='team/', blank=True, null=True, verbose_name='تصویر'
+    photo = ProcessedImageField(
+        upload_to='team/', blank=True, null=True, verbose_name='تصویر',
+        processors=[ResizeToFit(600, 600)],
+        format='WEBP', options={'quality': 82},
+        validators=[validate_image_size(5)],
+        help_text='حداکثر ۵ MB — به‌صورت خودکار به حداکثر ۶۰۰×۶۰۰ و WebP تبدیل می‌شود'
     )
     instagram_url = models.URLField(blank=True, verbose_name='اینستاگرام')
     whatsapp_number = models.CharField(max_length=20, blank=True, verbose_name='واتساپ')

@@ -1,10 +1,3 @@
-/* فرم تماس — موقتاً غیرفعال تا راه‌اندازی پنل ادمین */
-document.querySelector('.card-form-panel form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    document.getElementById('form-notice').style.display = 'block';
-    this.querySelector('.btn-send').disabled = true;
-});
-
 window.addEventListener('load', function () {
     var mapEl = document.getElementById('neshanMapContact');
     if (!mapEl || typeof L === 'undefined') return;

@@ -125,7 +125,7 @@
             <div class="col-lg-5 mb-5 mb-lg-0">
                 <div class="why-img-wrap wow fadeInUp" data-wow-delay=".1s">
                     <div class="why-img-inner">
-                        <img src="{% static 'images/about/doctor/welcome.png' %}" alt="Dr. Abdolrahimi eye surgery" loading="lazy">
+                        {% if doctor_photo_surgery %}<img src="{{ doctor_photo_surgery.image.url }}" alt="{{ doctor_photo_surgery.alt_en|default:'Dr. Abdolrahimi eye surgery' }}" loading="lazy">{% else %}<img src="{% static 'images/about/doctor/welcome.png' %}" alt="Dr. Abdolrahimi eye surgery" loading="lazy">{% endif %}
                     </div>
                 </div>
             </div>

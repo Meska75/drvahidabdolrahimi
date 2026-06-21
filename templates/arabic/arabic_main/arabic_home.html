@@ -27,6 +27,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <!-- Leaflet.js -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+{# <link rel="stylesheet" href="{% static 'css/booking.css' %}"> — TODO: تفعيل بعد إعداد API بذيرش24 #}
 {% endblock %}
 
 {% block content %}
@@ -201,7 +202,7 @@
         <div class="row align-items-center">
             <div class="col-lg-5 mb-5 mb-lg-0">
                 <div class="about-img-wrap">
-                    <img src="{% static 'images/about/doctor/welcome.png' %}" alt="د. وحيد عبد الرحيمي" loading="lazy">
+                    {% if doctor_photo_profile %}<img src="{{ doctor_photo_profile.image.url }}" alt="{{ doctor_photo_profile.alt_ar|default:'د. وحيد عبد الرحيمي' }}" loading="lazy">{% else %}<img src="{% static 'images/about/doctor/welcome.png' %}" alt="د. وحيد عبد الرحيمي" loading="lazy">{% endif %}
                     <div class="exp-badge">
                         <span class="yrs">+20</span>
                         <span class="lbl">عامًا خبرة</span>
@@ -397,12 +398,18 @@
             <p>لمحة عن البيئة المجهزة والمريحة في عيادة د. عبد الرحيمي</p>
         </div>
         <div class="gallery-grid">
-            {% for img in gallery_images %}
+            {% for img in clinic_interior_photos %}
             <div class="gallery-item {% if forloop.first %}gi-wide-tall{% elif forloop.counter == 6 %}gi-wide{% endif %}"
                  data-full="{{ img.image.url }}">
-                <img src="{{ img.image.url }}" alt="{{ img.alt_ar|default:img.title_ar }}" loading="lazy">
+                <img src="{{ img.image.url }}" alt="{{ img.caption_ar|default:'عيادة د. عبد الرحيمي' }}" loading="lazy">
                 <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
             </div>
+            {% empty %}
+            <div class="gallery-item gi-wide-tall"><img src="{% static 'images/home/gallery/feed1.jpg' %}" alt="العيادة" loading="lazy"></div>
+            <div class="gallery-item"><img src="{% static 'images/home/gallery/feed2.jpg' %}" alt="العيادة" loading="lazy"></div>
+            <div class="gallery-item"><img src="{% static 'images/home/gallery/feed3.jpg' %}" alt="العيادة" loading="lazy"></div>
+            <div class="gallery-item"><img src="{% static 'images/home/gallery/feed4.jpg' %}" alt="العيادة" loading="lazy"></div>
+            <div class="gallery-item gi-wide"><img src="{% static 'images/home/gallery/feed5.jpg' %}" alt="العيادة" loading="lazy"></div>
             {% endfor %}
         </div>
     </div>
@@ -454,6 +461,20 @@
 {% endif %}
 
 
+{# ===== TODO: حجز الموعد — تفعيل بعد إعداد API بذيرش24 ===== #}
+{# <section class="booking-section" id="booking"> #}
+{#     <div class="container"> #}
+{#         <div class="sec-head text-center"> #}
+{#             <span class="pre-title">پذیرش24</span> #}
+{#             <h2>احجز موعدك أونلاين</h2> #}
+{#             <div class="sec-divider"></div> #}
+{#             <p>اختر التاريخ والوقت المناسب لك لحجز موعد الاستشارة عبر الإنترنت</p> #}
+{#         </div> #}
+{#         <div data-booking-widget data-proxy-url="/booking-proxy/" data-lang="ar"></div> #}
+{#     </div> #}
+{# </section> #}
+
+
 <!-- ===== الاتصال والخريطة ===== -->
 <section class="contact-home-section">
     <div class="container">
@@ -470,7 +491,11 @@
             <div id="neshanMap"></div>
         </div>
         <div class="contact-building-wrap">
+            {% if building_photo %}
+            <img src="{{ building_photo.image.url }}" alt="{{ building_photo.caption_ar|default:'مبنى عيادة د. عبد الرحيمي' }}" class="building-photo" loading="lazy">
+            {% else %}
             <img src="{% static 'images/home/gallery/front_door.jpg' %}" alt="مبنى عيادة د. عبد الرحيمي" class="building-photo" loading="lazy">
+            {% endif %}
             <div class="building-photo-overlay"></div>
         </div>
     </div>
@@ -522,4 +547,5 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
 <script src="{% static 'js/home_ar.js' %}"></script>
+{# <script src="{% static 'js/booking.js' %}"></script> — TODO: تفعيل بعد إعداد API بذيرش24 #}
 {% endblock %}

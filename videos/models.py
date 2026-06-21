@@ -1,4 +1,7 @@
 from django.db import models
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFit
+from utils.image_validators import validate_image_size, validate_video_size
 
 
 class VideoCategory(models.Model):
@@ -42,7 +45,9 @@ class SiteVideo(models.Model):
         max_length=10, choices=SOURCE_CHOICES, default='embed', verbose_name='نوع منبع'
     )
     file_path = models.FileField(
-        upload_to='videos/', blank=True, null=True, verbose_name='فایل ویدیو'
+        upload_to='videos/', blank=True, null=True, verbose_name='فایل ویدیو',
+        validators=[validate_video_size(50)],
+        help_text='حداکثر ۵۰ MB — توصیه: ویدیو را در آپارات آپلود کنید و از کد embed استفاده نمایید'
     )
     platform = models.CharField(
         max_length=10, choices=PLATFORM_CHOICES, blank=True, default='', verbose_name='پلتفرم'
@@ -52,8 +57,12 @@ class SiteVideo(models.Model):
         verbose_name='کد iframe',
         help_text='کد &lt;iframe&gt; را از صفحه ویدیو کپی کنید: یوتیوب ← اشتراک‌گذاری ← جاسازی | آپارات ← اشتراک‌گذاری ← کد تعبیه (گزینه iframe)'
     )
-    thumbnail = models.ImageField(
-        upload_to='videos/thumbnails/', blank=True, null=True, verbose_name='تصویر بند انگشتی'
+    thumbnail = ProcessedImageField(
+        upload_to='videos/thumbnails/', blank=True, null=True, verbose_name='تصویر بند انگشتی',
+        processors=[ResizeToFit(640, 360)],
+        format='WEBP', options={'quality': 80},
+        validators=[validate_image_size(5)],
+        help_text='حداکثر ۵ MB — به‌صورت خودکار به ۶۴۰×۳۶۰ و WebP تبدیل می‌شود'
     )
     duration_sec = models.PositiveIntegerField(null=True, blank=True, verbose_name='مدت زمان (ثانیه)')
     views_count = models.PositiveIntegerField(default=0, verbose_name='تعداد بازدید')

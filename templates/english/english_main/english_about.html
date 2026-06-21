@@ -100,7 +100,7 @@
                             <span class="exp-label">Years Exp.</span>
                         </div>
 
-                        <img src="{% static 'images/about/doctor/welcome2.png' %}" alt="Dr. Vahid Abdolrahimi">
+                        {% if doctor_photo_profile %}<img src="{{ doctor_photo_profile.image.url }}" alt="{{ doctor_photo_profile.alt_en|default:'Dr. Vahid Abdolrahimi' }}">{% else %}<img src="{% static 'images/about/doctor/welcome2.png' %}" alt="Dr. Vahid Abdolrahimi">{% endif %}
 
                         <div class="photo-specialty-badge">
                             Retina &amp; Laser Sub-Specialist
@@ -175,7 +175,7 @@
                 <div class="bio-photo-wrap wow fadeInLeft" data-wow-delay=".1s">
                     <div class="bio-photo-deco"></div>
                     <div class="bio-photo-inner">
-                        <img src="{% static 'images/about/doctor/welcome.png' %}" alt="Dr. Vahid Abdolrahimi — Biography">
+                        {% if doctor_photo_biography %}<img src="{{ doctor_photo_biography.image.url }}" alt="{{ doctor_photo_biography.alt_en|default:'Dr. Vahid Abdolrahimi — Biography' }}">{% else %}<img src="{% static 'images/about/doctor/welcome.png' %}" alt="Dr. Vahid Abdolrahimi — Biography">{% endif %}
                     </div>
                 </div>
             </div>

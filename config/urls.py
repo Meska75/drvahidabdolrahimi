@@ -19,6 +19,16 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+from django.contrib.sitemaps.views import sitemap
+from django.views.generic import TemplateView
+from main.sitemaps import SITEMAPS
+from config.admin_views import storage_stats_view
+from main.views import paziresh24_proxy
+from config.error_views import page_not_found as view_404
+
+# هندلرهای سفارشی خطا
+handler404 = 'config.error_views.page_not_found'
+handler500 = 'config.error_views.server_error'
 
 urlpatterns = [
     # بازیابی رمز عبور — باید قبل از admin.site.urls تعریف شود
@@ -43,6 +53,14 @@ urlpatterns = [
          ),
          name='password_reset_complete'),
 
+    # نقشه سایت و robots.txt
+    path('sitemap.xml', sitemap, {'sitemaps': SITEMAPS},
+         name='django.contrib.sitemaps.views.sitemap'),
+    path('robots.txt', TemplateView.as_view(
+        template_name='robots.txt', content_type='text/plain'
+    ), name='robots_txt'),
+
+    path('admin/storage-stats/', storage_stats_view, name='admin_storage_stats'),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
@@ -61,6 +79,9 @@ urlpatterns = [
     path('videos/', include('videos.urls')),
     path('en/videos/', include('videos.urls_english')),
     path('ar/videos/', include('videos.urls_arabic')),
+    path('booking-proxy/', paziresh24_proxy, name='booking_proxy'),
+    # فقط برای تست صفحه ۴۰۴ در حالت development — در production حذف کنید
+    path('404-preview/', lambda req: view_404(req, exception=None), name='preview_404'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

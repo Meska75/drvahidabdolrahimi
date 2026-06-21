@@ -83,7 +83,7 @@
             <div class="gallery-grid" id="gallery-grid">
                 <div class="grid-sizer"></div>
                 {% for img in images %}
-                <div class="gallery-item {{ img.tag_classes }} wow fadeIn" data-wow-delay="{{ forloop.counter0|add:1 }}00ms">
+                <div class="gallery-item {{ img.tag_classes }} wow fadeIn" data-wow-delay="{{ forloop.counter0|add:1 }}00ms" data-bidx="{{ forloop.counter }}">
                     <div class="gallery-img-wrap"
                          data-src="{{ img.image.url }}"
                          data-title="{{ img.title_ar|default:img.title_fa }}">
@@ -113,6 +113,14 @@
                 {% endfor %}
             </div>
         </div>
+        <div class="gal-load-more-wrap" id="gal-load-more-wrap" style="display:none; text-align:center; margin: 40px 0 20px;">
+            <button id="gal-load-more" class="gal-load-more-btn">
+                <i class="fa fa-plus-circle"></i>
+                عرض المزيد من الصور
+                <span id="gal-remaining-count"></span>
+            </button>
+        </div>
+
         {% else %}
         <div class="gallery-empty">
             <i class="fa fa-image"></i>
@@ -148,10 +156,37 @@
 (function ($) {
     'use strict';
 
-    var $grid = null;
+    var BATCH       = 18;
+    var maxShown    = BATCH;
+    var totalItems  = parseInt('{{ images|length }}', 10) || 0;
+    var activeFilter = '*';
+    var $grid        = null;
     var $touchTarget = null;
     var visibleImages = [];
-    var currentIndex = 0;
+    var currentIndex  = 0;
+
+    function updateLoadMoreBtn() {
+        if (activeFilter !== '*' || totalItems <= BATCH) {
+            $('#gal-load-more-wrap').hide();
+            return;
+        }
+        var remaining = totalItems - maxShown;
+        if (remaining > 0) {
+            $('#gal-load-more-wrap').show();
+            $('#gal-remaining-count').text('(' + Math.min(remaining, BATCH) + ' صورة)');
+        } else {
+            $('#gal-load-more-wrap').hide();
+        }
+    }
+
+    function applyBatchFilter() {
+        if (!$grid) return;
+        $grid.isotope({ filter: function () {
+            return parseInt($(this).data('bidx'), 10) <= maxShown;
+        }});
+        updateLoadMoreBtn();
+        setTimeout(buildVisibleArray, 350);
+    }
 
     function buildVisibleArray() {
         visibleImages = [];
@@ -169,17 +204,30 @@
                 layoutMode: 'masonry',
                 masonry: { columnWidth: '.grid-sizer', gutter: 0 }
             });
-            buildVisibleArray();
+            applyBatchFilter();
         });
     }
+
+    /* ---- عرض المزيد ---- */
+    $(document).on('click', '#gal-load-more', function () {
+        maxShown += BATCH;
+        applyBatchFilter();
+    });
 
     /* ---- فلترة ---- */
     $(document).on('click', '.filter-btn', function () {
         var filterVal = $(this).data('filter');
-        if ($grid) { $grid.isotope({ filter: filterVal }); }
+        activeFilter  = filterVal;
         $('.filter-btn').removeClass('is-checked');
         $(this).addClass('is-checked');
-        setTimeout(buildVisibleArray, 350);
+
+        if (filterVal === '*') {
+            applyBatchFilter();
+        } else {
+            if ($grid) { $grid.isotope({ filter: filterVal }); }
+            $('#gal-load-more-wrap').hide();
+            setTimeout(buildVisibleArray, 350);
+        }
     });
 
     /* ---- لايت بوكس ---- */

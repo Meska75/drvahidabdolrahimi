@@ -93,7 +93,11 @@
                             <span class="exp-label">سال تجربه</span>
                         </div>
 
+                        {% if doctor_photo_profile %}
+                        <img src="{{ doctor_photo_profile.image.url }}" alt="{{ doctor_photo_profile.alt_fa|default:'دکتر وحید عبدالرحیمی' }}">
+                        {% else %}
                         <img src="{% static 'images/about/doctor/welcome2.png' %}" alt="دکتر وحید عبدالرحیمی">
+                        {% endif %}
 
                         <!-- بج تخصص پایین عکس -->
                         <div class="photo-specialty-badge">
@@ -163,7 +167,11 @@
                 <div class="bio-photo-wrap wow fadeInRight" data-wow-delay=".1s">
                     <div class="bio-photo-deco"></div>
                     <div class="bio-photo-inner">
+                        {% if doctor_photo_biography %}
+                        <img src="{{ doctor_photo_biography.image.url }}" alt="{{ doctor_photo_biography.alt_fa|default:'دکتر وحید عبدالرحیمی — بیوگرافی' }}">
+                        {% else %}
                         <img src="{% static 'images/about/doctor/welcome.png' %}" alt="دکتر وحید عبدالرحیمی — بیوگرافی">
+                        {% endif %}
                     </div>
                 </div>
             </div>

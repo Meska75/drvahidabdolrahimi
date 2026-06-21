@@ -2,16 +2,14 @@
    استایل جستجو — پنل + صفحه نتایج
    ============================================================ */
 
-/* ===== دکمه جستجو در هدر ===== */
-.header-search { display: inline-flex; align-items: center; margin-right: 12px; }
-
-/*
- * در base_fa/ar/en، هدر از justify-content:flex-start استفاده می‌کند.
- * با margin-inline-start:auto دکمه جستجو را به انتهای مخالف (چپ در RTL، راست در LTR) می‌چسبانیم.
- */
-#header .header-search {
-    margin-inline-start: auto;
+/* ===== wrapper هر دو دکمه (رزرو + جستجو) در هدر ===== */
+#header .header-actions {
+    margin-inline-start: auto;   /* چسباندن به انتهای مخالف (چپ در RTL، راست در LTR) */
     margin-inline-end: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
 }
 
 .search-btn-toggle {

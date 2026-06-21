@@ -1,0 +1,218 @@
+/* ============================================================
+   دکمه‌های شناور: تماس (FAB) + بازگشت به بالا
+   ============================================================ */
+
+/* ===== گروه FAB — گوشه راست پایین ===== */
+.fab-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9990;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 12px;
+}
+
+/* دکمه اصلی toggle */
+.fab-main {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0f766e, #0891b2);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    box-shadow: 0 4px 20px rgba(15,118,110,0.45), 0 2px 8px rgba(0,0,0,0.12);
+    transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), box-shadow 0.22s, background 0.22s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    /* حلقه pulse برای جلب توجه */
+    animation: fab-pulse 2.8s infinite;
+}
+
+@keyframes fab-pulse {
+    0%   { box-shadow: 0 4px 20px rgba(15,118,110,0.45), 0 0 0 0 rgba(15,118,110,0.35); }
+    60%  { box-shadow: 0 4px 20px rgba(15,118,110,0.45), 0 0 0 14px rgba(15,118,110,0); }
+    100% { box-shadow: 0 4px 20px rgba(15,118,110,0.45), 0 0 0 0 rgba(15,118,110,0); }
+}
+
+.fab-main:hover {
+    transform: scale(1.08);
+    animation: none;
+    box-shadow: 0 6px 26px rgba(15,118,110,0.55);
+}
+
+.fab-main.open {
+    background: linear-gradient(135deg, #64748b, #475569);
+    transform: rotate(45deg);
+    animation: none;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+/* ===== دکمه‌های sub ===== */
+.fab-item {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.18);
+    position: relative;
+    opacity: 0;
+    transform: scale(0.3) translateY(16px);
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.22s cubic-bezier(.34,1.56,.64,1), box-shadow 0.18s, filter 0.18s;
+    text-decoration: none !important;
+}
+
+.fab-container.open .fab-item {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: all;
+}
+
+/* ظهور پله‌ای */
+.fab-container.open .fab-item:nth-child(1) { transition-delay: 0.04s; }
+.fab-container.open .fab-item:nth-child(2) { transition-delay: 0.09s; }
+.fab-container.open .fab-item:nth-child(3) { transition-delay: 0.14s; }
+
+.fab-item:hover {
+    transform: scale(1.12) !important;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.22);
+    color: #fff !important;
+}
+
+/* رنگ هر دکمه */
+.fab-whatsapp  { background: #25d366; }
+.fab-whatsapp:hover  { filter: brightness(1.08); }
+
+.fab-telegram  { background: #229ED9; }
+.fab-telegram:hover  { filter: brightness(1.1); }
+
+.fab-phone     { background: linear-gradient(135deg, #0f766e, #0d9488); }
+.fab-phone:hover     { filter: brightness(1.1); }
+
+/* ===== Tooltip ===== */
+.fab-tooltip {
+    position: absolute;
+    /* در RTL: سمت چپ دکمه */
+    left: calc(100% + 12px);
+    top: 50%;
+    transform: translateY(-50%) translateX(-6px);
+    background: rgba(15,23,42,0.9);
+    color: #f1f5f9;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 7px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.18s, transform 0.18s;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    /* مثلث کوچک */
+    direction: rtl;
+}
+
+.fab-tooltip::after {
+    content: '';
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 5px solid transparent;
+    border-right-color: rgba(15,23,42,0.9);
+}
+
+/* در RTL (فارسی/عربی) tooltip سمت چپ */
+html[dir="rtl"] .fab-tooltip {
+    left: calc(100% + 12px);
+    right: auto;
+    transform: translateY(-50%) translateX(-6px);
+}
+
+html[dir="rtl"] .fab-tooltip::after {
+    right: 100%; left: auto;
+    border-right-color: rgba(15,23,42,0.9);
+    border-left-color: transparent;
+}
+
+/* در LTR tooltip سمت راست */
+html[dir="ltr"] .fab-tooltip {
+    left: auto;
+    right: calc(100% + 12px);
+    transform: translateY(-50%) translateX(6px);
+}
+
+html[dir="ltr"] .fab-tooltip::after {
+    left: 100%; right: auto;
+    border-right-color: transparent;
+    border-left-color: rgba(15,23,42,0.9);
+}
+
+.fab-item:hover .fab-tooltip {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0) !important;
+}
+
+/* ===== دکمه بازگشت به بالا — گوشه چپ پایین ===== */
+.back-to-top {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: rgba(15,118,110,0.88);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    box-shadow: 0 3px 14px rgba(15,118,110,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9989;
+    /* پنهان در بالای صفحه */
+    opacity: 0;
+    transform: translateY(14px);
+    pointer-events: none;
+    transition: opacity 0.26s, transform 0.26s, background 0.18s, box-shadow 0.18s;
+    backdrop-filter: blur(4px);
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+.back-to-top:hover {
+    background: #0f766e;
+    box-shadow: 0 6px 20px rgba(15,118,110,0.42);
+    transform: translateY(-3px) !important;
+}
+
+/* در LTR (انگلیسی) سمت راست */
+html[dir="ltr"] .back-to-top {
+    left: auto;
+    right: 88px;
+}
+
+/* ===== موبایل ===== */
+@media (max-width: 767px) {
+    .fab-container   { bottom: 16px; right: 16px; }
+    .back-to-top     { bottom: 16px; left: 16px; }
+    .fab-main        { width: 52px; height: 52px; font-size: 1.1rem; }
+    .fab-item        { width: 44px; height: 44px; font-size: 1rem; }
+
+    html[dir="ltr"] .back-to-top { right: 76px; left: auto; }
+}

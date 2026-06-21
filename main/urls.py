@@ -9,4 +9,5 @@ urlpatterns = [
     path('contact/', views.persian_contact, name='persian_contact'),
     path('faq/', views.persian_faq, name='persian_faq'),
     path('search/', views.persian_search, name='persian_search'),
+    path('booking-proxy/', views.paziresh24_proxy, name='paziresh24_proxy'),
 ]

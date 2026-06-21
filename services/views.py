@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import ServiceItem
 from team.models import TeamMember
+from siteimages.models import DoctorPhoto
 
 
 def _team():
@@ -22,6 +23,7 @@ def persian_office_services(request):
 def persian_surgery_services(request):
     return render(request, 'persian/persian_services/persian_surgery_services.html', {
         'items': ServiceItem.objects.filter(type='surgery', is_active=True),
+        'doctor_photo_surgery': DoctorPhoto.objects.filter(type='surgery', is_active=True).first(),
     })
 
 
@@ -40,6 +42,7 @@ def english_office_services(request):
 def english_surgery_services(request):
     return render(request, 'english/english_services/english_surgery_services.html', {
         'items': ServiceItem.objects.filter(type='surgery', is_active=True),
+        'doctor_photo_surgery': DoctorPhoto.objects.filter(type='surgery', is_active=True).first(),
     })
 
 
@@ -58,4 +61,5 @@ def arabic_office_services(request):
 def arabic_surgery_services(request):
     return render(request, 'arabic/arabic_services/arabic_surgery_services.html', {
         'items': ServiceItem.objects.filter(type='surgery', is_active=True),
+        'doctor_photo_surgery': DoctorPhoto.objects.filter(type='surgery', is_active=True).first(),
     })

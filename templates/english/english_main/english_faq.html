@@ -7,6 +7,29 @@
 <meta name="description" content="Frequently asked questions about Dr. Vahid Abdolrahimi's clinic — services, treatments, fees, and how to book an appointment.">
 {% endblock %}
 
+{% block json_ld %}
+{% if faqs %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {% for faq in faqs %}
+        {
+            "@type": "Question",
+            "name": "{{ faq.question_en|default:faq.question_fa|striptags|escapejs }}",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "{{ faq.answer_en|default:faq.answer_fa|striptags|truncatechars:500|escapejs }}"
+            }
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ]
+}
+</script>
+{% endif %}
+{% endblock %}
+
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/faq.css' %}">
 <style>

@@ -14,6 +14,14 @@
     <meta name="author" content="دکتر وحید عبدالرحیمی">
     {% block canonical %}<link rel="canonical" href="{{ request.build_absolute_uri }}">{% endblock %}
 
+    <!-- hreflang — چندزبانه -->
+    {% block hreflang %}
+    <link rel="alternate" hreflang="fa"       href="{{ request.scheme }}://{{ request.get_host }}/">
+    <link rel="alternate" hreflang="en"       href="{{ request.scheme }}://{{ request.get_host }}/en/">
+    <link rel="alternate" hreflang="ar"       href="{{ request.scheme }}://{{ request.get_host }}/ar/">
+    <link rel="alternate" hreflang="x-default" href="{{ request.scheme }}://{{ request.get_host }}/">
+    {% endblock %}
+
     <!-- Open Graph + Twitter Card -->
     {% block meta_og %}
     <meta property="og:type" content="website">
@@ -47,6 +55,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/base_fa.css' %}">
     <link rel="stylesheet" href="{% static 'css/search.css' %}">
+    <link rel="stylesheet" href="{% static 'css/floating_actions.css' %}">
 
     {% block extra_css %}{% endblock %}
 
@@ -58,14 +67,19 @@
         "name": "دکتر وحید عبدالرحیمی",
         "description": "جراح و متخصص چشم — فوق تخصص شبکیه و لیزر",
         "medicalSpecialty": "Ophthalmology",
-        "telephone": ["+98-21-88648210", "+98-901-343-4195"],
+        "telephone": [
+            "{{ main_clinic.phone_1|default:'+98-21-88648210' }}",
+            "{{ main_clinic.phone_2|default:'+98-901-343-4195' }}"
+        ],
         "sameAs": [
-            "https://www.instagram.com/dr_vahid_abdolrahimi/",
-            "https://t.me/dr_vahid_abdolrahimi"
+            {% if social_links.instagram %}"{{ social_links.instagram }}",{% endif %}
+            {% if social_links.telegram %}"{{ social_links.telegram }}",{% endif %}
+            {% if social_links.youtube %}"{{ social_links.youtube }}",{% endif %}
+            "https://www.paziresh24.com/dr/vahidabdolrahimi/"
         ],
         "address": {
             "@type": "PostalAddress",
-            "streetAddress": "میدان ونک، خیابان گاندی جنوبی، خیابان شهیده ترکان، پلاک ۲۴، طبقه ۴، واحد ۹",
+            "streetAddress": "{{ main_clinic.address_fa|default:'میدان ونک، خیابان گاندی جنوبی، خیابان شهیده ترکان، پلاک ۲۴، طبقه ۴، واحد ۹' }}",
             "addressLocality": "تهران",
             "addressCountry": "IR"
         },
@@ -79,6 +93,7 @@
         ],
         "priceRange": "$$",
         "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.png' %}",
+        "url": "{{ request.scheme }}://{{ request.get_host }}/",
         "identifier": {
             "@type": "PropertyValue",
             "name": "شماره نظام پزشکی",
@@ -179,8 +194,10 @@
                             </li>
                         </ul>
                     </nav>
-                    <!-- دکمه جستجو -->
-                    <div class="header-search">
+                    <!-- دکمه‌های رزرو + جستجو کنار هم -->
+                    <div class="header-actions">
+                        {# TODO: بعد از دریافت API پذیرش24، کامنت زیر را فعال کنید #}
+                        {# <a href="{% url 'main:persian_home' %}#booking" class="booking-header-btn" aria-label="رزرو نوبت آنلاین"><i class="fa fa-calendar-plus-o"></i><span class="booking-btn-label">رزرو نوبت</span></a> #}
                         <button id="searchOpenBtn" class="search-btn-toggle" aria-label="جستجو" aria-expanded="false">
                             <i class="fa fa-search"></i>
                             <span class="search-btn-label">جستجو</span>
@@ -283,7 +300,46 @@
     <script src="{% static 'js/vendor/superfish.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/search.js' %}"></script>
+    <script src="{% static 'js/floating_actions.js' %}"></script>
 
     {% block extra_js %}{% endblock %}
+
+    <!-- ===== دکمه‌های شناور تماس — فعلاً غیرفعال (بعداً با مشاور هوش مصنوعی جایگزین می‌شود) =====
+    <div class="fab-container" id="fabContainer" role="group" aria-label="دکمه‌های تماس">
+
+        {% if social_links.whatsapp %}
+        <a href="{{ social_links.whatsapp }}" class="fab-item fab-whatsapp"
+           target="_blank" rel="noopener noreferrer" aria-label="واتس‌اپ">
+            <i class="fab fa-whatsapp"></i>
+            <span class="fab-tooltip">واتس‌اپ</span>
+        </a>
+        {% endif %}
+
+        {% if social_links.telegram %}
+        <a href="{{ social_links.telegram }}" class="fab-item fab-telegram"
+           target="_blank" rel="noopener noreferrer" aria-label="تلگرام">
+            <i class="fab fa-telegram-plane"></i>
+            <span class="fab-tooltip">تلگرام</span>
+        </a>
+        {% endif %}
+
+        <a href="tel:{% if main_clinic.phone_1 %}{{ main_clinic.phone_1 }}{% else %}02188648210{% endif %}"
+           class="fab-item fab-phone" aria-label="تماس تلفنی">
+            <i class="fa fa-phone"></i>
+            <span class="fab-tooltip">{% if main_clinic.phone_1 %}{{ main_clinic.phone_1 }}{% else %}۰۲۱-۸۸۶۴۸۲۱۰{% endif %}</span>
+        </a>
+
+        <button class="fab-main" id="fabMain" aria-label="تماس با ما" aria-expanded="false" aria-haspopup="true">
+            <i class="fa fa-comment" id="fabMainIcon"></i>
+        </button>
+    </div>
+    ===== پایان دکمه‌های شناور تماس ===== -->
+
+    <!-- دکمه بازگشت به بالا -->
+    <button class="back-to-top" id="backToTop" aria-label="بازگشت به بالا" title="بازگشت به بالا">
+        <i class="fa fa-chevron-up"></i>
+    </button>
+    <!-- ===== پایان دکمه‌های شناور ===== -->
+
 </body>
 </html>

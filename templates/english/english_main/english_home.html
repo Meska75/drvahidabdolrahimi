@@ -33,6 +33,7 @@
 <!-- Leaflet.js -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="{% static 'css/home_en.css' %}">
+{# <link rel="stylesheet" href="{% static 'css/booking.css' %}"> — TODO: Enable after Paziresh24 API setup #}
 {% endblock %}
 
 {% block content %}
@@ -207,7 +208,7 @@
         <div class="row align-items-center">
             <div class="col-lg-5 mb-5 mb-lg-0">
                 <div class="about-img-wrap">
-                    <img src="{% static 'images/about/doctor/welcome.png' %}" alt="Dr. Vahid Abdolrahimi" loading="lazy">
+                    {% if doctor_photo_profile %}<img src="{{ doctor_photo_profile.image.url }}" alt="{{ doctor_photo_profile.alt_en|default:'Dr. Vahid Abdolrahimi' }}" loading="lazy">{% else %}<img src="{% static 'images/about/doctor/welcome.png' %}" alt="Dr. Vahid Abdolrahimi" loading="lazy">{% endif %}
                     <div class="exp-badge">
                         <span class="yrs">20+</span>
                         <span class="lbl">Years Experience</span>
@@ -404,12 +405,18 @@
             <p>A glimpse into the well-equipped and welcoming environment of Dr. Abdolrahimi's clinic</p>
         </div>
         <div class="gallery-grid">
-            {% for img in gallery_images %}
+            {% for img in clinic_interior_photos %}
             <div class="gallery-item {% if forloop.first %}gi-wide-tall{% elif forloop.counter == 6 %}gi-wide{% endif %}"
                  data-full="{{ img.image.url }}">
-                <img src="{{ img.image.url }}" alt="{{ img.alt_en|default:img.title_en }}" loading="lazy">
+                <img src="{{ img.image.url }}" alt="{{ img.caption_en|default:'Dr. Abdolrahimi Clinic' }}" loading="lazy">
                 <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
             </div>
+            {% empty %}
+            <div class="gallery-item gi-wide-tall"><img src="{% static 'images/home/gallery/feed1.jpg' %}" alt="clinic" loading="lazy"></div>
+            <div class="gallery-item"><img src="{% static 'images/home/gallery/feed2.jpg' %}" alt="clinic" loading="lazy"></div>
+            <div class="gallery-item"><img src="{% static 'images/home/gallery/feed3.jpg' %}" alt="clinic" loading="lazy"></div>
+            <div class="gallery-item"><img src="{% static 'images/home/gallery/feed4.jpg' %}" alt="clinic" loading="lazy"></div>
+            <div class="gallery-item gi-wide"><img src="{% static 'images/home/gallery/feed5.jpg' %}" alt="clinic" loading="lazy"></div>
             {% endfor %}
         </div>
     </div>
@@ -461,6 +468,20 @@
 {% endif %}
 
 
+{# ===== TODO: Online Booking — Enable after Paziresh24 API setup ===== #}
+{# <section class="booking-section" id="booking"> #}
+{#     <div class="container"> #}
+{#         <div class="sec-head text-center"> #}
+{#             <span class="pre-title">Paziresh24</span> #}
+{#             <h2>Book an Appointment Online</h2> #}
+{#             <div class="sec-divider"></div> #}
+{#             <p>Select your preferred date and time to book a consultation appointment online</p> #}
+{#         </div> #}
+{#         <div data-booking-widget data-proxy-url="/booking-proxy/" data-lang="en"></div> #}
+{#     </div> #}
+{# </section> #}
+
+
 <!-- ===== Contact Section ===== -->
 <section class="contact-home-section">
     <div class="container">
@@ -477,7 +498,11 @@
             <div id="neshanMap"></div>
         </div>
         <div class="contact-building-wrap">
+            {% if building_photo %}
+            <img src="{{ building_photo.image.url }}" alt="{{ building_photo.caption_en|default:"Dr. Abdolrahimi's Clinic Building" }}" class="building-photo" loading="lazy">
+            {% else %}
             <img src="{% static 'images/home/gallery/front_door.jpg' %}" alt="Dr. Abdolrahimi's Clinic Building" class="building-photo" loading="lazy">
+            {% endif %}
             <div class="building-photo-overlay"></div>
         </div>
     </div>
@@ -529,4 +554,5 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
 <script src="{% static 'js/home_en.js' %}"></script>
+{# <script src="{% static 'js/booking.js' %}"></script> — TODO: Enable after Paziresh24 API setup #}
 {% endblock %}

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>صفحه پیدا نشد — دکتر وحید عبدالرحیمی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        font-family: 'Vazirmatn', Tahoma, sans-serif;
+        background: linear-gradient(145deg, #0b1628 0%, #0f2642 50%, #0b1e38 100%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        padding: 24px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* دایره‌های دکوری */
+    body::before, body::after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+        opacity: 0.07;
+    }
+    body::before {
+        width: 500px; height: 500px;
+        background: #0f766e;
+        top: -120px; right: -120px;
+    }
+    body::after {
+        width: 380px; height: 380px;
+        background: #0891b2;
+        bottom: -80px; left: -80px;
+    }
+
+    .card {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        max-width: 520px;
+        width: 100%;
+        animation: fadeUp 0.5s ease both;
+    }
+
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* آیکون چشم */
+    .eye-wrap {
+        width: 110px; height: 110px;
+        background: rgba(15,118,110,0.15);
+        border: 2px solid rgba(15,118,110,0.35);
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 28px;
+        box-shadow: 0 0 40px rgba(15,118,110,0.25);
+    }
+
+    .eye-svg { width: 54px; height: 54px; }
+
+    /* عدد ۴۰۴ */
+    .error-code {
+        font-size: clamp(5rem, 18vw, 9rem);
+        font-weight: 800;
+        line-height: 1;
+        background: linear-gradient(135deg, #0f766e, #2dd4bf, #0891b2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 16px;
+        letter-spacing: -4px;
+    }
+
+    h1 {
+        font-size: clamp(1.2rem, 4vw, 1.6rem);
+        font-weight: 700;
+        color: #e2e8f0;
+        margin-bottom: 12px;
+    }
+
+    p {
+        font-size: 0.95rem;
+        color: #94a3b8;
+        line-height: 1.8;
+        margin-bottom: 36px;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #0f766e, #0891b2);
+        color: #fff;
+        text-decoration: none;
+        padding: 13px 28px;
+        border-radius: 12px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        font-family: inherit;
+        transition: filter 0.18s, transform 0.15s;
+        box-shadow: 0 4px 16px rgba(15,118,110,0.35);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-primary:hover {
+        filter: brightness(1.1);
+        transform: translateY(-2px);
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .btn-secondary {
+        background: rgba(255,255,255,0.08);
+        color: #cbd5e1;
+        text-decoration: none;
+        padding: 13px 28px;
+        border-radius: 12px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        font-family: inherit;
+        border: 1.5px solid rgba(255,255,255,0.15);
+        transition: background 0.18s, color 0.18s, transform 0.15s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-secondary:hover {
+        background: rgba(255,255,255,0.14);
+        color: #fff;
+        transform: translateY(-2px);
+        text-decoration: none;
+    }
+
+    /* لوگو بالا */
+    .top-logo {
+        position: absolute;
+        top: 24px;
+        right: 32px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: rgba(255,255,255,0.55);
+        text-decoration: none;
+    }
+
+    .top-logo:hover { color: #2dd4bf; text-decoration: none; }
+
+    /* خط جداکننده */
+    .divider {
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #0f766e, #0891b2);
+        border-radius: 3px;
+        margin: 0 auto 24px;
+    }
+</style>
+</head>
+<body>
+
+<a class="top-logo" href="/">دکتر وحید عبدالرحیمی</a>
+
+<div class="card">
+    <div class="eye-wrap">
+        <svg class="eye-svg" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="27" cy="27" rx="24" ry="16" stroke="#2dd4bf" stroke-width="2.5"/>
+            <circle cx="27" cy="27" r="8" fill="none" stroke="#0f766e" stroke-width="2.5"/>
+            <circle cx="29.5" cy="24.5" r="2.5" fill="#2dd4bf"/>
+            <!-- خط اریب روی چشم (نیافتن) -->
+            <line x1="8" y1="8" x2="46" y2="46" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+        </svg>
+    </div>
+
+    <div class="error-code">404</div>
+    <div class="divider"></div>
+    <h1>صفحه‌ای که دنبالش می‌گردید پیدا نشد</h1>
+    <p>
+        شاید آدرس را اشتباه تایپ کرده‌اید یا این صفحه منتقل شده است.<br>
+        نگران نباشید — از صفحه اصلی می‌توانید ادامه دهید.
+    </p>
+
+    <div class="btn-group">
+        <a href="/" class="btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            بازگشت به خانه
+        </a>
+        <a href="/contact/" class="btn-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.54 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            تماس با ما
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

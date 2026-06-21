@@ -7,6 +7,29 @@
 <meta name="description" content="الأسئلة الشائعة حول خدمات عيادة د. وحيد عبد الرحيمي — العلاجات والرسوم وكيفية حجز موعد">
 {% endblock %}
 
+{% block json_ld %}
+{% if faqs %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {% for faq in faqs %}
+        {
+            "@type": "Question",
+            "name": "{{ faq.question_ar|default:faq.question_fa|striptags|escapejs }}",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "{{ faq.answer_ar|default:faq.answer_fa|striptags|truncatechars:500|escapejs }}"
+            }
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ]
+}
+</script>
+{% endif %}
+{% endblock %}
+
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/faq.css' %}">
 {% endblock %}

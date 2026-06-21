@@ -1,4 +1,7 @@
 from django.db import models
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFit
+from utils.image_validators import validate_image_size
 
 
 class GalleryTag(models.Model):
@@ -24,7 +27,13 @@ class GalleryImage(models.Model):
     description_fa = models.CharField(max_length=300, blank=True, verbose_name='توضیح فارسی')
     description_en = models.CharField(max_length=300, blank=True, verbose_name='English Description')
     description_ar = models.CharField(max_length=300, blank=True, verbose_name='الوصف العربي')
-    image = models.ImageField(upload_to='gallery/', verbose_name='تصویر')
+    image = ProcessedImageField(
+        upload_to='gallery/', verbose_name='تصویر',
+        processors=[ResizeToFit(1600, 1200)],
+        format='WEBP', options={'quality': 85},
+        validators=[validate_image_size(10)],
+        help_text='حداکثر ۱۰ MB — به‌صورت خودکار به حداکثر ۱۶۰۰×۱۲۰۰ و WebP تبدیل می‌شود'
+    )
     alt_fa = models.CharField(max_length=200, blank=True, verbose_name='Alt فارسی')
     alt_en = models.CharField(max_length=200, blank=True, verbose_name='Alt EN')
     alt_ar = models.CharField(max_length=200, blank=True, verbose_name='Alt عربي')

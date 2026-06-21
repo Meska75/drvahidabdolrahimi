@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /accounts/
+Disallow: /ckeditor/
+Disallow: /booking-proxy/
+Disallow: /search/?q=
+
+Sitemap: {{ request.scheme }}://{{ request.get_host }}/sitemap.xml

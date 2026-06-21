@@ -18,6 +18,7 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 <link rel="stylesheet" href="{% static 'css/faq.css' %}">
+{# <link rel="stylesheet" href="{% static 'css/booking.css' %}"> — TODO: فعال‌سازی بعد از دریافت API پذیرش24 #}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <!-- Leaflet.js — استاندارد، بدون وابستگی به SDK نشان -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -195,7 +196,7 @@
         <div class="row align-items-center">
             <div class="col-lg-5 mb-5 mb-lg-0">
                 <div class="about-img-wrap">
-                    <img src="{% static 'images/about/doctor/welcome.png' %}" alt="دکتر وحید عبدالرحیمی" loading="lazy">
+                    {% if doctor_photo_profile %}<img src="{{ doctor_photo_profile.image.url }}" alt="{{ doctor_photo_profile.alt_fa|default:'دکتر وحید عبدالرحیمی' }}" loading="lazy">{% else %}<img src="{% static 'images/about/doctor/welcome.png' %}" alt="دکتر وحید عبدالرحیمی" loading="lazy">{% endif %}
                     <div class="exp-badge">
                         <span class="yrs">+۲۰</span>
                         <span class="lbl">سال تجربه</span>
@@ -420,12 +421,18 @@
             <p>نگاهی به محیط مجهز و دوستانه مطب دکتر عبدالرحیمی</p>
         </div>
         <div class="gallery-grid">
-            {% for img in gallery_images %}
+            {% for img in clinic_interior_photos %}
             <div class="gallery-item {% if forloop.first %}gi-wide-tall{% elif forloop.counter == 6 %}gi-wide{% endif %}"
                  data-full="{{ img.image.url }}">
-                <img src="{{ img.image.url }}" alt="{{ img.alt_fa|default:img.title_fa }}" loading="lazy">
+                <img src="{{ img.image.url }}" alt="{{ img.caption_fa|default:'تصویر مطب دکتر عبدالرحیمی' }}" loading="lazy">
                 <div class="gallery-overlay"><i class="fa fa-expand"></i></div>
             </div>
+            {% empty %}
+            <div class="gallery-item gi-wide-tall"><img src="{% static 'images/home/gallery/feed1.jpg' %}" alt="مطب" loading="lazy"></div>
+            <div class="gallery-item"><img src="{% static 'images/home/gallery/feed2.jpg' %}" alt="مطب" loading="lazy"></div>
+            <div class="gallery-item"><img src="{% static 'images/home/gallery/feed3.jpg' %}" alt="مطب" loading="lazy"></div>
+            <div class="gallery-item"><img src="{% static 'images/home/gallery/feed4.jpg' %}" alt="مطب" loading="lazy"></div>
+            <div class="gallery-item gi-wide"><img src="{% static 'images/home/gallery/feed5.jpg' %}" alt="مطب" loading="lazy"></div>
             {% endfor %}
         </div>
     </div>
@@ -476,6 +483,20 @@
 {% endif %}
 
 
+{# ===== TODO: رزرو نوبت آنلاین — بعد از دریافت API پذیرش24 فعال کنید ===== #}
+{# <section class="booking-section" id="booking"> #}
+{#     <div class="container"> #}
+{#         <div class="sec-head text-center"> #}
+{#             <span class="pre-title">پذیرش24</span> #}
+{#             <h2>رزرو نوبت آنلاین</h2> #}
+{#             <div class="sec-divider"></div> #}
+{#             <p>تاریخ و ساعت مناسب خود را انتخاب کنید و نوبت ویزیت را به صورت آنلاین رزرو نمایید</p> #}
+{#         </div> #}
+{#         <div data-booking-widget data-proxy-url="{% url 'main:paziresh24_proxy' %}" data-lang="fa"></div> #}
+{#     </div> #}
+{# </section> #}
+
+
 <!-- ===== بخش ارتباط با ما ===== -->
 <section class="contact-home-section">
     <div class="container">
@@ -493,9 +514,12 @@
         <div class="contact-map-wrap">
             <div id="neshanMap"></div>
         </div>
-        <!-- عکس ساختمان: جهت تغییر تصویر، مقدار src را ویرایش کنید -->
         <div class="contact-building-wrap">
+            {% if building_photo %}
+            <img src="{{ building_photo.image.url }}" alt="{{ building_photo.caption_fa|default:'نمای ساختمان مطب دکتر عبدالرحیمی' }}" class="building-photo" loading="lazy">
+            {% else %}
             <img src="{% static 'images/home/gallery/front_door.jpg' %}" alt="نمای ساختمان مطب دکتر عبدالرحیمی" class="building-photo" loading="lazy">
+            {% endif %}
             <div class="building-photo-overlay"></div>
         </div>
     </div>
@@ -548,4 +572,5 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
 <script src="{% static 'js/home.js' %}"></script>
+{# <script src="{% static 'js/booking.js' %}"></script> — TODO: فعال‌سازی بعد از دریافت API پذیرش24 #}
 {% endblock %}

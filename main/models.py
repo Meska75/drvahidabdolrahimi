@@ -2,6 +2,9 @@ import html as _html
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.html import strip_tags
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFit
+from utils.image_validators import validate_image_size
 
 
 class ContactMessage(models.Model):
@@ -74,9 +77,12 @@ class SiteBanner(models.Model):
     location = models.CharField(
         max_length=20, choices=LOCATION_CHOICES, default='home_hero', verbose_name='موقعیت'
     )
-    image = models.ImageField(
+    image = ProcessedImageField(
         upload_to='banners/', verbose_name='تصویر',
-        help_text='اسلایدر صفحه اصلی: ۱۹۲۰×۸۰۰ پیکسل — هدر صفحات داخلی: ۱۹۲۰×۵۰۰ پیکسل — فرمت: JPG یا WebP — حداکثر حجم: ۱ مگابایت'
+        processors=[ResizeToFit(1920, 900)],
+        format='WEBP', options={'quality': 85},
+        validators=[validate_image_size(10)],
+        help_text='حداکثر ۱۰ MB — به‌صورت خودکار به حداکثر ۱۹۲۰×۹۰۰ و WebP تبدیل می‌شود'
     )
     caption_fa = models.CharField(max_length=255, blank=True, verbose_name='کپشن فارسی')
     caption_en = models.CharField(max_length=255, blank=True, verbose_name='English Caption')
@@ -147,9 +153,12 @@ class DoctorClinic(models.Model):
     schedule_fa = models.TextField(blank=True, verbose_name='ساعت کاری فارسی')
     schedule_en = models.TextField(blank=True, verbose_name='English Schedule')
     schedule_ar = models.TextField(blank=True, verbose_name='جدول المواعيد')
-    image = models.ImageField(
+    image = ProcessedImageField(
         upload_to='clinics/', blank=True, null=True, verbose_name='تصویر',
-        help_text='ابعاد توصیه‌شده: ۸۰۰×۶۰۰ پیکسل — فرمت: JPG یا PNG — حداکثر حجم: ۳۰۰ کیلوبایت'
+        processors=[ResizeToFit(1200, 900)],
+        format='WEBP', options={'quality': 82},
+        validators=[validate_image_size(8)],
+        help_text='حداکثر ۸ MB — به‌صورت خودکار به حداکثر ۱۲۰۰×۹۰۰ و WebP تبدیل می‌شود'
     )
     map_url = models.URLField(blank=True, verbose_name='لینک نقشه')
     is_active = models.BooleanField(default=True, verbose_name='فعال')

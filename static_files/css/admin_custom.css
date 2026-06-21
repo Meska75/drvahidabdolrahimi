@@ -1223,12 +1223,87 @@ ul.object-tools {
 }
 .breadcrumbs a:hover { color: #ffffff !important; text-decoration: underline !important; }
 
-/* پیام‌های flash */
+/* پیام‌های flash — روی پس‌زمینه رنگی خودشان */
 ul.messagelist li { color: #1e293b !important; }
 
-/* صفحه تأیید حذف */
+/* ── لیست اشیاء در صفحه حذف (خارج از .delete-confirmation نیز پوشش داده می‌شود) ── */
+ul.object-list li,
+#content ul.object-list li {
+    color: #ffffff !important;
+    font-family: 'Vazirmatn', Tahoma, sans-serif !important;
+    font-size: 0.88rem !important;
+}
+
+ul.object-list li a { color: #38bdf8 !important; }
+ul.object-list li a:hover { color: #7dd3fc !important; }
+
+/* ── submit-row روی صفحه تأیید حذف ── */
+.submit-row {
+    background: #0f172a !important;
+    border-top: 1px solid #334155 !important;
+    padding: 12px 14px !important;
+    border-radius: 0 0 10px 10px !important;
+}
+
+.submit-row a.deletelink {
+    background: linear-gradient(135deg, #b91c1c, #dc2626) !important;
+    color: #ffffff !important;
+    border-radius: 8px !important;
+    padding: 9px 18px !important;
+    font-weight: 700 !important;
+    font-family: 'Vazirmatn', sans-serif !important;
+    text-decoration: none !important;
+    font-size: 0.88rem !important;
+    border: none !important;
+    transition: opacity 0.2s !important;
+}
+
+.submit-row a.deletelink:hover { opacity: 0.85 !important; }
+
+/* ── breadcrumbs روی صفحه حذف ── */
+.breadcrumbs a { color: rgba(255,255,255,0.85) !important; }
+.breadcrumbs { color: rgba(255,255,255,0.7) !important; }
+
+/* ── صفحه تأیید حذف — تم تیره کامل ── */
+
+/* wrapper اصلی */
+.delete-confirmation {
+    color: #ffffff !important;
+}
+
+/* تمام متن‌های داخلی */
 .delete-confirmation p,
-.delete-confirmation .help { color: #1e293b !important; }
+.delete-confirmation h2,
+.delete-confirmation h3,
+.delete-confirmation li,
+.delete-confirmation span,
+.delete-confirmation label,
+.delete-confirmation .help,
+.delete-confirmation .object-list,
+.delete-confirmation .object-list li,
+.delete-confirmation ul li,
+.delete-confirmation > ul > li {
+    color: #ffffff !important;
+}
+
+/* لینک‌های داخل لیست اشیاء */
+.delete-confirmation a,
+.delete-confirmation .object-list a,
+.delete-confirmation ul a {
+    color: #38bdf8 !important;
+    font-weight: 600 !important;
+}
+.delete-confirmation a:hover { color: #7dd3fc !important; }
+
+/* فیلدست داخلی (خلاصه + اشیاء) */
+.delete-confirmation fieldset.module {
+    background: #0f172a !important;
+    border: 1px solid #334155 !important;
+}
+.delete-confirmation fieldset.module h2 {
+    background: #070d17 !important;
+    color: #ffffff !important;
+}
 
 /* ============================================================
    ۱۲. صفحه لاگین سفارشی  (al = admin-login prefix)

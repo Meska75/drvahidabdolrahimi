@@ -13,6 +13,11 @@ DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
+# ===== پذیرش۲۴ — رزرو نوبت آنلاین =====
+PAZIRESH24_API_KEY  = os.environ.get('PAZIRESH24_API_KEY', '')
+PAZIRESH24_DOCTOR_ID = os.environ.get('PAZIRESH24_DOCTOR_ID', '')
+PAZIRESH24_BASE_URL  = os.environ.get('PAZIRESH24_BASE_URL', 'https://api.paziresh24.com')
+
 # ===== اپ‌های نصب‌شده =====
 INSTALLED_APPS = [
     'jazzmin',
@@ -22,9 +27,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
+    'imagekit',
+    'django_cleanup.apps.CleanupConfig',
     'ckeditor',
     'ckeditor_uploader',
     'main',
+    'siteimages',
     'services',
     'blog',
     'accounts',
@@ -180,7 +189,7 @@ JAZZMIN_SETTINGS = {
     "hide_models": [],
 
     "order_with_respect_to": [
-        "main", "blog", "gallery", "videos", "team", "services", "accounts", "auth",
+        "main", "siteimages", "blog", "gallery", "videos", "team", "services", "accounts", "auth",
     ],
 
     "custom_links": {
@@ -202,6 +211,12 @@ JAZZMIN_SETTINGS = {
             "icon": "fas fa-plus-circle",
             "permissions": ["videos.add_sitevideo"],
         }],
+        "siteimages": [{
+            "name": "افزودن بنر",
+            "url": "/admin/siteimages/sitebannerproxy/add/",
+            "icon": "fas fa-plus-circle",
+            "permissions": ["main.add_sitebanner"],
+        }],
     },
 
     "icons": {
@@ -213,10 +228,14 @@ JAZZMIN_SETTINGS = {
         "main.PatientTestimonial": "fas fa-star",
         "main.SiteSetting": "fas fa-cog",
         "main.SocialLinks": "fas fa-share-alt",
-        "main.SiteBanner": "fas fa-image",
         "main.DoctorEducation": "fas fa-graduation-cap",
         "main.DoctorAchievement": "fas fa-award",
         "main.DoctorClinic": "fas fa-hospital",
+        "siteimages": "fas fa-photo-video",
+        "siteimages.SiteBannerProxy": "fas fa-image",
+        "siteimages.DoctorPhoto": "fas fa-user-circle",
+        "siteimages.BuildingPhoto": "fas fa-building",
+        "siteimages.ClinicInteriorPhoto": "fas fa-clinic-medical",
         "blog.Post": "fas fa-newspaper",
         "blog.Category": "fas fa-tags",
         "blog.Comment": "fas fa-comments",
@@ -262,7 +281,7 @@ JAZZMIN_UI_TWEAKS = {
     "sidebar_nav_legacy_style": False,
     "sidebar_nav_flat_style": False,
     "theme": "default",
-    "dark_mode_theme": None,
+    "default_theme_mode": "light",
     "button_classes": {
         "primary": "btn-primary",
         "secondary": "btn-secondary",

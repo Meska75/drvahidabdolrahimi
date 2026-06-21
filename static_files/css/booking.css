@@ -1,0 +1,544 @@
+/* ============================================================
+   ویجت رزرو نوبت آنلاین — دکمه هدر + تقویم + فرم
+   ============================================================ */
+
+/* ===== دکمه رزرو در هدر ===== */
+.booking-header-btn {
+    background: linear-gradient(135deg, #0f766e 0%, #0891b2 100%);
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 7px 14px;
+    border-radius: 8px;
+    transition: filter 0.15s, transform 0.15s, box-shadow 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    text-decoration: none;
+    box-shadow: 0 2px 10px rgba(15,118,110,0.32);
+    font-family: inherit;
+    line-height: 1;
+}
+
+.booking-header-btn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 16px rgba(15,118,110,0.42);
+    color: #fff;
+    text-decoration: none;
+}
+
+.booking-btn-label { font-size: 0.82rem; font-family: inherit; }
+
+@media (max-width: 575px) { .booking-btn-label { display: none; } }
+
+/* ===== بخش رزرو در صفحه اصلی ===== */
+.booking-section {
+    padding: 80px 0 90px;
+    background: linear-gradient(160deg, #f0fdfa 0%, #e0f2fe 60%, #f0f9ff 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.booking-section::before,
+.booking-section::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.07;
+    background: #0f766e;
+}
+.booking-section::before { width: 400px; height: 400px; top: -100px; right: -100px; }
+.booking-section::after  { width: 300px; height: 300px; bottom: -60px; left: -60px; }
+
+/* ===== کارت اصلی widget ===== */
+[data-booking-widget] {
+    max-width: 760px;
+    margin: 40px auto 0;
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 10px 50px rgba(15,118,110,0.13), 0 2px 10px rgba(0,0,0,0.06);
+    overflow: hidden;
+}
+
+/* ===== نوار مراحل ===== */
+.bk-steps-bar {
+    display: flex;
+    background: #f8fafc;
+    border-bottom: 1.5px solid #e2e8f0;
+}
+
+.bk-step {
+    flex: 1;
+    padding: 14px 4px 12px;
+    text-align: center;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-weight: 600;
+    position: relative;
+    transition: color 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.bk-step.active { color: #0f766e; }
+.bk-step.done   { color: #16a34a; }
+
+.bk-step.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #0f766e, #0891b2);
+    border-radius: 3px 3px 0 0;
+}
+
+.bk-step-n {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    color: #64748b;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+}
+
+.bk-step.active .bk-step-n { background: #0f766e; color: #fff; }
+.bk-step.done   .bk-step-n { background: #16a34a; color: #fff; }
+
+/* ===== بدنه ===== */
+.bk-body { padding: 28px 32px 30px; }
+
+@media (max-width: 575px) { .bk-body { padding: 18px 14px 22px; } }
+
+.bk-panel { display: none; }
+.bk-panel.active { display: block; }
+
+/* ================================================================
+   تقویم
+================================================================ */
+.bk-cal-wrap { user-select: none; }
+
+/* هدر تقویم: < ماه > */
+.bk-cal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.bk-cal-nav {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid #e2e8f0;
+    background: #fff;
+    color: #475569;
+    cursor: pointer;
+    font-size: 0.85rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.18s, border-color 0.18s, color 0.18s;
+    flex-shrink: 0;
+}
+
+.bk-cal-nav:hover { background: #f0fdfa; border-color: #0f766e; color: #0f766e; }
+
+.bk-cal-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e293b;
+    letter-spacing: 0.01em;
+}
+
+/* legend */
+.bk-cal-legend {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 12px;
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+.leg-item { display: flex; align-items: center; gap: 5px; }
+
+.leg-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.leg-avail { background: linear-gradient(135deg, #0f766e, #2dd4bf); }
+.leg-none  { background: #e2e8f0; }
+
+/* بارگذاری تقویم */
+.bk-cal-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 20px;
+    color: #64748b;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    background: #f8fafc;
+    margin-bottom: 10px;
+}
+
+.bk-cal-loading i { font-size: 1.1rem; color: #0f766e; }
+
+/* هدر روزهای هفته */
+.bk-cal-days-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 4px;
+}
+
+.bk-cal-wd {
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #94a3b8;
+    padding: 4px 0;
+    text-transform: uppercase;
+}
+
+/* شبکه روزها */
+.bk-cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    transition: opacity 0.25s;
+}
+
+/* سلول روز */
+.bk-cal-cell {
+    aspect-ratio: 1;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #94a3b8;
+    background: transparent;
+    transition: background 0.15s, transform 0.12s, box-shadow 0.15s;
+    cursor: default;
+    min-height: 44px;
+}
+
+.bk-cal-empty { background: transparent !important; }
+
+/* روز گذشته */
+.bk-past { color: #cbd5e1; }
+
+/* امروز */
+.bk-today { border: 2px solid #0891b2; color: #0891b2; }
+.bk-today .bk-day-num { font-weight: 800; }
+
+/* روز بدون نوبت */
+.bk-no-slots-day { color: #cbd5e1; }
+
+/* روز با نوبت خالی */
+.bk-has-slots { color: #1e293b; }
+.bk-clickable {
+    cursor: pointer;
+    background: #f0fdfa;
+}
+
+.bk-clickable:hover {
+    background: #ccfbf1;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(15,118,110,0.18);
+    z-index: 1;
+}
+
+/* روز انتخاب‌شده */
+.bk-selected {
+    background: linear-gradient(135deg, #0f766e, #0891b2) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 14px rgba(15,118,110,0.38);
+    transform: scale(1.07);
+    z-index: 2;
+}
+
+.bk-selected .bk-slots-dot { background: rgba(255,255,255,0.5) !important; }
+
+.bk-day-num { line-height: 1; font-size: 0.95rem; }
+
+/* نقطه نشان‌دهنده نوبت خالی */
+.bk-slots-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0f766e, #2dd4bf);
+    position: absolute;
+    bottom: 5px;
+    box-shadow: 0 1px 3px rgba(15,118,110,0.3);
+}
+
+/* ================================================================
+   ساعت‌ها — Step 2
+================================================================ */
+.bk-summary {
+    background: linear-gradient(135deg, #f0fdfa, #e0f2fe);
+    border: 1px solid #99f6e4;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    font-size: 0.9rem;
+    color: #0f766e;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.bk-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 36px 0;
+    color: #64748b;
+    font-size: 0.9rem;
+    gap: 10px;
+}
+
+.bk-loading i { font-size: 1.8rem; color: #0f766e; }
+
+.bk-time-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 4px;
+}
+
+@media (max-width: 575px) {
+    .bk-time-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.bk-time-slot {
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 12px 6px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #374151;
+    background: #fff;
+    transition: border-color 0.15s, background 0.15s, transform 0.12s, color 0.15s;
+    font-family: inherit;
+}
+
+.bk-time-slot:hover {
+    border-color: #0f766e;
+    background: #f0fdfa;
+    transform: translateY(-2px);
+    color: #0f766e;
+}
+
+.bk-time-slot.selected {
+    border-color: #0f766e;
+    background: linear-gradient(135deg, #0f766e, #0891b2);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(15,118,110,0.3);
+}
+
+.bk-no-slots {
+    text-align: center;
+    padding: 32px 10px;
+    color: #94a3b8;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.bk-no-slots i { font-size: 2.2rem; opacity: 0.5; }
+.bk-no-slots p { margin: 0; font-size: 0.9rem; }
+
+/* ================================================================
+   فرم بیمار — Step 3
+================================================================ */
+.bk-field { margin-bottom: 18px; }
+
+.bk-field label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 7px;
+}
+
+.bk-req { color: #dc2626; margin-right: 2px; }
+.bk-hint { font-size: 0.75rem; color: #94a3b8; font-weight: 400; margin-right: 6px; }
+
+.bk-field input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: #1e293b;
+    background: #f8fafc;
+    outline: none;
+    direction: rtl;
+    transition: border-color 0.18s, background 0.18s, box-shadow 0.18s;
+}
+
+.bk-field input:focus {
+    border-color: #0f766e;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(15,118,110,0.1);
+}
+
+.bk-field input.error { border-color: #dc2626; }
+
+/* ================================================================
+   دکمه‌های action
+================================================================ */
+.bk-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+
+.bk-btn-primary {
+    background: linear-gradient(135deg, #0f766e, #0891b2);
+    color: #fff;
+    border: none;
+    padding: 13px 28px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: filter 0.18s, transform 0.12s;
+    box-shadow: 0 4px 14px rgba(15,118,110,0.28);
+}
+
+.bk-btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.bk-btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.bk-btn-back {
+    background: transparent;
+    color: #64748b;
+    border: 2px solid #e2e8f0;
+    padding: 11px 20px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: border-color 0.18s, color 0.18s;
+}
+
+.bk-btn-back:hover { border-color: #94a3b8; color: #374151; }
+
+/* ================================================================
+   خطا
+================================================================ */
+.bk-error-box {
+    display: none;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: #dc2626;
+    font-size: 0.88rem;
+    margin-top: 12px;
+}
+
+.bk-error-box i { margin-left: 4px; }
+
+/* ================================================================
+   موفقیت — Step 4
+================================================================ */
+.bk-success {
+    text-align: center;
+    padding: 16px 0 8px;
+}
+
+.bk-success-icon {
+    width: 76px; height: 76px;
+    background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    box-shadow: 0 6px 20px rgba(22,163,74,0.2);
+}
+
+.bk-success-icon i { font-size: 2.2rem; color: #16a34a; }
+
+.bk-success h3 { font-size: 1.25rem; font-weight: 800; color: #166534; margin-bottom: 8px; }
+.bk-success p  { color: #374151; font-size: 0.92rem; margin-bottom: 16px; }
+
+.bk-confirm-card {
+    background: linear-gradient(135deg, #f0fdfa, #e0f2fe);
+    border: 1px solid #99f6e4;
+    border-radius: 14px;
+    padding: 16px 20px;
+    max-width: 380px;
+    margin: 0 auto 20px;
+    text-align: right;
+}
+
+.bk-confirm-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #ccfbf1;
+    color: #374151;
+}
+
+.bk-confirm-row:last-child { border-bottom: none; }
+.bk-confirm-row span:first-child { color: #64748b; font-weight: 600; }
+.bk-confirm-row span:last-child  { color: #0f766e; font-weight: 700; }
+
+.bk-btn-new {
+    background: linear-gradient(135deg, #0f766e, #0891b2);
+    color: #fff;
+    border: none;
+    padding: 11px 26px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: filter 0.18s;
+    box-shadow: 0 4px 12px rgba(15,118,110,0.24);
+}
+
+.bk-btn-new:hover { filter: brightness(1.1); }
+
+/* ================================================================
+   ریسپانسیو موبایل
+================================================================ */
+@media (max-width: 480px) {
+    .bk-cal-cell { font-size: 0.78rem; min-height: 36px; border-radius: 8px; }
+    .bk-cal-grid  { gap: 3px; }
+    .bk-cal-days-header { gap: 3px; }
+    .bk-step { font-size: 0.68rem; padding: 10px 2px 8px; }
+    .bk-step-n { width: 22px; height: 22px; font-size: 0.7rem; }
+}

@@ -5,6 +5,45 @@
 
 {% block meta_description %}<meta name="description" content="{{ post.summary_ar|default:post.title_ar }}">{% endblock %}
 
+{% block hreflang %}
+<link rel="alternate" hreflang="ar"        href="{{ request.scheme }}://{{ request.get_host }}/ar/blog/{{ post.slug }}/">
+<link rel="alternate" hreflang="fa"        href="{{ request.scheme }}://{{ request.get_host }}/blog/{{ post.slug }}/">
+<link rel="alternate" hreflang="en"        href="{{ request.scheme }}://{{ request.get_host }}/en/blog/{{ post.slug }}/">
+<link rel="alternate" hreflang="x-default" href="{{ request.scheme }}://{{ request.get_host }}/blog/{{ post.slug }}/">
+{% endblock %}
+
+{% block json_ld %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "{{ post.meta_title_ar|default:post.title_ar|escapejs }}",
+    "description": "{{ post.meta_description_ar|default:post.summary_ar|striptags|truncatechars:160|escapejs }}",
+    "author": {
+        "@type": "Person",
+        "name": "{{ post.author|escapejs }}",
+        "jobTitle": "أخصائي شبكية العين والليزر"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "د. وحيد عبد الرحيمي",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.png' %}"
+        }
+    },
+    "datePublished": "{{ post.published_at|date:'c' }}",
+    "dateModified": "{{ post.updated_at|date:'c' }}",
+    {% if post.image %}"image": "{{ request.scheme }}://{{ request.get_host }}{{ post.image.url }}",{% endif %}
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ request.build_absolute_uri }}"
+    },
+    "inLanguage": "ar"
+}
+</script>
+{% endblock %}
+
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/blog.css' %}">
 {% endblock %}

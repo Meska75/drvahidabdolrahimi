@@ -1,3 +1,9 @@
+import json
+import requests as _http
+from django.conf import settings as django_settings
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from .models import (
@@ -8,6 +14,7 @@ from .forms import ContactMessageForm
 from team.models import TeamMember
 from services.models import ServiceItem
 from gallery.models import GalleryImage
+from siteimages.models import DoctorPhoto, BuildingPhoto, ClinicInteriorPhoto
 
 
 def _detect_lang(request):
@@ -32,10 +39,24 @@ def _service_context():
 
 def _about_context():
     """داده‌های مشترک صفحه درباره در هر سه زبان."""
+    doctor_photos = {p.type: p for p in DoctorPhoto.objects.filter(is_active=True)}
     return {
         'educations': DoctorEducation.objects.all(),
         'achievements': DoctorAchievement.objects.all(),
         'clinics': DoctorClinic.objects.filter(is_active=True),
+        'doctor_photo_profile':   doctor_photos.get('profile'),
+        'doctor_photo_biography': doctor_photos.get('biography'),
+        'doctor_photo_surgery':   doctor_photos.get('surgery'),
+    }
+
+
+def _home_image_context():
+    """تصاویر صفحه اصلی از DB."""
+    doctor_photos = {p.type: p for p in DoctorPhoto.objects.filter(is_active=True)}
+    return {
+        'building_photo': BuildingPhoto.objects.filter(is_active=True).order_by('sort_order').first(),
+        'clinic_interior_photos': ClinicInteriorPhoto.objects.filter(is_active=True).order_by('sort_order')[:9],
+        'doctor_photo_profile': doctor_photos.get('profile'),
     }
 
 
@@ -52,6 +73,7 @@ def persian_home(request):
     gallery_images = GalleryImage.objects.filter(is_active=True).order_by('sort_order')[:8]
     banners = SiteBanner.objects.filter(location='home_hero', is_active=True).order_by('sort_order')
     ctx = _service_context()
+    ctx.update(_home_image_context())
     ctx.update({
         'faqs': faqs,
         'testimonials': testimonials,
@@ -95,6 +117,7 @@ def english_home(request):
     gallery_images = GalleryImage.objects.filter(is_active=True).order_by('sort_order')[:8]
     banners = SiteBanner.objects.filter(location='home_hero', is_active=True).order_by('sort_order')
     ctx = _service_context()
+    ctx.update(_home_image_context())
     ctx.update({
         'faqs': faqs,
         'testimonials': testimonials,
@@ -138,6 +161,7 @@ def arabic_home(request):
     gallery_images = GalleryImage.objects.filter(is_active=True).order_by('sort_order')[:8]
     banners = SiteBanner.objects.filter(location='home_hero', is_active=True).order_by('sort_order')
     ctx = _service_context()
+    ctx.update(_home_image_context())
     ctx.update({
         'faqs': faqs,
         'testimonials': testimonials,
@@ -173,6 +197,95 @@ def arabic_contact(request):
 def arabic_faq(request):
     faqs = FaqItem.objects.filter(is_active=True).order_by('category', 'sort_order', 'id')
     return render(request, 'arabic/arabic_main/arabic_faq.html', {'faqs': faqs})
+
+
+# ===== پروکسی پذیرش۲۴ =====
+
+@csrf_exempt
+@require_http_methods(["GET", "POST"])
+def paziresh24_proxy(request):
+    """
+    پروکسی امن برای API پذیرش24.
+    API key روی سرور نگه داشته می‌شود و هیچگاه به مرورگر ارسال نمی‌شود.
+
+    GET  ?action=slots&date=YYYY-MM-DD  → لیست نوبت‌های خالی آن روز
+    POST ?action=book                   → ثبت نوبت (body: JSON با اطلاعات بیمار)
+    """
+    api_key   = django_settings.PAZIRESH24_API_KEY
+    doctor_id = django_settings.PAZIRESH24_DOCTOR_ID
+    base_url  = django_settings.PAZIRESH24_BASE_URL
+
+    if not api_key or not doctor_id:
+        return JsonResponse(
+            {'error': 'booking_not_configured',
+             'message': 'سیستم رزرو هنوز پیکربندی نشده. لطفاً با مدیر سایت تماس بگیرید.'},
+            status=503
+        )
+
+    headers = {
+        'x-api-key': api_key,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+    }
+
+    action = request.GET.get('action', 'slots')
+
+    try:
+        if action == 'slots':
+            date = request.GET.get('date', '')
+            resp = _http.get(
+                f'{base_url}/open-platform/v1/booking/appointments',
+                params={'doctor_id': doctor_id, 'from': date, 'to': date},
+                headers=headers,
+                timeout=10,
+            )
+            return JsonResponse(resp.json(), status=resp.status_code, safe=False)
+
+        elif action == 'month':
+            import calendar as cal_mod
+            year  = int(request.GET.get('year',  '2025'))
+            month = int(request.GET.get('month', '1'))
+            last_day = cal_mod.monthrange(year, month)[1]
+            from_date = f'{year}-{month:02d}-01'
+            to_date   = f'{year}-{month:02d}-{last_day:02d}'
+            resp = _http.get(
+                f'{base_url}/open-platform/v1/booking/appointments',
+                params={'doctor_id': doctor_id, 'from': from_date, 'to': to_date},
+                headers=headers,
+                timeout=15,
+            )
+            return JsonResponse(resp.json(), status=resp.status_code, safe=False)
+
+        elif action == 'book' and request.method == 'POST':
+            body = json.loads(request.body)
+            resp = _http.post(
+                f'{base_url}/open-platform/v1/booking/appointments',
+                json={
+                    'doctor_id':      doctor_id,
+                    'appointment_id': body.get('appointment_id'),
+                    'patient': {
+                        'name':          body.get('name', ''),
+                        'phone':         body.get('phone', ''),
+                        'national_code': body.get('national_code', ''),
+                    },
+                },
+                headers=headers,
+                timeout=10,
+            )
+            return JsonResponse(resp.json(), status=resp.status_code, safe=False)
+
+    except _http.exceptions.Timeout:
+        return JsonResponse(
+            {'error': 'timeout', 'message': 'سرور پذیرش24 پاسخ نداد. لطفاً دوباره امتحان کنید.'},
+            status=504
+        )
+    except Exception:
+        return JsonResponse(
+            {'error': 'service_unavailable', 'message': 'خطا در ارتباط با سرور رزرو. لطفاً دوباره امتحان کنید.'},
+            status=503
+        )
+
+    return JsonResponse({'error': 'invalid_action'}, status=400)
 
 
 # ===== جستجو =====

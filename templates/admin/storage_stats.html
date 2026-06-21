@@ -1,0 +1,82 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}آمار فضای ذخیره‌سازی{% endblock %}
+
+{% block content %}
+<style>
+.stats-wrap { max-width: 800px; margin: 0 auto; direction: rtl; font-family: Vazirmatn, Tahoma, sans-serif; }
+.stats-header { background: linear-gradient(135deg, #0f766e, #0891b2); color: #fff; border-radius: 14px; padding: 24px 28px; margin-bottom: 28px; display: flex; align-items: center; gap: 20px; }
+.stats-header-icon { font-size: 2.5rem; opacity: 0.9; }
+.stats-header h2 { margin: 0 0 4px; font-size: 1.4rem; font-weight: 700; }
+.stats-header p { margin: 0; opacity: 0.85; font-size: 0.95rem; }
+.stats-total { font-size: 1.8rem; font-weight: 800; }
+
+.stats-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+.stats-table thead th { background: #f1f5f9; color: #475569; font-size: 0.82rem; font-weight: 700; padding: 12px 18px; text-align: right; border-bottom: 2px solid #e2e8f0; }
+.stats-table tbody td { padding: 14px 18px; border-bottom: 1px solid #f1f5f9; font-size: 0.92rem; color: #374151; }
+.stats-table tbody tr:last-child td { border-bottom: none; }
+.stats-table tbody tr:hover { background: #f8fafc; }
+
+.bar-cell { min-width: 180px; }
+.bar-track { background: #e2e8f0; border-radius: 20px; height: 8px; overflow: hidden; }
+.bar-fill { height: 100%; background: linear-gradient(90deg, #0f766e, #2dd4bf); border-radius: 20px; transition: width 0.4s; }
+
+.badge-count { background: #f1f5f9; color: #64748b; font-size: 0.78rem; padding: 2px 8px; border-radius: 20px; font-weight: 600; }
+.size-val { font-weight: 700; color: #0f766e; }
+.folder-name { color: #64748b; font-size: 0.78rem; font-family: monospace; direction: ltr; display: inline-block; }
+
+.note-box { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 10px; padding: 14px 18px; margin-top: 20px; font-size: 0.88rem; color: #0f766e; }
+.note-box strong { display: block; margin-bottom: 4px; }
+</style>
+
+<div class="stats-wrap">
+
+  <div class="stats-header">
+    <div class="stats-header-icon">💾</div>
+    <div>
+      <h2>آمار فضای ذخیره‌سازی رسانه</h2>
+      <p>مجموع فضای مصرف‌شده توسط فایل‌های آپلودشده در پوشه media</p>
+      <div class="stats-total">{{ stats.total_size }}</div>
+    </div>
+  </div>
+
+  <table class="stats-table">
+    <thead>
+      <tr>
+        <th>پوشه</th>
+        <th>مسیر</th>
+        <th>تعداد فایل</th>
+        <th>حجم</th>
+        <th class="bar-cell">نسبت مصرف</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in stats.rows %}
+      <tr>
+        <td><strong>{{ row.label }}</strong></td>
+        <td><span class="folder-name">media/{{ row.folder }}/</span></td>
+        <td><span class="badge-count">{{ row.count }} فایل</span></td>
+        <td><span class="size-val">{{ row.size }}</span></td>
+        <td class="bar-cell">
+          <div class="bar-track">
+            {% if stats.total_bytes > 0 %}
+            <div class="bar-fill" style="width:{% widthratio row.bytes stats.total_bytes 100 %}%"></div>
+            {% else %}
+            <div class="bar-fill" style="width:0%"></div>
+            {% endif %}
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="note-box">
+    <strong>💡 توصیه</strong>
+    تصاویر جدید به‌صورت خودکار فشرده و به فرمت WebP تبدیل می‌شوند.
+    برای ویدیوها، پیشنهاد می‌شود از <strong>آپارات</strong> یا <strong>یوتیوب</strong> استفاده کنید و کد embed را در سایت قرار دهید.
+  </div>
+
+</div>
+{% endblock %}

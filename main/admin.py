@@ -1,8 +1,11 @@
 from django.contrib import admin
+from django.urls import path
+from django.shortcuts import render
 from django.utils.html import format_html
 from ckeditor.widgets import CKEditorWidget
+from utils.storage_stats import get_media_stats
 from .models import (
-    ContactMessage, SiteSetting, SiteBanner, SocialLinks,
+    ContactMessage, SiteSetting, SocialLinks,
     DoctorEducation, DoctorAchievement, DoctorClinic,
     FaqItem, PatientTestimonial,
 )
@@ -51,23 +54,6 @@ class SiteSettingAdmin(admin.ModelAdmin):
     @admin.display(description='عربی')
     def ar_val(self, obj):
         return obj.value_ar or '—'
-
-
-@admin.register(SiteBanner)
-class SiteBannerAdmin(admin.ModelAdmin):
-    list_display = ('preview', 'location', 'sort_order', 'is_active')
-    list_editable = ('sort_order', 'is_active')
-    list_filter = ('location', 'is_active')
-
-    @admin.display(description='پیش‌نمایش')
-    def preview(self, obj):
-        if obj.image:
-            return format_html(
-                '<img src="{}" style="width:90px;height:50px;object-fit:cover;'
-                'border-radius:6px;border:1px solid #475569;display:block;">',
-                obj.image.url
-            )
-        return format_html('<span style="color:#64748b;font-size:0.8rem;">—</span>')
 
 
 @admin.register(DoctorEducation)

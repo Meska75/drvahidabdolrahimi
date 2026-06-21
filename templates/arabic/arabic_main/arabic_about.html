@@ -75,7 +75,7 @@
                             <div class="exp-number">+20</div>
                             <span class="exp-label">عامًا</span>
                         </div>
-                        <img src="{% static 'images/about/doctor/welcome2.png' %}" alt="د. وحيد عبد الرحيمي">
+                        {% if doctor_photo_profile %}<img src="{{ doctor_photo_profile.image.url }}" alt="{{ doctor_photo_profile.alt_ar|default:'د. وحيد عبد الرحيمي' }}">{% else %}<img src="{% static 'images/about/doctor/welcome2.png' %}" alt="د. وحيد عبد الرحيمي">{% endif %}
                         <div class="photo-specialty-badge">
                             أخصائي شبكية العين والليزر
                         </div>
@@ -139,7 +139,7 @@
                 <div class="bio-photo-wrap wow fadeInRight" data-wow-delay=".1s">
                     <div class="bio-photo-deco"></div>
                     <div class="bio-photo-inner">
-                        <img src="{% static 'images/about/doctor/welcome.png' %}" alt="د. وحيد عبد الرحيمي — السيرة الذاتية">
+                        {% if doctor_photo_biography %}<img src="{{ doctor_photo_biography.image.url }}" alt="{{ doctor_photo_biography.alt_ar|default:'د. وحيد عبد الرحيمي — السيرة الذاتية' }}">{% else %}<img src="{% static 'images/about/doctor/welcome.png' %}" alt="د. وحيد عبد الرحيمي — السيرة الذاتية">{% endif %}
                     </div>
                 </div>
             </div>

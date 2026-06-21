@@ -1,4 +1,7 @@
 from django.db import models
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFit
+from utils.image_validators import validate_image_size
 
 
 class ServiceItem(models.Model):
@@ -39,9 +42,12 @@ class ServiceItem(models.Model):
         help_text='الحد الأقصى ٢٥٠ حرفًا — يظهر في صفحة الخدمات'
     )
 
-    image = models.ImageField(
+    image = ProcessedImageField(
         upload_to='services/', blank=True, null=True, verbose_name='تصویر',
-        help_text='ابعاد توصیه‌شده: ۶۰۰×۴۰۰ پیکسل'
+        processors=[ResizeToFit(800, 600)],
+        format='WEBP', options={'quality': 82},
+        validators=[validate_image_size(8)],
+        help_text='حداکثر ۸ MB — به‌صورت خودکار فشرده و به WebP تبدیل می‌شود'
     )
     meta_title_fa = models.CharField(max_length=70, blank=True, verbose_name='عنوان SEO فارسی')
     meta_title_en = models.CharField(max_length=70, blank=True, verbose_name='SEO Title EN')

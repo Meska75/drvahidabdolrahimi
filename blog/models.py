@@ -1,6 +1,9 @@
 from django.db import models
 from django.utils import timezone
 from ckeditor_uploader.fields import RichTextUploadingField
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFit
+from utils.image_validators import validate_image_size
 
 
 class Category(models.Model):
@@ -40,9 +43,12 @@ class Post(models.Model):
     content_en = RichTextUploadingField(verbose_name='English Content', config_name='ltr')
     content_ar = RichTextUploadingField(verbose_name='المحتوى العربي', config_name='rtl')
 
-    image = models.ImageField(
+    image = ProcessedImageField(
         upload_to='blog/', blank=True, null=True, verbose_name='تصویر شاخص',
-        help_text='ابعاد توصیه‌شده: ۱۲۰۰×۶۷۵ پیکسل (نسبت ۱۶:۹) — فرمت: JPG یا WebP — حداکثر حجم: ۵۰۰ کیلوبایت'
+        processors=[ResizeToFit(1200, 800)],
+        format='WEBP', options={'quality': 82},
+        validators=[validate_image_size(8)],
+        help_text='حداکثر ۸ MB — به‌صورت خودکار به حداکثر ۱۲۰۰×۸۰۰ و WebP تبدیل می‌شود'
     )
     author = models.CharField(
         max_length=100, default='دکتر وحید عبدالرحیمی', verbose_name='نویسنده'

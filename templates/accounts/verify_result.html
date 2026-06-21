@@ -10,7 +10,7 @@
     <title>{% if success %}حساب فعال شد{% else %}لینک نامعتبر{% endif %} | {{ jazzmin_settings.site_title }}</title>
     <link rel="stylesheet" href="{% static 'vendor/fontawesome-free/css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'vendor/adminlte/css/adminlte.min.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/vazirmatn.css' %}">
     {% if jazzmin_settings.custom_css %}
     <link rel="stylesheet" href="{% static jazzmin_settings.custom_css %}">
     {% endif %}

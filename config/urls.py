@@ -80,9 +80,13 @@ urlpatterns = [
     path('en/videos/', include('videos.urls_english')),
     path('ar/videos/', include('videos.urls_arabic')),
     path('booking-proxy/', paziresh24_proxy, name='booking_proxy'),
-    # فقط برای تست صفحه ۴۰۴ در حالت development — در production حذف کنید
-    path('404-preview/', lambda req: view_404(req, exception=None), name='preview_404'),
 ]
+
+# مسیر تست صفحه ۴۰۴ — فقط در حالت توسعه فعال است و در پروداکشن خودکار غیرفعال می‌شود
+if settings.DEBUG:
+    urlpatterns += [
+        path('404-preview/', lambda req: view_404(req, exception=None), name='preview_404'),
+    ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

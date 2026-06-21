@@ -1,0 +1,45 @@
+/* ================================================================
+   فونت وزیرمتن — نسخه self-host (بدون وابستگی به CDN خارجی)
+   مناسب برای کاربران داخل ایران — سرعت بالا و بدون فیلترینگ
+   منبع: github.com/rastikerdar/vazirmatn (نسخه ۳۳.۰۰۳)
+   ================================================================ */
+
+@font-face {
+    font-family: 'Vazirmatn';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../webfonts/Vazirmatn-Regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Vazirmatn';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('../webfonts/Vazirmatn-Medium.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Vazirmatn';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('../webfonts/Vazirmatn-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Vazirmatn';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('../webfonts/Vazirmatn-Bold.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Vazirmatn';
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: url('../webfonts/Vazirmatn-ExtraBold.woff2') format('woff2');
+}

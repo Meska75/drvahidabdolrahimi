@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
-from django.db.models import Count, Q
+from django.db.models import Count, Q, F
 from django.db.models.functions import ExtractYear
 from .models import Post, Category, Comment
 from .forms import CommentForm
@@ -63,8 +63,9 @@ def persian_blog_list(request):
 
 def persian_blog_detail(request, slug):
     post = get_object_or_404(Post, slug=slug, is_published=True)
-    post.views_count += 1
-    post.save(update_fields=['views_count'])
+    # شمارش اتمیک — جلوگیری از race condition زیر بار همزمان
+    Post.objects.filter(pk=post.pk).update(views_count=F('views_count') + 1)
+    post.views_count += 1  # هماهنگ‌سازی مقدار در حافظه برای نمایش در همین صفحه
     related = Post.objects.filter(is_published=True, category=post.category).exclude(pk=post.pk)[:3]
     comments = post.comments.filter(is_approved=True)
 
@@ -117,8 +118,9 @@ def english_blog_list(request):
 
 def english_blog_detail(request, slug):
     post = get_object_or_404(Post, slug=slug, is_published=True)
-    post.views_count += 1
-    post.save(update_fields=['views_count'])
+    # شمارش اتمیک — جلوگیری از race condition زیر بار همزمان
+    Post.objects.filter(pk=post.pk).update(views_count=F('views_count') + 1)
+    post.views_count += 1  # هماهنگ‌سازی مقدار در حافظه برای نمایش در همین صفحه
     related = Post.objects.filter(is_published=True, category=post.category).exclude(pk=post.pk)[:3]
     comments = post.comments.filter(is_approved=True)
 
@@ -171,8 +173,9 @@ def arabic_blog_list(request):
 
 def arabic_blog_detail(request, slug):
     post = get_object_or_404(Post, slug=slug, is_published=True)
-    post.views_count += 1
-    post.save(update_fields=['views_count'])
+    # شمارش اتمیک — جلوگیری از race condition زیر بار همزمان
+    Post.objects.filter(pk=post.pk).update(views_count=F('views_count') + 1)
+    post.views_count += 1  # هماهنگ‌سازی مقدار در حافظه برای نمایش در همین صفحه
     related = Post.objects.filter(is_published=True, category=post.category).exclude(pk=post.pk)[:3]
     comments = post.comments.filter(is_approved=True)
 

@@ -24,9 +24,9 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 <link rel="stylesheet" href="{% static 'css/faq.css' %}">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-<!-- Leaflet.js -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
+<!-- Leaflet.js — self-host -->
+<link rel="stylesheet" href="{% static 'css/leaflet.css' %}">
 {# <link rel="stylesheet" href="{% static 'css/booking.css' %}"> — TODO: تفعيل بعد إعداد API بذيرش24 #}
 {% endblock %}
 
@@ -544,8 +544,8 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+<script src="{% static 'js/vendor/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'js/vendor/leaflet.js' %}" defer></script>
 <script src="{% static 'js/home_ar.js' %}"></script>
 {# <script src="{% static 'js/booking.js' %}"></script> — TODO: تفعيل بعد إعداد API بذيرش24 #}
 {% endblock %}

@@ -195,6 +195,11 @@
                         </p>
                         <form method="post" novalidate>
                             {% csrf_token %}
+                            {# فیلد تله ضد اسپم — برای کاربر واقعی نامرئی است #}
+                            <div style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden;" aria-hidden="true">
+                                <label>این فیلد را خالی بگذارید</label>
+                                {{ form.website }}
+                            </div>
                             <div class="cmt-form-row">
                                 <div class="cmt-form-group">
                                     <label for="id_name">نام <span class="cmt-req">*</span></label>

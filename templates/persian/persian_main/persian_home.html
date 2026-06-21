@@ -19,9 +19,9 @@
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 <link rel="stylesheet" href="{% static 'css/faq.css' %}">
 {# <link rel="stylesheet" href="{% static 'css/booking.css' %}"> — TODO: فعال‌سازی بعد از دریافت API پذیرش24 #}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-<!-- Leaflet.js — استاندارد، بدون وابستگی به SDK نشان -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
+<!-- Leaflet.js — self-host، بدون وابستگی به CDN خارجی -->
+<link rel="stylesheet" href="{% static 'css/leaflet.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -569,8 +569,8 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+<script src="{% static 'js/vendor/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'js/vendor/leaflet.js' %}" defer></script>
 <script src="{% static 'js/home.js' %}"></script>
 {# <script src="{% static 'js/booking.js' %}"></script> — TODO: فعال‌سازی بعد از دریافت API پذیرش24 #}
 {% endblock %}

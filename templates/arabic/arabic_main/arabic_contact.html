@@ -7,7 +7,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/contact.css' %}">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="{% static 'css/leaflet.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -130,6 +130,12 @@
                 <form action="{% url 'arabic:arabic_contact' %}" method="post">
                     {% csrf_token %}
 
+                    {# حقل فخ ضد السبام — غير مرئي للمستخدم الحقيقي #}
+                    <div style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden;" aria-hidden="true">
+                        <label>اترك هذا الحقل فارغاً</label>
+                        <input type="text" name="website" tabindex="-1" autocomplete="off">
+                    </div>
+
                     <div class="uf-row">
                         <div class="uf-group">
                             <label class="uf-label" for="ar_name">الاسم الكامل</label>
@@ -187,6 +193,6 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{% static 'js/vendor/leaflet.js' %}"></script>
 <script src="{% static 'js/contact_ar.js' %}"></script>
 {% endblock %}

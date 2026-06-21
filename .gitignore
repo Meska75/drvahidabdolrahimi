@@ -64,6 +64,9 @@ db.sqlite3-journal
 # فایل‌های تولیدشده توسط collectstatic
 static/
 
+# فایل‌های فشرده موقت
+*.zip
+
 # متغیرهای محیطی
 .env
 

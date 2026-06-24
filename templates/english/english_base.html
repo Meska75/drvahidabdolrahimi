@@ -151,7 +151,8 @@
                 <div class="row align-items-center justify-content-between d-flex">
                     <div id="logo">
                         <a href="{% url 'english:english_home' %}">
-                            <img src="{% static 'images/logo/logo_en.png' %}" alt="Dr. Vahid Abdolrahimi" title="Dr. Vahid Abdolrahimi" />
+                            <img src="{% static 'images/logo/logo_en.png' %}" alt="Dr. Vahid Abdolrahimi" title="Dr. Vahid Abdolrahimi" class="logo-desktop" />
+                            <img src="{% static 'images/logo/logo_en_mobile.png' %}" alt="Dr. Vahid Abdolrahimi" title="Dr. Vahid Abdolrahimi" class="logo-mobile" />
                         </a>
                     </div>
                     <div class="lang-strip-mobile">
@@ -198,6 +199,15 @@
                             <i class="fa fa-search"></i>
                             <span class="search-btn-label">Search</span>
                         </button>
+                        <!-- Globe icon for language selection — mobile only -->
+                        <details class="mobile-lang">
+                            <summary class="mobile-lang-toggle" aria-label="Select language"><i class="fa fa-globe"></i></summary>
+                            <div class="mobile-lang-menu">
+                                <a href="{% url 'main:persian_home' %}">فارسی</a>
+                                <a href="{% url 'english:english_home' %}" class="active">English</a>
+                                <a href="{% url 'arabic:arabic_home' %}">العربية</a>
+                            </div>
+                        </details>
                     </div>
                 </div>
             </div>

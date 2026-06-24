@@ -1084,26 +1084,51 @@
     .about-expertise-section { clip-path: none; margin-top: 0; }
     .about-clinics-section { clip-path: none; margin-top: 0; padding-top: 70px; }
 
-    .stat-number { font-size: 36px; }
+    /* آمار: ۲ کارت در هر ردیف با ابعاد جمع‌وجور (مثل صفحه اصلی) */
+    .stat-card { padding: 22px 10px; border-radius: 14px; }
+    .stat-icon-wrap { width: 46px; height: 46px; margin-bottom: 10px; border-radius: 12px; }
+    .stat-icon-wrap i { font-size: 18px; }
+    .stat-number { font-size: 30px; }
+    .stat-label { font-size: 11px; }
 
     .bio-skills-grid { grid-template-columns: 1fr; }
     .bio-photo-wrap { padding: 0 0 20px 0; }
     .bio-photo-deco { display: none; }
     .bio-photo-inner img { height: 320px; }
 
-    .tl-item { padding-right: 10px; }
+    /* سوابق و تحصیلات: کارت‌های باریک‌تر و فشرده‌تر تا اسکرول کمتر شود */
+    .tl-item { padding-right: 10px; margin-bottom: 18px; }
+    .tl-card { padding: 13px 16px; border-radius: 14px; }
+    .tl-card-header { gap: 10px; margin-bottom: 7px; }
+    .tl-icon { width: 38px; height: 38px; border-radius: 10px; }
+    .tl-icon i { font-size: 15px; }
+    .tl-card h3 { font-size: 14px; }
+    .tl-year { font-size: 10px; margin-bottom: 7px; padding: 2px 10px; }
+    .tl-card p { font-size: 12px; line-height: 1.6; }
+    .tl-dot { top: 18px; width: 16px; height: 16px; }
 
     .clinic-card { margin: 4px 2px 20px; }
     .clinic-img-wrap { height: 170px; }
 
-    /* کارت‌های تخصص و دستاورد — ۲ ستون در موبایل */
-    .about-expertise-section .row > .col-md-6,
-    .about-achievements-section .row > .col-md-6 {
+    /* کارت‌های تخصص — ۲ ستون در موبایل */
+    .about-expertise-section .row > .col-md-6 {
         flex: 0 0 50%;
         max-width: 50%;
         padding-right: 8px;
         padding-left: 8px;
     }
+
+    /* کارت‌های افتخارات — ۳ ستون در موبایل و فشرده‌تر */
+    .about-achievements-section .row > .col-md-6 {
+        flex: 0 0 33.333%;
+        max-width: 33.333%;
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+    .achievement-card { padding: 16px 8px; border-radius: 14px; }
+    .achievement-num { font-size: 28px; }
+    .achievement-card h3 { font-size: 12px; margin-bottom: 4px; line-height: 1.4; }
+    .achievement-card p { font-size: 10px; line-height: 1.5; }
 }
 
 /* متن‌های پاراگرافی — justify برای فارسی و عربی */

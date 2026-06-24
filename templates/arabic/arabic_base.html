@@ -151,7 +151,8 @@
                 <div class="row align-items-center justify-content-between d-flex">
                     <div id="logo">
                         <a href="{% url 'arabic:arabic_home' %}">
-                            <img src="{% static 'images/logo/logo_ar.png' %}" alt="د. وحيد عبد الرحيمي" title="د. وحيد عبد الرحيمي" />
+                            <img src="{% static 'images/logo/logo_ar.png' %}" alt="د. وحيد عبد الرحيمي" title="د. وحيد عبد الرحيمي" class="logo-desktop" />
+                            <img src="{% static 'images/logo/logo_ar_mobile.png' %}" alt="د. وحيد عبد الرحيمي" title="د. وحيد عبد الرحيمي" class="logo-mobile" />
                         </a>
                     </div>
                     <div class="lang-strip-mobile">
@@ -198,6 +199,15 @@
                             <i class="fa fa-search"></i>
                             <span class="search-btn-label">بحث</span>
                         </button>
+                        <!-- أيقونة الكرة الأرضية لاختيار اللغة — للموبايل فقط -->
+                        <details class="mobile-lang">
+                            <summary class="mobile-lang-toggle" aria-label="اختيار اللغة"><i class="fa fa-globe"></i></summary>
+                            <div class="mobile-lang-menu">
+                                <a href="{% url 'main:persian_home' %}">فارسی</a>
+                                <a href="{% url 'english:english_home' %}">English</a>
+                                <a href="{% url 'arabic:arabic_home' %}" class="active">العربية</a>
+                            </div>
+                        </details>
                     </div>
                 </div>
             </div>

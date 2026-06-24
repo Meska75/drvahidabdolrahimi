@@ -154,7 +154,8 @@
                 <div class="row align-items-center justify-content-between d-flex">
                     <div id="logo">
                         <a href="{% url 'main:persian_home' %}">
-                            <img src="{% static 'images/logo/logo.png' %}" alt="دکتر وحید عبدالرحیمی" title="دکتر وحید عبدالرحیمی" />
+                            <img src="{% static 'images/logo/logo.png' %}" alt="دکتر وحید عبدالرحیمی" title="دکتر وحید عبدالرحیمی" class="logo-desktop" />
+                            <img src="{% static 'images/logo/logo_fa_mobile.png' %}" alt="دکتر وحید عبدالرحیمی" title="دکتر وحید عبدالرحیمی" class="logo-mobile" />
                         </a>
                     </div>
                     <div class="lang-strip-mobile">
@@ -193,7 +194,7 @@
                             </li>
                         </ul>
                     </nav>
-                    <!-- دکمه‌های رزرو + جستجو کنار هم -->
+                    <!-- دکمه‌های جستجو + زبان (موبایل) -->
                     <div class="header-actions">
                         {# TODO: بعد از دریافت API پذیرش24، کامنت زیر را فعال کنید #}
                         {# <a href="{% url 'main:persian_home' %}#booking" class="booking-header-btn" aria-label="رزرو نوبت آنلاین"><i class="fa fa-calendar-plus-o"></i><span class="booking-btn-label">رزرو نوبت</span></a> #}
@@ -201,6 +202,15 @@
                             <i class="fa fa-search"></i>
                             <span class="search-btn-label">جستجو</span>
                         </button>
+                        <!-- آیکون کره زمین برای انتخاب زبان — فقط موبایل -->
+                        <details class="mobile-lang">
+                            <summary class="mobile-lang-toggle" aria-label="انتخاب زبان"><i class="fa fa-globe"></i></summary>
+                            <div class="mobile-lang-menu">
+                                <a href="{% url 'main:persian_home' %}" class="active">فارسی</a>
+                                <a href="{% url 'english:english_home' %}">English</a>
+                                <a href="{% url 'arabic:arabic_home' %}">العربية</a>
+                            </div>
+                        </details>
                     </div>
                 </div>
             </div>

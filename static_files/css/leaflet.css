@@ -659,3 +659,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
 		print-color-adjust: exact;
 		}
 	}
+
+/* ===== override سفارشی پروژه =====
+   کنترل‌های نقشه (زوم/attribution) z-index پیش‌فرض 1000 دارند و روی هدر
+   ثابت سایت (z-index: 997) می‌افتند. این مقدار را پایین می‌آوریم تا هیچ
+   جزئی از نقشه هنگام اسکرول روی هدر قرار نگیرد. */
+.leaflet-top,
+.leaflet-bottom { z-index: 400 !important; }

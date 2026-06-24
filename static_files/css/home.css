@@ -1407,10 +1407,10 @@ a.floating-card:hover {
 }
 
 @media (max-width: 767px) {
-    /* موبایل: header-top hidden، #header fixed (112px = 76px + 36px نوار زبان) از بالا */
+    /* موبایل: محتوا دقیقاً زیر هدر ۶۰px تا نوار navy نباشد و نیم‌دایره روی هیرو بیفتد */
     .hero-section {
-        margin-top: 112px;
-        min-height: calc(100vh - 112px);
+        margin-top: 60px;
+        min-height: calc(100vh - 60px);
         padding-top: 40px;
     }
 
@@ -1441,14 +1441,26 @@ a.floating-card:hover {
     .hero-title         { font-size: 28px !important; }
     .hero-stats         { gap: 20px; }
     .hero-stat-num      { font-size: 30px; }
+
+    /* نوار آمار: ۲ کارت در هر ردیف با ابعاد جمع‌وجور */
+    .stat-item  { padding: 22px 8px; }
+    .stat-num   { font-size: 30px !important; }
+    .stat-lbl   { font-size: 11px; margin-top: 5px; }
+    .stat-icon  { font-size: 20px; margin-bottom: 8px; }
     .exp-badge          { position: static; margin-top: -30px; display: inline-block; }
     .about-img-wrap img { height: 280px; }
-    .srv-card .card-img { height: 180px; }
+    .srv-card .card-img { height: 150px; }
     .team-card .img-wrap { height: 220px; }
 
+    /* کارت‌های خدمات: ۲تا در هر ردیف روی موبایل */
+    .srv-carousel:not(.owl-loaded) { gap: 16px; }
     .srv-carousel:not(.owl-loaded) .srv-carousel-item {
-        flex: 0 0 100%;
+        flex: 0 0 calc(50% - 8px);
+        min-width: 0;
     }
+    /* کوچک‌کردن متن کارت‌ها متناسب با عرض کمتر */
+    .srv-card h3 { font-size: 16px; }
+    .srv-card .card-body-inner { padding: 16px 14px; }
 
     .services-surgery-section {
         clip-path: none;
@@ -1488,14 +1500,15 @@ a.floating-card:hover {
         height: auto;
     }
 
+    /* روی موبایل: نقشه تمام‌عرض و بلندتر، عکس ساختمان مخفی (دفورمه نشدن) */
     .contact-map-wrap {
-        height: 320px;
+        height: 360px;
         flex: none;
+        width: 100%;
     }
 
     .contact-building-wrap {
-        flex: none;
-        height: 200px;
+        display: none;
     }
 
     .ci-item {

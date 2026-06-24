@@ -325,3 +325,124 @@ input, textarea, select, button, label, td, th {
         z-index: 1;
     }
 }
+
+/* ================================================================
+   هدر موبایل — لوگو وسط داخل کارو (هماهنگ با نسخه فارسی)
+   ================================================================ */
+#logo .logo-mobile { display: none; }
+.mobile-lang { display: none; }
+
+@media (max-width: 960px) {
+    #header { overflow: visible; border-bottom: none; background: #071a35; }
+    #header.header-scrolled { box-shadow: none; background: #071a35; }
+    #header .container > .row {
+        position: relative;
+        min-height: 60px;
+        align-items: center;
+        flex-wrap: nowrap;
+    }
+
+    #logo {
+        position: absolute;
+        left: 50%;
+        top: -14px;
+        transform: translateX(-50%);
+        margin: 0;
+        padding: 0;
+        z-index: 6;
+    }
+    #logo .logo-desktop { display: none; }
+    #logo a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 96px;
+        height: 96px;
+        background: #071a35;
+        border: none;
+        border-radius: 50%;
+        box-shadow: none;
+    }
+    #logo .logo-mobile { display: block; max-height: 60px; width: auto; }
+
+    #header .header-actions {
+        gap: 18px;
+        margin-inline-start: auto;
+        margin-left: 24px !important;
+    }
+
+    .search-btn-toggle {
+        background: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        width: 28px; height: 40px;
+        color: #60a5fa !important;
+        transform: none !important;
+    }
+    .search-btn-toggle:hover { background: none !important; box-shadow: none !important; transform: none !important; }
+    .search-btn-toggle[aria-expanded="true"] { background: none !important; color: #93c5fd !important; box-shadow: none !important; }
+    .search-btn-toggle i { font-size: 23px; }
+
+    #mobile-nav-toggle {
+        right: 24px !important;
+        left: auto !important;
+        top: 16px !important;
+        font-size: 24px !important;
+    }
+    #mobile-nav-toggle i { color: #60a5fa !important; }
+
+    #mobile-nav {
+        left: auto !important;
+        right: -280px !important;
+        padding-top: 58px !important;
+    }
+    body.mobile-nav-active #mobile-nav { left: auto !important; right: 0 !important; }
+    #mobile-nav ul li a { text-align: right; }
+
+    .lang-strip-mobile { display: none !important; }
+
+    .mobile-lang { display: inline-block; position: relative; }
+    .mobile-lang > summary {
+        list-style: none;
+        cursor: pointer;
+        width: 28px; height: 40px;
+        display: flex; align-items: center; justify-content: center;
+        background: none;
+        color: #60a5fa;
+        font-size: 22px;
+        transition: color .2s;
+    }
+    .mobile-lang > summary::-webkit-details-marker { display: none; }
+    .mobile-lang[open] > summary { background: none; color: #93c5fd; }
+    .mobile-lang-menu {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        min-width: 132px;
+        background: #0b2444;
+        border: 1px solid rgba(255,255,255,.1);
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.4);
+        overflow: hidden;
+        z-index: 1001;
+    }
+    .mobile-lang-menu a {
+        display: block;
+        padding: 11px 16px;
+        color: #cbd5e1;
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: none !important;
+        border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .mobile-lang-menu a:last-child { border-bottom: none; }
+    .mobile-lang-menu a.active { color: #60a5fa; background: rgba(96,165,250,.08); }
+    .mobile-lang-menu a:hover { background: rgba(255,255,255,.06); }
+
+    /* margin-top صفحات — برابر ارتفاع هدر (۶۰px) */
+    .hero-section,
+    .services-hero-section,
+    .about-hero-section,
+    .contact-hero-section,
+    .sov-hero-section { margin-top: 60px !important; }
+}

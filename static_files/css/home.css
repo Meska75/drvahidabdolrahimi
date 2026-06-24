@@ -854,6 +854,28 @@ a.floating-card:hover {
 .srv-carousel .owl-dot.active span { background: var(--primary) !important; }
 
 /* ===========================
+   کاروسل تیم مطب (owl) — ارتفاع برابر کارت‌ها + نقطه‌ها
+=========================== */
+.team-carousel { position: relative; }
+.team-carousel .owl-stage { display: flex; }
+.team-carousel .owl-item { display: flex; height: auto; }
+.team-carousel .owl-item .team-slide { display: flex; width: 100%; }
+.team-carousel .team-card { width: 100%; }
+.team-carousel.owl-loaded { padding-bottom: 42px; }
+.team-carousel .owl-dots {
+    position: absolute;
+    bottom: 4px; left: 0; right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+.team-carousel .owl-dot span {
+    background: var(--border) !important;
+    transition: background .25s;
+}
+.team-carousel .owl-dot.active span { background: var(--primary) !important; }
+
+/* ===========================
    بخش خدمات مطب
    پس‌زمینه آبی روشن — متمایز از about
 =========================== */

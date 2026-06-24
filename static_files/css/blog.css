@@ -1518,6 +1518,137 @@
 
 
 /* ================================================================
+   موبایل — تاگل سایدبار فیلترها (≤ 991px)
+================================================================ */
+
+.blg-mob-toggle {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 11px 16px;
+    color: #1e293b;
+    font-size: .87rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 4px;
+    transition: border-color .2s, background .2s;
+    font-family: inherit;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    text-align: right;
+}
+
+.blg-mob-toggle:focus { outline: none; }
+
+.blg-mob-toggle:hover {
+    border-color: #1a56db;
+    background: #f8faff;
+}
+
+.blg-mob-toggle[aria-expanded="true"] {
+    border-color: #1a56db;
+    background: #eff6ff;
+    color: #1a56db;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-color: transparent;
+    margin-bottom: 0;
+}
+
+.blg-mob-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.blg-mob-toggle-label i { color: #1a56db; font-size: .85rem; }
+
+.blg-mob-toggle[aria-expanded="true"] .blg-mob-toggle-label i { color: #1a56db; }
+
+.blg-mob-toggle-icon {
+    flex-shrink: 0;
+    font-size: .78rem;
+    color: #94a3b8;
+    transition: transform .25s;
+}
+
+.blg-mob-toggle[aria-expanded="true"] .blg-mob-toggle-icon {
+    transform: rotate(180deg);
+    color: #1a56db;
+}
+
+.blg-mob-active-badge {
+    display: inline-block;
+    background: #dc2626;
+    color: #fff;
+    font-size: .63rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    vertical-align: middle;
+}
+
+/* پنل فیلترها وقتی باز است */
+@media (max-width: 991.98px) {
+    /* حذف sticky در موبایل */
+    .blg-sidebar { position: static; }
+
+    /* سایدبار باز شده: گرید دو ستونه برای ویجت‌ها */
+    .blg-sidebar.show {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        border: 1.5px solid #1a56db;
+        border-top: none;
+        border-radius: 0 0 12px 12px;
+        padding: 10px 10px 12px;
+        background: #f8fafc;
+        margin-bottom: 20px;
+    }
+
+    /* ویجت‌های فیلتر: فشرده */
+    .blg-sidebar .blg-widget {
+        padding: 10px 11px 9px;
+        margin-bottom: 0;
+        border-radius: 9px;
+    }
+
+    .blg-sidebar .blg-widget-title {
+        font-size: .74rem !important;
+        margin-bottom: 8px !important;
+        padding-bottom: 6px;
+        gap: 5px;
+    }
+
+    /* لیست فیلتر — تک ستونه (ویجت خودش نصف عرض صفحه است) */
+    .blg-sidebar .blg-filter-list { display: block; }
+    .blg-sidebar .blg-filter-list li + li { margin-top: 2px; }
+
+    .blg-sidebar .blg-filter-item {
+        padding: 5px 7px;
+        font-size: .73rem;
+        border-radius: 6px;
+    }
+
+    .blg-filter-count {
+        font-size: .6rem;
+        min-width: 16px;
+        height: 15px;
+        padding: 0 3px;
+    }
+
+    /* ریست فیلترها — تمام عرض (دو ستون) */
+    .blg-sidebar .blg-widget--reset {
+        grid-column: 1 / -1;
+        padding: 8px 11px;
+    }
+}
+
+
+/* ================================================================
    بخش نظرات مقاله (Comments)
 ================================================================ */
 

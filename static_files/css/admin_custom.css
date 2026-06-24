@@ -23,7 +23,7 @@ html[data-theme="light"] {
     /* بردر و پس‌زمینه */
     --border-color:      #cbd5e1;   /* بود: #ccc — کادر‌ها مشخص‌تر */
     --darkened-bg:       #f8fafc;   /* بود: #f8f8f8 */
-    --body-bg:           #ffffff;
+    --body-bg:           #f0f2f5;
     --selected-bg:       #e0f2fe;
 
     /* لینک‌ها */
@@ -38,16 +38,18 @@ html[data-theme="light"] {
 }
 
 /* ============================================================
-   ۱. ریست پایه — overflow افقی
+   ۱. ریست پایه — overflow افقی + بک‌گراند پایه
    ============================================================ */
 html,
 body {
     overflow-x: hidden !important;
     max-width: 100% !important;
+    background-color: #f0f2f5 !important;
 }
 
 .wrapper {
     overflow-x: hidden !important;
+    background-color: #f0f2f5 !important;
 }
 
 body,
@@ -69,7 +71,7 @@ body {
 
 /* ناحیه محتوا — رنگ مشخص تا هیچ متنی با پس‌زمینه تداخل نداشته باشد */
 .content-wrapper {
-    background: #f4f6f9 !important;
+    background: #f0f2f5 !important;
     color: #1e293b !important;
     min-height: 100vh !important;
 }

@@ -133,6 +133,26 @@
             }
         });
 
+        // کاروسل تیم مطب — صفحه اصلی و صفحه خدمات (۲ نفر در موبایل، چرخش خودکار، قابل کشیدن)
+        if ($('.team-carousel').length) {
+            $('.team-carousel').owlCarousel({
+                loop: true,
+                margin: 24,
+                autoplay: true,
+                autoplayTimeout: 3500,
+                autoplayHoverPause: true,
+                nav: false,
+                dots: true,
+                smartSpeed: 800,
+                responsiveClass: true,
+                responsive: {
+                    0:   { items: 2 },
+                    768: { items: 3 },
+                    992: { items: 4 }
+                }
+            });
+        }
+
         // Date Picker
         jQuery('#datepicker').datetimepicker({
             timepicker:false,

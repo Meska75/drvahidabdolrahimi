@@ -96,7 +96,22 @@
 
             <!-- Sidebar (LEFT in LTR — first in HTML) -->
             <div class="col-lg-3">
-                <aside class="blg-sidebar">
+
+                <!-- Mobile filter toggle -->
+                <button class="blg-mob-toggle d-lg-none" type="button"
+                        data-toggle="collapse" data-target="#blgFilters"
+                        aria-expanded="false" aria-controls="blgFilters">
+                    <span class="blg-mob-toggle-label">
+                        <i class="fa fa-sliders"></i>
+                        Filters &amp; Most Viewed
+                        {% if active_cat or active_year %}
+                        <span class="blg-mob-active-badge">Filter Active</span>
+                        {% endif %}
+                    </span>
+                    <i class="fa fa-chevron-down blg-mob-toggle-icon"></i>
+                </button>
+
+                <aside class="blg-sidebar collapse d-lg-block" id="blgFilters">
 
                     <!-- Category filter -->
                     <div class="blg-widget wow fadeInLeft" data-wow-delay=".1s">
@@ -167,7 +182,7 @@
 
                     <!-- Reset filters -->
                     {% if active_cat or active_year %}
-                    <div class="blg-widget wow fadeInLeft" data-wow-delay=".2s">
+                    <div class="blg-widget blg-widget--reset wow fadeInLeft" data-wow-delay=".2s">
                         <a href="{% url 'english_blog:english_blog_list' %}" class="blg-filter-item"
                            style="justify-content:center; color:#dc2626; background:#fff5f5; border:1px solid #fecaca;">
                             <i class="fa fa-times-circle-o mr-1"></i>
@@ -176,9 +191,9 @@
                     </div>
                     {% endif %}
 
-                    <!-- Most popular posts -->
+                    <!-- Most popular posts — desktop only -->
                     {% if popular_posts %}
-                    <div class="blg-widget wow fadeInLeft" data-wow-delay=".25s">
+                    <div class="blg-widget wow fadeInLeft d-none d-lg-block" data-wow-delay=".25s">
                         <h3 class="blg-widget-title">
                             <i class="fa fa-bar-chart"></i> Most Viewed Articles
                         </h3>

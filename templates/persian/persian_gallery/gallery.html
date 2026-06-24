@@ -9,6 +9,13 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/gallery.css' %}">
+<style>
+/* موبایل — نمایش ۲ تصویر در هر ردیف به جای ۱ (فقط نسخه فارسی) */
+@media (max-width: 480px) {
+    .gal-grid-wrap .gallery-item,
+    .gal-grid-wrap .grid-sizer { width: 50%; }
+}
+</style>
 {% endblock %}
 
 {% block content %}

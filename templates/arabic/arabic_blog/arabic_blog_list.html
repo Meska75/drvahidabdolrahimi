@@ -91,7 +91,22 @@
 
             <!-- الشريط الجانبي (يمين في RTL — الأول في HTML) -->
             <div class="col-lg-3">
-                <aside class="blg-sidebar">
+
+                <!-- زر تفعيل الفلاتر — موبايل فقط -->
+                <button class="blg-mob-toggle d-lg-none" type="button"
+                        data-toggle="collapse" data-target="#blgFilters"
+                        aria-expanded="false" aria-controls="blgFilters">
+                    <span class="blg-mob-toggle-label">
+                        <i class="fa fa-sliders"></i>
+                        الفلاتر والمقالات الأكثر مشاهدة
+                        {% if active_cat or active_year %}
+                        <span class="blg-mob-active-badge">فلتر نشط</span>
+                        {% endif %}
+                    </span>
+                    <i class="fa fa-chevron-down blg-mob-toggle-icon"></i>
+                </button>
+
+                <aside class="blg-sidebar collapse d-lg-block" id="blgFilters">
 
                     <!-- فيلتر التصنيفات -->
                     <div class="blg-widget wow fadeInRight" data-wow-delay=".1s">
@@ -162,7 +177,7 @@
 
                     <!-- إزالة الفلاتر -->
                     {% if active_cat or active_year %}
-                    <div class="blg-widget wow fadeInRight" data-wow-delay=".2s">
+                    <div class="blg-widget blg-widget--reset wow fadeInRight" data-wow-delay=".2s">
                         <a href="{% url 'arabic_blog:arabic_blog_list' %}" class="blg-filter-item"
                            style="justify-content:center; color:#dc2626; background:#fff5f5; border:1px solid #fecaca;">
                             <i class="fa fa-times-circle-o ml-1"></i>
@@ -171,9 +186,9 @@
                     </div>
                     {% endif %}
 
-                    <!-- المقالات الأكثر مشاهدة -->
+                    <!-- المقالات الأكثر مشاهدة — سطح المكتب فقط -->
                     {% if popular_posts %}
-                    <div class="blg-widget wow fadeInRight" data-wow-delay=".25s">
+                    <div class="blg-widget wow fadeInRight d-none d-lg-block" data-wow-delay=".25s">
                         <h3 class="blg-widget-title">
                             <i class="fa fa-bar-chart"></i> الأكثر مشاهدة
                         </h3>

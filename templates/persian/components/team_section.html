@@ -7,12 +7,11 @@
     <p>همکاران متخصص و باتجربه در کنار دکتر عبدالرحیمی، آماده ارائه بهترین خدمات به شما هستند</p>
 </div>
 
-<div class="row">
+<div class="owl-carousel team-carousel">
 
     {% for member in team_members %}
-    <div class="col-lg-3 col-sm-6 mb-4 {% if not forloop.last %}mb-lg-0{% endif %}">
-        <div class="team-card wow fadeInUp" data-wow-delay=".{{ forloop.counter }}s"
-             {% if member.photo %}data-bg="{{ member.photo.url }}"{% endif %}>
+    <div class="team-slide">
+        <div class="team-card" {% if member.photo %}data-bg="{{ member.photo.url }}"{% endif %}>
             <div class="img-wrap">
                 {% if member.photo %}
                 <img src="{{ member.photo.url }}" alt="{{ member.name_fa }}" loading="lazy">

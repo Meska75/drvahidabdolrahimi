@@ -9,6 +9,13 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/gallery.css' %}">
+<style>
+/* موبايل — صورتان في كل صف بدلاً من صورة واحدة */
+@media (max-width: 480px) {
+    .gal-grid-wrap .gallery-item,
+    .gal-grid-wrap .grid-sizer { width: 50%; }
+}
+</style>
 {% endblock %}
 
 {% block content %}

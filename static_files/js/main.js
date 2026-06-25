@@ -19,14 +19,16 @@
             'class': '',
             'id': ''
             });
-            // آیکون‌های شبکه اجتماعی در پایین منوی موبایل
-            $mobile_nav.append(
-                '<div class="mobile-nav-social">' +
-                '<a href="https://www.instagram.com/dr_vahid_abdolrahimi/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa fa-instagram"></i></a>' +
-                '<a href="https://t.me/dr_vahid_abdolrahimi" target="_blank" rel="noopener" aria-label="Telegram"><i class="fa fa-telegram"></i></a>' +
-                '<a href="https://wa.me/989013434195" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>' +
-                '</div>'
-            );
+            // آیکون‌های شبکه اجتماعی — پویا از هدر دسکتاپ (تغییر از ادمین پنل اعمال می‌شود)
+            var $socialLinks = $('.social-links a');
+            if ($socialLinks.length) {
+                var socialHtml = '<div class="mobile-nav-social">';
+                $socialLinks.each(function() {
+                    socialHtml += '<a href="' + $(this).attr('href') + '" target="_blank" rel="noopener" aria-label="' + $(this).attr('aria-label') + '">' + $(this).html() + '</a>';
+                });
+                socialHtml += '</div>';
+                $mobile_nav.append(socialHtml);
+            }
             $('body').append($mobile_nav);
             $('body').prepend('<button type="button" id="mobile-nav-toggle"><i class="lnr lnr-menu"></i></button>');
             $('body').append('<div id="mobile-body-overly"></div>');
@@ -163,213 +165,6 @@
         $('select').niceSelect();
         
 
-        // Google Map
-        if ( $('#mapBox').length ){
-            var $lat = $('#mapBox').data('lat');
-            var $lon = $('#mapBox').data('lon');
-            var $zoom = $('#mapBox').data('zoom');
-            var $marker = $('#mapBox').data('marker');
-            var $info = $('#mapBox').data('info');
-            var $markerLat = $('#mapBox').data('mlat');
-            var $markerLon = $('#mapBox').data('mlon');
-            var map = new GMaps({
-            el: '#mapBox',
-            lat: $lat,
-            lng: $lon,
-            scrollwheel: false,
-            scaleControl: true,
-            streetViewControl: false,
-            panControl: true,
-            disableDoubleClickZoom: true,
-            mapTypeControl: false,
-            zoom: $zoom,
-                styles: [
-                    {
-                        "featureType": "water",
-                        "elementType": "geometry.fill",
-                        "stylers": [
-                            {
-                                "color": "#dcdfe6"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "transit",
-                        "stylers": [
-                            {
-                                "color": "#808080"
-                            },
-                            {
-                                "visibility": "off"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "road.highway",
-                        "elementType": "geometry.stroke",
-                        "stylers": [
-                            {
-                                "visibility": "on"
-                            },
-                            {
-                                "color": "#dcdfe6"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "road.highway",
-                        "elementType": "geometry.fill",
-                        "stylers": [
-                            {
-                                "color": "#ffffff"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "road.local",
-                        "elementType": "geometry.fill",
-                        "stylers": [
-                            {
-                                "visibility": "on"
-                            },
-                            {
-                                "color": "#ffffff"
-                            },
-                            {
-                                "weight": 1.8
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "road.local",
-                        "elementType": "geometry.stroke",
-                        "stylers": [
-                            {
-                                "color": "#d7d7d7"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "poi",
-                        "elementType": "geometry.fill",
-                        "stylers": [
-                            {
-                                "visibility": "on"
-                            },
-                            {
-                                "color": "#ebebeb"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative",
-                        "elementType": "geometry",
-                        "stylers": [
-                            {
-                                "color": "#a7a7a7"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "road.arterial",
-                        "elementType": "geometry.fill",
-                        "stylers": [
-                            {
-                                "color": "#ffffff"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "road.arterial",
-                        "elementType": "geometry.fill",
-                        "stylers": [
-                            {
-                                "color": "#ffffff"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "landscape",
-                        "elementType": "geometry.fill",
-                        "stylers": [
-                            {
-                                "visibility": "on"
-                            },
-                            {
-                                "color": "#efefef"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "road",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                            {
-                                "color": "#696969"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                            {
-                                "visibility": "on"
-                            },
-                            {
-                                "color": "#737373"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "poi",
-                        "elementType": "labels.icon",
-                        "stylers": [
-                            {
-                                "visibility": "off"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "poi",
-                        "elementType": "labels",
-                        "stylers": [
-                            {
-                                "visibility": "off"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "road.arterial",
-                        "elementType": "geometry.stroke",
-                        "stylers": [
-                            {
-                                "color": "#d6d6d6"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "road",
-                        "elementType": "labels.icon",
-                        "stylers": [
-                            {
-                                "visibility": "off"
-                            }
-                        ]
-                    },
-                    {},
-                    {
-                        "featureType": "poi",
-                        "elementType": "geometry.fill",
-                        "stylers": [
-                            {
-                                "color": "#dadada"
-                            }
-                        ]
-                    }
-                ]
-            });
-        }
 
     });
 

@@ -9,7 +9,10 @@
       "Bash(env\\\\Scripts\\\\python.exe manage.py check --deploy)",
       "WebFetch(domain:developers.paziresh24.com)",
       "Skill(code-review)",
-      "Skill(code-review:*)"
+      "Skill(code-review:*)",
+      "Bash(copy \"c:\\\\Users\\\\Asus\\\\Desktop\\\\prgramming\\\\projects\\\\dr_abdolrahimi\\\\drvahidabdolrahimi\\\\static_files\\\\css\\\\admin_custom.css\" \"c:\\\\Users\\\\Asus\\\\Desktop\\\\prgramming\\\\projects\\\\dr_abdolrahimi\\\\drvahidabdolrahimi\\\\static\\\\css\\\\admin_custom.css\")",
+      "Bash(ls -la \"c:\\\\Users\\\\Asus\\\\Desktop\\\\prgramming\\\\projects\\\\dr_abdolrahimi\\\\drvahidabdolrahimi\\\\\")",
+      "Read(//c/Users/Asus/Desktop/prgramming/projects/dr_abdolrahimi/**)"
     ]
   }
 }

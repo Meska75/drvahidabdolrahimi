@@ -11,3 +11,4 @@ requests==2.34.2
 django-imagekit==6.1.0
 pilkit==3.0
 django-cleanup==9.0.0
+psycopg2-binary==2.9.10

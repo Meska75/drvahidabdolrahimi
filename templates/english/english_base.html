@@ -70,14 +70,19 @@
         "name": "Dr. Vahid Abdolrahimi",
         "description": "Ophthalmologist & Retina/Laser Sub-Specialist",
         "medicalSpecialty": "Ophthalmology",
-        "telephone": ["+98-21-88648210", "+98-901-343-4195"],
+        "telephone": [
+            "{{ main_clinic.phone_1|default:'+98-21-88648210' }}",
+            "{{ main_clinic.phone_2|default:'+98-901-343-4195' }}"
+        ],
         "sameAs": [
-            "https://www.instagram.com/dr_vahid_abdolrahimi/",
-            "https://t.me/dr_vahid_abdolrahimi"
+            {% if social_links.instagram %}"{{ social_links.instagram }}",{% endif %}
+            {% if social_links.telegram %}"{{ social_links.telegram }}",{% endif %}
+            {% if social_links.youtube %}"{{ social_links.youtube }}",{% endif %}
+            "https://www.paziresh24.com/dr/vahidabdolrahimi/"
         ],
         "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Unit 9, 4th Floor, 24 Shahide Torkan St., Vanak Sq.",
+            "streetAddress": "{{ main_clinic.address_en|default:'Unit 9, 4th Floor, 24 Shahide Torkan St., Vanak Sq.' }}",
             "addressLocality": "Tehran",
             "addressCountry": "IR"
         },

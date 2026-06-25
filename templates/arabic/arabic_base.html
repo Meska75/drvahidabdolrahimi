@@ -70,14 +70,19 @@
         "name": "د. وحيد عبد الرحيمي",
         "description": "طبيب عيون وجراح، أخصائي شبكية العين والليزر",
         "medicalSpecialty": "Ophthalmology",
-        "telephone": ["+98-21-88648210", "+98-901-343-4195"],
+        "telephone": [
+            "{{ main_clinic.phone_1|default:'+98-21-88648210' }}",
+            "{{ main_clinic.phone_2|default:'+98-901-343-4195' }}"
+        ],
         "sameAs": [
-            "https://www.instagram.com/dr_vahid_abdolrahimi/",
-            "https://t.me/dr_vahid_abdolrahimi"
+            {% if social_links.instagram %}"{{ social_links.instagram }}",{% endif %}
+            {% if social_links.telegram %}"{{ social_links.telegram }}",{% endif %}
+            {% if social_links.youtube %}"{{ social_links.youtube }}",{% endif %}
+            "https://www.paziresh24.com/dr/vahidabdolrahimi/"
         ],
         "address": {
             "@type": "PostalAddress",
-            "streetAddress": "ميدان وانك، شارع غاندي الجنوبي، شارع الشهيدة تركان، رقم 24، الطابق الرابع، وحدة 9",
+            "streetAddress": "{{ main_clinic.address_ar|default:'ميدان وانك، شارع غاندي الجنوبي، شارع الشهيدة تركان، رقم 24، الطابق الرابع، وحدة 9' }}",
             "addressLocality": "طهران",
             "addressCountry": "IR"
         },

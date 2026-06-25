@@ -74,12 +74,25 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # ===== دیتابیس =====
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# در development از SQLite، در production از PostgreSQL استفاده می‌شود
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('DB_NAME', ''),
+            'USER': os.environ.get('DB_USER', ''),
+            'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+            'HOST': os.environ.get('DB_HOST', 'localhost'),
+            'PORT': os.environ.get('DB_PORT', '5432'),
+        }
+    }
 
 # ===== اعتبارسنجی رمز عبور =====
 AUTH_PASSWORD_VALIDATORS = [
@@ -254,7 +267,7 @@ JAZZMIN_SETTINGS = {
     "related_modal_active": True,
     "custom_css": "css/admin_custom.css",
     "custom_js": "js/admin_jazzmin.js",
-    "use_google_fonts_cdn": True,
+    "use_google_fonts_cdn": False,
     "show_ui_builder": False,
     "changeform_format": "horizontal_tabs",
     "language_chooser": False,
@@ -316,3 +329,13 @@ if not DEBUG:
     SECURE_HSTS_PRELOAD = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+    # ریدایرکت HTTP به HTTPS — چون پشت nginx (reverse proxy) هستیم
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    # دامنه‌های مجاز برای CSRF
+    CSRF_TRUSTED_ORIGINS = [
+        'https://drabdolrahimi.ir',
+        'https://www.drabdolrahimi.ir',
+        'https://drabdolrahimi.com',
+        'https://www.drabdolrahimi.com',
+    ]

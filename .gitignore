@@ -67,6 +67,9 @@ static/
 # فایل‌های فشرده موقت
 *.zip
 
+# Source map files (build artifacts)
+*.map
+
 # متغیرهای محیطی
 .env
 

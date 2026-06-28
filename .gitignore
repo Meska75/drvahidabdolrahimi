@@ -192,3 +192,4 @@ cython_debug/
 .cursorignore
 .cursorindexingignorevenv_wsl/
 venv_wsl/
+.env.example

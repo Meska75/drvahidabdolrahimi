@@ -12,7 +12,9 @@
       "Skill(code-review:*)",
       "Bash(copy \"c:\\\\Users\\\\Asus\\\\Desktop\\\\prgramming\\\\projects\\\\dr_abdolrahimi\\\\drvahidabdolrahimi\\\\static_files\\\\css\\\\admin_custom.css\" \"c:\\\\Users\\\\Asus\\\\Desktop\\\\prgramming\\\\projects\\\\dr_abdolrahimi\\\\drvahidabdolrahimi\\\\static\\\\css\\\\admin_custom.css\")",
       "Bash(ls -la \"c:\\\\Users\\\\Asus\\\\Desktop\\\\prgramming\\\\projects\\\\dr_abdolrahimi\\\\drvahidabdolrahimi\\\\\")",
-      "Read(//c/Users/Asus/Desktop/prgramming/projects/dr_abdolrahimi/**)"
+      "Read(//c/Users/Asus/Desktop/prgramming/projects/dr_abdolrahimi/**)",
+      "Bash(python \"C:/Users/Asus/AppData/Local/Temp/claude/c--Users-Asus-Desktop-prgramming-projects-dr-abdolrahimi-drvahidabdolrahimi/cae5aea3-91d8-444d-accf-86f807655022/scratchpad/build_doc.py\")",
+      "Bash(awk '{print $5, $9}')"
     ]
   }
 }

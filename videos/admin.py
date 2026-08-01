@@ -24,7 +24,10 @@ class SiteVideoAdmin(admin.ModelAdmin):
         ('فارسی', {'fields': ('title_fa', 'description_fa')}),
         ('English', {'fields': ('title_en', 'description_en'), 'classes': ('collapse',)}),
         ('العربية', {'fields': ('title_ar', 'description_ar'), 'classes': ('collapse',)}),
-        ('منبع ویدیو', {'fields': ('category', 'source_type', 'platform', 'file_path', 'embed_code')}),
+        ('منبع ویدیو', {
+            'description': 'برای آپلود فایل ویدیو، «نوع منبع» را روی «آپلود مستقیم» بگذارید. فیلد «تصویر بند انگشتی» فقط برای عکس پیش‌نمایش است.',
+            'fields': ('category', 'source_type', 'platform', 'file_path', 'embed_code'),
+        }),
         ('رسانه', {'fields': ('thumbnail', 'duration_sec')}),
         ('انتشار', {'fields': ('is_published', 'published_at', 'sort_order', 'views_count')}),
     )
@@ -53,4 +56,19 @@ class SiteVideoAdmin(admin.ModelAdmin):
         form.base_fields['description_fa'].widget = RTL
         form.base_fields['description_en'].widget = LTR
         form.base_fields['description_ar'].widget = RTL
+        # فیلتر انتخاب فایل: فقط فرمت‌های ویدیو (نه تصویر)
+        form.base_fields['file_path'].widget.attrs['accept'] = (
+            'video/mp4,video/webm,video/ogg,video/quicktime,'
+            '.mp4,.webm,.ogg,.mov,.avi,.mkv,.m4v'
+        )
+        form.base_fields['file_path'].help_text = (
+            'ابتدا «نوع منبع» را روی «آپلود مستقیم» بگذارید. '
+            'فقط فایل ویدیو (mp4, webm, mov, …) — حداکثر ۵۰ MB'
+        )
+        # تصویر بند انگشتی فقط برای پیش‌نمایش است
+        if 'thumbnail' in form.base_fields:
+            form.base_fields['thumbnail'].widget.attrs['accept'] = 'image/*'
+            form.base_fields['thumbnail'].help_text = (
+                'تصویر پیش‌نمایش کارت ویدیو (نه فایل ویدیو) — حداکثر ۵ MB'
+            )
         return form

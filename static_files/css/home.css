@@ -855,9 +855,10 @@ a.floating-card:hover {
 
 /* ===========================
    کاروسل تیم مطب (owl) — ارتفاع برابر کارت‌ها + نقطه‌ها
+   توجه: display:flex روی .owl-stage عرض stage را خراب می‌کند — استفاده نشود
 =========================== */
 .team-carousel { position: relative; }
-.team-carousel .owl-stage { display: flex; }
+.team-carousel .owl-stage-outer { overflow: hidden; }
 .team-carousel .owl-item { display: flex; height: auto; }
 .team-carousel .owl-item .team-slide { display: flex; width: 100%; }
 .team-carousel .team-card { width: 100%; }

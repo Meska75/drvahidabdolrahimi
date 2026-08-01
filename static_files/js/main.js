@@ -137,22 +137,30 @@
 
         // کاروسل تیم مطب — صفحه اصلی و صفحه خدمات (۲ نفر در موبایل، چرخش خودکار، قابل کشیدن)
         if ($('.team-carousel').length) {
-            $('.team-carousel').owlCarousel({
-                loop: true,
-                margin: 24,
-                autoplay: true,
-                autoplayTimeout: 3500,
-                autoplayHoverPause: true,
-                nav: false,
-                dots: true,
-                smartSpeed: 800,
-                responsiveClass: true,
-                responsive: {
-                    0:   { items: 2 },
-                    768: { items: 3 },
-                    992: { items: 4 }
-                }
-            });
+            var $teamCar = $('.team-carousel');
+            var teamCount = $teamCar.children().length;
+            if (teamCount > 0) {
+                // با تعداد کم عضو، loop باعث اسلاید خالی و خروج از کادر می‌شود
+                var teamLoop = teamCount > 4;
+                $teamCar.owlCarousel({
+                    rtl: true,
+                    loop: teamLoop,
+                    rewind: !teamLoop,
+                    margin: 24,
+                    autoplay: true,
+                    autoplayTimeout: 3500,
+                    autoplayHoverPause: true,
+                    nav: false,
+                    dots: true,
+                    smartSpeed: 800,
+                    responsiveClass: true,
+                    responsive: {
+                        0:   { items: Math.min(2, teamCount) },
+                        768: { items: Math.min(3, teamCount) },
+                        992: { items: Math.min(4, teamCount) }
+                    }
+                });
+            }
         }
 
         // Date Picker

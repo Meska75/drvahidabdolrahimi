@@ -119,6 +119,12 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static_files',
 ]
 
+# سقف آپلود — پیش‌فرض Django فقط ۲.۵ MB است و قبل از فشرده‌سازی ImageKit درخواست را رد می‌کند
+# تصاویر تا ۱۰ MB و ویدیو تا ۵۰ MB در مدل‌ها مجازند؛ اینجا کمی بالاتر می‌گذاریم
+DATA_UPLOAD_MAX_MEMORY_SIZE = 55 * 1024 * 1024   # ۵۵ MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 55 * 1024 * 1024   # ۵۵ MB
+
+
 # whitenoise — فشرده‌سازی و cache فایل‌های استاتیک در production
 # در development از storage پیش‌فرض Django استفاده می‌شود
 if not DEBUG:

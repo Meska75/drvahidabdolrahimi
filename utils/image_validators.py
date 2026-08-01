@@ -10,12 +10,14 @@ class FileSizeValidator:
         self.max_mb = max_mb
 
     def __call__(self, file):
+        # توجه: این چک روی فایل اصلی قبل از فشرده‌سازی ImageKit اجرا می‌شود
         limit = self.max_mb * 1024 * 1024
         if file.size > limit:
             raise ValidationError(
-                f'حجم فایل ({file.size / (1024*1024):.1f} MB) '
-                f'بیشتر از حد مجاز ({self.max_mb} MB) است. '
-                f'لطفاً تصویر را فشرده کنید.'
+                f'حجم فایل آپلودی ({file.size / (1024*1024):.1f} MB) '
+                f'بیشتر از سقف مجاز آپلود ({self.max_mb} MB) است. '
+                f'پس از پذیرش، تصویر به‌صورت خودکار فشرده و به WebP تبدیل می‌شود؛ '
+                f'اما فایل اولیه نباید از {self.max_mb} MB بزرگ‌تر باشد.'
             )
 
     def __eq__(self, other):

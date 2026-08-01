@@ -90,16 +90,25 @@ class SocialLinksAdmin(admin.ModelAdmin):
 
 @admin.register(DoctorClinic)
 class DoctorClinicAdmin(admin.ModelAdmin):
-    list_display = ('name_fa', 'city_fa', 'phone_1', 'is_active', 'sort_order')
+    list_display = ('name_fa', 'city_fa', 'phone_1', 'phone_1_en', 'is_active', 'sort_order')
     list_editable = ('is_active', 'sort_order')
-    search_fields = ('name_fa', 'phone_1', 'phone_2')
+    search_fields = ('name_fa', 'phone_1', 'phone_2', 'phone_1_en', 'phone_2_en', 'phone_1_ar', 'phone_2_ar')
     fieldsets = (
         ('⭐ اطلاعات اصلی — هدر و فوتر سایت', {
             'description': '🔔 اولین مطب فعال (کمترین ترتیب نمایش) به عنوان شماره تماس و آدرس در هدر و فوتر همه صفحات نمایش داده می‌شود.',
             'fields': ('name_fa', 'name_en', 'name_ar', 'is_active', 'sort_order'),
         }),
-        ('تلفن‌ها', {
+        ('تلفن‌ها — فارسی', {
+            'description': 'شماره با ارقام فارسی یا ساختار محلی، فقط در نسخه فارسی سایت نمایش داده می‌شود.',
             'fields': ('phone_1', 'phone_2'),
+        }),
+        ('Phones — English', {
+            'description': 'Use Latin digits (e.g. 021-88648210). Shown only on the English site.',
+            'fields': ('phone_1_en', 'phone_2_en'),
+        }),
+        ('الهواتف — العربية', {
+            'description': 'تُعرض فقط في النسخة العربية من الموقع.',
+            'fields': ('phone_1_ar', 'phone_2_ar'),
         }),
         ('آدرس', {
             'fields': ('address_fa', 'address_en', 'address_ar', 'city_fa', 'city_en', 'city_ar'),

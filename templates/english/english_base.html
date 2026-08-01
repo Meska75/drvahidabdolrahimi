@@ -70,9 +70,9 @@
         "name": "Dr. Vahid Abdolrahimi",
         "description": "Ophthalmologist & Retina/Laser Sub-Specialist",
         "medicalSpecialty": "Ophthalmology",
-        "telephone": [
-            "{{ main_clinic.phone_1|default:'+98-21-88648210' }}",
-            "{{ main_clinic.phone_2|default:'+98-901-343-4195' }}"
+            "telephone": [
+            "{{ main_clinic.phone_1_en|default:'+98-21-88648210' }}",
+            "{{ main_clinic.phone_2_en|default:'+98-901-343-4195' }}"
         ],
         "sameAs": [
             {% if social_links.instagram %}"{{ social_links.instagram }}",{% endif %}
@@ -119,8 +119,8 @@
                 <div class="row">
                     <div class="col-lg-8 d-md-flex">
                         {% if main_clinic %}
-                        {% if main_clinic.phone_1 %}<h6><span><i class="fa fa-phone"></i></span> {{ main_clinic.phone_1 }}</h6>{% endif %}
-                        {% if main_clinic.phone_2 %}<h6><span><i class="fa fa-mobile"></i></span> {{ main_clinic.phone_2 }}</h6>{% endif %}
+                        {% if main_clinic.phone_1_en %}<h6><span><i class="fa fa-phone"></i></span> {{ main_clinic.phone_1_en }}</h6>{% endif %}
+                        {% if main_clinic.phone_2_en %}<h6><span><i class="fa fa-mobile"></i></span> {{ main_clinic.phone_2_en }}</h6>{% endif %}
                         {% if main_clinic.address_en %}<h6><span><i class="fa fa-map-marker"></i></span> {{ main_clinic.address_en }}</h6>{% endif %}
                         {% else %}
                         <h6><span><i class="fa fa-phone"></i></span> +98-21-88648210</h6>
@@ -261,8 +261,8 @@
                             <h3 class="mb-4">Contact Information</h3>
                             {% if main_clinic %}
                             {% if main_clinic.address_en %}<p class="mb-2"><i class="fa fa-map-marker"></i> {{ main_clinic.address_en }}</p>{% endif %}
-                            {% if main_clinic.phone_1 %}<p class="mb-2"><i class="fa fa-phone"></i> <span dir="ltr">{{ main_clinic.phone_1 }}</span></p>{% endif %}
-                            {% if main_clinic.phone_2 %}<p class="mb-2"><i class="fa fa-mobile"></i> <span dir="ltr">{{ main_clinic.phone_2 }}</span></p>{% endif %}
+                            {% if main_clinic.phone_1_en %}<p class="mb-2"><i class="fa fa-phone"></i> <span dir="ltr">{{ main_clinic.phone_1_en }}</span></p>{% endif %}
+                            {% if main_clinic.phone_2_en %}<p class="mb-2"><i class="fa fa-mobile"></i> <span dir="ltr">{{ main_clinic.phone_2_en }}</span></p>{% endif %}
                             {% if main_clinic.schedule_en %}<p><i class="fa fa-clock-o"></i> {{ main_clinic.schedule_en }}</p>{% endif %}
                             {% else %}
                             <p class="mb-2"><i class="fa fa-phone"></i> <span dir="ltr">+98-21-88648210</span></p>
@@ -334,10 +334,10 @@
         </a>
         {% endif %}
 
-        <a href="tel:{% if main_clinic.phone_1 %}{{ main_clinic.phone_1 }}{% else %}02188648210{% endif %}"
+        <a href="tel:{% if main_clinic.phone_1_en %}{{ main_clinic.phone_1_en }}{% else %}02188648210{% endif %}"
            class="fab-item fab-phone" aria-label="Call us">
             <i class="fa fa-phone"></i>
-            <span class="fab-tooltip">{% if main_clinic.phone_1 %}{{ main_clinic.phone_1 }}{% else %}021-88648210{% endif %}</span>
+            <span class="fab-tooltip">{% if main_clinic.phone_1_en %}{{ main_clinic.phone_1_en }}{% else %}021-88648210{% endif %}</span>
         </a>
 
         <button class="fab-main" id="fabMain" aria-label="Contact us" aria-expanded="false" aria-haspopup="true">

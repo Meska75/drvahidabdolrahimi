@@ -119,8 +119,8 @@
                 <div class="row">
                     <div class="col-lg-8 d-md-flex">
                         {% if main_clinic %}
-                        {% if main_clinic.phone_1_ar %}<h6><span><i class="fa fa-phone"></i></span> {{ main_clinic.phone_1_ar }}</h6>{% endif %}
-                        {% if main_clinic.phone_2_ar %}<h6><span><i class="fa fa-mobile"></i></span> {{ main_clinic.phone_2_ar }}</h6>{% endif %}
+                        {% if main_clinic.phone_1_ar %}<h6><span><i class="fa fa-phone"></i></span> <span dir="ltr" class="phone-ltr">{{ main_clinic.phone_1_ar }}</span></h6>{% endif %}
+                        {% if main_clinic.phone_2_ar %}<h6><span><i class="fa fa-mobile"></i></span> <span dir="ltr" class="phone-ltr">{{ main_clinic.phone_2_ar }}</span></h6>{% endif %}
                         {% if main_clinic.address_ar %}<h6><span><i class="fa fa-map-marker"></i></span> {{ main_clinic.address_ar }}</h6>{% endif %}
                         {% else %}
                         <h6><span><i class="fa fa-phone"></i></span> 021-88648210</h6>
@@ -261,8 +261,8 @@
                             <h3 class="mb-4">معلومات الاتصال</h3>
                             {% if main_clinic %}
                             {% if main_clinic.address_ar %}<p class="mb-2"><i class="fa fa-map-marker"></i> {{ main_clinic.address_ar }}</p>{% endif %}
-                            {% if main_clinic.phone_1_ar %}<p class="mb-2"><i class="fa fa-phone"></i> <span dir="ltr">{{ main_clinic.phone_1_ar }}</span></p>{% endif %}
-                            {% if main_clinic.phone_2_ar %}<p class="mb-2"><i class="fa fa-mobile"></i> <span dir="ltr">{{ main_clinic.phone_2_ar }}</span></p>{% endif %}
+                            {% if main_clinic.phone_1_ar %}<p class="mb-2"><i class="fa fa-phone"></i> <span dir="ltr" class="phone-ltr">{{ main_clinic.phone_1_ar }}</span></p>{% endif %}
+                            {% if main_clinic.phone_2_ar %}<p class="mb-2"><i class="fa fa-mobile"></i> <span dir="ltr" class="phone-ltr">{{ main_clinic.phone_2_ar }}</span></p>{% endif %}
                             {% if main_clinic.schedule_ar %}<p><i class="fa fa-clock-o"></i> {{ main_clinic.schedule_ar }}</p>{% endif %}
                             {% else %}
                             <p class="mb-2"><i class="fa fa-phone"></i> <span dir="ltr">021-88648210</span></p>

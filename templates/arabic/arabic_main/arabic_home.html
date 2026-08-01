@@ -514,7 +514,7 @@
                     <div class="ci-icon-wrap"><i class="fa fa-phone"></i></div>
                     <div class="ci-text">
                         <strong>هاتف العيادة</strong>
-                        <span dir="ltr">021-88648210</span>
+                        <span dir="ltr" class="phone-ltr">{% if main_clinic.phone_1_ar %}{{ main_clinic.phone_1_ar }}{% if main_clinic.phone_2_ar %} | {{ main_clinic.phone_2_ar }}{% endif %}{% else %}021-88648210{% endif %}</span>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6 ci-item">

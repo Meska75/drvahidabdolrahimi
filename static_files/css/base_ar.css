@@ -446,3 +446,10 @@ input, textarea, select, button, label, td, th {
     .contact-hero-section,
     .sov-hero-section { margin-top: 60px !important; }
 }
+
+/* ????? ?????? — LTR ?????? ?? ???? */
+.phone-ltr {
+    direction: ltr;
+    unicode-bidi: isolate;
+    display: inline-block;
+}

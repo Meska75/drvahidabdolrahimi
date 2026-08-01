@@ -452,3 +452,12 @@ input, textarea, select, button, label, td, th {
     .contact-hero-section,
     .sov-hero-section { margin-top: 60px !important; }
 }
+
+/* Phone numbers — Latin digits, LTR, Inter (not Vazir) */
+.phone-ltr {
+    direction: ltr;
+    unicode-bidi: isolate;
+    display: inline-block;
+    font-family: 'Inter', Arial, sans-serif !important;
+    font-variant-numeric: lining-nums;
+}

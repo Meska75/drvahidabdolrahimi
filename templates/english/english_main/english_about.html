@@ -428,7 +428,7 @@
                         {% if clinic.phone_1_en %}
                         <div class="clinic-info-item">
                             <i class="fas fa-phone"></i>
-                            <span>{{ clinic.phone_1_en }}{% if clinic.phone_2_en %} &nbsp;|&nbsp; {{ clinic.phone_2_en }}{% endif %}</span>
+                            <span dir="ltr" class="phone-ltr" lang="en">{{ clinic.phone_1_en }}{% if clinic.phone_2_en %} &nbsp;|&nbsp; {{ clinic.phone_2_en }}{% endif %}</span>
                         </div>
                         {% endif %}
                     </div>

@@ -50,21 +50,25 @@
         <!-- Three contact blocks -->
         <div class="contact-blocks wow fadeInUp" data-wow-delay=".2s">
 
-            <a href="tel:02188648210" class="contact-block">
+            {% if main_clinic.phone_1_en %}
+            <a href="tel:{{ main_clinic.phone_1_en }}" class="contact-block">
                 <div class="cb-icon">
                     <i class="fas fa-phone"></i>
                 </div>
                 <h4>Clinic Phone</h4>
-                <span class="cb-value">021-88648210</span>
+                <span class="cb-value phone-ltr" dir="ltr" lang="en">{{ main_clinic.phone_1_en }}</span>
             </a>
+            {% endif %}
 
-            <a href="tel:09013434195" class="contact-block">
+            {% if main_clinic.phone_2_en %}
+            <a href="tel:{{ main_clinic.phone_2_en }}" class="contact-block">
                 <div class="cb-icon">
                     <i class="fas fa-mobile-alt"></i>
                 </div>
                 <h4>Mobile</h4>
-                <span class="cb-value">0901-343-4195</span>
+                <span class="cb-value phone-ltr" dir="ltr" lang="en">{{ main_clinic.phone_2_en }}</span>
             </a>
+            {% endif %}
 
             <div class="contact-block">
                 <div class="cb-icon">
@@ -108,25 +112,29 @@
                     </div>
                 </div>
 
+                {% if main_clinic.phone_1_en %}
                 <div class="info-item">
                     <div class="info-item-icon">
                         <i class="fas fa-phone"></i>
                     </div>
                     <div class="info-item-text">
                         <h5>CLINIC PHONE</h5>
-                        <a href="tel:02188648210">021-88648210</a>
+                        <a href="tel:{{ main_clinic.phone_1_en }}" dir="ltr" class="phone-ltr" lang="en">{{ main_clinic.phone_1_en }}</a>
                     </div>
                 </div>
+                {% endif %}
 
+                {% if main_clinic.phone_2_en %}
                 <div class="info-item">
                     <div class="info-item-icon">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
                     <div class="info-item-text">
                         <h5>MOBILE</h5>
-                        <a href="tel:09013434195">0901-343-4195</a>
+                        <a href="tel:{{ main_clinic.phone_2_en }}" dir="ltr" class="phone-ltr" lang="en">{{ main_clinic.phone_2_en }}</a>
                     </div>
                 </div>
+                {% endif %}
 
                 <div class="info-item">
                     <div class="info-item-icon">

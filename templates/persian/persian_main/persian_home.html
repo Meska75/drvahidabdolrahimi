@@ -539,7 +539,7 @@
                     <div class="ci-icon-wrap"><i class="fa fa-phone"></i></div>
                     <div class="ci-text">
                         <strong>تلفن مطب</strong>
-                        <span dir="ltr">021-88648210</span>
+                        <span dir="ltr" class="phone-ltr">{% if main_clinic.phone_1_fa %}{{ main_clinic.phone_1_fa }}{% if main_clinic.phone_2_fa %} | {{ main_clinic.phone_2_fa }}{% endif %}{% else %}۰۲۱-۸۸۶۴۸۲۱۰{% endif %}</span>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6 ci-item">

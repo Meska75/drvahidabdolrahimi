@@ -521,7 +521,7 @@
                     <div class="ci-icon-wrap"><i class="fa fa-phone"></i></div>
                     <div class="ci-text">
                         <strong>Clinic Phone</strong>
-                        <span>021-88648210</span>
+                        <span dir="ltr" class="phone-ltr" lang="en">{% if main_clinic.phone_1_en %}{{ main_clinic.phone_1_en }}{% if main_clinic.phone_2_en %} | {{ main_clinic.phone_2_en }}{% endif %}{% else %}021-88648210{% endif %}</span>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6 ci-item">

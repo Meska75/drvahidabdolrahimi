@@ -3,6 +3,31 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+def _load_dotenv(path: Path) -> None:
+    """خواندن فایل .env بدون وابستگی اضافه — مقدارهای از قبل در محیط باشند، بازنویسی نمی‌شوند."""
+    if not path.is_file():
+        return
+    try:
+        raw = path.read_text(encoding='utf-8')
+    except OSError:
+        return
+    for line in raw.splitlines():
+        line = line.strip()
+        if not line or line.startswith('#') or '=' not in line:
+            continue
+        key, _, value = line.partition('=')
+        key = key.strip()
+        if not key or key in os.environ:
+            continue
+        value = value.strip()
+        if len(value) >= 2 and value[0] == value[-1] and value[0] in ('"', "'"):
+            value = value[1:-1]
+        os.environ[key] = value
+
+
+_load_dotenv(BASE_DIR / '.env')
+
 # ===== کلیدها و حالت اجرا — از محیط خوانده می‌شوند =====
 SECRET_KEY = os.environ.get(
     'SECRET_KEY',
@@ -11,7 +36,10 @@ SECRET_KEY = os.environ.get(
 
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = [
+    h.strip() for h in os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+    if h.strip()
+]
 
 # ===== پذیرش۲۴ — رزرو نوبت آنلاین =====
 PAZIRESH24_API_KEY  = os.environ.get('PAZIRESH24_API_KEY', '')
@@ -91,6 +119,16 @@ else:
             'PASSWORD': os.environ.get('DB_PASSWORD', ''),
             'HOST': os.environ.get('DB_HOST', 'localhost'),
             'PORT': os.environ.get('DB_PORT', '5432'),
+            # اتصال پایدارتر به دیتابیس ریموت (لیارا) — جلوگیری از قطع ناگهانی
+            'CONN_MAX_AGE': 60,
+            'CONN_HEALTH_CHECKS': True,
+            'OPTIONS': {
+                'connect_timeout': 10,
+                'keepalives': 1,
+                'keepalives_idle': 30,
+                'keepalives_interval': 10,
+                'keepalives_count': 5,
+            },
         }
     }
 

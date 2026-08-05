@@ -1408,7 +1408,12 @@ a.floating-card:hover {
     .stat-item         { border-left: none; border-bottom: 1px solid var(--border); }
     .exp-badge         { left: 10px; }
     .about-img-wrap    { margin-bottom: 40px; }
-    .about-img-wrap img { height: 360px; }
+    /* تبلت/موبایل: نسبت پورتریت تا تصویر مربعی نشود */
+    .about-img-wrap img {
+        height: auto;
+        aspect-ratio: 3 / 4;
+        min-height: 420px;
+    }
 
     .srv-carousel:not(.owl-loaded) .srv-carousel-item {
         flex: 0 0 calc(50% - 12px);
@@ -1471,7 +1476,12 @@ a.floating-card:hover {
     .stat-lbl   { font-size: 11px; margin-top: 5px; }
     .stat-icon  { font-size: 20px; margin-bottom: 8px; }
     .exp-badge          { position: static; margin-top: -30px; display: inline-block; }
-    .about-img-wrap img { height: 280px; }
+    /* موبایل تمام‌عرض: کادر کشیده‌تر به سمت پایین (پورتریت) */
+    .about-img-wrap img {
+        height: auto;
+        aspect-ratio: 3 / 4;
+        min-height: 440px;
+    }
     .srv-card .card-img { height: 150px; }
     .team-card .img-wrap { height: 220px; }
 

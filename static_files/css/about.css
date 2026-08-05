@@ -1094,7 +1094,12 @@
     .bio-skills-grid { grid-template-columns: 1fr; }
     .bio-photo-wrap { padding: 0 0 20px 0; }
     .bio-photo-deco { display: none; }
-    .bio-photo-inner img { height: 320px; }
+    /* موبایل: کادر عکس پورتریت (کشیده‌تر به پایین) */
+    .bio-photo-inner img {
+        height: auto;
+        aspect-ratio: 3 / 4;
+        min-height: 440px;
+    }
 
     /* سوابق و تحصیلات: کارت‌های باریک‌تر و فشرده‌تر تا اسکرول کمتر شود */
     .tl-item { padding-right: 10px; margin-bottom: 18px; }

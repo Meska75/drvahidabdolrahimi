@@ -4,6 +4,8 @@ Disallow: /admin/
 Disallow: /accounts/
 Disallow: /ckeditor/
 Disallow: /booking-proxy/
-Disallow: /search/?q=
+Disallow: /search/
+Disallow: /en/search/
+Disallow: /ar/search/
 
 Sitemap: {{ request.scheme }}://{{ request.get_host }}/sitemap.xml

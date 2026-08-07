@@ -43,6 +43,7 @@ class PersianStaticSitemap(Sitemap):
         ('services', 'persian_services_overview', 'services'),
         ('services', 'persian_office_services',   'services'),
         ('services', 'persian_surgery_services',  'services'),
+        ('blog',     'persian_blog_list',         'blog'),
         ('gallery',  'persian_gallery',           'gallery'),
         ('videos',   'persian_videos',            'videos'),
     ]
@@ -74,6 +75,7 @@ class EnglishStaticSitemap(Sitemap):
         ('english_services', 'english_services_overview', 'services'),
         ('english_services', 'english_office_services',   'services'),
         ('english_services', 'english_surgery_services',  'services'),
+        ('english_blog',     'english_blog_list',         'blog'),
         ('english_gallery',  'english_gallery',           'gallery'),
         ('english_videos',   'english_videos',            'videos'),
     ]
@@ -105,6 +107,7 @@ class ArabicStaticSitemap(Sitemap):
         ('arabic_services', 'arabic_services_overview', 'services'),
         ('arabic_services', 'arabic_office_services',   'services'),
         ('arabic_services', 'arabic_surgery_services',  'services'),
+        ('arabic_blog',     'arabic_blog_list',         'blog'),
         ('arabic_gallery',  'arabic_gallery',           'gallery'),
         ('arabic_videos',   'arabic_videos',            'videos'),
     ]

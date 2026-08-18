@@ -44,29 +44,40 @@
     padding-bottom: 60px;
 }
 
-/* crossfade بنر هیرو */
+/* crossfade بنر هیرو — تصویر با position مطلق تا height:auto بوت‌استرپ آن را صفر نکند */
 .hero-bg-slider {
     position: absolute;
-    inset: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
 }
 
 .hero-slide {
     position: absolute;
-    inset: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     opacity: 0;
     transition: opacity 1.2s ease-in-out;
 }
 
 .hero-slide img {
-    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
+    max-width: none;
     object-fit: cover;
     object-position: center center;
 }
 
-.hero-slide.active { opacity: 1; }
+.hero-slide.active { opacity: 1; z-index: 1; }
 
 /* overlay نیمه‌شفاف */
 .hero-overlay {

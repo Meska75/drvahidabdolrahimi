@@ -162,6 +162,17 @@
     to   { background-position: 200% center; }
 }
 
+/* روی موبایل انیمیشن گرادیان را قطع می‌کنیم — CLS و کار main-thread کمتر می‌شود */
+@media (max-width: 960px) {
+    .hero-title .highlight {
+        animation: none;
+        background-position: 0% center;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero-title .highlight { animation: none; }
+}
+
 .hero-subtitle {
     font-size: 18px !important;
     color: #93c5fd !important;

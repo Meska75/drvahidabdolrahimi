@@ -1,0 +1,4 @@
+{% load static %}
+{# بارگذاری غیرمسدودکننده CSS — تا رندر اولیه را معطل نکند #}
+<link rel="stylesheet" href="{% static path %}" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="{% static path %}"></noscript>

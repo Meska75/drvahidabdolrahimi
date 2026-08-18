@@ -35,11 +35,3 @@
     font-display: swap;
     src: url('../webfonts/Vazirmatn-Bold.woff2') format('woff2');
 }
-
-@font-face {
-    font-family: 'Vazirmatn';
-    font-style: normal;
-    font-weight: 800;
-    font-display: swap;
-    src: url('../webfonts/Vazirmatn-ExtraBold.woff2') format('woff2');
-}

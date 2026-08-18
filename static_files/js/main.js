@@ -110,9 +110,6 @@
     });
 
     jQuery(window).on('load', function() {
-        if (typeof WOW !== 'undefined') {
-            new WOW().init();
-        }
         $('.preloader').fadeOut(500);
     });
 })(jQuery);

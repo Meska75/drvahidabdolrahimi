@@ -55,9 +55,6 @@
     <link rel="stylesheet" href="{% static 'css/base_en.css' %}">
     <link rel="stylesheet" href="{% static 'css/search.css' %}">
     <link rel="stylesheet" href="{% static 'css/floating_actions.css' %}">
-    <!-- animate.css برای انیمیشن‌های پایین صفحه است؛ غیرمسدودکننده لود می‌شود -->
-    <link rel="stylesheet" href="{% static 'css/animate-3.7.0.css' %}" media="print" onload="this.onload=null;this.media='all'">
-    <noscript><link rel="stylesheet" href="{% static 'css/animate-3.7.0.css' %}"></noscript>
 
     {% block extra_css %}{% endblock %}
 
@@ -300,14 +297,26 @@
     <!-- End Footer -->
 
 
-    <!-- جاوااسکریپت مشترک — کتابخانه‌های صفحه‌محور در extra_js هر صفحه لود می‌شوند -->
+    <!-- جاوااسکریپت مشترک — کتابخانه‌های صفحه‌محور تنبل لود می‌شوند -->
     <script src="{% static 'js/vendor/jquery-2.2.4.min.js' %}"></script>
     <script src="{% static 'js/vendor/bootstrap-4.1.3.min.js' %}"></script>
     <script src="{% static 'js/vendor/superfish.min.js' %}"></script>
-    <script src="{% static 'js/vendor/wow.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/search.js' %}"></script>
     <script src="{% static 'js/floating_actions.js' %}"></script>
+    <script>
+        window.LAZY_VENDORS = {
+            owlCss: "{% static 'css/owl-carousel.min.css' %}",
+            owlJs: "{% static 'js/vendor/owl-carousel.min.js' %}",
+            swiperCss: "{% static 'css/swiper-bundle.min.css' %}",
+            swiperJs: "{% static 'js/vendor/swiper-bundle.min.js' %}",
+            leafletCss: "{% static 'css/leaflet.css' %}",
+            leafletJs: "{% static 'js/vendor/leaflet.js' %}",
+            animateCss: "{% static 'css/animate-3.7.0.css' %}",
+            wowJs: "{% static 'js/vendor/wow.min.js' %}"
+        };
+    </script>
+    <script src="{% static 'js/lazy-vendors.js' %}"></script>
 
     {% block extra_js %}{% endblock %}
 

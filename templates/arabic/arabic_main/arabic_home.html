@@ -25,10 +25,6 @@
 {% if banners %}<link rel="preload" as="image" href="{{ banners.0.image.url }}" fetchpriority="high">{% else %}<link rel="preload" as="image" href="{% static 'images/home/banner/banner-bg.jpg' %}" fetchpriority="high">{% endif %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 <link rel="stylesheet" href="{% static 'css/faq.css' %}">
-<link rel="stylesheet" href="{% static 'css/owl-carousel.min.css' %}">
-<link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
-<!-- Leaflet.js — self-host -->
-<link rel="stylesheet" href="{% static 'css/leaflet.css' %}">
 {# <link rel="stylesheet" href="{% static 'css/booking.css' %}"> — TODO: تفعيل بعد إعداد API بذيرش24 #}
 {% endblock %}
 
@@ -535,9 +531,6 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/vendor/owl-carousel.min.js' %}"></script>
-<script src="{% static 'js/vendor/swiper-bundle.min.js' %}"></script>
-<script src="{% static 'js/vendor/leaflet.js' %}" defer></script>
 <script src="{% static 'js/home_ar.js' %}"></script>
 {# <script src="{% static 'js/booking.js' %}"></script> — TODO: تفعيل بعد إعداد API بذيرش24 #}
 {% endblock %}

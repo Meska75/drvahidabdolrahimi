@@ -22,10 +22,11 @@
             }, 5000);
         }
 
-        /* ===== کاروسل خدمات — فعال فقط اگر تعداد آیتم > 4 ===== */
+        /* ===== کاروسل خدمات — بعد از لود تنبل Owl ===== */
         function initSrvCarousel(el) {
             var $el = $(el);
             if (!$el.length || !$.fn.owlCarousel) return;
+            if ($el.hasClass('owl-loaded')) return;
             if ($el.children('.srv-carousel-item').length > 4) {
                 $el.owlCarousel({
                     loop: true, margin: 20, autoplay: true,
@@ -37,8 +38,12 @@
                 });
             }
         }
-        initSrvCarousel($('#officeSrvCarousel'));
-        initSrvCarousel($('#surgerySrvCarousel'));
+        if (window.whenVendor) {
+            whenVendor('owl', function () {
+                initSrvCarousel($('#officeSrvCarousel'));
+                initSrvCarousel($('#surgerySrvCarousel'));
+            });
+        }
 
         /* ===== تصویر fade پس‌زمینه بخش تیم ===== */
 
@@ -91,85 +96,83 @@
 })(jQuery);
 
 
-/* ===== Swiper نظرات بیماران ===== */
-if (typeof Swiper !== 'undefined' && document.querySelector('.tst-swiper')) {
-    /* اگر تعداد slides کمتر از ۸ باشد تکرار می‌کنیم تا loop بی‌نهایت کار کند */
-    (function () {
+/* ===== Swiper نظرات بیماران — بعد از لود تنبل ===== */
+if (window.whenVendor) {
+    whenVendor('swiper', function () {
+        if (typeof Swiper === 'undefined' || !document.querySelector('.tst-swiper')) return;
         var wrapper = document.querySelector('.tst-swiper .swiper-wrapper');
-        if (!wrapper) return;
-        var orig = Array.from(wrapper.querySelectorAll('.swiper-slide'));
-        if (!orig.length) return;
-        var i = 0;
-        while (wrapper.querySelectorAll('.swiper-slide').length < 8) {
-            wrapper.appendChild(orig[i % orig.length].cloneNode(true));
-            i++;
+        if (wrapper) {
+            var orig = Array.from(wrapper.querySelectorAll('.swiper-slide'));
+            var i = 0;
+            while (orig.length && wrapper.querySelectorAll('.swiper-slide').length < 8) {
+                wrapper.appendChild(orig[i % orig.length].cloneNode(true));
+                i++;
+            }
         }
-    })();
-
-    new Swiper('.tst-swiper', {
-        loop: true,
-        speed: 600,
-        autoplay: { delay: 5000, disableOnInteraction: false },
-        centeredSlides: true,
-        grabCursor: true,
-        spaceBetween: 30,
-        navigation: {
-            nextEl: '.tst-swiper .swiper-button-next',
-            prevEl: '.tst-swiper .swiper-button-prev',
-        },
-        breakpoints: {
-            0:    { slidesPerView: 1,   spaceBetween: 16 },
-            768:  { slidesPerView: 1.5, spaceBetween: 24 },
-            1100: { slidesPerView: 3,   spaceBetween: 30 },
-        }
+        new Swiper('.tst-swiper', {
+            loop: true,
+            speed: 600,
+            autoplay: { delay: 5000, disableOnInteraction: false },
+            centeredSlides: true,
+            grabCursor: true,
+            spaceBetween: 30,
+            navigation: {
+                nextEl: '.tst-swiper .swiper-button-next',
+                prevEl: '.tst-swiper .swiper-button-prev',
+            },
+            breakpoints: {
+                0:    { slidesPerView: 1,   spaceBetween: 16 },
+                768:  { slidesPerView: 1.5, spaceBetween: 24 },
+                1100: { slidesPerView: 3,   spaceBetween: 30 },
+            }
+        });
     });
 }
 
 
-/* ===== نقشه نشان (Leaflet + tile API نشان) =====
-   window.load: بعد از defer scripts اجرا می‌شود */
-window.addEventListener('load', function () {
-    var mapEl = document.getElementById('neshanMap');
-    if (!mapEl || typeof L === 'undefined') return;
+/* ===== نقشه — بعد از لود تنبل Leaflet ===== */
+if (window.whenVendor) {
+    whenVendor('leaflet', function () {
+        var mapEl = document.getElementById('neshanMap');
+        if (!mapEl || typeof L === 'undefined' || mapEl._leaflet_id) return;
 
-    var lat    = 35.75431655694686;
-    var lng    = 51.41248217613625;
-    var apiKey = 'service.4b130a29422349a7a3210bf2972459f5';
+        var lat    = 35.75431655694686;
+        var lng    = 51.41248217613625;
+        var apiKey = 'service.4b130a29422349a7a3210bf2972459f5';
 
-    var map = L.map('neshanMap', {
-        center: [lat, lng],
-        zoom: 16,
-        zoomControl: true,
-        attributionControl: true
+        var map = L.map('neshanMap', {
+            center: [lat, lng],
+            zoom: 16,
+            zoomControl: true,
+            attributionControl: true
+        });
+
+        var neshanFailed = false;
+        var neshanLayer  = L.tileLayer(
+            'https://map.neshan.org/sdk/v1/map/xyz/dreamy/{z}/{x}/{y}.png?x-api-key=' + apiKey,
+            { attribution: '© <a href="https://neshan.org" target="_blank">نشان</a>', maxZoom: 18 }
+        );
+
+        neshanLayer.on('tileerror', function () {
+            if (!neshanFailed) {
+                neshanFailed = true;
+                map.removeLayer(neshanLayer);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© <a href="https://openstreetmap.org" target="_blank">OpenStreetMap</a>'
+                }).addTo(map);
+            }
+        });
+
+        neshanLayer.addTo(map);
+
+        L.marker([lat, lng])
+            .addTo(map)
+            .bindPopup(
+                '<div dir="rtl" style="font-family:Vazirmatn,sans-serif;font-size:13px;padding:4px 8px;">' +
+                '<strong>مطب دکتر وحید عبدالرحیمی</strong></div>'
+            )
+            .openPopup();
+
+        setTimeout(function () { map.invalidateSize(); }, 300);
     });
-
-    /* tile نشان با fallback به OpenStreetMap */
-    var neshanFailed = false;
-    var neshanLayer  = L.tileLayer(
-        'https://map.neshan.org/sdk/v1/map/xyz/dreamy/{z}/{x}/{y}.png?x-api-key=' + apiKey,
-        { attribution: '© <a href="https://neshan.org" target="_blank">نشان</a>', maxZoom: 18 }
-    );
-
-    neshanLayer.on('tileerror', function () {
-        if (!neshanFailed) {
-            neshanFailed = true;
-            map.removeLayer(neshanLayer);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© <a href="https://openstreetmap.org" target="_blank">OpenStreetMap</a>'
-            }).addTo(map);
-        }
-    });
-
-    neshanLayer.addTo(map);
-
-    L.marker([lat, lng])
-        .addTo(map)
-        .bindPopup(
-            '<div dir="rtl" style="font-family:Vazirmatn,sans-serif;font-size:13px;padding:4px 8px;">' +
-            '<strong>مطب دکتر وحید عبدالرحیمی</strong></div>'
-        )
-        .openPopup();
-
-    /* رفع اندازه container در flex layout */
-    setTimeout(function () { map.invalidateSize(); }, 300);
-});
+}

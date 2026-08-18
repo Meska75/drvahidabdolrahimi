@@ -1,0 +1,35 @@
+{% load static %}
+{# اسلایدر هیرو صفحه اصلی — تصویر اول مستقیم در HTML تا مرورگر LCP را فوری کشف کند #}
+<div class="hero-bg-slider" id="heroBgSlider">
+    {% if banners %}
+        {% for banner in banners %}
+        <div class="hero-slide{% if forloop.first %} active{% endif %}">
+            <img
+                src="{{ banner.image.url }}"
+                alt="{% if lang == 'en' %}{{ banner.alt_en|default:banner.alt_fa|default:'Dr. Vahid Abdolrahimi' }}{% elif lang == 'ar' %}{{ banner.alt_ar|default:banner.alt_fa|default:'د. وحيد عبد الرحيمي' }}{% else %}{{ banner.alt_fa|default:'دکتر وحید عبدالرحیمی' }}{% endif %}"
+                width="1920"
+                height="900"
+                decoding="async"
+                {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
+            >
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="hero-slide active">
+            <img
+                src="{% static 'images/home/banner/banner-bg.jpg' %}"
+                alt="{% if lang == 'en' %}Dr. Vahid Abdolrahimi Clinic{% elif lang == 'ar' %}عيادة د. وحيد عبد الرحيمي{% else %}مطب دکتر وحید عبدالرحیمی{% endif %}"
+                width="1920"
+                height="900"
+                decoding="async"
+                fetchpriority="high"
+            >
+        </div>
+        <div class="hero-slide">
+            <img src="{% static 'images/home/banner/banner-5bg.jpg' %}" alt="" width="1920" height="900" decoding="async" loading="lazy">
+        </div>
+        <div class="hero-slide">
+            <img src="{% static 'images/home/banner/banner-2bg.jpg' %}" alt="" width="1920" height="900" decoding="async" loading="lazy">
+        </div>
+    {% endif %}
+</div>

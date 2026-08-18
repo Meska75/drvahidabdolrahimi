@@ -5,32 +5,18 @@
 
 $(function () {
 
-    /* ===== Crossfade Hero Slider ===== */
-    var slides  = $('.hero-slide');
-    var total   = slides.length;
-    var current = 0;
-
-    function loadBg(el) {
-        var src = el.data('bg');
-        if (src && !el.data('loaded')) {
-            el.css('background-image', 'url(' + src + ')');
-            el.data('loaded', true);
+    /* ===== Crossfade Hero Slider — الصورة الأولى في HTML لاكتشاف LCP ===== */
+    var slides = document.querySelectorAll('#heroBgSlider .hero-slide');
+    if (slides.length > 1) {
+        var current = 0;
+        if (!slides[0].classList.contains('active')) {
+            slides[0].classList.add('active');
         }
-    }
-
-    if (total > 0) {
-        loadBg(slides.eq(0));
-        slides.eq(0).addClass('active');
-
-        if (total > 1) {
-            setInterval(function () {
-                var next = (current + 1) % total;
-                loadBg(slides.eq(next));
-                slides.eq(current).removeClass('active');
-                slides.eq(next).addClass('active');
-                current = next;
-            }, 5000);
-        }
+        setInterval(function () {
+            slides[current].classList.remove('active');
+            current = (current + 1) % slides.length;
+            slides[current].classList.add('active');
+        }, 5000);
     }
 
     /* ===== Team Background ===== */

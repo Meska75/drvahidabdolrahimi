@@ -3,15 +3,13 @@
 
     $(function () {
 
-        /* ===== Hero banner crossfade slider ===== */
+        /* ===== Hero banner crossfade — first image is in HTML for LCP ===== */
         var slides = document.querySelectorAll('#heroBgSlider .hero-slide');
-        var current = 0;
-        slides.forEach(function (s) {
-            var bg = s.getAttribute('data-bg');
-            if (bg) s.style.backgroundImage = 'url(' + bg + ')';
-        });
-        if (slides.length > 0) {
-            slides[0].classList.add('active');
+        if (slides.length > 1) {
+            var current = 0;
+            if (!slides[0].classList.contains('active')) {
+                slides[0].classList.add('active');
+            }
             setInterval(function () {
                 slides[current].classList.remove('active');
                 current = (current + 1) % slides.length;

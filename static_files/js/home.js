@@ -8,15 +8,13 @@
 
     $(function () {
 
-        /* ===== slider crossfade بنر هیرو ===== */
+        /* ===== slider crossfade بنر هیرو — تصویر اول از HTML لود می‌شود ===== */
         var slides = document.querySelectorAll('#heroBgSlider .hero-slide');
-        var current = 0;
-        slides.forEach(function (s) {
-            var bg = s.getAttribute('data-bg');
-            if (bg) s.style.backgroundImage = 'url(' + bg + ')';
-        });
-        if (slides.length > 0) {
-            slides[0].classList.add('active');
+        if (slides.length > 1) {
+            var current = 0;
+            if (!slides[0].classList.contains('active')) {
+                slides[0].classList.add('active');
+            }
             setInterval(function () {
                 slides[current].classList.remove('active');
                 current = (current + 1) % slides.length;

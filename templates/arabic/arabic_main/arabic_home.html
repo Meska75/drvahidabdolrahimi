@@ -22,6 +22,7 @@
 {% endblock %}
 
 {% block extra_css %}
+{% if banners %}<link rel="preload" as="image" href="{{ banners.0.image.url }}" fetchpriority="high">{% else %}<link rel="preload" as="image" href="{% static 'images/home/banner/banner-bg.jpg' %}" fetchpriority="high">{% endif %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 <link rel="stylesheet" href="{% static 'css/faq.css' %}">
 <link rel="stylesheet" href="{% static 'css/owl-carousel.min.css' %}">
@@ -35,18 +36,7 @@
 
 <!-- ===== Hero ===== -->
 <section class="hero-section">
-    <div class="hero-bg-slider" id="heroBgSlider">
-        {% if banners %}
-            {% for banner in banners %}
-            <div class="hero-slide" data-bg="{{ banner.image.url }}"
-                 {% if banner.alt_ar %}title="{{ banner.alt_ar }}"{% endif %}></div>
-            {% endfor %}
-        {% else %}
-            <div class="hero-slide" data-bg="{% static 'images/home/banner/banner-bg.jpg' %}"></div>
-            <div class="hero-slide" data-bg="{% static 'images/home/banner/banner-5bg.jpg' %}"></div>
-            <div class="hero-slide" data-bg="{% static 'images/home/banner/banner-2bg.jpg' %}"></div>
-        {% endif %}
-    </div>
+    {% include "components/hero_bg_slider.html" with lang="ar" %}
     <div class="hero-overlay"></div>
     <div class="hero-circle-1"></div>
     <div class="hero-circle-2"></div>

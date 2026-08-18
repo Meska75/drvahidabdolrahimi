@@ -54,11 +54,16 @@
 .hero-slide {
     position: absolute;
     inset: 0;
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
     opacity: 0;
     transition: opacity 1.2s ease-in-out;
+}
+
+.hero-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
 }
 
 .hero-slide.active { opacity: 1; }
@@ -1443,8 +1448,8 @@ a.floating-card:hover {
     }
 
     /* تصویر بنر از بالا-مرکز نمایش داده شود تا کات نشود */
-    .hero-slide {
-        background-position: center top !important;
+    .hero-slide img {
+        object-position: center top;
     }
 
     /* پرده گرادیان سمت چپ و راست برای پوشاندن لبه برش */

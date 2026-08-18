@@ -42,7 +42,7 @@ $(function () {
 
     /* ===== Office Services Carousel (RTL) ===== */
     var $offCar = $('#officeSrvCarousel');
-    if ($offCar.length) {
+    if ($offCar.length && $.fn.owlCarousel) {
         $offCar.owlCarousel({
             rtl: true,
             loop: true,
@@ -56,7 +56,7 @@ $(function () {
 
     /* ===== Surgery Services Carousel (RTL) ===== */
     var $surCar = $('#surgerySrvCarousel');
-    if ($surCar.length) {
+    if ($surCar.length && $.fn.owlCarousel) {
         $surCar.owlCarousel({
             rtl: true,
             loop: true,

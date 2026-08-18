@@ -22,7 +22,7 @@
         /* ===== Services carousel — active only when items > 4 ===== */
         function initSrvCarousel(el) {
             var $el = $(el);
-            if (!$el.length) return;
+            if (!$el.length || !$.fn.owlCarousel) return;
             if ($el.children('.srv-carousel-item').length > 4) {
                 $el.owlCarousel({
                     loop: true, margin: 20, autoplay: true,

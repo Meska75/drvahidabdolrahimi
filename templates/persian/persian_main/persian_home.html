@@ -18,6 +18,7 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 <link rel="stylesheet" href="{% static 'css/faq.css' %}">
+<link rel="stylesheet" href="{% static 'css/owl-carousel.min.css' %}">
 {# <link rel="stylesheet" href="{% static 'css/booking.css' %}"> — TODO: فعال‌سازی بعد از دریافت API پذیرش24 #}
 <link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
 <!-- Leaflet.js — self-host، بدون وابستگی به CDN خارجی -->
@@ -569,6 +570,7 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="{% static 'js/vendor/owl-carousel.min.js' %}"></script>
 <script src="{% static 'js/vendor/swiper-bundle.min.js' %}"></script>
 <script src="{% static 'js/vendor/leaflet.js' %}" defer></script>
 <script src="{% static 'js/home.js' %}"></script>

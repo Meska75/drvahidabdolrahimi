@@ -315,9 +315,12 @@
             }
         });
 
-        // هدر اسکرول — دسکتاپ: نوار بالا جمع می‌شود ولی پنهان نمی‌شود
+        // هدر اسکرول — فقط وقتی وضعیت عوض شد کلاس بزن (ResizeObserver خودش layout را همگام می‌کند)
+        var headerScrolled = null;
         $(window).on('scroll', function() {
             var scrolled = $(this).scrollTop() > 80;
+            if (headerScrolled === scrolled) return;
+            headerScrolled = scrolled;
             if (scrolled) {
                 $('#header').addClass('header-scrolled');
                 $('.header-top').addClass('header-scrolled');
@@ -325,27 +328,27 @@
                 $('#header').removeClass('header-scrolled');
                 $('.header-top').removeClass('header-scrolled');
             }
-            scheduleLayoutSync();
         });
 
+        var headerMainEl = document.getElementById('header');
         if (headerTopEl && window.ResizeObserver) {
             var headerObserver = new ResizeObserver(scheduleLayoutSync);
             headerObserver.observe(headerTopEl);
-        }
-
-        var headerMainEl = document.getElementById('header');
-        if (headerMainEl && window.ResizeObserver) {
-            var headerMainObserver = new ResizeObserver(scheduleLayoutSync);
-            headerMainObserver.observe(headerMainEl);
-        }
-
-        if (mobileBarEl && window.ResizeObserver) {
-            var mobileBarObserver = new ResizeObserver(scheduleLayoutSync);
-            mobileBarObserver.observe(mobileBarEl);
+            if (headerMainEl) {
+                headerObserver.observe(headerMainEl);
+            }
+            if (mobileBarEl) {
+                headerObserver.observe(mobileBarEl);
+            }
         }
 
         scheduleLayoutSync();
-        $(window).on('resize load', scheduleLayoutSync);
+        var resizeTimer;
+        $(window).on('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(scheduleLayoutSync, 120);
+        });
+        $(window).on('load', scheduleLayoutSync);
 
     });
 })(jQuery);

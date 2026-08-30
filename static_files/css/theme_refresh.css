@@ -414,6 +414,12 @@ a.floating-card:hover {
         background: rgba(96, 165, 250, 0.18);
     }
 
+    /* کارت‌های هیرو — بدون blur شیشه‌ای روی موبایل */
+    .floating-card {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
     .fab-container {
         bottom: calc(var(--mobile-bottom-bar-h, 48px) + 12px) !important;
     }
@@ -428,9 +434,8 @@ a.floating-card:hover {
 
     /* ===== منوی همبرگر — دراور مدرن ===== */
     #mobile-body-overly {
-        background: rgba(7, 15, 26, 0.55) !important;
-        backdrop-filter: blur(5px);
-        -webkit-backdrop-filter: blur(5px);
+        /* بدون blur — روی موبایل GPU را کمتر درگیر می‌کند */
+        background: rgba(7, 15, 26, 0.72) !important;
     }
 
     #mobile-nav {
@@ -564,13 +569,14 @@ a.floating-card:hover {
         direction: ltr;
     }
 
+    /* لینک فقط به اندازه آیکون+متن — بقیه ردیف مال دکمه باز شدن زیرمنو است */
     #mobile-nav .menu-has-children > .mobile-nav-row > a {
-        flex: 1 1 auto;
+        flex: 0 1 auto !important;
+        max-width: calc(100% - 56px);
         min-width: 0;
         display: flex !important;
         align-items: center;
         gap: 12px;
-        padding: 13px 14px 13px 6px !important;
         background: transparent !important;
         border: none !important;
         border-radius: 0 !important;
@@ -589,32 +595,35 @@ a.floating-card:hover {
     #mobile-nav .menu-has-children > .mobile-nav-row--rtl > a {
         direction: rtl;
         text-align: right;
-        padding: 13px 14px 13px 6px !important;
+        padding: 13px 14px 13px 8px !important;
     }
 
     #mobile-nav .menu-has-children > .mobile-nav-row--ltr > a {
         direction: ltr;
         text-align: left;
-        padding: 13px 6px 13px 14px !important;
+        padding: 13px 8px 13px 14px !important;
     }
 
     #mobile-nav .menu-has-children > .mobile-nav-row > a .mobile-nav-label {
-        flex: 1 1 auto;
+        flex: 0 1 auto;
         min-width: 0;
         line-height: 1.4;
     }
 
+    /* فضای خالی ردیف تا انتهای کادر — هم فلش آنجاست هم ناحیه کلیک */
     #mobile-nav .menu-has-children > .mobile-nav-row > .mobile-nav-sub-toggle {
-        flex: 0 0 40px;
-        width: 40px;
-        min-width: 40px;
+        flex: 1 1 auto !important;
+        width: auto !important;
+        min-width: 56px;
         height: auto;
         min-height: 52px;
         display: flex !important;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-end;
         margin: 0;
-        padding: 0 !important;
+        padding-block: 0 !important;
+        padding-inline-start: 8px !important;
+        padding-inline-end: 16px !important;
         border: none !important;
         border-radius: 0;
         background: transparent !important;

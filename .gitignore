@@ -64,6 +64,9 @@ db.sqlite3-journal
 # فایل‌های تولیدشده توسط collectstatic
 static/
 
+# آپلودهای CMS — فقط روی سرور در media/ می‌مانند، نه در گیت
+media/
+
 # فایل‌های فشرده موقت
 *.zip
 
@@ -187,13 +190,12 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-# Cursor  
-#  Cursor is an AI-powered code editor.`.cursorignore` specifies files/directories to 
-#  exclude from AI features like autocomplete and code analysis. Recommended for sensitive data
-#  refer to https://docs.cursor.com/context/ignore-files
+# Cursor / Claude — تنظیمات شخصی IDE
 .cursorignore
-.cursorindexingignorevenv_wsl/
+.cursorindexingignore
+.cursor/
+.claude/
+
+# محیط مجازی اضافی
 venv_wsl/
-.env
-.env.local
 .env.example

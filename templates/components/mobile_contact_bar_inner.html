@@ -1,0 +1,49 @@
+{% if mcb_address or mcb_phone1 or mcb_phone2 %}
+<div class="mobile-nav-contact-source" hidden aria-hidden="true">
+    <div class="mobile-nav-contact">
+        <p class="mobile-nav-contact-title">
+            {% if request.path|slice:":4" == "/en/" %}Contact{% elif request.path|slice:":4" == "/ar/" %}معلومات الاتصال{% else %}اطلاعات تماس{% endif %}
+        </p>
+        {% if mcb_address %}
+        <p class="mobile-nav-contact-item"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ mcb_address }}</p>
+        {% endif %}
+        {% if mcb_phone1 %}
+        <p class="mobile-nav-contact-item"><i class="fa fa-phone" aria-hidden="true"></i> <span dir="ltr" class="phone-ltr">{{ mcb_phone1 }}</span></p>
+        {% endif %}
+        {% if mcb_phone2 %}
+        <p class="mobile-nav-contact-item"><i class="fa fa-mobile" aria-hidden="true"></i> <span dir="ltr" class="phone-ltr">{{ mcb_phone2 }}</span></p>
+        {% endif %}
+        <a href="{{ mcb_contact_url }}" class="mobile-nav-contact-link">
+            {% if request.path|slice:":4" == "/en/" %}View on map{% elif request.path|slice:":4" == "/ar/" %}عرض على الخريطة{% else %}مشاهده در نقشه{% endif %}
+        </a>
+    </div>
+</div>
+
+<aside class="mobile-contact-bar" id="mobileContactBar" role="complementary"
+       aria-label="{% if request.path|slice:':4' == '/en/' %}Clinic contact{% elif request.path|slice:':4' == '/ar/' %}اتصال العيادة{% else %}تماس با مطب{% endif %}">
+    <div class="mcb-inner">
+        {% if mcb_address %}
+        <a href="{{ mcb_contact_url }}" class="mcb-address">
+            <i class="fa fa-map-marker" aria-hidden="true"></i>
+            <span>{{ mcb_address }}</span>
+        </a>
+        {% endif %}
+        {% if mcb_phone1 or mcb_phone2 %}
+        <div class="mcb-phones">
+            {% if mcb_phone1 %}
+            <a href="tel:{{ mcb_phone1 }}" class="mcb-phone" dir="ltr">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <span class="phone-ltr">{{ mcb_phone1 }}</span>
+            </a>
+            {% endif %}
+            {% if mcb_phone2 %}
+            <a href="tel:{{ mcb_phone2 }}" class="mcb-phone mcb-phone--alt" dir="ltr">
+                <i class="fa fa-mobile" aria-hidden="true"></i>
+                <span class="phone-ltr">{{ mcb_phone2 }}</span>
+            </a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</aside>
+{% endif %}

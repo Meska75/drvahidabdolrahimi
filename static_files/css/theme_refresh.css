@@ -1,0 +1,777 @@
+/* ============================================================
+   theme_refresh.css — پالت روشن‌تر با لنگر آبی (فاز ۱–۳)
+   بارگذاری بعد از base_*.css
+============================================================ */
+
+:root {
+    --surface-page:   #F4F8FC;
+    --surface-card:   #FFFFFF;
+    --anchor-navy:    #0F2D4A;
+    --anchor-navy-95: rgba(15, 45, 74, 0.97);
+    --text-navy:      #1E3A5F;
+    --brand-primary:  #1A56DB;
+    --brand-light:    #E8F2FE;
+    --header-main-h:  76px;
+    --site-header-offset: 123px;
+    --header-top-live: 47px;
+    --mobile-header-offset: 78px;
+    --mobile-header-bar-h: 64px;
+    --mobile-hero-content-offset: 108px;
+    --mobile-bottom-bar-h: 0px;
+}
+
+/* ===== بدنه روشن ===== */
+body {
+    background: var(--surface-page) !important;
+}
+
+/* ===== هدر: لنگر آبی ملایم‌تر از سرمه‌ای قبلی ===== */
+.header-area {
+    background: var(--anchor-navy);
+}
+
+.header-top {
+    background: var(--anchor-navy) !important;
+    transition: background 0.3s ease;
+    border-bottom: none !important;
+}
+
+#header {
+    background: var(--anchor-navy) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: none !important;
+}
+
+/* فوتر تیره بماند — قاب برند */
+.footer-area {
+    background: #071a35 !important;
+}
+
+/* ===== دسکتاپ: نوار بالا همیشه visible + حالت compact ===== */
+@media (min-width: 992px) {
+    .header-top.header-scrolled {
+        transform: none !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        padding: 6px 0 !important;
+    }
+
+    .header-top.header-scrolled .header-contact-item {
+        font-size: 12px !important;
+    }
+
+    .header-top.header-scrolled .header-address {
+        font-size: 13px !important;
+    }
+
+    .header-top.header-scrolled .social-links ul li a {
+        width: 24px;
+        height: 24px;
+        font-size: 11px;
+    }
+
+    .header-top.header-scrolled .lang-switcher a {
+        font-size: 10px;
+        padding: 2px 6px;
+    }
+
+  #header {
+        top: var(--header-top-live, 47px) !important;
+        transition: box-shadow 0.3s ease, background 0.3s ease;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+    }
+
+    #header.header-scrolled {
+        top: var(--header-top-live, 47px) !important;
+        box-shadow: 0 4px 24px rgba(0,0,0,.22);
+        background: var(--anchor-navy) !important;
+    }
+
+    /* فضای بیشتر برای آدرس — ستون تماس پهن‌تر */
+    .header-top .row > .col-lg-8 {
+        flex: 0 0 75%;
+        max-width: 75%;
+    }
+
+    .header-top .row > .col-lg-4 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+
+    #header.header-scrolled #logo img {
+        max-height: 42px;
+        transition: max-height 0.3s ease;
+    }
+
+    /* آدرس دوخطی — تلفن‌ها در یک خط بمانند */
+    .header-top .col-lg-8.d-md-flex {
+        display: flex;
+        flex: 1 1 auto;
+        min-width: 0;
+        gap: 10px 14px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .header-contact-item:not(.header-address) {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        margin: 0 !important;
+    }
+
+    .header-address {
+        flex: 1 1 52%;
+        min-width: 220px;
+        max-width: 100%;
+        margin: 0 !important;
+        white-space: normal !important;
+        line-height: 1.45 !important;
+        align-items: flex-start !important;
+        display: flex !important;
+        overflow: hidden;
+        max-height: calc(2 * 1.45 * 1em);
+    }
+
+    .header-address > span:first-child {
+        margin-top: 2px;
+    }
+}
+
+/* آدرس دوخطی — همه زبان‌ها */
+.header-address {
+    white-space: normal;
+    line-height: 1.45;
+    align-items: flex-start;
+}
+
+.header-address > span:first-child {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* ===== هیرو: اورلی جهت‌دار — خوانایی متن + نمایش عکس ===== */
+.hero-overlay {
+    background: linear-gradient(
+        to left,
+        rgba(7, 26, 53, 0.90) 0%,
+        rgba(7, 26, 53, 0.78) 30%,
+        rgba(13, 43, 85, 0.58) 55%,
+        rgba(10, 61, 114, 0.38) 100%
+    ) !important;
+}
+
+[dir="ltr"] .hero-overlay,
+html[lang="en"] .hero-overlay {
+    background: linear-gradient(
+        to right,
+        rgba(7, 26, 53, 0.90) 0%,
+        rgba(7, 26, 53, 0.78) 30%,
+        rgba(13, 43, 85, 0.58) 55%,
+        rgba(10, 61, 114, 0.38) 100%
+    ) !important;
+}
+
+/* فاصله محتوا زیر هدر — همگام با ارتفاع واقعی هدر */
+.hero-section {
+    margin-top: var(--site-header-offset, 123px) !important;
+    min-height: calc(100vh - var(--site-header-offset, 123px)) !important;
+}
+
+@media (max-width: 991.98px) {
+    /* هیرو: بدون margin — تصویر از بالای صفحه، هدر روی آن */
+    .hero-section {
+        margin-top: 0 !important;
+        min-height: 100vh !important;
+        padding-top: var(--mobile-hero-content-offset, 108px) !important;
+    }
+
+    /* صفحات داخلی: فقط ارتفاع نوار هدر (نه دایره لوگو) */
+    .services-hero-section,
+    .about-hero-section,
+    .contact-hero-section,
+    .sov-hero-section,
+    .faq-hero,
+    .gal-page-header,
+    .blg-hero,
+    .blg-detail-hero {
+        margin-top: var(--mobile-header-bar-h, 64px) !important;
+    }
+}
+
+/* کارت‌های شناور هیرو — سفید با سایه آبی */
+.floating-card {
+    background: rgba(255, 255, 255, 0.94) !important;
+    border: 1px solid rgba(26, 86, 219, 0.12) !important;
+    box-shadow: 0 8px 28px rgba(26, 86, 219, 0.14), 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+a.floating-card:hover {
+    background: #fff !important;
+    border-color: rgba(26, 86, 219, 0.28) !important;
+    box-shadow: 0 14px 36px rgba(26, 86, 219, 0.22) !important;
+}
+
+.floating-card .fc-text strong {
+    color: var(--text-navy) !important;
+}
+
+.floating-card .fc-text span {
+    color: #64748b !important;
+}
+
+/* ===== بخش‌های روشن صفحه اصلی ===== */
+.feat-section,
+.about-preview-section,
+.team-section,
+.blog-home-section,
+.faq-home-section,
+.contact-info-section {
+    background: var(--surface-page) !important;
+}
+
+.feat-card,
+.srv-card,
+.about-quote-box,
+.testimonial-card {
+    background: var(--surface-card) !important;
+    border: 1px solid rgba(26, 86, 219, 0.08);
+    box-shadow: 0 4px 18px rgba(15, 45, 74, 0.06);
+}
+
+.services-office-section {
+    background: var(--surface-card) !important;
+}
+
+/* بخش جراحی: گرادیان ملایم‌تر (نه سرمه‌ای سنگین) */
+.services-surgery-section {
+    background: linear-gradient(140deg, #0F2D4A 0%, #164E78 55%, #1A5F8C 100%) !important;
+}
+
+/* نظرات بیماران — کمی روشن‌تر */
+.testimonials-section {
+    background: linear-gradient(140deg, #0F2D4A 0%, #164E78 100%) !important;
+}
+
+/* صفحات داخلی — هیروهای تیره کمی روشن‌تر */
+.about-hero-section,
+.services-hero-section,
+.contact-hero-section,
+.sov-hero-section,
+.faq-hero,
+.gal-page-header,
+.blg-hero,
+.blg-detail-hero {
+    background: linear-gradient(140deg, #0F2D4A 0%, #164E78 58%, #1A5F8C 100%) !important;
+}
+
+.contact-hero-section,
+.sov-hero-section {
+    background: linear-gradient(150deg, #0A2540 0%, #0F2D4A 48%, #164E78 100%) !important;
+}
+
+/* بخش ویدیو و گالری */
+.videos-section {
+    background: var(--surface-page) !important;
+}
+
+/* ===== نوار تماس پایین — موبایل/تبلت ===== */
+.mobile-contact-bar {
+    display: none;
+}
+
+@media (max-width: 991.98px) {
+    html {
+        background: var(--anchor-navy);
+    }
+
+    body {
+        padding-bottom: var(--mobile-bottom-bar-h, 0px);
+    }
+
+    /* هدر موبایل — رنگ یکدست + دایره لوگو بزرگ‌تر با فاصله داخلی */
+    #header,
+    #header.header-scrolled {
+        background: var(--anchor-navy) !important;
+        border-bottom: none !important;
+        box-shadow: none !important;
+    }
+
+    #header .container > .row {
+        min-height: 64px;
+    }
+
+    #logo {
+        top: -20px !important;
+    }
+
+    #logo a {
+        width: 126px !important;
+        height: 126px !important;
+        padding: 12px !important;
+        box-sizing: border-box !important;
+        background: var(--anchor-navy) !important;
+    }
+
+    #logo .logo-mobile {
+        max-height: 66px !important;
+        max-width: 88px !important;
+    }
+
+    .mobile-contact-bar {
+        display: block;
+        position: fixed;
+        inset: auto 0 0 0;
+        width: 100%;
+        max-width: 100vw;
+        margin: 0;
+        z-index: 996;
+        background: var(--anchor-navy);
+        border: none;
+        box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.22);
+        padding: 0;
+        transform: translateZ(0);
+    }
+
+    /* پوشش کامل تا انتهای صفحه — رفع خط باریک زیر نوار */
+    .mobile-contact-bar::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -3px;
+        height: 6px;
+        background: var(--anchor-navy);
+        pointer-events: none;
+    }
+
+    .mcb-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .mcb-address {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        color: #fff !important;
+        text-decoration: none !important;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.5;
+    }
+
+    .mcb-address i {
+        flex-shrink: 0;
+        color: #60a5fa;
+        font-size: 14px;
+        margin-top: 2px;
+    }
+
+    .mcb-address span {
+        flex: 1 1 auto;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .mcb-phones {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px 12px;
+        width: 100%;
+    }
+
+    .mcb-phone {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: #e2e8f0 !important;
+        text-decoration: none !important;
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+        padding: 5px 10px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .mcb-phone i {
+        color: #60a5fa;
+        font-size: 13px;
+    }
+
+    .mcb-phone:hover,
+    .mcb-phone:focus {
+        color: #fff !important;
+        background: rgba(96, 165, 250, 0.18);
+    }
+
+    .fab-container {
+        bottom: calc(var(--mobile-bottom-bar-h, 48px) + 12px) !important;
+    }
+
+    .back-to-top {
+        bottom: calc(var(--mobile-bottom-bar-h, 48px) + 12px) !important;
+    }
+
+    html[dir="ltr"] .back-to-top {
+        bottom: calc(var(--mobile-bottom-bar-h, 48px) + 12px) !important;
+    }
+
+    /* ===== منوی همبرگر — دراور مدرن ===== */
+    #mobile-body-overly {
+        background: rgba(7, 15, 26, 0.55) !important;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+    }
+
+    #mobile-nav {
+        width: min(300px, 86vw) !important;
+        right: -100% !important;
+        left: auto !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        padding: 0 !important;
+        background: linear-gradient(175deg, #0a2540 0%, #0f2d4a 48%, #123a5c 100%) !important;
+        box-shadow: -14px 0 42px rgba(0, 0, 0, 0.38);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: right 0.32s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    body.mobile-nav-active #mobile-nav {
+        right: 0 !important;
+        left: auto !important;
+    }
+
+    .mobile-nav-head {
+        flex-shrink: 0;
+        padding: 20px 18px 14px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(0, 0, 0, 0.12);
+        text-align: center;
+    }
+
+    .mobile-nav-head-title {
+        display: block;
+        color: #60a5fa;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+    }
+
+    .mobile-nav-head-sub {
+        display: block;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.4;
+    }
+
+    #mobile-nav > ul {
+        flex: 1 1 auto;
+        overflow-y: auto;
+        padding: 10px 12px 8px !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #mobile-nav > ul > li {
+        margin-bottom: 6px;
+    }
+
+    #mobile-nav > ul > li > a {
+        display: flex !important;
+        align-items: center;
+        gap: 12px;
+        padding: 13px 14px !important;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        color: #e2e8f0 !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        text-transform: none !important;
+        transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    #mobile-nav > ul > li > a .mobile-nav-icon,
+    #mobile-nav .menu-has-children > .mobile-nav-row > a .mobile-nav-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: rgba(96, 165, 250, 0.12);
+        color: #60a5fa;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        flex-shrink: 0;
+        /* لغو position:absolute قدیمی style.css روی .menu-has-children i */
+        position: static !important;
+        right: auto !important;
+        z-index: auto !important;
+        padding: 0 !important;
+        cursor: inherit;
+    }
+
+    #mobile-nav > ul > li > a .mobile-nav-label,
+    #mobile-nav .menu-has-children > .mobile-nav-row > a .mobile-nav-label {
+        flex: 1 1 auto;
+        min-width: 0;
+        line-height: 1.4;
+    }
+
+    #mobile-nav > ul > li > a:hover,
+    #mobile-nav > ul > li.menu-active > a,
+    #mobile-nav > ul > li > a.menu-item-active {
+        background: rgba(96, 165, 250, 0.14) !important;
+        border-color: rgba(96, 165, 250, 0.28) !important;
+        color: #fff !important;
+    }
+
+    /* آیتم دارای زیرمنو — همان ظاهر دکمه‌های دیگر + فلش کوچک در انتهای ردیف */
+    #mobile-nav .menu-has-children {
+        display: block !important;
+        position: relative;
+    }
+
+    #mobile-nav .menu-has-children > .mobile-nav-row {
+        display: flex !important;
+        align-items: stretch;
+        width: 100%;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        overflow: hidden;
+    }
+
+    #mobile-nav .menu-has-children > .mobile-nav-row--rtl {
+        direction: rtl;
+    }
+
+    #mobile-nav .menu-has-children > .mobile-nav-row--ltr {
+        direction: ltr;
+    }
+
+    #mobile-nav .menu-has-children > .mobile-nav-row > a {
+        flex: 1 1 auto;
+        min-width: 0;
+        display: flex !important;
+        align-items: center;
+        gap: 12px;
+        padding: 13px 14px 13px 6px !important;
+        background: transparent !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        width: auto !important;
+        box-sizing: border-box;
+        position: static !important;
+        overflow: visible !important;
+        text-transform: none !important;
+        color: #e2e8f0 !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        justify-content: flex-start;
+    }
+
+    #mobile-nav .menu-has-children > .mobile-nav-row--rtl > a {
+        direction: rtl;
+        text-align: right;
+        padding: 13px 14px 13px 6px !important;
+    }
+
+    #mobile-nav .menu-has-children > .mobile-nav-row--ltr > a {
+        direction: ltr;
+        text-align: left;
+        padding: 13px 6px 13px 14px !important;
+    }
+
+    #mobile-nav .menu-has-children > .mobile-nav-row > a .mobile-nav-label {
+        flex: 1 1 auto;
+        min-width: 0;
+        line-height: 1.4;
+    }
+
+    #mobile-nav .menu-has-children > .mobile-nav-row > .mobile-nav-sub-toggle {
+        flex: 0 0 40px;
+        width: 40px;
+        min-width: 40px;
+        height: auto;
+        min-height: 52px;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 0 !important;
+        border: none !important;
+        border-radius: 0;
+        background: transparent !important;
+        color: #60a5fa;
+        cursor: pointer;
+        line-height: 1;
+        position: static !important;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+
+    /* فلش CSS — مستقل از فونت آیکون */
+    #mobile-nav .mobile-nav-chevron {
+        display: block;
+        width: 7px;
+        height: 7px;
+        margin-top: -3px;
+        border-right: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+        transform: rotate(45deg);
+        transition: transform 0.2s ease;
+        pointer-events: none;
+    }
+
+    #mobile-nav .mobile-nav-sub-toggle.is-open .mobile-nav-chevron,
+    #mobile-nav .menu-has-children.submenu-open .mobile-nav-chevron {
+        transform: rotate(225deg);
+        margin-top: 3px;
+    }
+
+    /* خنثی‌سازی آیکون قدیمی style.css روی آیتم زیرمنو */
+    #mobile-nav .menu-has-children > i,
+    #mobile-nav .mobile-nav-sub-toggle i {
+        display: none !important;
+    }
+
+    #mobile-nav .menu-has-children > .mobile-nav-row:hover {
+        background: rgba(96, 165, 250, 0.14);
+        border-color: rgba(96, 165, 250, 0.28);
+    }
+
+    #mobile-nav .menu-has-children.menu-active > .mobile-nav-row,
+    #mobile-nav .menu-has-children > .mobile-nav-row:has(+ ul.menu-item-active),
+    #mobile-nav .menu-has-children > .mobile-nav-row:has(+ ul:not([style*="display: none"])) {
+        background: rgba(96, 165, 250, 0.14);
+        border-color: rgba(96, 165, 250, 0.28);
+    }
+
+    #mobile-nav .menu-has-children > ul {
+        display: none;
+        position: static !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        width: 100% !important;
+        margin: 2px 0 4px !important;
+        padding: 4px 12px 6px 0 !important;
+        background: transparent !important;
+        border: none;
+        border-inline-start: 2px solid rgba(96, 165, 250, 0.25);
+        box-shadow: none !important;
+        overflow: hidden;
+    }
+
+    html[dir="rtl"] #mobile-nav .menu-has-children > ul {
+        padding: 4px 12px 6px 0 !important;
+    }
+
+    html[dir="ltr"] #mobile-nav .menu-has-children > ul {
+        padding: 4px 0 6px 12px !important;
+    }
+
+    #mobile-nav ul ul li a {
+        display: block !important;
+        padding: 10px 12px !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
+        color: #cbd5e1 !important;
+        text-transform: none !important;
+        border-radius: 8px;
+    }
+
+    #mobile-nav ul ul li a:hover {
+        color: #60a5fa !important;
+        background: rgba(96, 165, 250, 0.08);
+    }
+
+    #mobile-nav .mobile-nav-social {
+        flex-shrink: 0;
+        margin: 0 !important;
+        padding: 12px 16px !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(0, 0, 0, 0.1);
+        justify-content: center;
+        gap: 10px;
+    }
+
+    #mobile-nav .mobile-nav-social a {
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 12px !important;
+        background: rgba(255, 255, 255, 0.07) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #94a3b8 !important;
+        font-size: 16px !important;
+        transition: all 0.2s;
+    }
+
+    #mobile-nav .mobile-nav-social a:hover {
+        background: rgba(96, 165, 250, 0.2) !important;
+        color: #fff !important;
+        border-color: rgba(96, 165, 250, 0.35);
+    }
+
+    .mobile-nav-contact {
+        flex-shrink: 0;
+        margin: 0 !important;
+        padding: 14px 16px calc(14px + env(safe-area-inset-bottom, 0px)) !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(0, 0, 0, 0.14);
+    }
+
+    .mobile-nav-contact-title {
+        color: #60a5fa;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin: 0 0 10px;
+    }
+
+    .mobile-nav-contact-item {
+        color: #cbd5e1;
+        font-size: 12px;
+        line-height: 1.55;
+        margin: 0 0 8px;
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .mobile-nav-contact-item i {
+        color: #60a5fa;
+        margin-top: 3px;
+        flex-shrink: 0;
+    }
+
+    .mobile-nav-contact-link {
+        display: inline-flex;
+        align-items: center;
+        margin-top: 8px;
+        padding: 7px 12px;
+        border-radius: 8px;
+        background: rgba(96, 165, 250, 0.12);
+        color: #60a5fa !important;
+        font-size: 12px;
+        font-weight: 600;
+        text-decoration: none !important;
+    }
+}

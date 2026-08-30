@@ -4,10 +4,12 @@ import os
 import sys
 from pathlib import Path
 
-# بارگذاری متغیرهای محیطی از فایل .env
+# بارگذاری .env و سپس .env.local (لوکال DEBUG=True را روی پروداکشن می‌نشاند)
 try:
     from dotenv import load_dotenv
-    load_dotenv(Path(__file__).resolve().parent / '.env')
+    _root = Path(__file__).resolve().parent
+    load_dotenv(_root / '.env')
+    load_dotenv(_root / '.env.local', override=True)
 except ImportError:
     pass
 

@@ -1,5 +1,5 @@
 {% extends "persian/persian_base.html" %}
-{% load static %}
+{% load static clean_filters %}
 
 {% block title %}ویدیوها — دکتر وحید عبدالرحیمی{% endblock %}
 
@@ -84,7 +84,7 @@
                              data-file-url="{% if video.file_path %}{{ video.file_path.url }}{% endif %}"
                              data-embed-code="{{ video.embed_code }}"
                              data-title="{{ video.title_fa }}"
-                             data-desc="{{ video.description_fa|striptags|truncatechars:120 }}">
+                             data-desc="{{ video.description_fa|clean_html|truncatechars:120 }}">
 
                             <!-- تامبنیل -->
                             <div class="video-thumb-wrap">
@@ -112,7 +112,7 @@
                                 {% endif %}
                                 <h5 class="video-title">{{ video.title_fa }}</h5>
                                 {% if video.description_fa %}
-                                <p class="video-desc-text">{{ video.description_fa|striptags }}</p>
+                                <p class="video-desc-text">{{ video.description_fa|clean_html }}</p>
                                 {% endif %}
                                 {% if video.published_at %}
                                 <div class="video-meta-row">

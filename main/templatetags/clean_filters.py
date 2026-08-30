@@ -6,7 +6,11 @@ register = template.Library()
 
 @register.filter(name='clean_html')
 def clean_html(value):
-    """strip HTML tags and decode HTML entities (e.g. &nbsp; → space)"""
+    """حذف تگ HTML و تبدیل entityها (مثل &zwnj; و &nbsp;) به کاراکتر واقعی"""
     if not value:
         return ''
-    return html.unescape(strip_tags(str(value)))
+    text = strip_tags(str(value))
+    # دو بار unescape برای مواردی مثل &amp;zwnj;
+    for _ in range(2):
+        text = html.unescape(text)
+    return text.replace('&zwnj;', '\u200c')

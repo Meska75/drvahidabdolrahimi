@@ -1047,7 +1047,7 @@ ul.object-list li a:hover { color: #7dd3fc !important; }
     background: rgba(255,255,255,0.08);
 }
 
-.stat-blue   { background: linear-gradient(135deg, #1d4ed8, #3b82f6); }
+.stat-blue   { background: linear-gradient(135deg, #1d4ed8, #1a56db); }
 .stat-green  { background: linear-gradient(135deg, #15803d, #22c55e); }
 .stat-teal   { background: linear-gradient(135deg, #0f766e, #2dd4bf); }
 .stat-purple { background: linear-gradient(135deg, #6d28d9, #a78bfa); }

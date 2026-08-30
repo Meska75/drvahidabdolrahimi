@@ -1,0 +1,30 @@
+{% comment %}
+نوار تماس چسبان پایین — فقط موبایل/تبلت (CSS)
+آدرس کامل داخل منوی همبرگر از mobile-nav-contact-source کپی می‌شود.
+{% endcomment %}
+{% if request.path|slice:":4" == "/en/" %}
+    {% url 'english:english_contact' as mcb_contact_url %}
+    {% if main_clinic %}
+        {% with mcb_address=main_clinic.address_en mcb_phone1=main_clinic.phone_1_en mcb_phone2=main_clinic.phone_2_en %}
+        {% include "components/mobile_contact_bar_inner.html" %}
+        {% endwith %}
+    {% endif %}
+{% elif request.path|slice:":4" == "/ar/" %}
+    {% url 'arabic:arabic_contact' as mcb_contact_url %}
+    {% if main_clinic %}
+        {% with mcb_address=main_clinic.address_ar mcb_phone1=main_clinic.phone_1_ar mcb_phone2=main_clinic.phone_2_ar %}
+        {% include "components/mobile_contact_bar_inner.html" %}
+        {% endwith %}
+    {% endif %}
+{% else %}
+    {% url 'main:persian_contact' as mcb_contact_url %}
+    {% if main_clinic %}
+        {% with mcb_address=main_clinic.address_fa mcb_phone1=main_clinic.phone_1_fa mcb_phone2=main_clinic.phone_2_fa %}
+        {% include "components/mobile_contact_bar_inner.html" %}
+        {% endwith %}
+    {% else %}
+        {% with mcb_address="" mcb_phone1="۰۲۱-۸۸۶۴۸۲۱۰" mcb_phone2="" %}
+        {% include "components/mobile_contact_bar_inner.html" %}
+        {% endwith %}
+    {% endif %}
+{% endif %}

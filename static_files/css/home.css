@@ -83,7 +83,7 @@
 
 .hero-slide.active { opacity: 1; z-index: 1; }
 
-/* overlay نیمه‌شفاف */
+/* اورلی نیمه‌شفاف */
 .hero-overlay {
     position: absolute;
     inset: 0;
@@ -913,7 +913,7 @@ a.floating-card:hover {
 =========================== */
 .services-office-section {
     padding: 100px 0;
-    background: #eff6ff;
+    background: #e8f0fe;
     position: relative;
 }
 
@@ -1466,11 +1466,11 @@ a.floating-card:hover {
 }
 
 @media (max-width: 767px) {
-    /* موبایل: محتوا دقیقاً زیر هدر ۶۰px تا نوار navy نباشد و نیم‌دایره روی هیرو بیفتد */
+    /* هیرو از بالای صفحه — هدر شناور روی تصویر (تنظیم نهایی در theme_refresh.css) */
     .hero-section {
-        margin-top: 60px;
-        min-height: calc(100vh - 60px);
-        padding-top: 40px;
+        margin-top: 0;
+        min-height: 100vh;
+        padding-top: var(--mobile-hero-content-offset, 108px);
     }
 
     /* تصویر بنر از بالا-مرکز نمایش داده شود تا کات نشود */
@@ -1778,7 +1778,7 @@ a.floating-card:hover {
 }
 
 .faq-toggle:focus { outline: none; box-shadow: none; }
-.faq-toggle:not(.collapsed) { background: #eff6ff; }
+.faq-toggle:not(.collapsed) { background: #e8f0fe; }
 
 .faq-num {
     flex-shrink: 0;

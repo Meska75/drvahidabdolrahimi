@@ -4,8 +4,17 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-def _load_dotenv(path: Path) -> None:
-    """خواندن فایل .env بدون وابستگی اضافه — مقدارهای از قبل در محیط باشند، بازنویسی نمی‌شوند."""
+# کلیدهایی که قبل از خواندن فایل‌ها در محیط سیستم بودند — هیچ‌وقت بازنویسی نمی‌شوند
+_PREEXISTING_ENV = set(os.environ)
+
+
+def _load_dotenv(path: Path, *, override: bool = False) -> None:
+    """خواندن فایل .env بدون وابستگی اضافه.
+
+    override=False: اگر کلید از قبل در محیط باشد، دست نمی‌خورد.
+    override=True: روی مقادیر آمده از فایل‌های قبلی می‌نویسد، اما متغیرهای
+    واقعی سیستم‌عامل (قبل از لود) را بازنویسی نمی‌کند.
+    """
     if not path.is_file():
         return
     try:
@@ -18,8 +27,11 @@ def _load_dotenv(path: Path) -> None:
             continue
         key, _, value = line.partition('=')
         key = key.strip()
-        if not key or key in os.environ:
+        if not key:
             continue
+        if key in os.environ:
+            if not override or key in _PREEXISTING_ENV:
+                continue
         value = value.strip()
         if len(value) >= 2 and value[0] == value[-1] and value[0] in ('"', "'"):
             value = value[1:-1]
@@ -27,6 +39,8 @@ def _load_dotenv(path: Path) -> None:
 
 
 _load_dotenv(BASE_DIR / '.env')
+# تنظیمات لوکال روی .env پروداکشن می‌نشیند (مثلاً DEBUG=True) — در گیت نیست
+_load_dotenv(BASE_DIR / '.env.local', override=True)
 
 # ===== کلیدها و حالت اجرا — از محیط خوانده می‌شوند =====
 SECRET_KEY = os.environ.get(
@@ -102,24 +116,18 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # ===== دیتابیس =====
-# در development از SQLite، در production از PostgreSQL استفاده می‌شود
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else:
+# اگر DB_NAME در محیط باشد (حتی با DEBUG=True) همان PostgreSQL واقعی استفاده می‌شود
+# تا لوکال با دادهٔ زنده دیده شود. بدون DB_NAME → SQLite.
+_db_name = os.environ.get('DB_NAME', '').strip()
+if _db_name:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('DB_NAME', ''),
+            'NAME': _db_name,
             'USER': os.environ.get('DB_USER', ''),
             'PASSWORD': os.environ.get('DB_PASSWORD', ''),
             'HOST': os.environ.get('DB_HOST', 'localhost'),
             'PORT': os.environ.get('DB_PORT', '5432'),
-            # اتصال پایدارتر به دیتابیس ریموت (لیارا) — جلوگیری از قطع ناگهانی
             'CONN_MAX_AGE': 60,
             'CONN_HEALTH_CHECKS': True,
             'OPTIONS': {
@@ -129,6 +137,13 @@ else:
                 'keepalives_interval': 10,
                 'keepalives_count': 5,
             },
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
 
@@ -150,7 +165,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
-MEDIA_URL = '/media/'
+# روی لوکال می‌توان MEDIA_URL را به دامنه پروداکشن داد تا تصاویر آپلودی دیده شوند
+MEDIA_URL = os.environ.get('MEDIA_URL', '/media/')
 MEDIA_ROOT = BASE_DIR / 'media'
 
 STATICFILES_DIRS = [

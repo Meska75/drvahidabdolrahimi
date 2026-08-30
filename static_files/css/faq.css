@@ -128,7 +128,7 @@
 }
 
 .faq-toggle:focus { outline: none; box-shadow: none; }
-.faq-toggle:not(.collapsed) { background: #eff6ff; }
+.faq-toggle:not(.collapsed) { background: #e8f0fe; }
 
 .faq-num {
     flex-shrink: 0;

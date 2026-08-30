@@ -34,24 +34,48 @@ input, textarea, select, button, label, td, th {
     pointer-events: none;
 }
 
-.header-top .d-md-flex { flex-direction: row-reverse; justify-content: flex-end; }
-.header-top h6 {
-    margin-right: 0 !important;
-    margin-left: 1.5rem;
+.header-top .d-md-flex {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+.header-contact-item:not(.header-address) {
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.header-contact-item .phone-ltr {
+    white-space: nowrap;
+    display: inline-block;
+}
+.header-contact-item {
+    margin: 0 0 0 1.5rem;
+    padding: 0;
     color: #94a3b8 !important;
-    font-size: 12px !important;
+    font-size: 13px !important;
+    font-weight: 500;
+    font-style: normal;
     display: flex;
     align-items: center;
     gap: 6px;
+    line-height: 1.45;
+    text-transform: none;
 }
-.header-top h6 span {
-    margin-right: 0 !important;
-    margin-left: 0;
+.header-contact-item span {
+    margin: 0;
     display: inline-flex;
     align-items: center;
     line-height: 1;
 }
-.header-top h6 i { color: #60a5fa; font-size: 14px; line-height: 1; }
+.header-contact-item i { color: #60a5fa; font-size: 15px; line-height: 1; }
+.header-address {
+    font-size: 15px !important;
+    font-weight: 600;
+    color: #ffffff !important;
+}
+@media (max-width: 1199.98px) {
+    .header-address { font-size: 14px !important; }
+}
 
 .header-top .social-links ul {
     display: flex;
@@ -306,7 +330,7 @@ input, textarea, select, button, label, td, th {
     .services-hero-section,
     .about-hero-section,
     .contact-hero-section,
-    .sov-hero-section { margin-top: 60px !important; }
+    .sov-hero-section { margin-top: 0 !important; }
 }
 
 /* ===== سوئیچر زبان ===== */
@@ -469,27 +493,22 @@ input, textarea, select, button, label, td, th {
     .mobile-lang-menu a.active { color: #60a5fa; background: rgba(96,165,250,.08); }
     .mobile-lang-menu a:hover { background: rgba(255,255,255,.06); }
 
-    /* آیکون فلش زیرمنو: از روی متن به سمت چپ لینک */
+    /* آیتم دارای زیرمنو — غیرفعال کردن flex قدیمی style.css */
     #mobile-nav .menu-has-children {
         position: relative;
-        display: flex !important;
-        align-items: center;
+        display: block !important;
+        align-items: unset !important;
     }
-    #mobile-nav .menu-has-children > a {
-        flex: 1;
-        padding-left: 36px !important;
+
+    #mobile-nav .menu-has-children > a,
+    #mobile-nav .menu-has-children > .mobile-nav-row > a {
+        flex: none !important;
+        padding-left: 14px !important;
+        padding-right: 14px !important;
     }
+
     #mobile-nav .menu-has-children > i.lnr {
-        position: absolute !important;
-        left: 8px !important;
-        right: auto !important;
-        top: 50%;
-        transform: translateY(-50%);
-        cursor: pointer;
-        padding: 6px 8px;
-        color: #94a3b8;
-        flex-shrink: 0;
-        z-index: 1;
+        display: none !important;
     }
 }
 

@@ -545,7 +545,7 @@
 .blg-flt:hover {
     border-color: #1a56db;
     color: #1a56db;
-    background: #eff6ff;
+    background: #e8f0fe;
 }
 
 .blg-flt.active {
@@ -594,7 +594,7 @@
 /* پلیس‌هولدر بدون تصویر */
 .blg-card-noimg {
     height: 196px;
-    background: linear-gradient(135deg, #0d2451 0%, #0a3d72 100%);
+    background: linear-gradient(135deg, #0b2444 0%, #0a3d72 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -710,7 +710,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background: #eff6ff;
+    background: #e8f0fe;
     border: 1px solid #bfdbfe;
     border-radius: 8px;
     padding: 9px 14px;
@@ -817,7 +817,7 @@
     text-transform: none !important;
     margin-bottom: 14px !important;
     padding-bottom: 10px;
-    border-bottom: 2px solid #eff6ff;
+    border-bottom: 2px solid #e8f0fe;
     display: flex;
     align-items: center;
     gap: 7px;
@@ -847,7 +847,7 @@
 }
 
 .blg-filter-item:hover {
-    background: #eff6ff;
+    background: #e8f0fe;
     color: #1a56db;
     text-decoration: none;
 }
@@ -1012,7 +1012,7 @@
 }
 
 .blg-page-btn:hover {
-    background: #eff6ff;
+    background: #e8f0fe;
     border-color: #bfdbfe;
     color: #1a56db;
     text-decoration: none;
@@ -1071,7 +1071,7 @@
 
 .blg-mob-toggle[aria-expanded="true"] {
     border-color: #1a56db;
-    background: #eff6ff;
+    background: #e8f0fe;
     color: #1a56db;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
@@ -1197,7 +1197,7 @@
     font-size: .78rem;
     font-weight: 700;
     color: #1a56db;
-    background: #eff6ff;
+    background: #e8f0fe;
     padding: 2px 10px;
     border-radius: 20px;
     margin-right: 4px;

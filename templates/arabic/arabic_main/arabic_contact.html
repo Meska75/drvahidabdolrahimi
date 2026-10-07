@@ -136,6 +136,7 @@
 
                 <form action="{% url 'arabic:arabic_contact' %}" method="post">
                     {% csrf_token %}
+                    <input type="hidden" name="opened_at" value="{{ opened_at }}">
 
                     {# حقل فخ ضد السبام — غير مرئي للمستخدم الحقيقي #}
                     <div style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden;" aria-hidden="true">
@@ -143,36 +144,45 @@
                         <input type="text" name="website" tabindex="-1" autocomplete="off">
                     </div>
 
+                    {% if form_error %}
+                    <p class="captcha-error" role="alert">{{ form_error }}</p>
+                    {% endif %}
+
                     <div class="uf-row">
                         <div class="uf-group">
                             <label class="uf-label" for="ar_name">الاسم الكامل</label>
-                            <input type="text" id="ar_name" name="name" placeholder="مثال: أحمد محمد" required autocomplete="name">
+                            <input type="text" id="ar_name" name="name" value="{{ posted.name }}" placeholder="مثال: أحمد محمد" required autocomplete="name">
                             <i class="fas fa-user uf-icon"></i>
                         </div>
                         <div class="uf-group">
                             <label class="uf-label" for="ar_phone">رقم الهاتف</label>
-                            <input type="tel" id="ar_phone" name="phone" placeholder="09XXXXXXXXX" autocomplete="tel">
+                            <input type="tel" id="ar_phone" name="phone" value="{{ posted.phone }}" placeholder="09XXXXXXXXX" autocomplete="tel">
+                            {% if phone_error %}<p class="captcha-error" role="alert">{{ phone_error }}</p>{% endif %}
                             <i class="fas fa-phone uf-icon"></i>
                         </div>
                     </div>
 
                     <div class="uf-group">
                         <label class="uf-label" for="ar_email">البريد الإلكتروني</label>
-                        <input type="email" id="ar_email" name="email" placeholder="example@email.com" autocomplete="email">
+                        <input type="email" id="ar_email" name="email" value="{{ posted.email }}" placeholder="example@email.com" autocomplete="email">
                         <i class="fas fa-envelope uf-icon"></i>
                     </div>
 
                     <div class="uf-group">
                         <label class="uf-label" for="ar_subject">الموضوع</label>
-                        <input type="text" id="ar_subject" name="subject" placeholder="مثال: حجز موعد" required>
+                        <input type="text" id="ar_subject" name="subject" value="{{ posted.subject }}" placeholder="مثال: حجز موعد" required>
                         <i class="fas fa-tag uf-icon"></i>
                     </div>
 
                     <div class="uf-group textarea-group">
                         <label class="uf-label" for="ar_message">الرسالة</label>
-                        <textarea id="ar_message" name="message" placeholder="اكتب سؤالك أو رسالتك هنا..." required></textarea>
+                        <textarea id="ar_message" name="message" placeholder="اكتب سؤالك أو رسالتك هنا..." required>{{ posted.message }}</textarea>
                         <i class="fas fa-comment-dots uf-icon"></i>
                     </div>
+
+                    {% include "components/contact_appointment.html" with field_id="ar_appt" label="أريد حجز موعد" hint="رقم الهاتف ضروري لتنسيق الموعد." %}
+
+                    {% include "components/contact_captcha.html" with field_id="ar_captcha" label="رمز الصورة" hint="اكتب الحروف الظاهرة في الصورة." placeholder="مثال: K7M2P" refresh_label="رمز جديد" alt="رمز الأمان" %}
 
                     <button type="submit" class="btn-send">
                         <i class="fas fa-paper-plane"></i>

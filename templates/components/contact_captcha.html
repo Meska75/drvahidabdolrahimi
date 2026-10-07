@@ -1,0 +1,43 @@
+<div class="captcha-box">
+    <label class="uf-label" for="{{ field_id }}">{{ label }}</label>
+    <p class="captcha-hint">{{ hint }}</p>
+    <div class="captcha-row">
+        <img src="{{ captcha_image }}" alt="{{ alt }}" class="captcha-img" id="contact-captcha-img" width="220" height="68">
+        <button type="button" class="captcha-refresh" id="contact-captcha-refresh" aria-label="{{ refresh_label }}" title="{{ refresh_label }}">
+            <i class="fas fa-sync-alt" aria-hidden="true"></i>
+        </button>
+        <input type="text" class="captcha-input" id="{{ field_id }}" name="captcha"
+               maxlength="12" autocomplete="off" autocapitalize="characters" spellcheck="false"
+               inputmode="text" required placeholder="{{ placeholder }}" dir="ltr"
+               {% if captcha_error %}aria-invalid="true"{% endif %}>
+    </div>
+    {% if captcha_error %}
+    <p class="captcha-error" role="alert">{{ captcha_error }}</p>
+    {% endif %}
+</div>
+<script>
+(function () {
+    var btn = document.getElementById('contact-captcha-refresh');
+    var img = document.getElementById('contact-captcha-img');
+    var input = document.getElementById('{{ field_id }}');
+    if (!btn || !img) return;
+    btn.addEventListener('click', function () {
+        btn.disabled = true;
+        fetch('{% url "main:contact_captcha" %}', {
+            headers: { 'Accept': 'application/json' },
+            credentials: 'same-origin'
+        })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+                if (data.image) {
+                    img.src = data.image;
+                    if (input) {
+                        input.value = '';
+                        input.focus();
+                    }
+                }
+            })
+            .finally(function () { btn.disabled = false; });
+    });
+})();
+</script>

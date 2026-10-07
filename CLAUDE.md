@@ -3,7 +3,7 @@
 ## اطلاعات پروژه
 - پروژه: وبسایت رسمی دکتر عبدالرحیمی - متخصص چشم‌پزشکی
 - سه‌زبانه: فارسی، انگلیسی، عربی
-- هاستینگ: سرور ایرانی (آروان یا لیارا)
+- هاستینگ: سرور خود سایت؛ PostgreSQL هم روی همان سرور است
 
 ## صفحات مورد نیاز (فاز ۱)
 - صفحه انتخاب زبان (landing page)
@@ -82,4 +82,4 @@ Media uploads are configured to `media/` (`MEDIA_ROOT`).
 
 ### Database
 
-SQLite3 (`db.sqlite3`). Neither `main` nor `services` app has models yet — the database only holds Django's built-in tables.
+Production PostgreSQL runs on the same server as the site (`DB_HOST=127.0.0.1` in the server `.env`). Local tests use SQLite because `.env.local` leaves `DB_NAME` empty. Do not point the site at an external database service.

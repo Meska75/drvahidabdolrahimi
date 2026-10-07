@@ -10,6 +10,16 @@ from .models import (
     FaqItem, PatientTestimonial, ContactMessage,
     DoctorEducation, DoctorAchievement, DoctorClinic, SiteBanner,
 )
+from .antispam import (
+    EXPIRED_ERRORS,
+    RATE_ERRORS,
+    client_ip,
+    issue_opened_at,
+    opening_status,
+    rate_limited,
+    repeated_name,
+)
+from .captcha import new_captcha
 from .forms import ContactMessageForm
 from team.models import TeamMember
 from services.models import ServiceItem
@@ -89,21 +99,75 @@ def persian_about(request):
     return render(request, 'persian/persian_main/persian_about.html', _about_context())
 
 
-def persian_contact(request):
-    form = ContactMessageForm(request.POST or None)
+_CONTACT_FORM_ERROR = {
+    'fa': 'بعضی فیلدها کامل یا درست نیست. کد تصویر تازه شده؛ دوباره وارد کنید.',
+    'en': 'Some fields are missing or invalid. The image code was refreshed; enter it again.',
+    'ar': 'بعض الحقول ناقصة أو غير صحيحة. تم تحديث رمز الصورة؛ أدخله مرة أخرى.',
+}
+
+
+def _render_contact(request, template, language):
+    """فرم تماس هر سه زبان: کپچا، سرعت پر کردن، سقف آی‌پی، و قرنطینهٔ نام تکراری."""
+    form = ContactMessageForm(
+        request.POST or None,
+        language=language,
+        captcha_session=request.session,
+    )
+    blocked_error = ''
     if request.method == 'POST' and form.is_valid():
-        ContactMessage.objects.create(
-            full_name=form.cleaned_data['name'],
-            phone=form.cleaned_data.get('phone', ''),
-            email=form.cleaned_data.get('email', ''),
-            subject=form.cleaned_data.get('subject', ''),
-            message=form.cleaned_data['message'],
-            language='fa',
-        )
-        return redirect(request.path + '?sent=1')
-    return render(request, 'persian/persian_main/persian_contact.html', {
+        status = opening_status(request.POST.get('opened_at', ''))
+        # ربات مهر زمان را برنمی‌دارد یا همان لحظه می‌فرستد؛ به او خطا نشان نمی‌دهیم.
+        if status in ('too_fast', 'invalid'):
+            return redirect(request.path + '?sent=1')
+        if status == 'expired':
+            blocked_error = EXPIRED_ERRORS[language]
+        elif rate_limited(client_ip(request)):
+            blocked_error = RATE_ERRORS[language]
+        else:
+            data = form.cleaned_data
+            ContactMessage.objects.create(
+                full_name=data['name'],
+                phone=data.get('phone', ''),
+                email=data.get('email', ''),
+                subject=data.get('subject', ''),
+                message=data['message'],
+                language=language,
+                ip_address=client_ip(request),
+                is_spam=repeated_name(data['name']),
+                wants_appointment=bool(data.get('wants_appointment')),
+            )
+            return redirect(request.path + '?sent=1')
+
+    posted_token = request.POST.get('opened_at', '') if request.method == 'POST' else ''
+    if opening_status(posted_token) in ('ok', 'too_fast'):
+        opened_at = posted_token
+    else:
+        opened_at = issue_opened_at()
+
+    captcha_error = ''
+    form_error = blocked_error
+    phone_error = ''
+    if request.method == 'POST':
+        if form.errors.get('captcha'):
+            captcha_error = form.errors['captcha'][0]
+        if form.errors.get('phone'):
+            phone_error = form.errors['phone'][0]
+        if not form_error and any(key not in ('captcha', 'website') for key in form.errors):
+            form_error = _CONTACT_FORM_ERROR[language]
+
+    return render(request, template, {
         'sent': request.GET.get('sent') == '1',
+        'captcha_image': new_captcha(request.session),
+        'captcha_error': captcha_error,
+        'form_error': form_error,
+        'phone_error': phone_error,
+        'opened_at': opened_at,
+        'posted': request.POST if request.method == 'POST' else {},
     })
+
+
+def persian_contact(request):
+    return _render_contact(request, 'persian/persian_main/persian_contact.html', 'fa')
 
 
 def persian_faq(request):
@@ -134,20 +198,7 @@ def english_about(request):
 
 
 def english_contact(request):
-    form = ContactMessageForm(request.POST or None)
-    if request.method == 'POST' and form.is_valid():
-        ContactMessage.objects.create(
-            full_name=form.cleaned_data['name'],
-            phone=form.cleaned_data.get('phone', ''),
-            email=form.cleaned_data.get('email', ''),
-            subject=form.cleaned_data.get('subject', ''),
-            message=form.cleaned_data['message'],
-            language='en',
-        )
-        return redirect(request.path + '?sent=1')
-    return render(request, 'english/english_main/english_contact.html', {
-        'sent': request.GET.get('sent') == '1',
-    })
+    return _render_contact(request, 'english/english_main/english_contact.html', 'en')
 
 
 def english_faq(request):
@@ -178,20 +229,15 @@ def arabic_about(request):
 
 
 def arabic_contact(request):
-    form = ContactMessageForm(request.POST or None)
-    if request.method == 'POST' and form.is_valid():
-        ContactMessage.objects.create(
-            full_name=form.cleaned_data['name'],
-            phone=form.cleaned_data.get('phone', ''),
-            email=form.cleaned_data.get('email', ''),
-            subject=form.cleaned_data.get('subject', ''),
-            message=form.cleaned_data['message'],
-            language='ar',
-        )
-        return redirect(request.path + '?sent=1')
-    return render(request, 'arabic/arabic_main/arabic_contact.html', {
-        'sent': request.GET.get('sent') == '1',
-    })
+    return _render_contact(request, 'arabic/arabic_main/arabic_contact.html', 'ar')
+
+
+@require_http_methods(['GET'])
+def contact_captcha(request):
+    """تصویر تازه برای دکمهٔ تعویض کد، بدون بارگذاری دوبارهٔ صفحه."""
+    response = JsonResponse({'image': new_captcha(request.session)})
+    response['Cache-Control'] = 'no-store'
+    return response
 
 
 def arabic_faq(request):

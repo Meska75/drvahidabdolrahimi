@@ -12,3 +12,11 @@ django-imagekit==6.1.0
 pilkit==3.0
 django-cleanup==9.0.0
 psycopg2-binary==2.9.10
+cryptography==44.0.3
+langchain==0.3.27
+langchain-openai==0.3.27
+langchain-chroma==0.2.3
+langchain-text-splitters==0.3.9
+pypdf==5.4.0
+fastapi==0.115.12
+uvicorn==0.34.2

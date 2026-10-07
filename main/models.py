@@ -20,6 +20,19 @@ class ContactMessage(models.Model):
     )
     is_read = models.BooleanField(default=False, verbose_name='خوانده شده')
     is_replied = models.BooleanField(default=False, verbose_name='پاسخ داده شده')
+    is_spam = models.BooleanField(
+        default=False,
+        db_index=True,
+        verbose_name='اسپم',
+        help_text='در فهرست اصلی پنهان است. از فیلتر «اسپم» دیده می‌شود.',
+    )
+    wants_appointment = models.BooleanField(
+        default=False,
+        db_index=True,
+        verbose_name='درخواست نوبت',
+        help_text='اگر تیک «وقت گرفتن» خورده باشد، در فهرست درخواست نوبت هم دیده می‌شود.',
+    )
+    ip_address = models.CharField(max_length=45, blank=True, verbose_name='آی‌پی')
     replied_by = models.ForeignKey(
         User, on_delete=models.SET_NULL,
         null=True, blank=True,
@@ -36,6 +49,15 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return f'{self.full_name} — {self.subject or "بدون موضوع"}'
+
+
+class AppointmentRequest(ContactMessage):
+    """همان پیام تماس، فقط ردیف‌هایی که بیمار تیک وقت گرفتن زده است."""
+
+    class Meta:
+        proxy = True
+        verbose_name = 'درخواست نوبت'
+        verbose_name_plural = 'درخواست‌های نوبت'
 
 
 class SiteSetting(models.Model):

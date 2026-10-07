@@ -5,7 +5,7 @@ from django.utils.html import format_html
 from ckeditor.widgets import CKEditorWidget
 from utils.storage_stats import get_media_stats
 from .models import (
-    ContactMessage, SiteSetting, SocialLinks,
+    AppointmentRequest, ContactMessage, SiteSetting, SocialLinks,
     DoctorEducation, DoctorAchievement, DoctorClinic,
     FaqItem, PatientTestimonial,
 )
@@ -14,13 +14,82 @@ RTL = CKEditorWidget(config_name='rtl')
 LTR = CKEditorWidget(config_name='ltr')
 
 
+class ContactInboxFilter(admin.SimpleListFilter):
+    """فهرست اصلی فقط پیام واقعی را نشان می‌دهد."""
+
+    title = 'صندوق'
+    parameter_name = 'inbox'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('spam', 'اسپم'),
+            ('all', 'همه'),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == 'spam':
+            return queryset.filter(is_spam=True)
+        if self.value() == 'all':
+            return queryset
+        return queryset.filter(is_spam=False)
+
+    def choices(self, changelist):
+        yield {
+            'selected': self.value() is None,
+            'query_string': changelist.get_query_string(remove=[self.parameter_name]),
+            'display': 'پیام‌های واقعی',
+        }
+        for lookup, title in self.lookup_choices:
+            yield {
+                'selected': self.value() == str(lookup),
+                'query_string': changelist.get_query_string({self.parameter_name: lookup}),
+                'display': title,
+            }
+
+
+@admin.action(description='علامت‌گذاری به‌عنوان اسپم')
+def mark_as_spam(modeladmin, request, queryset):
+    queryset.update(is_spam=True)
+
+
+@admin.action(description='بازگرداندن به پیام‌های واقعی')
+def mark_as_real(modeladmin, request, queryset):
+    queryset.update(is_spam=False)
+
+
+@admin.action(description='حذف اسپم‌های انتخاب‌شده')
+def delete_selected_spam(modeladmin, request, queryset):
+    queryset.filter(is_spam=True).delete()
+
+
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = (
+        'full_name', 'phone', 'language', 'wants_appointment',
+        'is_spam', 'is_read', 'is_replied', 'created_at',
+    )
+    list_filter = (ContactInboxFilter, 'wants_appointment', 'is_read', 'is_replied', 'language')
+    list_editable = ('wants_appointment', 'is_spam', 'is_read', 'is_replied')
+    search_fields = ('full_name', 'phone', 'email', 'subject')
+    readonly_fields = ('created_at', 'ip_address')
+    actions = (mark_as_spam, mark_as_real, delete_selected_spam)
+
+
+@admin.register(AppointmentRequest)
+class AppointmentRequestAdmin(admin.ModelAdmin):
+    """فقط پیام‌هایی که بیمار تیک وقت گرفتن زده؛ اسپم اینجا نمی‌آید."""
+
     list_display = ('full_name', 'phone', 'language', 'is_read', 'is_replied', 'created_at')
     list_filter = ('is_read', 'is_replied', 'language')
     list_editable = ('is_read', 'is_replied')
-    search_fields = ('full_name', 'phone', 'email', 'subject')
-    readonly_fields = ('created_at',)
+    search_fields = ('full_name', 'phone', 'email', 'subject', 'message')
+    readonly_fields = ('created_at', 'ip_address')
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).filter(wants_appointment=True, is_spam=False)
+
+    def has_add_permission(self, request):
+        return False
 
 
 @admin.register(SiteSetting)

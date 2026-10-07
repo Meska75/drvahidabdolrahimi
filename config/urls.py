@@ -60,6 +60,7 @@ urlpatterns = [
         template_name='robots.txt', content_type='text/plain'
     ), name='robots_txt'),
 
+    path('chatbot/', include('chatbot.urls')),
     path('admin/storage-stats/', storage_stats_view, name='admin_storage_stats'),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls', namespace='accounts')),

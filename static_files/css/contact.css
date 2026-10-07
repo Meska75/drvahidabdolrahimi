@@ -472,6 +472,138 @@
 
 .btn-send i { font-size: 16px; }
 
+/* کپچای تصویری فرم تماس */
+.captcha-box { margin-bottom: 8px; }
+
+.captcha-hint {
+    margin: 0 0 10px;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.captcha-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.captcha-img {
+    width: 168px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    background: #f1f5f9;
+    flex: 0 0 auto;
+}
+
+.captcha-refresh {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    color: #1a56db;
+    cursor: pointer;
+    flex: 0 0 auto;
+}
+
+.captcha-refresh:hover { background: #eff6ff; }
+
+.captcha-refresh:disabled { opacity: .6; cursor: default; }
+
+.captcha-input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    border-bottom: 2px solid var(--border);
+    background: transparent;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    direction: ltr;
+    text-align: left;
+    padding: 8px 4px;
+    font-family: Consolas, 'Courier New', monospace;
+    color: var(--text-dark);
+    outline: none;
+}
+
+.captcha-input:focus { border-bottom-color: var(--primary); }
+
+.captcha-error {
+    color: #b91c1c;
+    font-size: 13px;
+    margin: 8px 0 0;
+}
+
+/* تیک درخواست نوبت */
+.appt-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 0 0 22px;
+    cursor: pointer;
+}
+
+.appt-check input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+}
+
+.appt-check-box {
+    width: 22px;
+    height: 22px;
+    border: 2px solid #cbd5e1;
+    border-radius: 6px;
+    flex: 0 0 auto;
+    margin-top: 2px;
+    position: relative;
+    background: #fff;
+}
+
+.appt-check input:checked + .appt-check-box {
+    background: #1a56db;
+    border-color: #1a56db;
+}
+
+.appt-check input:checked + .appt-check-box::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 6px;
+    height: 11px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.appt-check input:focus-visible + .appt-check-box {
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
+}
+
+.appt-check-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.appt-check-text strong {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.appt-check-text small {
+    font-size: 12px;
+    color: #64748b;
+}
+
 /* ===========================
    نقشه — full width
 =========================== */
@@ -562,6 +694,9 @@
     }
 
     .uf-row { grid-template-columns: 1fr; gap: 0; }
+
+    .captcha-row { flex-wrap: wrap; }
+    .captcha-input { flex: 1 1 140px; }
 
     .card-form-panel { padding: 28px 20px; }
     .card-info-panel { padding: 28px 20px; }

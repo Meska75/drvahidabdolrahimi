@@ -1,0 +1,9 @@
+<label class="appt-check" for="{{ field_id }}">
+    <input type="checkbox" id="{{ field_id }}" name="wants_appointment" value="on"
+           {% if posted.wants_appointment %}checked{% endif %}>
+    <span class="appt-check-box" aria-hidden="true"></span>
+    <span class="appt-check-text">
+        <strong>{{ label }}</strong>
+        <small>{{ hint }}</small>
+    </span>
+</label>

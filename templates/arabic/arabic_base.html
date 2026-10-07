@@ -295,6 +295,10 @@
 
     {% include "components/mobile_contact_bar.html" %}
 
+    {% if chatbot_enabled %}
+    {% include "chatbot/widget.html" %}
+    {% endif %}
+
     <!-- جاوااسکریپت مشترک — کتابخانه‌های صفحه‌محور تنبل لود می‌شوند -->
     <script src="{% static 'js/vendor/jquery-2.2.4.min.js' %}"></script>
     <script src="{% static 'js/vendor/bootstrap-4.1.3.min.js' %}"></script>

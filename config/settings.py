@@ -82,6 +82,7 @@ INSTALLED_APPS = [
     'team',
     'gallery',
     'videos',
+    'chatbot.apps.ChatbotConfig',
 ]
 
 MIDDLEWARE = [
@@ -108,6 +109,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'main.context_processors.site_context',
+                'chatbot.context_processors.chatbot_widget',
             ],
         },
     },
@@ -116,8 +118,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # ===== دیتابیس =====
-# اگر DB_NAME در محیط باشد (حتی با DEBUG=True) همان PostgreSQL واقعی استفاده می‌شود
-# تا لوکال با دادهٔ زنده دیده شود. بدون DB_NAME → SQLite.
+# اگر DB_NAME در محیط باشد، PostgreSQL همان سرور استفاده می‌شود.
+# روی این کامپیوتر .env.local نام دیتابیس را خالی می‌گذارد تا تست‌ها با SQLite اجرا شوند.
 _db_name = os.environ.get('DB_NAME', '').strip()
 if _db_name:
     DATABASES = {
@@ -186,6 +188,10 @@ if not DEBUG:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# ===== چت‌بات — دیتابیس برداری لوکال + حافظه مهمان =====
+CHATBOT_CHROMA_DIR = BASE_DIR / 'chatbot_store' / 'chroma'
+CHATBOT_MEMORY_DAYS = 7
+
 # ===== تنظیمات CKEditor =====
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = 'pillow'
@@ -253,6 +259,7 @@ JAZZMIN_SETTINGS = {
     "topmenu_links": [
         {"name": "مشاهده سایت", "url": "/", "new_window": True, "icon": "fas fa-external-link-alt"},
         {"name": "پیام‌های تماس", "url": "/admin/main/contactmessage/", "icon": "fas fa-envelope"},
+        {"name": "درخواست نوبت", "url": "/admin/main/appointmentrequest/", "icon": "fas fa-calendar-check"},
         {"model": "auth.User"},
     ],
 
@@ -262,7 +269,7 @@ JAZZMIN_SETTINGS = {
     "hide_models": [],
 
     "order_with_respect_to": [
-        "main", "siteimages", "blog", "gallery", "videos", "team", "services", "accounts", "auth",
+        "chatbot", "main", "siteimages", "blog", "gallery", "videos", "team", "services", "accounts", "auth",
     ],
 
     "custom_links": {
@@ -290,6 +297,12 @@ JAZZMIN_SETTINGS = {
             "icon": "fas fa-plus-circle",
             "permissions": ["main.add_sitebanner"],
         }],
+        "chatbot": [{
+            "name": "پروفایل و پرامپت",
+            "url": "/admin/chatbot/chatbotprofile/",
+            "icon": "fas fa-sliders-h",
+            "permissions": ["chatbot.change_chatbotprofile"],
+        }],
     },
 
     "icons": {
@@ -297,6 +310,7 @@ JAZZMIN_SETTINGS = {
         "auth.user": "fas fa-user",
         "auth.group": "fas fa-users",
         "main.ContactMessage": "fas fa-envelope",
+        "main.AppointmentRequest": "fas fa-calendar-check",
         "main.FaqItem": "fas fa-question-circle",
         "main.PatientTestimonial": "fas fa-star",
         "main.SiteSetting": "fas fa-cog",
@@ -320,6 +334,12 @@ JAZZMIN_SETTINGS = {
         "services.ServiceCategory": "fas fa-list",
         "services.ServiceItem": "fas fa-stethoscope",
         "accounts.UserProfile": "fas fa-id-card",
+        "chatbot": "fas fa-robot",
+        "chatbot.ChatbotProfile": "fas fa-user-md",
+        "chatbot.LlmConnection": "fas fa-plug",
+        "chatbot.EmbeddingConnection": "fas fa-project-diagram",
+        "chatbot.KnowledgeFile": "fas fa-file-alt",
+        "chatbot.Conversation": "fas fa-comments",
     },
 
     "default_icon_parents": "fas fa-chevron-circle-right",

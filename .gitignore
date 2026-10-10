@@ -61,8 +61,8 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 
-# فایل‌های تولیدشده توسط collectstatic
-static/
+# خروجی collectstatic در ریشهٔ پروژه؛ static داخل اپ‌ها باید در گیت بماند
+/static/
 
 # آپلودهای CMS — فقط روی سرور در media/ می‌مانند، نه در گیت
 media/

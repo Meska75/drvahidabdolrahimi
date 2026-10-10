@@ -36,10 +36,14 @@ def build_embedding_model(connection):
     if not api_key:
         return None
     kwargs = {
-        'model': connection.model_name,
-        'api_key': api_key,
-        'base_url': connection.base_url.rstrip('/'),
+        'model': connection.model_name.strip(),
+        'api_key': api_key.strip(),
+        'base_url': connection.base_url.strip().rstrip('/'),
         'timeout': connection.timeout_seconds or 60,
+        # LangChain پیش‌فرض متن را به شناسه توکن تبدیل می‌کند؛ لیارا فقط متن خام می‌پذیرد
+        'check_embedding_ctx_length': False,
+        # SDK اوپن‌ای اگر این مقدار نیاید base64 می‌فرستد و درگاه لیارا همان درخواست را 401 می‌دهد
+        'model_kwargs': {'encoding_format': 'float'},
     }
     if connection.provider == 'azure' and connection.azure_api_version:
         kwargs['default_query'] = {'api-version': connection.azure_api_version}
@@ -68,4 +72,12 @@ def ping_embedding_model(connection):
         return True, 'اتصال embedding موفق بود.'
     except Exception as exc:
         logger.exception('تست embedding ناموفق')
-        return False, str(exc)
+        text = str(exc)
+        if '401' in text or 'Unauthorized' in text:
+            return False, (
+                'کلید یا Base URL این اتصال RAG را لیارا نپذیرفت. '
+                'همان مقادیر اتصال چت را دوباره بنویسید و ذخیره کنید؛ '
+                'اگر فیلد کلید خالی بماند کلید قبلی عوض نمی‌شود. '
+                + text
+            )
+        return False, text

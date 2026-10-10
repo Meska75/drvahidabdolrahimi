@@ -3,7 +3,7 @@ from pathlib import Path
 
 from django.utils import timezone
 
-from chatbot.engine.rag import get_vectorstore
+from chatbot.engine.rag import delete_chunks, replace_chunks
 from chatbot.models import KnowledgeFile
 
 logger = logging.getLogger('chatbot')
@@ -31,28 +31,24 @@ def _read_file_text(path: Path) -> str:
 def add_file_to_rag(knowledge_file: KnowledgeFile) -> str:
     knowledge_file.status = 'indexing'
     knowledge_file.save(update_fields=['status'])
-    store = get_vectorstore(knowledge_file.profile)
-    if store is None:
-        knowledge_file.status = 'error'
-        knowledge_file.last_error = 'اتصال embedding فعال نیست یا Chroma در دسترس نیست.'
-        knowledge_file.in_rag = False
-        knowledge_file.save(update_fields=['status', 'last_error', 'in_rag'])
-        return knowledge_file.last_error
-
     path = Path(knowledge_file.file.path)
     try:
         text = _read_file_text(path).strip()
         if not text:
             raise ValueError('متن قابل استخراج از فایل نبود (شاید PDF اسکن‌شده باشد).')
         chunks = _splitter().split_text(text)
-        ids = [f'file-{knowledge_file.pk}-{i}' for i in range(len(chunks))]
-        metadatas = [
-            {'source': knowledge_file.original_name, 'file_id': str(knowledge_file.pk)}
-            for _ in chunks
-        ]
-        # اول قطعات قبلی همین فایل را بردار، بعد از نو بنویس
-        _delete_file_vectors(store, knowledge_file.pk)
-        store.add_texts(texts=chunks, metadatas=metadatas, ids=ids)
+        key = f'file-{knowledge_file.pk}'
+        err = replace_chunks(knowledge_file.profile, [
+            {
+                'text': piece,
+                'source_type': 'file',
+                'source_key': key,
+                'source_label': knowledge_file.original_name,
+            }
+            for piece in chunks
+        ])
+        if err:
+            raise RuntimeError(err)
         knowledge_file.in_rag = True
         knowledge_file.status = 'ready'
         knowledge_file.chunk_count = len(chunks)
@@ -70,9 +66,7 @@ def add_file_to_rag(knowledge_file: KnowledgeFile) -> str:
 
 
 def remove_file_from_rag(knowledge_file: KnowledgeFile, delete_file=False):
-    store = get_vectorstore(knowledge_file.profile)
-    if store is not None:
-        _delete_file_vectors(store, knowledge_file.pk)
+    delete_chunks(knowledge_file.profile, source_key=f'file-{knowledge_file.pk}')
     knowledge_file.in_rag = False
     knowledge_file.status = 'idle'
     knowledge_file.chunk_count = 0
@@ -80,17 +74,6 @@ def remove_file_from_rag(knowledge_file: KnowledgeFile, delete_file=False):
     if delete_file:
         knowledge_file.file.delete(save=False)
         knowledge_file.delete()
-
-
-def _delete_file_vectors(store, file_id):
-    try:
-        store._collection.delete(where={'file_id': str(file_id)})
-    except Exception:
-        # برخی نسخه‌های Chroma where را متفاوت می‌خواهند
-        try:
-            store.delete(ids=[f'file-{file_id}-{i}' for i in range(5000)])
-        except Exception:
-            logger.exception('حذف بردارهای فایل از Chroma ناموفق')
 
 
 def rebuild_profile_rag(profile):

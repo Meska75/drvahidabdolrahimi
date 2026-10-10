@@ -1,13 +1,10 @@
 """تبدیل محتوای زندهٔ سایت به قطعهٔ RAG — بدون پیام تماس و نظر بیمار."""
 
-import logging
 import re
 
 from django.utils.html import strip_tags
 
-from chatbot.engine.rag import get_vectorstore
-
-logger = logging.getLogger('chatbot')
+from chatbot.engine.rag import delete_chunks, replace_chunks
 
 SITE_SOURCES = ('faq', 'services', 'doctor', 'clinic', 'team', 'blog')
 
@@ -176,54 +173,27 @@ def profile_sources(profile):
     return enabled
 
 
-def _delete_where(store, where):
-    try:
-        store._collection.delete(where=where)
-    except Exception:
-        logger.exception('حذف قطعهٔ سایت از Chroma ناموفق')
-
-
 def remove_source(profile, source_type):
-    store = get_vectorstore(profile)
-    if store is None:
-        return 'اتصال embedding فعال نیست.'
-    _delete_where(store, {'source_type': source_type, 'profile': profile.slug})
-    return ''
+    return delete_chunks(profile, source_type=source_type)
 
 
 def remove_item(profile, source_key):
-    store = get_vectorstore(profile)
-    if store is None:
-        return 'اتصال embedding فعال نیست.'
-    _delete_where(store, {'source_key': source_key, 'profile': profile.slug})
-    return ''
+    return delete_chunks(profile, source_key=source_key)
 
 
 def write_rows(profile, rows):
     """ردیف‌های یک منبع را جایگزین می‌کند. rows خالی یعنی فقط حذف."""
     if not rows:
         return ''
-    store = get_vectorstore(profile)
-    if store is None:
-        return 'اتصال embedding فعال نیست.'
-    keys = {row[1] for row in rows}
-    for key in keys:
-        _delete_where(store, {'source_key': key, 'profile': profile.slug})
-    texts = []
-    metadatas = []
-    ids = []
-    for index, (source_type, source_key, text) in enumerate(rows):
-        texts.append(text)
-        metadatas.append({
-            'source': source_key,
+    return replace_chunks(profile, [
+        {
+            'text': text,
             'source_type': source_type,
             'source_key': source_key,
-            'profile': profile.slug,
-            'file_id': f'site-{source_key}',
-        })
-        ids.append(f'site-{profile.slug}-{source_key}-{index}')
-    store.add_texts(texts=texts, metadatas=metadatas, ids=ids)
-    return ''
+            'source_label': source_key,
+        }
+        for source_type, source_key, text in rows
+    ])
 
 
 def sync_instance(profile, instance):

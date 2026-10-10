@@ -188,8 +188,7 @@ if not DEBUG:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ===== چت‌بات — دیتابیس برداری لوکال + حافظه مهمان =====
-CHATBOT_CHROMA_DIR = BASE_DIR / 'chatbot_store' / 'chroma'
+# ===== چت‌بات =====
 CHATBOT_MEMORY_DAYS = 7
 
 # ===== تنظیمات CKEditor =====

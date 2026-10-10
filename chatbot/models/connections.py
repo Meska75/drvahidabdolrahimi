@@ -1,3 +1,5 @@
+import hashlib
+
 from django.db import models
 
 
@@ -98,3 +100,8 @@ class EmbeddingConnection(models.Model):
 
     def __str__(self):
         return f'{self.name} ({self.model_name})'
+
+    def compute_fingerprint(self):
+        """اثر انگشت ۶۴ نویسه‌ای؛ آدرس کامل در این فیلد جا نمی‌شود."""
+        raw = f'{self.base_url}|{self.model_name}'.encode('utf-8')
+        return hashlib.sha256(raw).hexdigest()

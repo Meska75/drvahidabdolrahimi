@@ -307,7 +307,7 @@ class EmbeddingConnectionAdmin(SecretInputMixin, admin.ModelAdmin):
         ok, detail = ping_embedding_model(obj)
         obj.is_ready = ok
         obj.last_error = '' if ok else detail
-        obj.fingerprint = f'{obj.base_url}|{obj.model_name}'
+        obj.fingerprint = obj.compute_fingerprint()
         obj.save(update_fields=['is_ready', 'last_error', 'fingerprint'])
         if ok:
             messages.success(request, 'اتصال embedding موفق بود.')
@@ -329,7 +329,7 @@ class EmbeddingConnectionAdmin(SecretInputMixin, admin.ModelAdmin):
         if obj.pk:
             old = EmbeddingConnection.objects.filter(pk=obj.pk).first()
         super().save_model(request, obj, form, change)
-        new_fp = f'{obj.base_url}|{obj.model_name}'
+        new_fp = obj.compute_fingerprint()
         if old and old.fingerprint and old.fingerprint != new_fp:
             messages.warning(
                 request,

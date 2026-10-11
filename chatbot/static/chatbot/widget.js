@@ -35,7 +35,8 @@
     var lang = root.getAttribute('data-lang') || 'fa';
     var copy = COPY[lang] || COPY.fa;
     var token = '';
-    var started = false;
+    var greetingText = '';
+    var threadReady = false;
 
     var launcher = document.getElementById('drChatbotLauncher');
     var panel = document.getElementById('drChatbotPanel');
@@ -54,8 +55,15 @@
     input.setAttribute('placeholder', copy.placeholder);
 
     function csrf() {
-        var match = document.cookie.match(/csrftoken=([^;]+)/);
-        return match ? match[1] : '';
+        var input = form.querySelector('input[name="csrfmiddlewaretoken"]');
+        if (input && input.value) return input.value;
+        var match = document.cookie.match(/(?:^|; )csrftoken=([^;]+)/);
+        return match ? decodeURIComponent(match[1]) : '';
+    }
+
+    function honeypotValue() {
+        var field = form.querySelector('input[name="dr_hp"]');
+        return field ? field.value : '';
     }
 
     function bubble(role, text) {
@@ -86,17 +94,25 @@
         }).then(function (r) { return r.json(); });
     }
 
+    function showGreetingIfEmpty() {
+        if (messages.childElementCount || !greetingText) return;
+        renderMessages([{ role: 'assistant', content: greetingText }]);
+    }
+
     function loadThread() {
         return postJson(root.getAttribute('data-start'), {
             language: lang,
-            website: form.website.value,
+            dr_hp: honeypotValue(),
             token: token
         }).then(function (data) {
+            if (!data || data.ok === false) throw new Error('start failed');
+            threadReady = true;
+            if (data.greeting) greetingText = data.greeting;
             if (data.token) token = data.token;
             if (data.messages && data.messages.length) {
                 renderMessages(data.messages);
-            } else if (data.greeting) {
-                renderMessages([{ role: 'assistant', content: data.greeting }]);
+            } else {
+                showGreetingIfEmpty();
             }
         });
     }
@@ -104,9 +120,12 @@
     function openPanel() {
         panel.hidden = false;
         launcher.setAttribute('aria-expanded', 'true');
-        if (!started) {
-            started = true;
-            loadThread().catch(function () {});
+        if (!threadReady) {
+            showGreetingIfEmpty();
+            loadThread().catch(function () {
+                threadReady = false;
+                showGreetingIfEmpty();
+            });
         }
         input.focus();
     }
@@ -127,7 +146,7 @@
             if (!window.confirm(copy.clearConfirm)) return;
             postJson(root.getAttribute('data-clear'), {
                 language: lang,
-                website: form.website.value,
+                dr_hp: honeypotValue(),
                 token: token
             }).then(function (data) {
                 if (data.token) token = data.token;
@@ -154,7 +173,7 @@
                 language: lang,
                 message: text,
                 token: token,
-                website: form.website.value
+                dr_hp: honeypotValue()
             })
         }).then(function (response) {
             var reader = response.body.getReader();
@@ -200,9 +219,16 @@
             return;
         }
         token = data.token || '';
+        greetingText = data.greeting || greetingText;
         if (data.name) {
             root.querySelector('.dr-chatbot-title').textContent = data.name;
         }
+        if (!panel.hidden) showGreetingIfEmpty();
         root.hidden = false;
     }).catch(function () {});
+
+    window.addEventListener('pageshow', function (event) {
+        if (!event.persisted) return;
+        if (!messages.childElementCount) threadReady = false;
+    });
 })();

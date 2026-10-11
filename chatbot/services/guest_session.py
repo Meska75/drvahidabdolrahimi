@@ -47,11 +47,13 @@ def get_or_create_guest_conversation(request, profile, language, source='widget'
     guest_id = guest_id_from_request(request)
     purge_stale_conversations(profile, source=source)
     cutoff = timezone.now() - timedelta(days=MEMORY_DAYS)
+    # هر زبان گفتگوی جدا دارد تا سلام فارسی روی صفحه انگلیسی نماند
     conv = Conversation.objects.filter(
         profile=profile,
         session_key=guest_id,
         source=source,
-    ).first()
+        language=language,
+    ).order_by('-updated_at').first()
     if conv and conv.updated_at < cutoff:
         conv.delete()
         conv = None
@@ -63,7 +65,4 @@ def get_or_create_guest_conversation(request, profile, language, source='widget'
             language=language,
             ip_address=client_ip(request),
         )
-    elif conv.language != language:
-        conv.language = language
-        conv.save(update_fields=['language', 'updated_at'])
     return conv, guest_id

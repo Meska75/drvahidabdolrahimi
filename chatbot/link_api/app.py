@@ -25,7 +25,7 @@ from pydantic import BaseModel, Field
 from django.utils import timezone
 
 from chatbot.engine.chat import answer_question
-from chatbot.engine.greetings import greeting_text
+from chatbot.engine.greetings import ensure_stored_greeting, greeting_text
 from chatbot.engine.memory import DjangoConversationHistory
 from chatbot.models import ChatbotProfile, ChatMessage, Conversation
 from chatbot.protect.rate_limit import allow_message
@@ -123,8 +123,8 @@ def get_link_conversation(profile, session_id, language, ip):
         profile=profile, source='link', updated_at__lt=cutoff,
     ).delete()
     conv = Conversation.objects.filter(
-        profile=profile, session_key=session_id, source='link',
-    ).first()
+        profile=profile, session_key=session_id, source='link', language=language,
+    ).order_by('-updated_at').first()
     if conv and conv.updated_at < cutoff:
         conv.delete()
         conv = None
@@ -136,19 +136,13 @@ def get_link_conversation(profile, session_id, language, ip):
             language=language,
             ip_address=ip,
         )
-    elif conv.language != language:
-        conv.language = language
-        conv.save(update_fields=['language', 'updated_at'])
     return conv
 
 
 def ensure_greeting(conv, profile, language):
-    if not conv.messages.exists():
-        ChatMessage.objects.create(
-            conversation=conv,
-            role='assistant',
-            content=greeting_text(language, assistant_name(profile, language)),
-        )
+    ensure_stored_greeting(
+        conv, greeting_text(language, assistant_name(profile, language)),
+    )
 
 
 @app.get('/health')

@@ -28,9 +28,10 @@
             </div>
         </header>
         <div class="dr-chatbot-messages" id="drChatbotMessages"></div>
-        <form class="dr-chatbot-form" id="drChatbotForm">
-            <label class="dr-chatbot-honeypot">
-                <input type="text" name="website" tabindex="-1" autocomplete="off">
+        <form class="dr-chatbot-form" id="drChatbotForm" autocomplete="off">
+            {% csrf_token %}
+            <label class="dr-chatbot-honeypot" aria-hidden="true">
+                <input type="text" name="dr_hp" tabindex="-1" autocomplete="off" value="">
             </label>
             <textarea id="drChatbotInput" rows="1" maxlength="2000" required></textarea>
             <button type="submit" id="drChatbotSend">

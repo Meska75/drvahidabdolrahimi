@@ -7,7 +7,8 @@
 .dr-chatbot-launcher {
     position: fixed;
     z-index: 9995;
-    left: 24px;
+    right: 24px;
+    left: auto;
     bottom: 88px;
     min-width: 56px;
     height: 56px;
@@ -33,15 +34,11 @@
     font-weight: 600;
 }
 
-html[dir="ltr"] .dr-chatbot-launcher {
-    left: 24px;
-    right: auto;
-}
-
 .dr-chatbot-panel {
     position: fixed;
     z-index: 9996;
-    left: 24px;
+    right: 24px;
+    left: auto;
     bottom: 156px;
     width: 380px;
     max-width: calc(100vw - 32px);
@@ -53,11 +50,6 @@ html[dir="ltr"] .dr-chatbot-launcher {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-}
-
-html[dir="ltr"] .dr-chatbot-panel {
-    left: 24px;
-    right: auto;
 }
 
 .dr-chatbot-head {
@@ -172,7 +164,8 @@ html[dir="ltr"] .dr-chatbot-panel {
 
 @media (max-width: 767px) {
     .dr-chatbot-launcher {
-        left: 12px;
+        right: 12px;
+        left: auto;
         bottom: calc(92px + env(safe-area-inset-bottom, 0px));
         padding: 0;
         width: 54px;

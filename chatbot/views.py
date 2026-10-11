@@ -6,7 +6,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 
 from chatbot.engine.chat import answer_question, stream_question
 from chatbot.engine.fallback import fallback_text
-from chatbot.engine.greetings import greeting_text
+from chatbot.engine.greetings import ensure_stored_greeting, greeting_text
 from chatbot.engine.memory import DjangoConversationHistory
 from chatbot.models import ChatbotProfile, ChatMessage
 from chatbot.protect.bot_detect import honeypot_filled, issue_token, token_is_too_fast, token_is_valid
@@ -55,9 +55,8 @@ def _serialized_messages(conv):
 
 
 def _ensure_greeting(conv, language, profile):
-    if not conv.messages.exists():
-        text = greeting_text(language, _assistant_name(profile, language))
-        ChatMessage.objects.create(conversation=conv, role='assistant', content=text)
+    text = greeting_text(language, _assistant_name(profile, language))
+    ensure_stored_greeting(conv, text)
 
 
 @require_GET
@@ -76,6 +75,7 @@ def widget_config(request):
         'language': language,
         'token': issue_token() if enabled else '',
         'name': _assistant_name(profile, language) if profile else '',
+        'greeting': greeting_text(language, _assistant_name(profile, language)) if profile else '',
         'memory_days': 7,
     }
     return _json(payload, guest_id)

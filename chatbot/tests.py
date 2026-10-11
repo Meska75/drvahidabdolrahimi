@@ -38,7 +38,9 @@ class SafetyTests(TestCase):
 class BotDetectTests(TestCase):
     def test_honeypot(self):
         self.assertTrue(honeypot_filled({'website': 'http://spam'}))
+        self.assertTrue(honeypot_filled({'dr_hp': 'http://spam'}))
         self.assertFalse(honeypot_filled({'website': ''}))
+        self.assertFalse(honeypot_filled({'dr_hp': ''}))
 
     def test_token_roundtrip(self):
         token = issue_token()

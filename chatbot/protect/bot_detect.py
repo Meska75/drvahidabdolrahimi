@@ -38,5 +38,5 @@ def token_is_too_fast(token):
 
 def honeypot_filled(data):
     """فیلد پنهان؛ انسان آن را خالی می‌گذارد."""
-    value = (data.get('website') or data.get('company_url') or '').strip()
+    value = (data.get('dr_hp') or data.get('website') or data.get('company_url') or '').strip()
     return bool(value)

@@ -83,7 +83,11 @@ def iter_visible(chunks, language, question):
 
 
 def _llm_messages(profile, language, question, conversation=None, history=None):
-    context = retrieve_context(profile, question, language=language)
+    from .prompts import reply_language
+
+    page = language if language in ('fa', 'en', 'ar') else 'fa'
+    content_language = reply_language(question, page) or page
+    context = retrieve_context(profile, question, language=content_language)
     if profile.knowledge_mode == 'rag_only' and not (context or '').strip():
         return None, _empty_rag(language)
 
@@ -99,7 +103,7 @@ def _llm_messages(profile, language, question, conversation=None, history=None):
                 past.append(AIMessage(content=item.get('content', '')))
 
     packed = messages_for_model(
-        build_system_prompt(profile, language),
+        build_system_prompt(profile, language, question),
         context,
         past,
         question,
@@ -151,7 +155,7 @@ def stream_question(profile, language, question, history=None, conversation=None
     except Exception as exc:
         logger.exception('آماده‌سازی پیام چت ناموفق')
         packed = messages_for_model(
-            build_system_prompt(profile, language), '', [], question,
+            build_system_prompt(profile, language, question), '', [], question,
         )
         early = None
         prepare_error = str(exc)

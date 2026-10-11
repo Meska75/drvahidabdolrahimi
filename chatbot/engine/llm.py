@@ -6,6 +6,9 @@ from chatbot.services.secrets import decrypt_secret
 
 logger = logging.getLogger('chatbot')
 
+# سقف خروجی. جواب کوتاه است و بودجهٔ بلند فقط فکر مدل را گران می‌کند.
+OUTPUT_TOKEN_CAP = 320
+
 
 def build_chat_model(connection):
     """مدل چت LangChain از روی اتصال پنل (درگاه سازگار با OpenAI)."""
@@ -23,7 +26,7 @@ def build_chat_model(connection):
         'base_url': connection.base_url.rstrip('/'),
         'temperature': connection.temperature or 0.3,
         'timeout': connection.timeout_seconds or 45,
-        'max_tokens': connection.max_tokens or 800,
+        'max_tokens': min(connection.max_tokens or OUTPUT_TOKEN_CAP, OUTPUT_TOKEN_CAP),
         # استریم بعضی درگاه‌ها مثل لیارا قطع نمی‌شود و چت روی سه‌نقطه می‌ماند
         'disable_streaming': True,
     }
@@ -109,6 +112,17 @@ def clean_for_user(text):
     return strip_markup(strip_thinking(text))
 
 
+def extract_answer(text):
+    """فقط متن داخل <answer> به کاربر می‌رسد. بیرون برچسب دور ریخته می‌شود."""
+    cleaned = strip_thinking(text)
+    match = re.search(r'<answer>(.*?)</answer>', cleaned, flags=re.I | re.S)
+    if not match:
+        match = re.search(r'<answer>(.*?)<answer\s*/>', cleaned, flags=re.I | re.S)
+    if not match:
+        return ''
+    return strip_markup(match.group(1)).strip()
+
+
 def looks_like_reasoning_trace(text):
     """متن برنامه‌ریزی انگلیسی مدل است، نه جواب بیمار."""
     raw = (text or '').strip()
@@ -130,7 +144,7 @@ def looks_like_reasoning_trace(text):
 
 
 def _visible_piece(value):
-    text = clean_for_user(_plain_text(value))
+    text = extract_answer(_plain_text(value))
     if not text or looks_like_reasoning_trace(text):
         return ''
     return text
@@ -246,7 +260,8 @@ def complete_text(connection, messages):
     """جواب مدل از بدنهٔ خام. اگر کتابخانه متن را خالی ببیند، باز هم همان جواب لیارا خوانده می‌شود."""
     client = _openai_client(connection)
     prepared = _to_openai_messages(messages)
-    max_tokens = connection.max_tokens or 800
+    requested = connection.max_tokens or OUTPUT_TOKEN_CAP
+    max_tokens = min(requested, OUTPUT_TOKEN_CAP)
     temperature = connection.temperature if connection.temperature is not None else 0.3
     # فکر کردن مدل را خاموش می‌کنیم تا به‌جای جواب، متن انگلیسی برنامه‌ریزی نیاید
     thinking_off = {
@@ -260,7 +275,7 @@ def complete_text(connection, messages):
         {
             'messages': prepared,
             'temperature': temperature,
-            'max_completion_tokens': max(max_tokens, 2000),
+            'max_completion_tokens': max_tokens,
             **thinking_off,
         },
         {'messages': prepared, 'temperature': temperature, 'max_tokens': max_tokens},
@@ -268,12 +283,12 @@ def complete_text(connection, messages):
             'messages': prepared + [{
                 'role': 'user',
                 'content': (
-                    'فقط پاسخ نهایی را به زبان بیمار بنویس. '
-                    'فکر درونی، عنوان انگلیسی و برنامه‌ریزی ننویس. تشخیص قطعی و دارو نده.'
+                    'Only the short final reply, inside this tag and nothing else:\n'
+                    '<answer>\nreply\n</answer>'
                 ),
             }],
             'temperature': temperature,
-            'max_completion_tokens': max(max_tokens, 2000),
+            'max_tokens': max_tokens,
             **thinking_off,
         },
     ]

@@ -47,16 +47,27 @@ class DjangoConversationHistory(BaseChatMessageHistory):
         self.conversation.messages.all().delete()
 
 
-def messages_for_model(system_text, rag_context, history_messages, question, max_tokens=3000):
-    """پرامپت سیستم + تاریخچهٔ کوتاه‌شده + سؤال فعلی."""
-    system_parts = [system_text]
-    if (rag_context or '').strip():
-        system_parts.append(
-            'دانش مطب (واقعیت‌های همین سایت؛ برای سؤال درباره مطب فقط از همین متن بگو):\n'
-            + rag_context.strip()
-        )
+def _clip(text, limit):
+    raw = text or ''
+    if len(raw) <= limit:
+        return raw
+    return raw[:limit].rstrip() + '…'
 
-    past = list(history_messages or [])
+
+def messages_for_model(system_text, rag_context, history_messages, question, max_tokens=800):
+    """پرامپت سیستم + تاریخچهٔ کوتاه + سؤال فعلی. سقف تاریخچه حدود ۸۰۰ توکن است."""
+    system_parts = [system_text]
+    context = _clip((rag_context or '').strip(), 1400)
+    if context:
+        system_parts.append('دانش مطب:\n' + context)
+
+    past = []
+    for message in history_messages or []:
+        content = _clip(getattr(message, 'content', '') or '', 400)
+        if isinstance(message, HumanMessage):
+            past.append(HumanMessage(content=content))
+        else:
+            past.append(AIMessage(content=content))
     if past and isinstance(past[-1], HumanMessage) and past[-1].content == question:
         past = past[:-1]
 

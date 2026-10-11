@@ -72,7 +72,7 @@ class ReasoningTraceTests(TestCase):
             'برای بررسی شبکیه باید معاینه حضوری انجام شود.'
         )
         body = {'choices': [{'message': {
-            'content': answer,
+            'content': 'The user wants a medical note.\n<answer>\n' + answer + '\n</answer>',
             'reasoning_content': '**Evaluating causes of halos** I think about cataracts.',
         }}]}
         self.assertEqual(_text_from_chat_json(body), answer)
@@ -81,7 +81,7 @@ class ReasoningTraceTests(TestCase):
         from chatbot.engine.llm import _text_from_chat_json
 
         body = {'choices': [{'message': {
-            'content': '<think>plan the answer in English</think>معاینه حضوری لازم است و تشخیص قطعی داده نمی‌شود.',
+            'content': '<think>plan the answer in English</think><answer>معاینه حضوری لازم است و تشخیص قطعی داده نمی‌شود.</answer>',
         }}]}
         text = _text_from_chat_json(body)
         self.assertNotIn('plan the answer', text)
@@ -94,9 +94,12 @@ class ReasoningTraceTests(TestCase):
             'The user is asking about seeing a gray halo. '
             'I cannot give definitive diagnoses and I should answer in Persian.\n'
             '</think>\n\n'
+            '<answer>\n'
             'دیدن هاله طوسی در وسط دید می‌تواند نشانه‌هایی از مشکلات مختلف چشمی باشد.\n'
             '- **مشکلات شبکیه**: مانند ادم ماکولا\n'
             '- **علائم هشدار اورژانسی**: کاهش ناگهانی بینایی\n'
+            '</answer>\n'
+            'Would you like me to continue in English?'
         )
         body = {'choices': [{'message': {'content': raw}}]}
         text = _text_from_chat_json(body)
@@ -143,9 +146,19 @@ class ReplyShapeTests(TestCase):
             prompt_ar = ''
             knowledge_mode = 'hybrid'
 
-        text = build_system_prompt(Profile(), 'fa')
+        text = build_system_prompt(Profile(), 'fa', 'وقتی به دیوار نگاه می‌کنم هاله می‌بینم')
         self.assertIn('خودت را معرفی نکن', text)
+        self.assertIn('فقط فارسی', text)
+        self.assertIn('<answer>', text)
         self.assertNotIn('قطعه‌ای بازیابی نشد', text)
+
+    def test_reply_language_follows_the_message(self):
+        from chatbot.engine.prompts import reply_language
+
+        self.assertEqual(reply_language('درباره دکتر عبدالرحیمی بگو', 'fa'), 'fa')
+        self.assertEqual(reply_language('I see a gray halo on a white wall', 'fa'), 'en')
+        self.assertEqual(reply_language('أرى هالة رمادية في منتصف الرؤية', 'fa'), 'ar')
+        self.assertIsNone(reply_language('Bonjour, je voudrais un rendez-vous demain', 'fa'))
 
 
 class SiteContextTests(TestCase):

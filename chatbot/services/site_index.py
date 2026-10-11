@@ -263,7 +263,27 @@ def _tokens(text):
     ]
 
 
-def _matching(lines, question, limit=24):
+_TOPIC_WORDS = {
+    'doctor': ('دکتر', 'عبدالرح', 'تحصیل', 'بیو', 'افتخار', 'doctor', 'about', 'سيرة', 'طبيب'),
+    'services': ('خدمت', 'جراح', 'لیزر', 'ویزیت', 'service', 'خدم', 'عمل'),
+    'clinic': ('آدرس', 'ساعت', 'تلفن', 'نوبت', 'کجا', 'تماس', 'address', 'phone', 'hour', 'موعد'),
+    'team': ('تیم', 'همکار', 'team', 'فريق'),
+    'faq': ('متداول', 'faq'),
+    'blog': ('مقاله', 'article', 'blog'),
+}
+
+
+def question_topics(question):
+    text = question or ''
+    lowered = text.lower()
+    found = set()
+    for name, words in _TOPIC_WORDS.items():
+        if any(word in text or word in lowered for word in words):
+            found.add(name)
+    return found
+
+
+def _matching(lines, question, limit=8):
     tokens = set(_tokens(question))
     if not tokens:
         return list(lines)[:limit]
@@ -318,11 +338,10 @@ def _service_block(language, question):
         line = f'- {kind}: {title}' + (f' — {desc}' if desc else '')
         lines.append(line)
         titles.append(f'- {kind}: {title}')
-    picked = _matching(lines, question)
-    body = picked or titles
-    if not body:
+    picked = _matching(lines, question) or titles[:8]
+    if not picked:
         return ''
-    return 'خدمات این مطب:\n' + '\n'.join(body)
+    return ('خدمات این مطب:\n' + '\n'.join(picked))[:900]
 
 
 def _doctor_block(language):
@@ -388,7 +407,7 @@ def _team_block(language, question):
         line = ' — '.join(bit for bit in bits if bit)
         if line:
             lines.append('- ' + line)
-    picked = _matching(lines, question) or lines[:12]
+    picked = _matching(lines, question)
     if not picked:
         return ''
     return 'تیم مطب:\n' + '\n'.join(picked)
@@ -403,7 +422,7 @@ def _faq_block(language, question):
         a = _field(item, 'answer', language)
         if q or a:
             lines.append(f'س: {q}\nج: {a}')
-    picked = _matching(lines, question, limit=6) or lines[:6]
+    picked = _matching(lines, question, limit=3)
     if not picked:
         return ''
     return 'پرسش‌های متداول:\n' + '\n\n'.join(picked)
@@ -419,41 +438,42 @@ def _blog_block(language, question):
         line = ' — '.join(bit for bit in (title, summary) if bit)
         if line:
             lines.append('- ' + line)
-    picked = _matching(lines, question, limit=3) or lines[:3]
+    picked = _matching(lines, question, limit=2)
     if not picked:
         return ''
     return 'مقالات:\n' + '\n'.join(picked)
 
 
-def live_site_context(profile, language, question, limit=6500):
-    """متن فعلی سایت، بدون وابستگی به embedding. اگر ایندکس RAG خالی باشد همین مبناست."""
+def live_site_context(profile, language, question, limit=1400):
+    """فقط بخش مرتبط با سؤال. علامت عمومی فقط تماس کوتاه مطب را می‌گیرد."""
     language = language if language in ('fa', 'en', 'ar') else 'fa'
     sources = set(answer_sources(profile))
+    topics = question_topics(question)
     blocks = []
-    if 'doctor' in sources:
+    if 'doctor' in sources and 'doctor' in topics:
         block = _doctor_block(language)
         if block:
-            blocks.append(block)
-    if 'services' in sources:
+            blocks.append(block[:800])
+    if 'services' in sources and 'services' in topics:
         block = _service_block(language, question)
         if block:
             blocks.append(block)
-    if 'clinic' in sources:
+    if 'clinic' in sources and ('clinic' in topics or not topics):
         block = _clinic_block(language)
         if block:
-            blocks.append(block)
-    if 'team' in sources:
+            blocks.append(block[:500])
+    if 'team' in sources and 'team' in topics:
         block = _team_block(language, question)
         if block:
-            blocks.append(block)
-    if 'faq' in sources:
+            blocks.append(block[:400])
+    if 'faq' in sources and 'faq' in topics:
         block = _faq_block(language, question)
         if block:
-            blocks.append(block)
-    if 'blog' in sources:
+            blocks.append(block[:400])
+    if 'blog' in sources and 'blog' in topics:
         block = _blog_block(language, question)
         if block:
-            blocks.append(block)
+            blocks.append(block[:300])
     return '\n\n'.join(blocks)[:limit]
 
 

@@ -124,10 +124,11 @@ def retrieve_context(profile, question, language='fa', k=4):
     live = live_site_context(profile, language, question)
     if live:
         parts.append(live)
-    files = _file_hits(profile, question, k=k)
+    files = _file_hits(profile, question, k=min(k, 2))
     if files:
         chunks = []
         for index, chunk in enumerate(files, start=1):
-            chunks.append(f'[{index}] ({chunk.source_label})\n{chunk.text}')
+            piece = (chunk.text or '')[:500]
+            chunks.append(f'[{index}] {piece}')
         parts.append('فایل‌های مرتبط:\n' + '\n\n'.join(chunks))
     return '\n\n'.join(parts)

@@ -47,6 +47,74 @@ class BotDetectTests(TestCase):
         self.assertTrue(token_is_valid(token))
 
 
+class ReplyShapeTests(TestCase):
+    def test_repeated_intro_is_removed(self):
+        from chatbot.engine.chat import iter_visible, visible_reply
+
+        raw = (
+            'سلام. من دستیار هوش مصنوعی مطب دکتر عبدالرحیمی هستم.\n\n'
+            'لیزیک در این مطب انجام می‌شود.'
+        )
+        text = visible_reply(raw, 'fa', 'لیزیک دارید؟')
+        self.assertNotIn('دستیار هوش مصنوعی', text)
+        self.assertIn('لیزیک', text)
+
+        pieces = list(iter_visible([raw], 'fa', 'خدمات مطب چیست'))
+        self.assertEqual(len(pieces), 1)
+        self.assertIn('لیزیک', pieces[0])
+        self.assertNotIn('من دستیار', pieces[0])
+
+    def test_identity_question_keeps_intro(self):
+        from chatbot.engine.chat import visible_reply
+
+        raw = 'سلام. من دستیار هوش مصنوعی مطب هستم.'
+        self.assertIn('دستیار', visible_reply(raw, 'fa', 'تو کی هستی؟'))
+
+    def test_prompt_forbids_repeating_intro(self):
+        from chatbot.engine.prompts import build_system_prompt
+
+        class Profile:
+            assistant_name_fa = 'دستیار تست'
+            assistant_name_en = 'Test'
+            assistant_name_ar = 'مساعد'
+            prompt_fa = ''
+            prompt_en = ''
+            prompt_ar = ''
+            knowledge_mode = 'hybrid'
+
+        text = build_system_prompt(Profile(), 'fa')
+        self.assertIn('خودت را معرفی نکن', text)
+        self.assertNotIn('قطعه‌ای بازیابی نشد', text)
+
+
+class SiteContextTests(TestCase):
+    def test_answer_uses_site_services_without_embeddings(self):
+        from chatbot.engine.rag import retrieve_context
+        from chatbot.models import ChatbotProfile
+        from services.models import ServiceItem
+
+        profile = ChatbotProfile.objects.create(
+            slug='test-clinic',
+            title='تست',
+            is_default=True,
+            knowledge_mode='hybrid',
+        )
+        ServiceItem.objects.create(
+            type='surgery',
+            title_fa='لیزیک اختصاصی این مطب',
+            description_fa='اصلاح عیب انکساری با لیزر در همین مرکز',
+        )
+        text = retrieve_context(profile, 'خدمات جراحی لیزیک چیست', language='fa')
+        self.assertIn('لیزیک اختصاصی این مطب', text)
+
+    def test_about_page_biography_is_included(self):
+        from chatbot.services.site_index import _about_page_text
+
+        text = _about_page_text('fa')
+        self.assertIn('شبکیه', text)
+        self.assertIn('عبدالرحیمی', text)
+
+
 class MemoryTrimTests(TestCase):
     def test_trim_keeps_recent_human_question(self):
         past = []

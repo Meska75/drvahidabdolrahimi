@@ -211,8 +211,15 @@
         function paint() {
             if (!shown) return;
             live.classList.remove('dr-chat-pending');
+            live.classList.add('dr-chat-live');
             live.textContent = shown;
             messages.scrollTop = messages.scrollHeight;
+        }
+
+        function endLive() {
+            live.classList.remove('dr-chat-pending');
+            live.classList.remove('dr-chat-live');
+            if (!shown) live.textContent = copy.failed;
         }
 
         function pump() {
@@ -221,13 +228,13 @@
             function step() {
                 if (!queue) {
                     pumping = false;
-                    if (finished && !shown) {
-                        live.classList.remove('dr-chat-pending');
-                        live.textContent = copy.failed;
-                    }
+                    if (finished) endLive();
                     return;
                 }
-                var n = queue.length > 24 ? 2 : 1;
+                var n = queue.length;
+                if (n > 120) n = 8;
+                else if (n > 40) n = 4;
+                else if (n > 8) n = 2;
                 shown += queue.slice(0, n);
                 queue = queue.slice(n);
                 paint();
@@ -286,13 +293,20 @@
                         if (payload.token && !payload.done) pump();
                     });
                     if (!result.done) return read();
-                    finished = true;
-                    if (queue) {
-                        shown += queue;
-                        queue = '';
-                        paint();
+                    if (buffer.trim()) {
+                        var tail = parseSseBlock(buffer);
+                        if (tail) {
+                            if (tail.reset) {
+                                shown = '';
+                                queue = '';
+                            }
+                            if (tail.token && !tail.done) queue += tail.token;
+                            if (tail.done && tail.session) token = tail.session;
+                        }
                     }
-                    if (!shown) fail();
+                    finished = true;
+                    if (queue && !pumping) pump();
+                    else if (!queue) endLive();
                 });
             }
             return read();

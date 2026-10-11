@@ -116,8 +116,7 @@ def _to_openai_messages(messages):
     return prepared
 
 
-def complete_text(connection, messages):
-    """جواب مدل از بدنهٔ خام. اگر کتابخانه متن را خالی ببیند، باز هم همان جواب لیارا خوانده می‌شود."""
+def _openai_client(connection):
     from openai import OpenAI
 
     if not connection or not connection.base_url or not connection.model_name:
@@ -125,12 +124,61 @@ def complete_text(connection, messages):
     api_key = decrypt_secret(connection.api_key_encrypted).strip()
     if not api_key:
         raise RuntimeError('کلید مدل خالی است.')
-    client = OpenAI(
+    return OpenAI(
         api_key=api_key,
         base_url=connection.base_url.strip().rstrip('/'),
         timeout=connection.timeout_seconds or 45,
         max_retries=0,
     )
+
+
+def _delta_text(chunk):
+    choices = getattr(chunk, 'choices', None) or []
+    if not choices:
+        return ''
+    delta = getattr(choices[0], 'delta', None)
+    if delta is None:
+        return ''
+    return _plain_text(getattr(delta, 'content', None))
+
+
+def iter_completion_text(connection, messages):
+    """تکه‌های متن را همان لحظه که مدل می‌نویسد برمی‌گرداند."""
+    client = _openai_client(connection)
+    prepared = _to_openai_messages(messages)
+    max_tokens = connection.max_tokens or 800
+    temperature = connection.temperature if connection.temperature is not None else 0.3
+    variants = [
+        {'temperature': temperature, 'max_tokens': max_tokens, 'stream': True},
+        {'stream': True},
+    ]
+    last_error = 'پاسخ مدل خالی بود.'
+    for extra in variants:
+        started = False
+        try:
+            stream = client.chat.completions.create(
+                model=connection.model_name.strip(),
+                messages=prepared,
+                **extra,
+            )
+            for chunk in stream:
+                text = _delta_text(chunk)
+                if not text:
+                    continue
+                started = True
+                yield text
+            return
+        except Exception as exc:
+            last_error = str(exc)
+            logger.exception('استریم مدل ناموفق')
+            if started:
+                raise
+    raise RuntimeError(last_error)
+
+
+def complete_text(connection, messages):
+    """جواب مدل از بدنهٔ خام. اگر کتابخانه متن را خالی ببیند، باز هم همان جواب لیارا خوانده می‌شود."""
+    client = _openai_client(connection)
     prepared = _to_openai_messages(messages)
     max_tokens = connection.max_tokens or 800
     temperature = connection.temperature if connection.temperature is not None else 0.3

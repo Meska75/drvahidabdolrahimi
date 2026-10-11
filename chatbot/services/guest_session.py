@@ -13,10 +13,14 @@ MEMORY_DAYS = getattr(settings, 'CHATBOT_MEMORY_DAYS', 7)
 
 
 def guest_id_from_request(request):
+    cached = getattr(request, '_dr_chat_guest_id', None)
+    if cached:
+        return cached
     raw = (request.COOKIES.get(COOKIE_NAME) or '').strip().lower()
-    if re.fullmatch(r'[a-f0-9]{32}', raw):
-        return raw
-    return uuid.uuid4().hex
+    if not re.fullmatch(r'[a-f0-9]{32}', raw):
+        raw = uuid.uuid4().hex
+    request._dr_chat_guest_id = raw
+    return raw
 
 
 def attach_guest_cookie(response, guest_id):

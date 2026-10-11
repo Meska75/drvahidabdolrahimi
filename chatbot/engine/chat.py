@@ -1,12 +1,28 @@
 import logging
+import re
 
 from .fallback import fallback_text
-from .llm import build_chat_model, complete_text
+from .llm import build_chat_model, complete_text, iter_completion_text
 from .memory import DjangoConversationHistory, messages_for_model
 from .prompts import build_system_prompt
 from .rag import retrieve_context
 
 logger = logging.getLogger('chatbot')
+
+_INTRO = {
+    'fa': re.compile(
+        r'^\s*(?:سلام(?:\s+و\s+وقت\s+بخیر)?[.،!\s]*)?'
+        r'(?:من\s+)?دستیار(?:\s+هوش\s+مصنوعی)?[^.\n]{0,140}'
+        r'(?:هستم|می‌باشم|ام)\s*[.!\n]+\s*'
+    ),
+    'en': re.compile(
+        r"^\s*(?:Hello|Hi)[,!.\s]*(?:I am|I'm)\s+(?:the\s+)?(?:AI\s+)?assistant[^.\n]{0,160}\.\s*",
+        re.I,
+    ),
+    'ar': re.compile(
+        r'^\s*(?:مرحباً?|مرحبا|السلام عليكم)[^\n]{0,40}?أنا\s+مساعد[^.\n]{0,140}\.\s*'
+    ),
+}
 
 
 def _empty_rag(language):
@@ -17,8 +33,55 @@ def _empty_rag(language):
     }[language]
 
 
+def asks_who_assistant(question):
+    text = question or ''
+    lowered = text.lower()
+    needles = (
+        'کی هستی', 'کیستی', 'کی هستید', 'اسم تو', 'اسمت', 'اسم شما',
+        'خودت را معرفی', 'خودتو معرفی', 'who are you', 'your name',
+        'من أنت', 'من انت', 'ما اسم',
+    )
+    return any(needle in text or needle in lowered for needle in needles)
+
+
+def visible_reply(text, language, question):
+    """معرفی تکراری ابتدای جواب را برمی‌دارد؛ سلام شروع گفتگو جدا نشان داده شده است."""
+    raw = text or ''
+    if asks_who_assistant(question):
+        return raw.strip()
+    pattern = _INTRO.get(language) or _INTRO['fa']
+    cleaned = pattern.sub('', raw, count=1).strip()
+    return cleaned or raw.strip()
+
+
+def iter_visible(chunks, language, question):
+    """اول جمله را نگه می‌دارد تا اگر معرفی تکراری بود حذف شود، بعد بقیه زنده می‌آید."""
+    if asks_who_assistant(question):
+        yield from chunks
+        return
+    buf = ''
+    hold = True
+    for chunk in chunks:
+        if not hold:
+            if chunk:
+                yield chunk
+            continue
+        buf += chunk or ''
+        ready = len(buf) >= 260 or (len(buf) >= 24 and re.search(r'[.!\n؟?]', buf))
+        if not ready:
+            continue
+        hold = False
+        cleaned = visible_reply(buf, language, question)
+        if cleaned:
+            yield cleaned
+    if hold and buf:
+        cleaned = visible_reply(buf, language, question)
+        if cleaned:
+            yield cleaned
+
+
 def _llm_messages(profile, language, question, conversation=None, history=None):
-    context = retrieve_context(profile, question)
+    context = retrieve_context(profile, question, language=language)
     if profile.knowledge_mode == 'rag_only' and not (context or '').strip():
         return None, _empty_rag(language)
 
@@ -56,7 +119,7 @@ def answer_question(profile, language, question, history=None, conversation=None
     if early:
         return early, False, ''
     try:
-        text = complete_text(profile.active_llm, packed)
+        text = visible_reply(complete_text(profile.active_llm, packed), language, question)
         if not text:
             return polite, True, 'پاسخ مدل خالی بود.'
         return text, False, ''
@@ -65,12 +128,27 @@ def answer_question(profile, language, question, history=None, conversation=None
         return polite, True, str(exc)
 
 
-def stream_question(profile, language, question, history=None, conversation=None):
-    """پاسخ را یکجا از مدل می‌گیرد و تکه‌تکه برمی‌گرداند تا در صفحه کم‌کم دیده شود.
+def _model_pieces(connection, packed):
+    produced = False
+    try:
+        for piece in iter_completion_text(connection, packed):
+            if piece:
+                produced = True
+                yield piece
+    except Exception:
+        logger.exception('استریم مدل قطع شد')
+        if produced:
+            return
+        raise
+    if produced:
+        return
+    fallback = complete_text(connection, packed)
+    if fallback:
+        yield fallback
 
-    استریم خام درگاه اینجا استفاده نمی‌شود؛ روی لیارا اتصال را باز نگه می‌داشت
-    و کاربر فقط سه‌نقطه می‌دید.
-    """
+
+def stream_question(profile, language, question, history=None, conversation=None):
+    """جواب مدل را همان‌طور که نوشته می‌شود برمی‌گرداند."""
     language = language if language in ('fa', 'en', 'ar') else 'fa'
     polite = fallback_text(language)
     llm = build_chat_model(profile.active_llm)
@@ -101,15 +179,13 @@ def stream_question(profile, language, question, history=None, conversation=None
 
     yield ('status', 'write', '')
     try:
-        text = complete_text(profile.active_llm, packed)
+        produced = False
+        for piece in iter_visible(_model_pieces(profile.active_llm, packed), language, question):
+            produced = True
+            yield ('delta', piece, '')
+        if not produced:
+            yield ('replace', polite, prepare_error or 'پاسخ مدل خالی بود.')
     except Exception as exc:
         logger.exception('خطا در فراخوانی مدل چت')
-        yield ('replace', polite, prepare_error or str(exc))
-        return
-    if not text:
-        yield ('replace', polite, prepare_error or 'پاسخ مدل خالی بود.')
-        return
-    # تکه‌تکه تا در صفحه یکجا ظاهر نشود
-    step = 24
-    for start in range(0, len(text), step):
-        yield ('delta', text[start:start + step], '')
+        if not produced:
+            yield ('replace', polite, prepare_error or str(exc))

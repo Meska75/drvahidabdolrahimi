@@ -50,10 +50,11 @@ class DjangoConversationHistory(BaseChatMessageHistory):
 def messages_for_model(system_text, rag_context, history_messages, question, max_tokens=3000):
     """پرامپت سیستم + تاریخچهٔ کوتاه‌شده + سؤال فعلی."""
     system_parts = [system_text]
-    if rag_context:
-        system_parts.append('دانش مطب:\n' + rag_context)
-    else:
-        system_parts.append('دانش مطب: قطعه‌ای بازیابی نشد.')
+    if (rag_context or '').strip():
+        system_parts.append(
+            'دانش مطب (واقعیت‌های همین سایت؛ برای سؤال درباره مطب فقط از همین متن بگو):\n'
+            + rag_context.strip()
+        )
 
     past = list(history_messages or [])
     if past and isinstance(past[-1], HumanMessage) and past[-1].content == question:

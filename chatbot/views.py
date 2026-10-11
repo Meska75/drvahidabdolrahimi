@@ -201,6 +201,7 @@ def stream_message(request):
     blocked = _guard(request, data, profile)
     conv, guest_id = get_or_create_guest_conversation(request, profile, language)
     ChatMessage.objects.create(conversation=conv, role='user', content=question)
+    conv.save(update_fields=['updated_at'])
 
     def sse(payload):
         return f'data: {json.dumps(payload, ensure_ascii=False)}\n\n'

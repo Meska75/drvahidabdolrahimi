@@ -154,6 +154,22 @@
     min-width: 148px;
 }
 
+.dr-chat-live::after {
+    content: '';
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    margin-inline-start: 2px;
+    background: #0f766e;
+    vertical-align: text-bottom;
+    animation: dr-caret 1s steps(1) infinite;
+}
+
+@keyframes dr-caret {
+    0%, 50% { opacity: 1; }
+    50.01%, 100% { opacity: 0; }
+}
+
 .dr-chat-status {
     font-size: 0.8rem;
     color: #475569;

@@ -2,6 +2,7 @@
 
 import logging
 import math
+import re
 
 from chatbot.models import KnowledgeChunk
 
@@ -75,24 +76,58 @@ def delete_chunks(profile, *, source_type=None, source_key=None):
     return ''
 
 
-def retrieve_context(profile, question, k=4):
+def _keyword_rank(rows, question, k):
+    tokens = set(re.findall(r'[\w\u0600-\u06FF]{2,}', (question or '').lower()))
+    scored = []
+    for row in rows:
+        overlap = len(tokens & set(re.findall(r'[\w\u0600-\u06FF]{2,}', (row.text or '').lower())))
+        if overlap:
+            scored.append((overlap, row))
+    scored.sort(key=lambda item: item[0], reverse=True)
+    return [row for _, row in scored[:k]]
+
+
+def _file_hits(profile, question, k=4):
+    """فایل‌های آپلودی. محتوای خود سایت جداگانه و زنده خوانده می‌شود."""
+    from chatbot.services.site_index import SITE_SOURCES
+
+    rows = list(
+        KnowledgeChunk.objects.filter(profile=profile).exclude(source_type__in=SITE_SOURCES)
+    )
+    if not rows:
+        return []
+    client = embedding_client(profile)
+    if client is not None:
+        try:
+            query_vector = client.embed_query(question)
+        except Exception:
+            logger.exception('بردار سؤال ساخته نشد')
+            query_vector = None
+        if query_vector:
+            ranked = sorted(
+                ((_cosine(query_vector, row.embedding), row) for row in rows),
+                key=lambda item: item[0],
+                reverse=True,
+            )
+            hits = [row for score, row in ranked if score > 0.15][:k]
+            if hits:
+                return hits
+    return _keyword_rank(rows, question, k)
+
+
+def retrieve_context(profile, question, language='fa', k=4):
     if profile.knowledge_mode == 'llm_only':
         return ''
-    client = embedding_client(profile)
-    if client is None:
-        return ''
-    try:
-        query_vector = client.embed_query(question)
-    except Exception:
-        logger.exception('بردار سؤال ساخته نشد')
-        return ''
-    ranked = []
-    for chunk in KnowledgeChunk.objects.filter(profile=profile).iterator():
-        ranked.append((_cosine(query_vector, chunk.embedding), chunk))
-    ranked.sort(key=lambda item: item[0], reverse=True)
+    from chatbot.services.site_index import live_site_context
+
     parts = []
-    for index, (_score, chunk) in enumerate(ranked[:k], start=1):
-        if _score <= 0:
-            continue
-        parts.append(f'[{index}] ({chunk.source_label})\n{chunk.text}')
+    live = live_site_context(profile, language, question)
+    if live:
+        parts.append(live)
+    files = _file_hits(profile, question, k=k)
+    if files:
+        chunks = []
+        for index, chunk in enumerate(files, start=1):
+            chunks.append(f'[{index}] ({chunk.source_label})\n{chunk.text}')
+        parts.append('فایل‌های مرتبط:\n' + '\n\n'.join(chunks))
     return '\n\n'.join(parts)

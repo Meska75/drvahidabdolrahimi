@@ -84,8 +84,28 @@ class ReasoningTraceTests(TestCase):
             'content': '<think>plan the answer in English</think>معاینه حضوری لازم است و تشخیص قطعی داده نمی‌شود.',
         }}]}
         text = _text_from_chat_json(body)
-        self.assertNotIn('think', text.lower())
+        self.assertNotIn('plan the answer', text)
         self.assertIn('معاینه حضوری', text)
+
+    def test_unopened_think_block_and_markdown_are_hidden(self):
+        from chatbot.engine.llm import _text_from_chat_json
+
+        raw = (
+            'The user is asking about seeing a gray halo. '
+            'I cannot give definitive diagnoses and I should answer in Persian.\n'
+            '</think>\n\n'
+            'دیدن هاله طوسی در وسط دید می‌تواند نشانه‌هایی از مشکلات مختلف چشمی باشد.\n'
+            '- **مشکلات شبکیه**: مانند ادم ماکولا\n'
+            '- **علائم هشدار اورژانسی**: کاهش ناگهانی بینایی\n'
+        )
+        body = {'choices': [{'message': {'content': raw}}]}
+        text = _text_from_chat_json(body)
+        self.assertNotIn('The user is asking', text)
+        self.assertNotIn('think', text.lower())
+        self.assertNotIn('**', text)
+        self.assertIn('هاله طوسی', text)
+        self.assertIn('مشکلات شبکیه', text)
+        self.assertIn('علائم هشدار اورژانسی', text)
 
 
 class ReplyShapeTests(TestCase):

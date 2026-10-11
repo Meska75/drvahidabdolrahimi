@@ -46,7 +46,9 @@ def asks_who_assistant(question):
 
 def visible_reply(text, language, question):
     """معرفی تکراری ابتدای جواب را برمی‌دارد؛ سلام شروع گفتگو جدا نشان داده شده است."""
-    raw = text or ''
+    from .llm import clean_for_user
+
+    raw = clean_for_user(text)
     if asks_who_assistant(question):
         return raw.strip()
     pattern = _INTRO.get(language) or _INTRO['fa']

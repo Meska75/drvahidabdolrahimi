@@ -1,3 +1,4 @@
+import html
 import logging
 import re
 
@@ -79,10 +80,33 @@ def _plain_text(value):
 
 def strip_thinking(text):
     """بلوک فکر مدل را از متن قابل‌نمایش جدا می‌کند."""
-    cleaned = text or ''
+    cleaned = html.unescape(text or '')
     cleaned = re.sub(r'<think>.*?</think>', '', cleaned, flags=re.I | re.S)
     cleaned = re.sub(r'<thinking>.*?</thinking>', '', cleaned, flags=re.I | re.S)
+    # گاهی تگ شروع نمی‌آید و فقط تا </think> فکر مدل در متن است
+    cleaned = re.sub(r'^.*?</think>', '', cleaned, count=1, flags=re.I | re.S)
+    cleaned = re.sub(r'^.*?</thinking>', '', cleaned, count=1, flags=re.I | re.S)
+    cleaned = re.sub(r'</?think>', '', cleaned, flags=re.I)
+    cleaned = re.sub(r'</?thinking>', '', cleaned, flags=re.I)
     return cleaned.strip()
+
+
+def strip_markup(text):
+    """علامت مارک‌داون و تگ HTML را برمی‌دارد تا بیمار فقط متن ببیند."""
+    cleaned = text or ''
+    cleaned = re.sub(r'<br\s*/?>', '\n', cleaned, flags=re.I)
+    cleaned = re.sub(r'</p\s*>', '\n', cleaned, flags=re.I)
+    cleaned = re.sub(r'<[^>\n]+>', '', cleaned)
+    cleaned = re.sub(r'\*\*(.+?)\*\*', r'\1', cleaned, flags=re.S)
+    cleaned = re.sub(r'__(.+?)__', r'\1', cleaned, flags=re.S)
+    cleaned = re.sub(r'`([^`]+)`', r'\1', cleaned)
+    cleaned = re.sub(r'^#{1,6}\s+', '', cleaned, flags=re.M)
+    cleaned = cleaned.replace('**', '').replace('__', '')
+    return cleaned.strip()
+
+
+def clean_for_user(text):
+    return strip_markup(strip_thinking(text))
 
 
 def looks_like_reasoning_trace(text):
@@ -106,7 +130,7 @@ def looks_like_reasoning_trace(text):
 
 
 def _visible_piece(value):
-    text = strip_thinking(_plain_text(value))
+    text = clean_for_user(_plain_text(value))
     if not text or looks_like_reasoning_trace(text):
         return ''
     return text

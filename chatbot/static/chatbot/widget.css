@@ -10,9 +10,12 @@
     right: 24px;
     left: auto;
     bottom: 88px;
-    min-width: 56px;
-    height: 56px;
-    padding: 0 16px;
+    min-width: 0;
+    height: 44px;
+    box-sizing: border-box;
+    padding-block: 4px;
+    padding-inline-start: 4px;
+    padding-inline-end: 14px;
     border: none;
     border-radius: 999px;
     background: linear-gradient(135deg, #0f766e, #0891b2);
@@ -21,17 +24,29 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     box-shadow: 0 4px 20px rgba(15, 118, 110, 0.45);
+    overflow: hidden;
 }
 
-.dr-chatbot-launcher i {
-    font-size: 1.2rem;
+.dr-chatbot-launcher-anim,
+.dr-chatbot-launcher-anim dotlottie-wc {
+    display: block;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    pointer-events: none;
+}
+
+/* طرح داخل فایل کمی پایین‌تر از وسط بوم است */
+.dr-chatbot-launcher-anim {
+    transform: translateY(-3px);
 }
 
 .dr-chatbot-launcher-label {
     font-size: 0.85rem;
     font-weight: 600;
+    line-height: 1;
 }
 
 .dr-chatbot-panel {
@@ -39,7 +54,7 @@
     z-index: 9996;
     right: 24px;
     left: auto;
-    bottom: 156px;
+    bottom: 148px;
     width: 380px;
     max-width: calc(100vw - 32px);
     height: 520px;
@@ -220,9 +235,17 @@
         left: auto;
         bottom: calc(92px + env(safe-area-inset-bottom, 0px));
         padding: 0;
-        width: 54px;
-        min-width: 54px;
-        height: 54px;
+        width: 44px;
+        min-width: 44px;
+        height: 44px;
+        gap: 0;
+    }
+
+    .dr-chatbot-launcher-anim,
+    .dr-chatbot-launcher-anim dotlottie-wc {
+        width: 36px;
+        height: 36px;
+        flex-basis: 36px;
     }
 
     .dr-chatbot-launcher-label {

@@ -56,6 +56,7 @@
     var input = document.getElementById('drChatbotInput');
 
     launcher.querySelector('.dr-chatbot-launcher-label').textContent = copy.launcher;
+    launcher.setAttribute('aria-label', copy.launcher);
     root.querySelector('.dr-chatbot-title').textContent = copy.title;
     root.querySelector('.dr-chatbot-sub').textContent = copy.sub;
     closer.setAttribute('aria-label', copy.close);

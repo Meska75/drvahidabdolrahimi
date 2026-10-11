@@ -47,6 +47,47 @@ class BotDetectTests(TestCase):
         self.assertTrue(token_is_valid(token))
 
 
+class ReasoningTraceTests(TestCase):
+    def test_english_planning_is_not_an_answer(self):
+        from chatbot.engine.llm import _text_from_chat_json, looks_like_reasoning_trace
+
+        trace = (
+            '**Exploring vision phenomena**\n\n'
+            'We can discuss possible causes of vision changes. '
+            'I think it is important to recommend an in-person exam. '
+            'I need to avoid giving a diagnosis.'
+        )
+        self.assertTrue(looks_like_reasoning_trace(trace))
+        body = {'choices': [{'message': {
+            'content': trace,
+            'reasoning_content': trace,
+        }}]}
+        self.assertEqual(_text_from_chat_json(body), '')
+
+    def test_persian_answer_is_kept_when_reasoning_is_separate(self):
+        from chatbot.engine.llm import _text_from_chat_json
+
+        answer = (
+            'هاله خاکستری وسط دید علت‌های مختلفی دارد و از اینجا تشخیص قطعی ممکن نیست. '
+            'برای بررسی شبکیه باید معاینه حضوری انجام شود.'
+        )
+        body = {'choices': [{'message': {
+            'content': answer,
+            'reasoning_content': '**Evaluating causes of halos** I think about cataracts.',
+        }}]}
+        self.assertEqual(_text_from_chat_json(body), answer)
+
+    def test_think_tags_are_removed(self):
+        from chatbot.engine.llm import _text_from_chat_json
+
+        body = {'choices': [{'message': {
+            'content': '<think>plan the answer in English</think>معاینه حضوری لازم است و تشخیص قطعی داده نمی‌شود.',
+        }}]}
+        text = _text_from_chat_json(body)
+        self.assertNotIn('think', text.lower())
+        self.assertIn('معاینه حضوری', text)
+
+
 class ReplyShapeTests(TestCase):
     def test_repeated_intro_is_removed(self):
         from chatbot.engine.chat import iter_visible, visible_reply

@@ -1,4 +1,6 @@
 import logging
+import re
+
 from chatbot.services.secrets import decrypt_secret
 
 logger = logging.getLogger('chatbot')
@@ -63,7 +65,10 @@ def _plain_text(value):
     if isinstance(value, list):
         return ''.join(_plain_text(item) for item in value)
     if isinstance(value, dict):
-        for key in ('text', 'content', 'value', 'output_text', 'reasoning_content'):
+        kind = str(value.get('type') or '')
+        if kind in ('reasoning', 'thinking', 'reasoning_content'):
+            return ''
+        for key in ('text', 'content', 'value', 'output_text'):
             if key in value and value[key] not in (None, ''):
                 found = _plain_text(value[key])
                 if found.strip():
@@ -72,7 +77,43 @@ def _plain_text(value):
     return ''
 
 
+def strip_thinking(text):
+    """بلوک فکر مدل را از متن قابل‌نمایش جدا می‌کند."""
+    cleaned = text or ''
+    cleaned = re.sub(r'<think>.*?</think>', '', cleaned, flags=re.I | re.S)
+    cleaned = re.sub(r'<thinking>.*?</thinking>', '', cleaned, flags=re.I | re.S)
+    return cleaned.strip()
+
+
+def looks_like_reasoning_trace(text):
+    """متن برنامه‌ریزی انگلیسی مدل است، نه جواب بیمار."""
+    raw = (text or '').strip()
+    if not raw:
+        return False
+    arabic = len(re.findall(r'[\u0600-\u06FF]', raw))
+    latin = len(re.findall(r'[A-Za-z]', raw))
+    if arabic >= 40:
+        return False
+    lowered = raw.lower()
+    cues = (
+        'i think', 'i need', "i'm ", 'i am considering', 'we can discuss',
+        'the user', 'i should', 'i want to', 'exploring ', 'evaluating ',
+        'proposing ', 'identifying ',
+    )
+    cue_hit = any(cue in lowered for cue in cues)
+    bold_heads = len(re.findall(r'\*\*[A-Za-z][^*]{2,80}\*\*', raw))
+    return latin > 80 and (cue_hit or bold_heads >= 1)
+
+
+def _visible_piece(value):
+    text = strip_thinking(_plain_text(value))
+    if not text or looks_like_reasoning_trace(text):
+        return ''
+    return text
+
+
 def _text_from_chat_json(body):
+    """فقط جواب نهایی. فکر درونی مدل، حتی اگر در فیلد reasoning باشد، برنمی‌گردد."""
     if not isinstance(body, dict):
         return ''
     choices = body.get('choices') or []
@@ -80,17 +121,18 @@ def _text_from_chat_json(body):
         message = choices[0].get('message') or {}
         if not isinstance(message, dict):
             message = {}
+        delta = choices[0].get('delta') if isinstance(choices[0].get('delta'), dict) else {}
         for candidate in (
             message.get('content'),
-            (choices[0].get('delta') or {}).get('content') if isinstance(choices[0].get('delta'), dict) else None,
+            delta.get('content') if isinstance(delta, dict) else None,
             message.get('reasoning_content'),
             message.get('reasoning'),
         ):
-            text = _plain_text(candidate).strip()
+            text = _visible_piece(candidate)
             if text:
                 return text
     for key in ('output_text', 'output', 'content'):
-        text = _plain_text(body.get(key)).strip()
+        text = _visible_piece(body.get(key))
         if text:
             return text
     return ''
@@ -182,33 +224,79 @@ def complete_text(connection, messages):
     prepared = _to_openai_messages(messages)
     max_tokens = connection.max_tokens or 800
     temperature = connection.temperature if connection.temperature is not None else 0.3
+    # فکر کردن مدل را خاموش می‌کنیم تا به‌جای جواب، متن انگلیسی برنامه‌ریزی نیاید
+    thinking_off = {
+        'extra_body': {
+            'enable_thinking': False,
+            'chat_template_kwargs': {'enable_thinking': False},
+        },
+    }
     attempts = [
-        {'temperature': temperature, 'max_tokens': max_tokens},
-        {'temperature': temperature, 'max_completion_tokens': max(max_tokens, 2000)},
-        {},
+        {'messages': prepared, 'temperature': temperature, 'max_tokens': max_tokens, **thinking_off},
+        {
+            'messages': prepared,
+            'temperature': temperature,
+            'max_completion_tokens': max(max_tokens, 2000),
+            **thinking_off,
+        },
+        {'messages': prepared, 'temperature': temperature, 'max_tokens': max_tokens},
+        {
+            'messages': prepared + [{
+                'role': 'user',
+                'content': (
+                    'فقط پاسخ نهایی را به زبان بیمار بنویس. '
+                    'فکر درونی، عنوان انگلیسی و برنامه‌ریزی ننویس. تشخیص قطعی و دارو نده.'
+                ),
+            }],
+            'temperature': temperature,
+            'max_completion_tokens': max(max_tokens, 2000),
+            **thinking_off,
+        },
     ]
-    last_error = 'پاسخ مدل خالی بود.'
-    for extra in attempts:
+    def read_attempt(extra):
         kwargs = {
             'model': connection.model_name.strip(),
-            'messages': prepared,
+            'messages': extra['messages'],
         }
-        kwargs.update(extra)
+        for key, value in extra.items():
+            if key != 'messages':
+                kwargs[key] = value
+        raw = client.chat.completions.with_raw_response.create(**kwargs)
+        response = raw.http_response
         try:
-            raw = client.chat.completions.with_raw_response.create(**kwargs)
-            response = raw.http_response
-            try:
-                body = response.json()
-            except Exception:
-                body = {}
-            if response.status_code >= 400:
-                err = body.get('error') if isinstance(body, dict) else None
-                last_error = _plain_text((err or {}).get('message') if isinstance(err, dict) else err) or str(response.status_code)
-                continue
-            text = _text_from_chat_json(body)
-            if text:
-                return text
-            last_error = 'پاسخ مدل متن قابل نمایش نداشت.'
+            body = response.json()
+        except Exception:
+            body = {}
+        if response.status_code >= 400:
+            err = body.get('error') if isinstance(body, dict) else None
+            message = _plain_text((err or {}).get('message') if isinstance(err, dict) else err) or str(response.status_code)
+            return 'error', message
+        text = _text_from_chat_json(body)
+        if text:
+            return 'ok', text
+        return 'empty', 'پاسخ مدل متن قابل نمایش نداشت.'
+
+    last_error = 'پاسخ مدل خالی بود.'
+    saw_empty_answer = False
+    for extra in attempts[:-1]:
+        try:
+            kind, payload = read_attempt(extra)
+        except Exception as exc:
+            last_error = str(exc)
+            logger.exception('خواندن پاسخ مدل ناموفق')
+            continue
+        if kind == 'ok':
+            return payload
+        last_error = payload
+        if kind == 'empty':
+            saw_empty_answer = True
+            break
+    if saw_empty_answer or last_error:
+        try:
+            kind, payload = read_attempt(attempts[-1])
+            if kind == 'ok':
+                return payload
+            last_error = payload
         except Exception as exc:
             last_error = str(exc)
             logger.exception('خواندن پاسخ مدل ناموفق')

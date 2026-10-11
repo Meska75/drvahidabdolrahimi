@@ -1,7 +1,5 @@
 import re
 
-from .safety import SAFETY_POLICY
-
 DEFAULT_PROMPTS = {
     'fa': (
         'تو {name} هستی. کوتاه و مؤدب جواب بده. '
@@ -63,10 +61,17 @@ KNOWLEDGE_INSTRUCTIONS = {
 }
 
 CONTINUITY = {
-    'fa': 'سلام قبلاً گفته شده. خودت را معرفی نکن. مستقیم جواب بده.',
-    'en': 'Do not greet again and do not introduce yourself. Answer directly.',
-    'ar': 'لا تعد التحية ولا تعرّف بنفسك. أجب مباشرة.',
-    None: 'Do not greet or introduce yourself. Answer directly.',
+    'fa': 'اگر فقط سلام کرد یک جمله بگو. خودت را معرفی نکن. مستقیم به سؤال جواب بده.',
+    'en': 'If the user only says hello, reply with one short sentence. Do not introduce yourself.',
+    'ar': 'إذا سلّم فقط، أجب بجملة قصيرة. لا تعرّف بنفسك. أجب عن السؤال مباشرة.',
+    None: 'If the user only says hello, reply with one short sentence in their language.',
+}
+
+SAFETY_BRIEF = {
+    'fa': 'دارو تجویز نکن. تشخیص قطعی نده. اورژانس چشمی را به مطب ارجاع بده. تلفن و ساعت را فقط از دانش مطب بگو.',
+    'en': 'Do not prescribe or diagnose. Send eye emergencies to the clinic. Take phone and hours only from the clinic notes.',
+    'ar': 'لا تصف دواء ولا تشخّص. أحل طوارئ العين إلى العيادة. خذ الهاتف والساعات من معلومات العيادة فقط.',
+    None: 'Do not prescribe or diagnose. Send eye emergencies to a clinic.',
 }
 
 _EN_HINTS = {
@@ -128,16 +133,33 @@ def build_system_prompt(profile, language, question=''):
         custom = custom.format(name=name)
 
     mode = profile.knowledge_mode or 'hybrid'
-    mode_text = KNOWLEDGE_INSTRUCTIONS.get(mode, KNOWLEDGE_INSTRUCTIONS['hybrid'])
+    mode_text = {
+        'fa': {
+            'hybrid': 'درباره مطب فقط از دانش مطب بگو. اگر نبود بگو در سایت نیست. علامت بیماری را کوتاه و بدون تشخیص بگو.',
+            'rag_only': 'فقط از دانش مطب جواب بده. اگر نبود بگو ثبت نشده و تماس بگیرند.',
+            'llm_only': 'از دانش عمومی جواب بده و دارو تجویز نکن.',
+        },
+        'en': {
+            'hybrid': 'Use only the clinic notes for this clinic. If missing, say so. For symptoms, be brief and do not diagnose.',
+            'rag_only': 'Answer only from the clinic notes. If missing, say it is not listed.',
+            'llm_only': 'Use general knowledge. Do not prescribe.',
+        },
+        'ar': {
+            'hybrid': 'عن العيادة استخدم معلومات العيادة فقط. إن غابت فقل ذلك. للأعراض أجب باختصار بلا تشخيص.',
+            'rag_only': 'أجب من معلومات العيادة فقط. إن غابت فقل أنها غير مسجلة.',
+            'llm_only': 'استخدم المعرفة العامة ولا تصف دواء.',
+        },
+    }.get(prompt_lang, {}).get(mode) or KNOWLEDGE_INSTRUCTIONS.get(mode, KNOWLEDGE_INSTRUCTIONS['hybrid'])
     lock = LANG_LOCK.get(lang, LANG_LOCK[None])
     continuity = CONTINUITY.get(lang, CONTINUITY[None])
     answer_format = ANSWER_FORMAT.get(lang, ANSWER_FORMAT[None])
+    safety = SAFETY_BRIEF.get(lang, SAFETY_BRIEF[None])
 
     return (
         f'{lock}\n'
-        f'{answer_format}\n'
         f'{continuity}\n'
         f'{custom}\n'
-        f'{mode_text}\n\n'
-        f'{SAFETY_POLICY}'
+        f'{safety}\n'
+        f'{mode_text}\n'
+        f'{answer_format}'
     )

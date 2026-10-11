@@ -110,6 +110,30 @@ class ReasoningTraceTests(TestCase):
         self.assertIn('مشکلات شبکیه', text)
         self.assertIn('علائم هشدار اورژانسی', text)
 
+    def test_plain_persian_answer_is_shown_without_answer_tag(self):
+        from chatbot.engine.llm import _text_from_chat_json
+
+        body = {'choices': [{'message': {
+            'content': 'دکتر وحید عبدالرحیمی جراح و متخصص چشم با فوق تخصص شبکیه است.',
+        }}]}
+        text = _text_from_chat_json(body)
+        self.assertIn('عبدالرحیمی', text)
+        self.assertNotIn('<', text)
+
+    def test_english_rule_dump_is_hidden(self):
+        from chatbot.engine.llm import _text_from_chat_json
+
+        body = {'choices': [{'message': {'content': (
+            '<answer>\n'
+            '* No greetings or self-introduction unless asked.\n'
+            '* Role: clinic assistant.\n'
+            '* Knowledge base: do not invent info.\n'
+            '* Medical Safety: No prescriptions.\n'
+            '* Output Format: Must be inside <answer> ... </answer>\n'
+            '</answer>'
+        )}}]}
+        self.assertEqual(_text_from_chat_json(body), '')
+
 
 class ReplyShapeTests(TestCase):
     def test_repeated_intro_is_removed(self):

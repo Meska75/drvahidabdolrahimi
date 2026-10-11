@@ -6,8 +6,8 @@ from chatbot.services.secrets import decrypt_secret
 
 logger = logging.getLogger('chatbot')
 
-# سقف خروجی. جواب کوتاه است و بودجهٔ بلند فقط فکر مدل را گران می‌کند.
-OUTPUT_TOKEN_CAP = 320
+# مدل گاهی قبل از جواب فکر می‌کند. سقف خیلی کوچک جواب را قطع می‌کرد و کاربر پیام قطعی می‌دید.
+OUTPUT_TOKEN_CAP = 700
 
 
 def build_chat_model(connection):
@@ -123,6 +123,21 @@ def extract_answer(text):
     return strip_markup(match.group(1)).strip()
 
 
+def looks_like_prompt_echo(text):
+    """مدل به‌جای جواب، خلاصهٔ دستورها را به انگلیسی برگردانده است."""
+    raw = (text or '').strip()
+    if not raw:
+        return False
+    if len(re.findall(r'[\u0600-\u06FF]', raw)) >= 40:
+        return False
+    lowered = raw.lower()
+    needles = (
+        'output format', 'knowledge base', 'no greetings', 'self-introduction',
+        'do not invent', 'medical safety', 'must be inside', 'no prescriptions',
+    )
+    return sum(1 for needle in needles if needle in lowered) >= 2
+
+
 def looks_like_reasoning_trace(text):
     """متن برنامه‌ریزی انگلیسی مدل است، نه جواب بیمار."""
     raw = (text or '').strip()
@@ -144,8 +159,10 @@ def looks_like_reasoning_trace(text):
 
 
 def _visible_piece(value):
-    text = extract_answer(_plain_text(value))
-    if not text or looks_like_reasoning_trace(text):
+    raw = _plain_text(value)
+    boxed = extract_answer(raw)
+    text = boxed or clean_for_user(raw)
+    if not text or looks_like_reasoning_trace(text) or looks_like_prompt_echo(text):
         return ''
     return text
 

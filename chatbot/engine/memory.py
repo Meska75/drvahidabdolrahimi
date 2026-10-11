@@ -57,7 +57,7 @@ def _clip(text, limit):
 def messages_for_model(system_text, rag_context, history_messages, question, max_tokens=800):
     """پرامپت سیستم + تاریخچهٔ کوتاه + سؤال فعلی. سقف تاریخچه حدود ۸۰۰ توکن است."""
     system_parts = [system_text]
-    context = _clip((rag_context or '').strip(), 1400)
+    context = _clip((rag_context or '').strip(), 2600)
     if context:
         system_parts.append('دانش مطب:\n' + context)
 

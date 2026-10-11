@@ -338,10 +338,10 @@ def _service_block(language, question):
         line = f'- {kind}: {title}' + (f' — {desc}' if desc else '')
         lines.append(line)
         titles.append(f'- {kind}: {title}')
-    picked = _matching(lines, question) or titles[:8]
+    picked = _matching(lines, question, limit=12) or titles[:12]
     if not picked:
         return ''
-    return ('خدمات این مطب:\n' + '\n'.join(picked))[:900]
+    return ('خدمات این مطب:\n' + '\n'.join(picked))[:1600]
 
 
 def _doctor_block(language):
@@ -350,7 +350,7 @@ def _doctor_block(language):
     parts = []
     about = _about_page_text(language)
     if about:
-        parts.append('معرفی پزشک:\n' + about)
+        parts.append('معرفی پزشک:\n' + about[:1400])
     education = []
     for item in DoctorEducation.objects.all().order_by('sort_order', 'id'):
         degree = _field(item, 'degree', language)
@@ -444,36 +444,36 @@ def _blog_block(language, question):
     return 'مقالات:\n' + '\n'.join(picked)
 
 
-def live_site_context(profile, language, question, limit=1400):
-    """فقط بخش مرتبط با سؤال. علامت عمومی فقط تماس کوتاه مطب را می‌گیرد."""
+def live_site_context(profile, language, question, limit=2600):
+    """بخش مرتبط کامل‌تر می‌آید. معرفی کوتاه پزشک و تماس مطب در بقیهٔ سؤال‌ها هم هست."""
     language = language if language in ('fa', 'en', 'ar') else 'fa'
     sources = set(answer_sources(profile))
     topics = question_topics(question)
     blocks = []
-    if 'doctor' in sources and 'doctor' in topics:
-        block = _doctor_block(language)
-        if block:
-            blocks.append(block[:800])
-    if 'services' in sources and 'services' in topics:
-        block = _service_block(language, question)
-        if block:
-            blocks.append(block)
-    if 'clinic' in sources and ('clinic' in topics or not topics):
+    if 'clinic' in sources:
         block = _clinic_block(language)
         if block:
-            blocks.append(block[:500])
+            blocks.append(block[:900])
+    if 'doctor' in sources:
+        block = _doctor_block(language)
+        if block:
+            blocks.append(block if 'doctor' in topics else block[:500])
+    if 'services' in sources and ('services' in topics or 'doctor' in topics):
+        block = _service_block(language, question)
+        if block:
+            blocks.append(block if 'services' in topics else block[:600])
     if 'team' in sources and 'team' in topics:
         block = _team_block(language, question)
         if block:
-            blocks.append(block[:400])
+            blocks.append(block[:500])
     if 'faq' in sources and 'faq' in topics:
         block = _faq_block(language, question)
         if block:
-            blocks.append(block[:400])
+            blocks.append(block[:500])
     if 'blog' in sources and 'blog' in topics:
         block = _blog_block(language, question)
         if block:
-            blocks.append(block[:300])
+            blocks.append(block[:400])
     return '\n\n'.join(blocks)[:limit]
 
 

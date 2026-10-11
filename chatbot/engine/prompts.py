@@ -25,19 +25,22 @@ LANG_LOCK = {
 
 ANSWER_FORMAT = {
     'fa': (
-        'حداکثر پنج خط، بدون مقدمه و بدون فکر درونی. '
+        'سؤال ساده را در سه تا پنج خط جواب بده. '
+        'اگر سؤال جزئیات خواست تا حدود دوازده خط، بدون حاشیه و بدون فکر درونی. '
         'هیچ متنی بیرون این برچسب ننویس:\n<answer>\nپاسخ\n</answer>'
     ),
     'en': (
-        'At most five lines. No preamble and no reasoning. '
+        'A simple question needs three to five lines. '
+        'If it asks for detail, use up to about twelve lines, with no filler and no reasoning. '
         'Write nothing outside this tag:\n<answer>\nreply\n</answer>'
     ),
     'ar': (
-        'خمس أسطر كحد أقصى، بلا مقدمة وبلا تفكير داخلي. '
+        'السؤال البسيط في ثلاثة إلى خمسة أسطر. '
+        'إذا طلب تفصيلاً فحتى نحو اثني عشر سطراً، بلا حشو وبلا تفكير داخلي. '
         'لا تكتب شيئاً خارج هذه العلامة:\n<answer>\nالرد\n</answer>'
     ),
     None: (
-        'At most five lines, in the user\'s language. '
+        'Three to five lines for a simple question, up to about twelve if it needs detail. '
         'Write nothing outside this tag:\n<answer>\nreply\n</answer>'
     ),
 }
@@ -135,7 +138,7 @@ def build_system_prompt(profile, language, question=''):
     mode = profile.knowledge_mode or 'hybrid'
     mode_text = {
         'fa': {
-            'hybrid': 'درباره مطب فقط از دانش مطب بگو. اگر نبود بگو در سایت نیست. علامت بیماری را کوتاه و بدون تشخیص بگو.',
+            'hybrid': 'درباره مطب فقط از دانش مطب بگو و جزئیات همان متن را بیاور. اگر نبود بگو در سایت نیست. علامت بیماری را بدون تشخیص قطعی توضیح بده.',
             'rag_only': 'فقط از دانش مطب جواب بده. اگر نبود بگو ثبت نشده و تماس بگیرند.',
             'llm_only': 'از دانش عمومی جواب بده و دارو تجویز نکن.',
         },

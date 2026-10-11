@@ -7,7 +7,7 @@ from chatbot.services.secrets import decrypt_secret
 logger = logging.getLogger('chatbot')
 
 # مدل گاهی قبل از جواب فکر می‌کند. سقف خیلی کوچک جواب را قطع می‌کرد و کاربر پیام قطعی می‌دید.
-OUTPUT_TOKEN_CAP = 700
+OUTPUT_TOKEN_CAP = 1000
 
 
 def build_chat_model(connection):

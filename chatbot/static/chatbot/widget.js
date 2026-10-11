@@ -287,8 +287,12 @@
                     });
                     if (!result.done) return read();
                     finished = true;
-                    if (!queue && !shown) fail();
-                    else pump();
+                    if (queue) {
+                        shown += queue;
+                        queue = '';
+                        paint();
+                    }
+                    if (!shown) fail();
                 });
             }
             return read();

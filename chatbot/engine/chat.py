@@ -1,7 +1,7 @@
 import logging
 
 from .fallback import fallback_text
-from .llm import build_chat_model
+from .llm import build_chat_model, complete_text
 from .memory import DjangoConversationHistory, messages_for_model
 from .prompts import build_system_prompt
 from .rag import retrieve_context
@@ -56,34 +56,13 @@ def answer_question(profile, language, question, history=None, conversation=None
     if early:
         return early, False, ''
     try:
-        result = llm.invoke(packed)
-        text = (getattr(result, 'content', None) or '').strip()
+        text = complete_text(profile.active_llm, packed)
         if not text:
             return polite, True, 'پاسخ مدل خالی بود.'
         return text, False, ''
     except Exception as exc:
         logger.exception('خطا در فراخوانی مدل چت')
         return polite, True, str(exc)
-
-
-def _chunk_text(chunk):
-    """متن قابل نمایش از پاسخ مدل؛ بعضی مدل‌ها به‌جای رشته، لیست می‌فرستند."""
-    content = getattr(chunk, 'content', None)
-    if isinstance(content, str):
-        return content
-    if isinstance(content, list):
-        parts = []
-        for block in content:
-            if isinstance(block, str):
-                parts.append(block)
-            elif isinstance(block, dict):
-                parts.append(str(block.get('text') or block.get('content') or ''))
-        return ''.join(parts)
-    return ''
-
-
-def _invoke_text(llm, messages):
-    return _chunk_text(llm.invoke(messages)).strip()
 
 
 def stream_question(profile, language, question, history=None, conversation=None):
@@ -121,22 +100,16 @@ def stream_question(profile, language, question, history=None, conversation=None
         return
 
     yield ('status', 'write', '')
-    text = ''
-    error = prepare_error
     try:
-        text = _invoke_text(llm, packed)
+        text = complete_text(profile.active_llm, packed)
     except Exception as exc:
         logger.exception('خطا در فراخوانی مدل چت')
-        error = str(exc)
-        try:
-            from langchain_core.messages import HumanMessage
-            system = getattr(packed[0], 'content', '') if packed else ''
-            text = _invoke_text(llm, [HumanMessage(content=f'{system}\n\n{question}')])
-            error = ''
-        except Exception as exc2:
-            logger.exception('تلاش دوم مدل چت ناموفق')
-            error = str(exc2)
-    if not text:
-        yield ('replace', polite, error or 'پاسخ مدل خالی بود.')
+        yield ('replace', polite, prepare_error or str(exc))
         return
-    yield ('delta', text, '')
+    if not text:
+        yield ('replace', polite, prepare_error or 'پاسخ مدل خالی بود.')
+        return
+    # تکه‌تکه تا در صفحه یکجا ظاهر نشود
+    step = 24
+    for start in range(0, len(text), step):
+        yield ('delta', text[start:start + step], '')

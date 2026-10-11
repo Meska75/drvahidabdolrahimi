@@ -795,7 +795,9 @@ a.floating-card:hover {
     color: var(--text-dark) !important;
     margin-bottom: 8px !important;
     text-transform: none !important;
-    /* عنوان: حداکثر ۲ خط */
+    line-height: 1.45;
+    /* عنوان: همیشه دو خط تا ارتفاع کارت‌ها یکی بماند */
+    min-height: calc(1.45em * 2);
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -809,7 +811,8 @@ a.floating-card:hover {
     line-height: 1.75;
     flex: 1;
     text-align: justify;
-    /* متن خلاصه: حداکثر ۳ خط */
+    /* متن خلاصه: همیشه سه خط */
+    min-height: calc(1.75em * 3);
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -855,9 +858,21 @@ a.floating-card:hover {
     height: 100%;
 }
 
-/* دکمه‌های nav کاروسل */
+/* دکمه‌های nav کاروسل — جفت دکمه‌ها وسط نوار */
+.srv-carousel .owl-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin-top: 18px;
+    text-align: center;
+}
+
 .srv-carousel .owl-nav button {
     width: 40px; height: 40px;
+    margin: 0 !important;
+    position: static;
     border-radius: 50% !important;
     background: #fff !important;
     border: 1px solid var(--border) !important;
@@ -873,10 +888,14 @@ a.floating-card:hover {
     border-color: var(--primary) !important;
 }
 
-.srv-carousel .owl-nav .owl-prev { margin-left: 6px; }
-.srv-carousel .owl-nav .owl-next { margin-right: 6px; }
-
 /* نقطه‌های dots */
+.srv-carousel .owl-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 12px;
+}
+
 .srv-carousel .owl-dot span {
     background: var(--border) !important;
     transition: background .25s;

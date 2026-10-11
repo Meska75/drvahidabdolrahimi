@@ -28,14 +28,39 @@
             if (!$el.length || !$.fn.owlCarousel) return;
             if ($el.hasClass('owl-loaded')) return;
             if ($el.children('.srv-carousel-item').length > 4) {
+                // صفحه فارسی dir=rtl است؛ بدون rtl کارت‌ها بیرون از کادر می‌روند
                 $el.owlCarousel({
-                    loop: true, margin: 20, autoplay: true,
-                    autoplayTimeout: 3500, autoplayHoverPause: true,
-                    nav: true, dots: true,
+                    rtl: true,
+                    loop: true,
+                    rewind: true,
+                    margin: 20,
+                    autoplay: true,
+                    autoplayTimeout: 3500,
+                    autoplayHoverPause: true,
+                    nav: true,
+                    dots: true,
                     navText: ['<i class="fa fa-chevron-right"></i>', '<i class="fa fa-chevron-left"></i>'],
                     smartSpeed: 700,
                     responsive: { 0: { items: 1 }, 576: { items: 2 }, 992: { items: 3 }, 1200: { items: 4 } }
                 });
+                $el.trigger('play.owl.autoplay', [3500]);
+                equalizeSrvCards($el);
+                $el.on('resized.owl.carousel', function () {
+                    equalizeSrvCards($el);
+                });
+            }
+        }
+
+        /* ارتفاع همه کارت‌های یک نوار را با بلندترین کارت یکی می‌کند */
+        function equalizeSrvCards($el) {
+            var $cards = $el.find('.srv-card');
+            $cards.css('height', 'auto');
+            var max = 0;
+            $cards.each(function () {
+                max = Math.max(max, this.offsetHeight);
+            });
+            if (max) {
+                $cards.css('height', max + 'px');
             }
         }
         if (window.whenVendor) {

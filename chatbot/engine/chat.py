@@ -2,7 +2,7 @@ import logging
 import re
 
 from .fallback import fallback_text
-from .llm import build_chat_model, complete_text, iter_completion_text
+from .llm import build_chat_model, complete_text
 from .memory import DjangoConversationHistory, messages_for_model
 from .prompts import build_system_prompt
 from .rag import retrieve_context
@@ -128,27 +128,11 @@ def answer_question(profile, language, question, history=None, conversation=None
         return polite, True, str(exc)
 
 
-def _model_pieces(connection, packed):
-    produced = False
-    try:
-        for piece in iter_completion_text(connection, packed):
-            if piece:
-                produced = True
-                yield piece
-    except Exception:
-        logger.exception('استریم مدل قطع شد')
-        if produced:
-            return
-        raise
-    if produced:
-        return
-    fallback = complete_text(connection, packed)
-    if fallback:
-        yield fallback
-
-
 def stream_question(profile, language, question, history=None, conversation=None):
-    """جواب مدل را همان‌طور که نوشته می‌شود برمی‌گرداند."""
+    """جواب کامل مدل را می‌گیرد. نمایش تکه‌تکه در صفحه انجام می‌شود.
+
+    استریم خود درگاه لیارا اتصال را نمی‌بندد و سرویس جواب را ناتمام قطع می‌کند.
+    """
     language = language if language in ('fa', 'en', 'ar') else 'fa'
     polite = fallback_text(language)
     llm = build_chat_model(profile.active_llm)
@@ -179,13 +163,12 @@ def stream_question(profile, language, question, history=None, conversation=None
 
     yield ('status', 'write', '')
     try:
-        produced = False
-        for piece in iter_visible(_model_pieces(profile.active_llm, packed), language, question):
-            produced = True
-            yield ('delta', piece, '')
-        if not produced:
-            yield ('replace', polite, prepare_error or 'پاسخ مدل خالی بود.')
+        text = visible_reply(complete_text(profile.active_llm, packed), language, question)
     except Exception as exc:
         logger.exception('خطا در فراخوانی مدل چت')
-        if not produced:
-            yield ('replace', polite, prepare_error or str(exc))
+        yield ('replace', polite, prepare_error or str(exc))
+        return
+    if not text:
+        yield ('replace', polite, prepare_error or 'پاسخ مدل خالی بود.')
+        return
+    yield ('delta', text, '')

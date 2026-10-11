@@ -1,4 +1,5 @@
 import json
+import logging
 
 from django.http import JsonResponse, StreamingHttpResponse
 from django.views.decorators.http import require_POST, require_GET
@@ -16,6 +17,8 @@ from chatbot.services.guest_session import (
     get_or_create_guest_conversation,
     guest_id_from_request,
 )
+
+logger = logging.getLogger('chatbot')
 
 
 def _language_from_path(path):
@@ -212,26 +215,34 @@ def stream_message(request):
         full = []
         used_fallback = False
         internal = ''
-        if blocked:
-            yield sse({'status': 'write'})
-            yield sse({'token': blocked, 'reset': True})
-            full.append(blocked)
-            used_fallback = True
-        else:
-            for kind, payload, err in stream_question(
-                profile, language, question, conversation=conv,
-            ):
-                if err:
-                    internal = err
-                if kind == 'status':
-                    yield sse({'status': payload})
-                elif kind == 'replace':
-                    used_fallback = True
-                    full = [payload]
-                    yield sse({'token': payload, 'reset': True})
-                elif kind == 'delta' and payload:
-                    full.append(payload)
-                    yield sse({'token': payload})
+        try:
+            if blocked:
+                yield sse({'status': 'write'})
+                yield sse({'token': blocked, 'reset': True})
+                full.append(blocked)
+                used_fallback = True
+            else:
+                for kind, payload, err in stream_question(
+                    profile, language, question, conversation=conv,
+                ):
+                    if err:
+                        internal = err
+                    if kind == 'status':
+                        yield sse({'status': payload})
+                    elif kind == 'replace':
+                        used_fallback = True
+                        full = [payload]
+                        yield sse({'token': payload, 'reset': True})
+                    elif kind == 'delta' and payload:
+                        full.append(payload)
+                        yield sse({'token': payload})
+        except Exception as exc:
+            logger.exception('جریان پاسخ چت قطع شد')
+            internal = str(exc)
+            if not full:
+                used_fallback = True
+                full.append(fallback_text(language))
+                yield sse({'token': full[0], 'reset': True})
         text = ''.join(full).strip()
         if not text:
             text = fallback_text(language)

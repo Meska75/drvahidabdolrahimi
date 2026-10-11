@@ -82,8 +82,16 @@ def _chunk_text(chunk):
     return ''
 
 
+def _invoke_text(llm, messages):
+    return _chunk_text(llm.invoke(messages)).strip()
+
+
 def stream_question(profile, language, question, history=None, conversation=None):
-    """جریان پاسخ: وضعیت جستجو، سپس تکه‌های متن. اگر استریم خالی بود یک بار پاسخ کامل می‌گیرد."""
+    """پاسخ را یکجا از مدل می‌گیرد و تکه‌تکه برمی‌گرداند تا در صفحه کم‌کم دیده شود.
+
+    استریم خام درگاه اینجا استفاده نمی‌شود؛ روی لیارا اتصال را باز نگه می‌داشت
+    و کاربر فقط سه‌نقطه می‌دید.
+    """
     language = language if language in ('fa', 'en', 'ar') else 'fa'
     polite = fallback_text(language)
     llm = build_chat_model(profile.active_llm)
@@ -92,38 +100,43 @@ def stream_question(profile, language, question, history=None, conversation=None
         return
 
     yield ('status', 'search', '')
-    packed, early = _llm_messages(
-        profile, language, question,
-        conversation=conversation, history=history,
-    )
+    try:
+        packed, early = _llm_messages(
+            profile, language, question,
+            conversation=conversation, history=history,
+        )
+    except Exception as exc:
+        logger.exception('آماده‌سازی پیام چت ناموفق')
+        packed = messages_for_model(
+            build_system_prompt(profile, language), '', [], question,
+        )
+        early = None
+        prepare_error = str(exc)
+    else:
+        prepare_error = ''
+
     if early:
         yield ('status', 'write', '')
         yield ('delta', early, '')
         return
 
     yield ('status', 'write', '')
-    got = []
+    text = ''
+    error = prepare_error
     try:
-        for chunk in llm.stream(packed):
-            piece = _chunk_text(chunk)
-            if piece:
-                got.append(piece)
-                yield ('delta', piece, '')
+        text = _invoke_text(llm, packed)
     except Exception as exc:
-        logger.exception('خطا در استریم مدل چت')
-        if not ''.join(got).strip():
-            yield ('replace', polite, str(exc))
-        return
-
-    if ''.join(got).strip():
-        return
-    try:
-        text = _chunk_text(llm.invoke(packed)).strip()
-    except Exception as exc:
-        logger.exception('خطا در دریافت پاسخ کامل')
-        yield ('replace', polite, str(exc))
-        return
+        logger.exception('خطا در فراخوانی مدل چت')
+        error = str(exc)
+        try:
+            from langchain_core.messages import HumanMessage
+            system = getattr(packed[0], 'content', '') if packed else ''
+            text = _invoke_text(llm, [HumanMessage(content=f'{system}\n\n{question}')])
+            error = ''
+        except Exception as exc2:
+            logger.exception('تلاش دوم مدل چت ناموفق')
+            error = str(exc2)
     if not text:
-        yield ('replace', polite, 'پاسخ مدل خالی بود.')
+        yield ('replace', polite, error or 'پاسخ مدل خالی بود.')
         return
     yield ('delta', text, '')

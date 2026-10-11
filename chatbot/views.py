@@ -9,7 +9,7 @@ from chatbot.engine.fallback import fallback_text
 from chatbot.engine.greetings import ensure_stored_greeting, greeting_text
 from chatbot.engine.memory import DjangoConversationHistory
 from chatbot.models import ChatbotProfile, ChatMessage
-from chatbot.protect.bot_detect import honeypot_filled, issue_token, token_is_too_fast, token_is_valid
+from chatbot.protect.bot_detect import honeypot_filled, issue_token, token_is_valid
 from chatbot.protect.rate_limit import allow_message, client_ip
 from chatbot.services.guest_session import (
     attach_guest_cookie,
@@ -133,10 +133,9 @@ def clear_chat(request):
 def _guard(request, data, profile):
     language = data.get('language') or 'fa'
     polite = fallback_text(language if language in ('fa', 'en', 'ar') else 'fa')
-    if honeypot_filled(data):
-        return polite
     token = data.get('token') or ''
-    if not token_is_valid(token) or token_is_too_fast(token):
+    # توکن صفحه باید معتبر باشد. عجلهٔ کاربر دیگر به‌جای جواب، متن «آنلاین نیست» نمی‌سازد.
+    if not token_is_valid(token):
         return polite
     ip = client_ip(request)
     if not allow_message(profile, ip):

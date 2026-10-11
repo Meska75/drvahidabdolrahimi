@@ -21,6 +21,8 @@ def build_chat_model(connection):
         'temperature': connection.temperature or 0.3,
         'timeout': connection.timeout_seconds or 45,
         'max_tokens': connection.max_tokens or 800,
+        # استریم بعضی درگاه‌ها مثل لیارا قطع نمی‌شود و چت روی سه‌نقطه می‌ماند
+        'disable_streaming': True,
     }
     if connection.provider == 'azure' and connection.azure_api_version:
         kwargs['default_query'] = {'api-version': connection.azure_api_version}

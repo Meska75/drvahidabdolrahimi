@@ -203,28 +203,41 @@ def stream_message(request):
     conv, guest_id = get_or_create_guest_conversation(request, profile, language)
     ChatMessage.objects.create(conversation=conv, role='user', content=question)
 
+    def sse(payload):
+        return f'data: {json.dumps(payload, ensure_ascii=False)}\n\n'
+
     def event_stream():
+        # چند بایت اضافه تا پروکسی همان اول وضعیت را بفرستد و منتظر آخر جواب نماند
+        yield ':' + (' ' * 2048) + '\n\n'
         full = []
         used_fallback = False
         internal = ''
         if blocked:
-            yield f'data: {json.dumps({"token": blocked}, ensure_ascii=False)}\n\n'
+            yield sse({'status': 'write'})
+            yield sse({'token': blocked, 'reset': True})
             full.append(blocked)
             used_fallback = True
         else:
-            for piece, fb, err in stream_question(
+            for kind, payload, err in stream_question(
                 profile, language, question, conversation=conv,
             ):
                 if err:
                     internal = err
-                if fb:
+                if kind == 'status':
+                    yield sse({'status': payload})
+                elif kind == 'replace':
                     used_fallback = True
-                    full = [piece]
-                    yield f'data: {json.dumps({"token": piece, "reset": True}, ensure_ascii=False)}\n\n'
-                else:
-                    full.append(piece)
-                    yield f'data: {json.dumps({"token": piece}, ensure_ascii=False)}\n\n'
-        text = ''.join(full)
+                    full = [payload]
+                    yield sse({'token': payload, 'reset': True})
+                elif kind == 'delta' and payload:
+                    full.append(payload)
+                    yield sse({'token': payload})
+        text = ''.join(full).strip()
+        if not text:
+            text = fallback_text(language)
+            used_fallback = True
+            internal = internal or 'پاسخ خالی بود.'
+            yield sse({'token': text, 'reset': True})
         ChatMessage.objects.create(
             conversation=conv,
             role='assistant',
@@ -232,9 +245,9 @@ def stream_message(request):
             used_fallback=used_fallback,
             internal_error=internal,
         )
-        yield f'data: {json.dumps({"done": True, "token": issue_token()})}\n\n'
+        yield sse({'done': True, 'session': issue_token()})
 
     response = StreamingHttpResponse(event_stream(), content_type='text/event-stream')
-    response['Cache-Control'] = 'no-cache'
+    response['Cache-Control'] = 'no-cache, no-transform'
     response['X-Accel-Buffering'] = 'no'
     return attach_guest_cookie(response, guest_id)

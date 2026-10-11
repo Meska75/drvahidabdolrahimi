@@ -8,6 +8,9 @@
             title: 'دستیار مطب',
             sub: 'پاسخ‌ها جنبه آموزشی دارند و جایگزین معاینه نیستند.',
             placeholder: 'پیام خود را بنویسید…',
+            statusSearch: 'در حال بررسی اطلاعات مطب…',
+            statusWrite: 'در حال نوشتن پاسخ…',
+            failed: 'پاسخ آماده نشد. لطفاً یک‌بار دیگر بفرستید.',
             close: 'بستن',
             clear: 'پاک کردن گفتگو',
             clearConfirm: 'گفتگوی فعلی پاک شود؟'
@@ -17,6 +20,9 @@
             title: 'Clinic assistant',
             sub: 'Answers are educational and not a medical exam.',
             placeholder: 'Type your message…',
+            statusSearch: 'Checking clinic information…',
+            statusWrite: 'Writing the answer…',
+            failed: 'The reply was not ready. Please send it once more.',
             close: 'Close',
             clear: 'Clear chat',
             clearConfirm: 'Clear this conversation?'
@@ -26,6 +32,9 @@
             title: 'مساعد العيادة',
             sub: 'الإجابات للمعرفة العامة وليست بديلاً عن الفحص.',
             placeholder: 'اكتب رسالتك…',
+            statusSearch: 'جارٍ مراجعة معلومات العيادة…',
+            statusWrite: 'جارٍ كتابة الإجابة…',
+            failed: 'لم يجهز الرد. أعد الإرسال مرة أخرى.',
             close: 'إغلاق',
             clear: 'مسح المحادثة',
             clearConfirm: 'هل تريد مسح هذه المحادثة؟'
@@ -155,13 +164,87 @@
         });
     }
 
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        var text = (input.value || '').trim();
-        if (!text) return;
+    var sending = false;
+
+    function thinkingBubble() {
+        var el = document.createElement('div');
+        el.className = 'dr-chat-bubble assistant dr-chat-pending';
+        el.innerHTML = '<div class="dr-chat-status"></div><div class="dr-chat-dots" aria-hidden="true"><i></i><i></i><i></i></div>';
+        el.querySelector('.dr-chat-status').textContent = copy.statusSearch;
+        messages.appendChild(el);
+        messages.scrollTop = messages.scrollHeight;
+        return el;
+    }
+
+    function setStatus(el, text) {
+        if (!el.classList.contains('dr-chat-pending')) return;
+        var node = el.querySelector('.dr-chat-status');
+        if (node) node.textContent = text;
+    }
+
+    function parseSseBlock(block) {
+        var data = [];
+        block.split('\n').forEach(function (line) {
+            line = line.replace(/\r$/, '');
+            if (line.indexOf('data:') === 0) data.push(line.slice(5).replace(/^\s/, ''));
+        });
+        if (!data.length) return null;
+        try {
+            return JSON.parse(data.join('\n'));
+        } catch (e) {
+            return null;
+        }
+    }
+
+    function sendMessage(text) {
+        if (sending) return;
+        sending = true;
+        input.disabled = true;
         bubble('user', text);
         input.value = '';
-        var live = bubble('assistant', '…');
+        var live = thinkingBubble();
+        var queue = '';
+        var shown = '';
+        var pumping = false;
+        var finished = false;
+
+        function paint() {
+            if (!shown) return;
+            live.classList.remove('dr-chat-pending');
+            live.textContent = shown;
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function pump() {
+            if (pumping) return;
+            pumping = true;
+            function step() {
+                if (!queue) {
+                    pumping = false;
+                    if (finished && !shown) {
+                        live.classList.remove('dr-chat-pending');
+                        live.textContent = copy.failed;
+                    }
+                    return;
+                }
+                var n = queue.length > 24 ? 2 : 1;
+                shown += queue.slice(0, n);
+                queue = queue.slice(n);
+                paint();
+                requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }
+
+        function fail() {
+            finished = true;
+            queue = '';
+            if (!shown) {
+                live.classList.remove('dr-chat-pending');
+                live.textContent = copy.failed;
+            }
+        }
+
         fetch(root.getAttribute('data-stream'), {
             method: 'POST',
             credentials: 'same-origin',
@@ -176,39 +259,59 @@
                 dr_hp: honeypotValue()
             })
         }).then(function (response) {
+            if (!response.ok || !response.body) {
+                fail();
+                return;
+            }
             var reader = response.body.getReader();
             var decoder = new TextDecoder();
             var buffer = '';
-            var acc = '';
             function read() {
                 return reader.read().then(function (result) {
                     buffer += decoder.decode(result.value || new Uint8Array(), { stream: !result.done });
                     var parts = buffer.split('\n\n');
                     buffer = parts.pop();
                     parts.forEach(function (block) {
-                        var line = block.replace(/^data:\s*/, '');
-                        if (!line) return;
-                        try {
-                            var payload = JSON.parse(line);
-                            if (payload.done) {
-                                if (payload.token) token = payload.token;
-                                return;
-                            }
-                            if (payload.reset) acc = '';
-                            if (payload.token) {
-                                acc += payload.token;
-                                live.textContent = acc;
-                                messages.scrollTop = messages.scrollHeight;
-                            }
-                        } catch (e) {}
+                        var payload = parseSseBlock(block);
+                        if (!payload) return;
+                        if (payload.status === 'search') setStatus(live, copy.statusSearch);
+                        if (payload.status === 'write') setStatus(live, copy.statusWrite);
+                        if (payload.reset) {
+                            shown = '';
+                            queue = '';
+                        }
+                        if (payload.token && !payload.done) queue += payload.token;
+                        if (payload.done && payload.session) token = payload.session;
+                        if (payload.done) finished = true;
+                        if (payload.token && !payload.done) pump();
                     });
                     if (!result.done) return read();
+                    finished = true;
+                    if (!queue && !shown) fail();
+                    else pump();
                 });
             }
             return read();
-        }).catch(function () {
-            live.textContent = copy.sub;
+        }).catch(fail).then(function () {
+            sending = false;
+            input.disabled = false;
+            input.focus();
         });
+    }
+
+    input.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            if (form.requestSubmit) form.requestSubmit();
+            else form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+        }
+    });
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var text = (input.value || '').trim();
+        if (!text || sending) return;
+        sendMessage(text);
     });
 
     fetch(root.getAttribute('data-config') + '?lang=' + encodeURIComponent(lang), {

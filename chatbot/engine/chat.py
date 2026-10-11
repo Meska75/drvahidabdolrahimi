@@ -66,26 +66,64 @@ def answer_question(profile, language, question, history=None, conversation=None
         return polite, True, str(exc)
 
 
+def _chunk_text(chunk):
+    """متن قابل نمایش از پاسخ مدل؛ بعضی مدل‌ها به‌جای رشته، لیست می‌فرستند."""
+    content = getattr(chunk, 'content', None)
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        parts = []
+        for block in content:
+            if isinstance(block, str):
+                parts.append(block)
+            elif isinstance(block, dict):
+                parts.append(str(block.get('text') or block.get('content') or ''))
+        return ''.join(parts)
+    return ''
+
+
 def stream_question(profile, language, question, history=None, conversation=None):
+    """جریان پاسخ: وضعیت جستجو، سپس تکه‌های متن. اگر استریم خالی بود یک بار پاسخ کامل می‌گیرد."""
     language = language if language in ('fa', 'en', 'ar') else 'fa'
     polite = fallback_text(language)
     llm = build_chat_model(profile.active_llm)
     if llm is None:
-        yield polite, True, 'مدل فعال تنظیم نشده یا کلید خالی است.'
+        yield ('replace', polite, 'مدل فعال تنظیم نشده یا کلید خالی است.')
         return
 
+    yield ('status', 'search', '')
     packed, early = _llm_messages(
         profile, language, question,
         conversation=conversation, history=history,
     )
     if early:
-        yield early, False, ''
+        yield ('status', 'write', '')
+        yield ('delta', early, '')
         return
+
+    yield ('status', 'write', '')
+    got = []
     try:
         for chunk in llm.stream(packed):
-            piece = getattr(chunk, 'content', None) or ''
+            piece = _chunk_text(chunk)
             if piece:
-                yield piece, False, ''
+                got.append(piece)
+                yield ('delta', piece, '')
     except Exception as exc:
         logger.exception('خطا در استریم مدل چت')
-        yield polite, True, str(exc)
+        if not ''.join(got).strip():
+            yield ('replace', polite, str(exc))
+        return
+
+    if ''.join(got).strip():
+        return
+    try:
+        text = _chunk_text(llm.invoke(packed)).strip()
+    except Exception as exc:
+        logger.exception('خطا در دریافت پاسخ کامل')
+        yield ('replace', polite, str(exc))
+        return
+    if not text:
+        yield ('replace', polite, 'پاسخ مدل خالی بود.')
+        return
+    yield ('delta', text, '')

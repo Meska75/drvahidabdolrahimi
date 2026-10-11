@@ -3,9 +3,8 @@ if (window.whenVendor) {
         var mapEl = document.getElementById('neshanMapContact');
         if (!mapEl || typeof L === 'undefined' || mapEl._leaflet_id) return;
 
-        var lat    = 35.75431655694686;
-        var lng    = 51.41248217613625;
-        var apiKey = 'service.4b130a29422349a7a3210bf2972459f5';
+        var lat = 35.75431655694686;
+        var lng = 51.41248217613625;
 
         var map = L.map('neshanMapContact', {
             center: [lat, lng],
@@ -14,23 +13,13 @@ if (window.whenVendor) {
             attributionControl: true
         });
 
-        var neshanFailed = false;
-        var neshanLayer  = L.tileLayer(
-            'https://map.neshan.org/sdk/v1/map/xyz/dreamy/{z}/{x}/{y}.png?x-api-key=' + apiKey,
-            { attribution: '© <a href="https://neshan.org" target="_blank">نشان</a>', maxZoom: 18 }
-        );
-
-        neshanLayer.on('tileerror', function () {
-            if (!neshanFailed) {
-                neshanFailed = true;
-                map.removeLayer(neshanLayer);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '© <a href="https://openstreetmap.org" target="_blank">OpenStreetMap</a>'
-                }).addTo(map);
-            }
-        });
-
-        neshanLayer.addTo(map);
+        // آدرس قدیمی کاشی نشان ۴۰۴ است و tile.openstreetmap.org هم به‌خاطر
+        // Referrer-Policy: same-origin تصویر «Access blocked» برمی‌گرداند.
+        L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>',
+            maxZoom: 19,
+            referrerPolicy: 'strict-origin-when-cross-origin'
+        }).addTo(map);
 
         L.marker([lat, lng])
             .addTo(map)

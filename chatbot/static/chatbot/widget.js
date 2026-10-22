@@ -4,7 +4,7 @@
 
     var COPY = {
         fa: {
-            launcher: 'پرسش از دستیار',
+            launcher: 'مشاوره آنلاین هوش مصنوعی',
             title: 'دستیار مطب',
             sub: 'پاسخ‌ها جنبه آموزشی دارند و جایگزین معاینه نیستند.',
             placeholder: 'پیام خود را بنویسید…',
@@ -16,7 +16,7 @@
             clearConfirm: 'گفتگوی فعلی پاک شود؟'
         },
         en: {
-            launcher: 'Ask the assistant',
+            launcher: 'AI Online Consultation',
             title: 'Clinic assistant',
             sub: 'Answers are educational and not a medical exam.',
             placeholder: 'Type your message…',
@@ -28,7 +28,7 @@
             clearConfirm: 'Clear this conversation?'
         },
         ar: {
-            launcher: 'اسأل المساعد',
+            launcher: 'استشارة أونلاين بالذكاء الاصطناعي',
             title: 'مساعد العيادة',
             sub: 'الإجابات للمعرفة العامة وليست بديلاً عن الفحص.',
             placeholder: 'اكتب رسالتك…',

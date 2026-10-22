@@ -11,12 +11,10 @@
     left: auto;
     bottom: 88px;
     min-width: 0;
-    height: 44px;
+    height: 52px;
     box-sizing: border-box;
-    padding-block: 4px;
-    padding-inline-start: 4px;
-    padding-inline-end: 14px;
-    border: none;
+    padding: 0 24px;
+    border: 2px solid rgba(255, 255, 255, 0.85);
     border-radius: 999px;
     background: linear-gradient(135deg, #0f766e, #0891b2);
     color: #fff;
@@ -24,28 +22,31 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    box-shadow: 0 4px 20px rgba(15, 118, 110, 0.45);
-    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(15, 118, 110, 0.5);
+    white-space: nowrap;
+    animation: dr-launcher-pulse 2.4s ease-out infinite;
 }
 
-.dr-chatbot-launcher-anim,
-.dr-chatbot-launcher-anim dotlottie-wc {
-    display: block;
-    width: 36px;
-    height: 36px;
-    flex: 0 0 36px;
-    pointer-events: none;
+.dr-chatbot-launcher[aria-expanded="true"] {
+    animation: none;
 }
 
-/* طرح داخل فایل کمی پایین‌تر از وسط بوم است */
-.dr-chatbot-launcher-anim {
-    transform: translateY(-3px);
+/* حلقه نوری دور دکمه تا در گوشه صفحه دیده شود */
+@keyframes dr-launcher-pulse {
+    0%   { box-shadow: 0 6px 24px rgba(15, 118, 110, 0.5), 0 0 0 0 rgba(8, 145, 178, 0.55); }
+    70%  { box-shadow: 0 6px 24px rgba(15, 118, 110, 0.5), 0 0 0 14px rgba(8, 145, 178, 0); }
+    100% { box-shadow: 0 6px 24px rgba(15, 118, 110, 0.5), 0 0 0 0 rgba(8, 145, 178, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dr-chatbot-launcher {
+        animation: none;
+    }
 }
 
 .dr-chatbot-launcher-label {
-    font-size: 0.85rem;
-    font-weight: 600;
+    font-size: 1rem;
+    font-weight: 700;
     line-height: 1;
 }
 
@@ -234,22 +235,19 @@
         right: 12px;
         left: auto;
         bottom: calc(92px + env(safe-area-inset-bottom, 0px));
-        padding: 0;
-        width: 44px;
-        min-width: 44px;
-        height: 44px;
-        gap: 0;
+        max-width: calc(100vw - 24px);
+        height: 56px;
+        padding: 0 20px;
     }
 
-    .dr-chatbot-launcher-anim,
-    .dr-chatbot-launcher-anim dotlottie-wc {
-        width: 36px;
-        height: 36px;
-        flex-basis: 36px;
+    /* در LTR دکمه بازگشت به بالا سمت راست است؛ دکمه مشاوره به چپ می‌رود */
+    .dr-chatbot[dir="ltr"] .dr-chatbot-launcher {
+        left: 12px;
+        right: auto;
     }
 
     .dr-chatbot-launcher-label {
-        display: none;
+        font-size: 15px;
     }
 
     .dr-chatbot-panel {

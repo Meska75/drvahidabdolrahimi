@@ -55,10 +55,13 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/base_en.css' %}">
     <link rel="stylesheet" href="{% static 'css/theme_refresh.css' %}">
-    {% include "components/deferred_css.html" with path="css/fontawesome-all.min.css" %}
-    {% include "components/deferred_css.html" with path="css/fontawesome-v4-shims.min.css" %}
-    {% include "components/deferred_css.html" with path="css/search.css" %}
-    {% include "components/deferred_css.html" with path="css/floating_actions.css" %}
+    <!-- آیکون‌ها و دکمه‌های هدر باید پیش از اولین رندر آماده باشند تا صفحه نیمه‌کاره دیده نشود -->
+    <link rel="preload" as="font" href="{% static 'webfonts/fa-solid-900.woff2' %}" type="font/woff2" crossorigin>
+    <link rel="preload" as="font" href="{% static 'webfonts/fa-brands-400.woff2' %}" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="{% static 'css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fontawesome-v4-shims.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+    <link rel="stylesheet" href="{% static 'css/floating_actions.css' %}">
 
     {% block extra_css %}{% endblock %}
 

@@ -7,8 +7,5 @@ class ChatbotConfig(AppConfig):
     verbose_name = 'چت‌بات هوش مصنوعی'
 
     def ready(self):
-        import mimetypes
-        mimetypes.add_type('application/wasm', '.wasm')
-        mimetypes.add_type('application/zip', '.lottie')
         from chatbot.signals import connect_site_signals
         connect_site_signals()

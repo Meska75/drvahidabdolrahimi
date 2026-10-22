@@ -8,8 +8,6 @@
      data-stream="{% url 'chatbot:stream' %}"
      data-clear="{% url 'chatbot:clear' %}">
     <button type="button" class="dr-chatbot-launcher" id="drChatbotLauncher" aria-expanded="false">
-        {# طرح متحرک دستیار به‌جای آیکون — در دسکتاپ و موبایل #}
-        <span class="dr-chatbot-launcher-anim" id="drChatbotAnim" aria-hidden="true"></span>
         <span class="dr-chatbot-launcher-label"></span>
     </button>
 
@@ -42,17 +40,4 @@
     </section>
 </div>
 <link rel="stylesheet" href="{% static 'chatbot/widget.css' %}">
-<script type="module">
-    import { setWasmUrl } from "{% static 'chatbot/vendor/dotlottie-wc.js' %}";
-    setWasmUrl("{% static 'chatbot/vendor/dotlottie-player.wasm' %}");
-    var slot = document.getElementById('drChatbotAnim');
-    if (slot && !slot.firstElementChild) {
-        var player = document.createElement('dotlottie-wc');
-        player.setAttribute('src', "{% static 'chatbot/ai-assistant.lottie' %}");
-        player.setAttribute('autoplay', '');
-        player.setAttribute('loop', '');
-        player.setAttribute('marker', 'idle');
-        slot.appendChild(player);
-    }
-</script>
 <script src="{% static 'chatbot/widget.js' %}" defer></script>
